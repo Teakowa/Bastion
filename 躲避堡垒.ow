@@ -395,7 +395,9 @@
 		73: dlc04
 		80: heroColor
 		82: breathRed
+		83: breathPurple
 		90: springBoardPosition
+		91: __currentMapText__
 		127: antiCrashActivated
 
 	玩家:
@@ -810,7 +812,7 @@
 		);
 		等待(服务器负载 / 100 * 0.500, 无视条件);
 		全局.allTitle = 数组(
-			数组(自定义字符串("{0}开拓者", 当前地图), 全局.heroColor[12]), // 0
+			数组(自定义字符串("{0}开拓者", 全局.__currentMapText__ != 空 ? 全局.__currentMapText__ : 当前地图), 全局.heroColor[12]), // 0
 			数组(自定义字符串("这是一个超长的称号测试字段如果到这里还没有被截断说明确实很长你说得对但是广告位招租啊哈大OW是我的家乡"), 空), // 1
             数组(自定义字符串("地图不是我做的"), 空), // 2
             数组(自定义字符串("野生开发者"), 空), // 3
@@ -1116,6 +1118,7 @@
 		全局.resetPosition = 矢量(-150.250, 0.830, 104.510);
 		全局.creditsPosition = 矢量(-170.800, 3.650, 96.450);
 		开始强制重生室(队伍1, 2);
+		全局.__currentMapText__ = 自定义字符串("暴雪世界");
 		全局.mapTitleRelation = 数组(
             // 格式: [玩家索引, 称号索引]
             数组(7, 9), // 吾携秋水揽星河-征服者
@@ -1239,6 +1242,7 @@
 		全局.resetPosition = 矢量(128.060, 10.720, 1.840);
 		全局.creditsPosition = 矢量(132.820, 13.720, 9.040);
 		开始强制重生室(队伍1, 2);
+		全局.__currentMapText__ = 全局.__currentMap__ == 565 ? 自定义字符串("阿德勒斯布鲁恩") : 当前地图;
 		全局.mapTitleRelation = 数组(
 			// 尘风歌者 (索引6)
 			数组(6, 9),   // 征服者
@@ -1610,6 +1614,7 @@
 		全局.thirdPersonPosition = 矢量(-176.048, -0.070, 36.540);
 		全局.resetPosition = 矢量(-175.230, -0.070, 43.030);
 		全局.creditsPosition = 矢量(-185.560, 3.530, 38.320);
+		全局.__currentMapText__ = 自定义字符串("国王大道");
 		开始强制重生室(队伍1, 1);
 		全局.mapTitleRelation = 数组(
 			// 尘风歌者 (索引6)
@@ -2605,6 +2610,7 @@
 		全局.thirdPersonPosition = 矢量(-33.20, 1.00, -115.04);
 		全局.resetPosition = 矢量(-46.98, 1.00, -101.54);
 		全局.creditsPosition = 矢量(-48.10, 2.50, -116.08);
+		全局.__currentMapText__ = 自定义字符串("花村");
 		// 开始强制重生室(队伍1, 0);
 		全局.mapTitleRelation = 数组(
 			// 卖核弹的小女孩 (索引13)
