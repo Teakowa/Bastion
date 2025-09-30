@@ -3308,7 +3308,7 @@
 	条件
 	{
 		全局.antiCrashActivated == 假;
-		服务器负载 > 230;
+		服务器负载 > 235;
 	}
 
 	动作
@@ -3720,12 +3720,13 @@
 	条件
 	{
 		存活(事件玩家) == 真;
+		标准化生命值(事件玩家) < 1;
 	}
 
 	动作
 	{
-		等待(20, 无视条件);
-		开始持续治疗(事件玩家, 空, 19.500, 9999);
+		等待(60, 无视条件);
+		开始持续治疗(事件玩家, 空, 59.500, 9999);
 		如条件为“真”则循环;
 	}
 }
@@ -4555,7 +4556,7 @@
 
 	条件
 	{
-		全局.controlRespawnPosition != 空;
+		单次赋值(全局.controlRespawnPosition != 空) == 真;
 		所用英雄(事件玩家) == 英雄(天使);
 		// 数量(已过滤的数组(已过滤的数组(所有死亡玩家(队伍1), (当前数组元素.controlPlayerRespawnPosition == 空 && 当前数组元素.controlPlayerRespawn == 假) || (当前数组元素.controlPlayerRespawn == 假 && 当前数组元素.controlRespawnPosition != 空数组)), 相距距离(所选位置(事件玩家), 所选位置(当前数组元素)) < 40))
 		事件玩家.mercyResurrect == 假;
@@ -4568,7 +4569,7 @@
 		等待直到 (所用英雄(事件玩家) != 英雄(天使) || 事件玩家.mercyResurrect, 999999986991104.000);
 		可用按钮(事件玩家, 按钮(技能2));
 		设置启用技能 2(事件玩家, 真);
-		等待(0.035, 无视条件);
+		等待(0.032, 无视条件);
 		如条件为“真”则循环;
 	}
 }
@@ -4584,7 +4585,7 @@
 
 	条件
 	{
-		全局.controlRespawnPosition != 空;
+		单次赋值(全局.controlRespawnPosition != 空) == 真;
 		所用英雄(事件玩家) == 英雄(天使);
 		数量(
 			已过滤的数组(
@@ -5069,7 +5070,7 @@
 	}
 }
 
-规则("update scoreboard every few seconds")
+禁用 规则("update scoreboard every few seconds")
 {
 	事件
 	{
