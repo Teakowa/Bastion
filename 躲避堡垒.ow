@@ -5978,12 +5978,15 @@
 		等待(服务器负载 / 100 * 0.032, 无视条件);
 		事件玩家.playerTitleIndex = (事件玩家.playerTitleIndex + 1) % 数量(事件玩家.playerTitles);
 		等待(服务器负载 / 100 * 0.032, 无视条件);
+		停止追踪玩家变量(事件玩家, rgb_vect);
 		事件玩家.playerTitleAndColor = 数组(首个(事件玩家.playerTitles[事件玩家.playerTitleIndex]), 最后(事件玩家.playerTitles[事件玩家.playerTitleIndex]));
+		事件玩家.rgb_vect = 事件玩家.playerTitleAndColor[1] != 空 && 数量(事件玩家.playerTitleAndColor[1]) <= 1 ? 首个(事件玩家.playerTitleAndColor[1]) : 全局.rgbList[首个(事件玩家.info_pvar)];
 		// IF(事件玩家.isDev && 事件玩家.playerTitleAndColor[1] == 空);
 		// 	事件玩家.playerTitleAndColor[1] = 全局.rgbList;
 		// 	事件玩家.rgb_vect = 全局.rgbList[首个(事件玩家.info_pvar)];
 		// END;
 		小字体信息(事件玩家, 自定义字符串("  {0}  已将称号更改为 {1}", 图标字符串(箭矢), 首个(事件玩家.playerTitles[事件玩家.playerTitleIndex])));
+		等待(服务器负载 / 100 * 0.032, 无视条件);
 	}
 }
 
@@ -6013,12 +6016,15 @@
 		等待(服务器负载 / 100 * 0.032, 无视条件);
 		事件玩家.playerTitleIndex -= 1;
 		等待(服务器负载 / 100 * 0.032, 无视条件);
+		停止追踪玩家变量(事件玩家, rgb_vect);
 		事件玩家.playerTitleAndColor = 数组(首个(事件玩家.playerTitles[事件玩家.playerTitleIndex]), 最后(事件玩家.playerTitles[事件玩家.playerTitleIndex]));
+		事件玩家.rgb_vect = 事件玩家.playerTitleAndColor[1] != 空 && 数量(事件玩家.playerTitleAndColor[1]) <= 1 ? 首个(事件玩家.playerTitleAndColor[1]) : 全局.rgbList[首个(事件玩家.info_pvar)];
 		// IF(事件玩家.isDev && 事件玩家.playerTitleAndColor[1] == 空);
 		// 	事件玩家.playerTitleAndColor[1] = 全局.rgbList;
 		// 	事件玩家.rgb_vect = 全局.rgbList[首个(事件玩家.info_pvar)];
 		// END;
 		小字体信息(事件玩家, 自定义字符串("  {0}  已将称号更改为 {1}", 图标字符串(箭矢), 首个(事件玩家.playerTitleAndColor)));
+		等待(服务器负载 / 100 * 0.032, 无视条件);
 	}
 }
 
@@ -6427,7 +6433,9 @@
 			事件玩家.playerTitleRelationIndex = 数组值的索引(全局.titlePlayer, 自定义字符串("{0}", 事件玩家));
 			调用子程序(setPlayerTitle);
 			等待(0.032, 无视条件);
+			小字体信息(事件玩家, 自定义字符串("  称号已加载"));
 			事件玩家.playerTitleAndColor = 数组(首个(最后(事件玩家.playerTitles)), 最后(最后(事件玩家.playerTitles)));
+			事件玩家.rgb_vect = 事件玩家.playerTitleAndColor[1] != 空 ? 首个(事件玩家.playerTitleAndColor[1]) : 全局.rgbList[首个(事件玩家.info_pvar)];
 		END;
 		根据条件跳过(全局.controlRespawnPosition == 空,1);
 		小字体信息(事件玩家, 自定义字符串("  通过第一个传送点可以按 {0} 使用存档点功能（单英雄仅限一次）", 按钮(装填)));
@@ -6457,15 +6465,15 @@
 	动作
 	{
 		等待(栏位(事件玩家) * 0.080, 无视条件);
-		If(单次赋值(数组包含(全局.devList, 自定义字符串("{0}", 事件玩家))));
+		// If(单次赋值(数组包含(全局.devList, 自定义字符串("{0}", 事件玩家))));
 			事件玩家.info_pvar = 0;
-			事件玩家.rgb_vect = 全局.rgbList[首个(事件玩家.info_pvar)];
-			创建地图文本(已过滤的数组(所有玩家(所有队伍), 在视线内(事件玩家, 当前数组元素, 屏障不会阻挡视线)), 自定义字符串("{0}{1}", 技能图标字符串(英雄(托比昂), 按钮(技能2)), 事件玩家.playerTitleAndColor[0]), 事件玩家, 1, 不要截取, 可见，位置，字符串和颜色, 自定义颜色(X方向分量(
+		// 	事件玩家.rgb_vect = 全局.rgbList[首个(事件玩家.info_pvar)];
+			创建地图文本(已过滤的数组(所有玩家(所有队伍), 在视线内(事件玩家, 当前数组元素, 屏障不会阻挡视线)), 自定义字符串("{0}{1}", 事件玩家.isDev ? 技能图标字符串(英雄(托比昂), 按钮(技能2)) : 自定义字符串(""), 事件玩家.playerTitleAndColor[0]), 事件玩家, 事件玩家.isDev ? 1 : 0.800, 不要截取, 可见，位置，字符串和颜色, 自定义颜色(X方向分量(
 				事件玩家.rgb_vect), Y方向分量(事件玩家.rgb_vect), Z方向分量(事件玩家.rgb_vect), 255), 默认可见度);
-		Else;
-			创建地图文本(已过滤的数组(所有玩家(所有队伍), 在视线内(事件玩家, 当前数组元素, 屏障不会阻挡视线)), 事件玩家.playerTitleAndColor[0], 事件玩家, 0.800, 不要截取, 可见，位置，字符串和颜色,
-				事件玩家.playerTitleAndColor[1], 默认可见度);
-		End;
+		// Else;
+			// 创建地图文本(已过滤的数组(所有玩家(所有队伍), 在视线内(事件玩家, 当前数组元素, 屏障不会阻挡视线)), 事件玩家.playerTitleAndColor[0], 事件玩家, 0.800, 不要截取, 可见，位置，字符串和颜色,
+			// 	事件玩家.playerTitleAndColor[1], 默认可见度);
+		// End;
 		事件玩家.titleTextID = 上一个文本ID;
 	}
 }
@@ -6482,6 +6490,8 @@
 	条件
 	{
 		事件玩家.isDev == 真;
+		全局.antiCrashActivated == 假;
+		事件玩家.playerTitleAndColor[1] == 空;
 	}
 
 	动作
@@ -6490,6 +6500,36 @@
 		持续追踪玩家变量(事件玩家, rgb_vect, 全局.rgbList[事件玩家.info_pvar], 1.500, 全部禁用);
 		等待直到 (事件玩家.rgb_vect == 全局.rgbList[事件玩家.info_pvar], 999999986991104.000);
 		如条件为“真”则循环;
+		停止追踪玩家变量(事件玩家, rgb_vect);
+		事件玩家.info_pvar = 0;
+	}
+}
+
+规则("update title color")
+{
+	事件
+	{
+		持续 - 每名玩家;
+		双方;
+		全部;
+	}
+
+	条件
+	{
+		// 事件玩家.isDev == 真;
+		全局.antiCrashActivated == 假;
+		事件玩家.playerTitleAndColor[1] != 空;
+		数量(事件玩家.playerTitleAndColor[1]) > 1;
+	}
+
+	动作
+	{
+		事件玩家.info_pvar = (事件玩家.info_pvar + 1) % 数量(事件玩家.playerTitleAndColor[1]);
+		持续追踪玩家变量(事件玩家, rgb_vect, 事件玩家.playerTitleAndColor[1][事件玩家.info_pvar], 2.500, 全部禁用);
+		等待直到 (事件玩家.rgb_vect == 事件玩家.playerTitleAndColor[1][事件玩家.info_pvar], 999999986991104.000);
+		如条件为“真”则循环;
+		停止追踪玩家变量(事件玩家, rgb_vect);
+		事件玩家.info_pvar = 0;
 	}
 }
 
