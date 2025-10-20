@@ -1214,7 +1214,7 @@
         else if(事件玩家.categoryRoll <= 80);
 			// 减益事件 40%
 			事件玩家.eventType = 1;
-			事件玩家.eventId = 随机整数(0, 数量(全局.debuffEvent) - 1);
+			事件玩家.eventId = 数组随机取值(全局.debuffEventId);
 			事件玩家.eventName = 首个(全局.debuffEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.debuffEvent[事件玩家.eventId][1];
 			事件玩家.eventDuration = 最后(全局.debuffEvent[事件玩家.eventId]);
@@ -1223,7 +1223,7 @@
 		else;
 			// 机制事件 20%
 			事件玩家.eventType = 2;
-			事件玩家.eventId = 随机整数(0, 数量(全局.mechEvent) - 1);
+			事件玩家.eventId = 数组随机取值(全局.mechEvent);
 			事件玩家.eventName = 首个(全局.mechEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.mechEvent[事件玩家.eventId][1];
 			事件玩家.eventDuration = 最后(全局.mechEvent[事件玩家.eventId]);
