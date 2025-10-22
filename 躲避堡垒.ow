@@ -1223,7 +1223,7 @@
 
 	动作
 	{
-		事件玩家.categoryRoll = 随机整数(0, 40);
+		事件玩家.categoryRoll = 随机整数(0, 100);
 		if(事件玩家.categoryRoll <= 40);
             // 增益事件 40%
             事件玩家.eventType = 0;
