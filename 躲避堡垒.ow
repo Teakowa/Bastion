@@ -1249,7 +1249,7 @@
 		else;
 			// 机制事件 20%
 			事件玩家.eventType = 2;
-			事件玩家.eventId = 数组随机取值(全局.mechEvent);
+			事件玩家.eventId = 数组随机取值(全局.mechEventId);
 			事件玩家.eventName = 首个(全局.mechEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.mechEvent[事件玩家.eventId][1];
 			事件玩家.eventDuration = 最后(全局.mechEvent[事件玩家.eventId]);
