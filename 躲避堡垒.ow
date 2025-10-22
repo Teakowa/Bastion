@@ -1411,6 +1411,7 @@
 	条件
 	{
 		单次赋值(全局.dlcVishkarEvent) == 真;
+		全局.hashTag == 真;
 		全局.vishkarEventActivated == 真;
 		已重生(事件玩家) == 真;
 		// 事件玩家.isWinner != 真;
@@ -1437,6 +1438,7 @@
 	条件
 	{
 		单次赋值(全局.dlcVishkarEvent) == 真;
+		全局.hashTag == 真;
 		全局.vishkarEventActivated == 真;
 		已重生(事件玩家) == 真;
 		// 事件玩家.isWinner != 真;
