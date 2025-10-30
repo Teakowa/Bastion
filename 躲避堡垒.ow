@@ -5660,79 +5660,79 @@
 	}
 }
 
-规则("when players in the 2nd or 3rd map, no bastions within their field of vision can save respawn vectors.")
-{
-	事件
-	{
-		持续 - 每名玩家;
-		队伍1;
-		全部;
-	}
+// 规则("when players in the 2nd or 3rd map, no bastions within their field of vision can save respawn vectors.")
+// {
+// 	事件
+// 	{
+// 		持续 - 每名玩家;
+// 		队伍1;
+// 		全部;
+// 	}
 
-	条件
-	{
-		单次赋值(全局.controlRespawnPosition) != 空;
-		单次赋值(全局.portalPosition) == 空;
-		事件玩家.isWinner != 真;
-		已重生(事件玩家) == 真;
-		首个(范围内玩家(事件玩家, 60, 队伍2, 表面)) == 假;
-		正在移动(事件玩家) != 真;
-		事件玩家.controlJumpIndex > 0;
-		事件玩家.controlPlayerRespawnPosition == 空;
-		事件玩家.controlPlayerRespawn == 假;
-		按钮被按下(事件玩家, 按钮(装填)) == 真;
-	}
+// 	条件
+// 	{
+// 		单次赋值(全局.controlRespawnPosition) != 空;
+// 		单次赋值(全局.portalPosition) == 空;
+// 		事件玩家.isWinner != 真;
+// 		已重生(事件玩家) == 真;
+// 		首个(范围内玩家(事件玩家, 60, 队伍2, 表面)) == 假;
+// 		正在移动(事件玩家) != 真;
+// 		事件玩家.controlJumpIndex > 0;
+// 		事件玩家.controlPlayerRespawnPosition == 空;
+// 		事件玩家.controlPlayerRespawn == 假;
+// 		按钮被按下(事件玩家, 按钮(装填)) == 真;
+// 	}
 
-	动作
-	{
-		小字体信息(事件玩家, 自定义字符串("  {0} 正在尝试设置存档点...", 技能图标字符串(英雄(天使), 按钮(技能2))));
-		等待(1, 当为“假”时中止);
-		事件玩家.controlPlayerRespawn = 真;
-		事件玩家.controlPlayerRespawnPosition = 数组(所选位置(事件玩家), 面朝方向(事件玩家), 所用英雄(事件玩家), 事件玩家.controlJumpIndex);
-		播放效果(所有玩家(所有队伍), “黑影”位移传动材料效果, 颜色(白色), 事件玩家, 200);
-		小字体信息(事件玩家, 自定义字符串("  {0} 存档点已设置，阵亡后将自动复活", 技能图标字符串(英雄(天使), 按钮(技能2))));
-	}
-}
+// 	动作
+// 	{
+// 		小字体信息(事件玩家, 自定义字符串("  {0} 正在尝试设置存档点...", 技能图标字符串(英雄(天使), 按钮(技能2))));
+// 		等待(1, 当为“假”时中止);
+// 		事件玩家.controlPlayerRespawn = 真;
+// 		事件玩家.controlPlayerRespawnPosition = 数组(所选位置(事件玩家), 面朝方向(事件玩家), 所用英雄(事件玩家), 事件玩家.controlJumpIndex);
+// 		播放效果(所有玩家(所有队伍), “黑影”位移传动材料效果, 颜色(白色), 事件玩家, 200);
+// 		小字体信息(事件玩家, 自定义字符串("  {0} 存档点已设置，阵亡后将自动复活", 技能图标字符串(英雄(天使), 按钮(技能2))));
+// 	}
+// }
 
-规则("when player died and controlPlayerRespawn set, respawn to controlPlayerRespawnPosition")
-{
-	事件
-	{
-		玩家阵亡;
-		队伍1;
-		全部;
-	}
+// 规则("when player died and controlPlayerRespawn set, respawn to controlPlayerRespawnPosition")
+// {
+// 	事件
+// 	{
+// 		玩家阵亡;
+// 		队伍1;
+// 		全部;
+// 	}
 
-	条件
-	{
-		单次赋值(全局.controlRespawnPosition) != 空;
-		单次赋值(全局.portalPosition) == 空;
-		事件玩家.isWinner != 真;
-		事件玩家.controlPlayerRespawn == 真;
-		事件玩家.controlPlayerRespawnPosition != 空;
-		事件玩家.controlJumpIndex > 0;
-		所用英雄(事件玩家) == 事件玩家.controlPlayerRespawnPosition[2];
-	}
+// 	条件
+// 	{
+// 		单次赋值(全局.controlRespawnPosition) != 空;
+// 		单次赋值(全局.portalPosition) == 空;
+// 		事件玩家.isWinner != 真;
+// 		事件玩家.controlPlayerRespawn == 真;
+// 		事件玩家.controlPlayerRespawnPosition != 空;
+// 		事件玩家.controlJumpIndex > 0;
+// 		所用英雄(事件玩家) == 事件玩家.controlPlayerRespawnPosition[2];
+// 	}
 
-	动作
-	{
-		大字体信息(事件玩家, 自定义字符串("正在复活至存档点"));
-		关闭游戏预设复生模式(事件玩家);
-		等待(3, 无视条件);
-		开启游戏预设复生模式(事件玩家);
-		复活(事件玩家);
-		传送(事件玩家, 首个(事件玩家.controlPlayerRespawnPosition));
-		设置朝向(事件玩家, 事件玩家.controlPlayerRespawnPosition[1], 至地图);
-		事件玩家.controlPlayerRespawn = 假;
-		"0.5秒后回退跳跃索引，防止玩家图2复活后无法传送到下一个存档点"
-		等待(0.500, 无视条件);
-		If(事件玩家.controlJumpIndex > 事件玩家.controlPlayerRespawnPosition[3]);
-			事件玩家.controlJumpIndex = 事件玩家.controlPlayerRespawnPosition[3];
-		End;
-		小字体信息(事件玩家, 自定义字符串("  {0} 存档点已消耗", 技能图标字符串(英雄(天使), 按钮(技能2))));
-		小字体信息(事件玩家, 自定义字符串("  {0} 在切换至下一个英雄前，存档点不可用", 技能图标字符串(英雄(天使), 按钮(技能2))));
-	}
-}
+// 	动作
+// 	{
+// 		大字体信息(事件玩家, 自定义字符串("正在复活至存档点"));
+// 		关闭游戏预设复生模式(事件玩家);
+// 		等待(3, 无视条件);
+// 		开启游戏预设复生模式(事件玩家);
+// 		复活(事件玩家);
+// 		传送(事件玩家, 首个(事件玩家.controlPlayerRespawnPosition));
+// 		设置朝向(事件玩家, 事件玩家.controlPlayerRespawnPosition[1], 至地图);
+// 		事件玩家.controlPlayerRespawn = 假;
+// 		"0.5秒后回退跳跃索引，防止玩家图2复活后无法传送到下一个存档点"
+// 		等待(0.500, 无视条件);
+// 		If(事件玩家.controlJumpIndex > 事件玩家.controlPlayerRespawnPosition[3]);
+// 			事件玩家.controlJumpIndex = 事件玩家.controlPlayerRespawnPosition[3];
+// 		End;
+// 		小字体信息(事件玩家, 自定义字符串("  {0} 存档点已消耗", 技能图标字符串(英雄(天使), 按钮(技能2))));
+// 		小字体信息(事件玩家, 自定义字符串("  {0} 在切换至下一个英雄前，存档点不可用", 技能图标字符串(英雄(天使), 按钮(技能2))));
+// 	}
+// }
 
 规则("when player died and controlPlayerRespawn not set, respawn to first respawn point")
 {
@@ -5893,13 +5893,16 @@
 			根据条件跳过(全局.controlJumpPosition[事件玩家.controlJumpIndex] == 空, 9);
 			事件玩家.controlJumpIndex += 1;
 			等待(0.016, 无视条件);
+			根据条件跳过(对任意为“真”(数组(具有状态(事件玩家, 相移), 具有状态(事件玩家, 无敌)), 当前数组元素), 2);
+			设置状态(事件玩家, 空, 相移, 0.5);
+			设置状态(事件玩家, 空, 无敌, 0.5);
 			传送(事件玩家, 全局.controlRespawnPosition[事件玩家.controlJumpIndex]);
 			设置朝向(事件玩家, 方向(眼睛位置(事件玩家), 所选位置(全局.controlJumpPosition[事件玩家.controlJumpIndex])), 至地图);
 			等待(2.160, 无视条件);
-			根据条件跳过(事件玩家.controlPlayerRespawn == 真 || 事件玩家.controlPlayerRespawnPosition != 空 || 事件玩家.isWinner == 真 || 全局.portalPosition != 空, 3);
-			小字体信息(事件玩家, 自定义字符串("  存档点可设置"));
-			等待(0.032, 无视条件);
-			小字体信息(事件玩家, 自定义字符串("  请考虑在合适的位置 长按 {0} 设置存档点（每个英雄仅限 1 次）", 按钮(装填)));
+			// 根据条件跳过(事件玩家.controlPlayerRespawn == 真 || 事件玩家.controlPlayerRespawnPosition != 空 || 事件玩家.isWinner == 真 || 全局.portalPosition != 空, 3);
+			// 小字体信息(事件玩家, 自定义字符串("  存档点可设置"));
+			// 等待(0.032, 无视条件);
+			// 小字体信息(事件玩家, 自定义字符串("  请考虑在合适的位置 长按 {0} 设置存档点（每个英雄仅限 1 次）", 按钮(装填)));
 		End;
 		循环;
 		// 事件玩家.controlPlayerRespawn = 假;
@@ -6015,7 +6018,7 @@
 		创建HUD文本(本地玩家, 自定义字符串("{0}: {1}", 自定义字符串("英雄"), 自定义字符串("{0} / {1}", 数组值的索引(全局.heroList, 所用英雄(本地玩家)) + 1, 数量(全局.heroList))),
 			自定义字符串(""), 空, 左边, 3, 颜色(白色), 空, 空, 可见和字符串, 默认可见度);
 		根据条件跳过(全局.controlJumpPosition == 空 || 全局.portalPosition != 空, 1);
-		创建HUD文本(!本地玩家.isWinner ? 本地玩家 : 空, 空, 自定义字符串("存档点（{1}）: {0}", 本地玩家.controlPlayerRespawnPosition == 空 && 本地玩家.controlPlayerRespawn == 假 && 本地玩家.controlJumpIndex != 0 ? 自定义字符串("可用") : 自定义字符串("不可用"), 按钮(装填)), 空, 左边, 3, 空, 本地玩家.controlPlayerRespawnPosition == 空 && 本地玩家.controlPlayerRespawn == 假 && 本地玩家.controlJumpIndex != 0 ? 颜色(绿色) : 颜色(红色), 空, 可见，字符串和颜色, 默认可见度);
+		// 创建HUD文本(!本地玩家.isWinner ? 本地玩家 : 空, 空, 自定义字符串("存档点（{1}）: {0}", 本地玩家.controlPlayerRespawnPosition == 空 && 本地玩家.controlPlayerRespawn == 假 && 本地玩家.controlJumpIndex != 0 ? 自定义字符串("可用") : 自定义字符串("不可用"), 按钮(装填)), 空, 左边, 3, 空, 本地玩家.controlPlayerRespawnPosition == 空 && 本地玩家.controlPlayerRespawn == 假 && 本地玩家.controlJumpIndex != 0 ? 颜色(绿色) : 颜色(红色), 空, 可见，字符串和颜色, 默认可见度);
 		创建HUD文本(本地玩家.isWinner || 所用英雄(本地玩家) != 全局.heroList[本地玩家.heroNumber] ? 空数组 : 本地玩家, 本地玩家.heroNumber + 1 < 数量(全局.heroList) ? 英雄图标字符串(
 			全局.heroList[本地玩家.heroNumber + 1]) : 图标字符串(旗帜), 自定义字符串("下一个英雄"), 本地玩家.heroNumber + 1 < 数量(全局.heroList)
 			? 全局.heroList[本地玩家.heroNumber + 1] : 自定义字符串("逃脱成功"), 左边, 4, 自定义颜色(36, 205, 244, 255), 颜色(白色), 颜色(白色), 可见和字符串, 默认可见度);
@@ -6088,7 +6091,7 @@
 			创建HUD文本(所有玩家(所有队伍), 空, 空, 全局.difficulty != 5 ? 自定义字符串("使用全部英雄通关，一旦你解锁了一个英雄就可以在后续的游戏中随时使用！当阵亡 {0} 次之后可跳过英雄", 全局.maxDeath) : 自定义字符串("使用全部英雄通关！当前难度无法跳过英雄，加油吧！"), 顶部, 0, 空, 空, 自定义颜色(255, 255, 255,
 				125), 可见和字符串, 默认可见度);
 		END;
-		创建HUD文本(所有玩家(所有队伍), 空, 自定义字符串("{0}代码：SVMQK | 加群拿称号：445152554 | Kook.vip/44qoov \n", 全局.controlJumpPosition == 空 || 全局.portalPosition != 空 ? 自定义字符串("") : 自定义字符串("存档点每个英雄只能使用 1 次，请把握存档时机\n")), 空, 顶部, 1, 空, 自定义颜色(255, 255, 255, 125), 空, 可见和字符串, 默认可见度);
+		创建HUD文本(所有玩家(所有队伍), 空, 自定义字符串("{0}代码：SVMQK | 加群拿称号：445152554 | Kook.vip/44qoov \n", 自定义字符串("")), 空, 顶部, 1, 空, 自定义颜色(255, 255, 255, 125), 空, 可见和字符串, 默认可见度);
 		创建HUD文本(所有玩家(所有队伍), 空, 空, 自定义字符串("难度：{0}", 首个(全局.difficultyText)), 右边, -6, 空, 空, 全局.difficultyText[1], 可见，字符串和颜色, 默认可见度);
 		IF(单次赋值(全局.dlcVishkarEvent));
 			创建HUD文本(本地玩家, 空, 自定义字符串("{0}/{1}/{2} 增益/减益/总计", 首个(本地玩家.eventCount), 本地玩家.eventCount[1], 本地玩家.eventCount[0] + 本地玩家.eventCount[1] + 本地玩家.eventCount[2]), 空, 左边, 5, 空, 自定义颜色(X方向分量(全局.heroColor[5]),Y方向分量(全局.heroColor[5]),Z方向分量(全局.heroColor[5]),255), 空, 可见和字符串, 始终不可见);
@@ -7774,8 +7777,8 @@
 			事件玩家.rgb_vect = 事件玩家.playerTitleAndColor[1] != 空 ? 首个(事件玩家.playerTitleAndColor[1]) : 全局.rgbList[首个(事件玩家.info_pvar)];
 		END;
 		事件玩家.obstrucVis = 空数组;
-		根据条件跳过(全局.controlRespawnPosition == 空 || 全局.portalPosition != 空,1);
-		小字体信息(事件玩家, 自定义字符串("  通过第一个传送点可以按 {0} 使用存档点功能（单英雄仅限一次）", 按钮(装填)));
+		// 根据条件跳过(全局.controlRespawnPosition == 空 || 全局.portalPosition != 空,1);
+		// 小字体信息(事件玩家, 自定义字符串("  通过第一个传送点可以按 {0} 使用存档点功能（单英雄仅限一次）", 按钮(装填)));
 		If(数组包含(全局.savedIndex, 自定义字符串("{0}", 事件玩家)));
 			小字体信息(事件玩家, 自定义字符串("  你的进度已成功加载"));
 			小字体信息(从数组中移除(所有玩家(所有队伍), 事件玩家), 自定义字符串("  {0} 载入 {1}{2}", 事件玩家, 英雄图标字符串(全局.heroList[事件玩家.heroNumber]), 全局.heroList[事件玩家.heroNumber]));
