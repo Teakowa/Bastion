@@ -2,7 +2,7 @@
 {
 	主程序
 	{
-		描述: "随机事件 2.0 已上线\n!!!使用全英雄逃出生天!!!\n————————————————\n代码【SVMQK】  | 最近更新：25.1203.1\n\nowmod.net/2650\n\n企鹅聊天群：445152554\n\n原作［OW2 PASTION ESCAPE］"
+		描述: "随机事件 2.0 已上线\n!!!使用全英雄逃出生天!!!\n————————————————\n代码【SVMQK】  | 最近更新：25.1205.1\n\nowmod.net/2650\n\n企鹅聊天群：445152554\n\n原作［OW2 PASTION ESCAPE］"
 		模式名称: "躲避堡垒3"
 	}
 
@@ -524,21 +524,27 @@
 		69: categoryRoll
 		70: mov_speed_penalty
 		71: mov_speed_buff
-		72: healing_increase // 增加造成治疗量 healing_received_increase heal_recv_inc
-		73: healing_decrease // 减少造成治疗量 healing_received_decrease heal_recv_dec
-		74: dmg_increase // 增加受到伤害量 damage_received_increase  dmg_recv_inc
-		75: dmg_reduction // 减少受到伤害量 damage_received_decrease  dmg_recv_dec
-		76: healthId
-		77: hack_timer
-		78: targetWeight
-		79: targetSilence
-		80: hudTextId
-		81: heart_steel
-		82: obstrucVis
-		83: sizeHealth
-		84: eventDurationHud
-		85: possess
-		86: empProMax
+		72: mov_speed_penalty_global
+		73: mov_speed_buff_global
+		74: healing_increase // 增加造成治疗量 healing_received_increase heal_recv_inc
+		75: healing_decrease // 减少造成治疗量 healing_received_decrease heal_recv_dec
+		76: healing_increase_global
+		77: healing_decrease_global
+		78: dmg_increase // 增加受到伤害量 damage_received_increase  dmg_recv_inc
+		79: dmg_reduction // 减少受到伤害量 damage_received_decrease  dmg_recv_dec
+		80: dmg_increase_global
+		81: dmg_reduction_global
+		82: healthId
+		83: hack_timer
+		84: targetWeight
+		85: targetSilence
+		86: hudTextId
+		87: heart_steel
+		88: obstrucVis
+		89: sizeHealth
+		90: eventDurationHud
+		91: possess
+		92: empProMax
 }
 
 子程序
@@ -1307,7 +1313,7 @@
 	动作
 	{
 		// 等待(服务器负载 / 100 * 0.032, 无视条件);
-		设置移动速度(事件玩家, 100 - 事件玩家.mov_speed_penalty + 事件玩家.mov_speed_buff);
+		设置移动速度(事件玩家, 100 - 事件玩家.mov_speed_penalty - 事件玩家.mov_speed_penalty_global + 事件玩家.mov_speed_buff + 事件玩家.mov_speed_buff_global);
 	}
 }
 
@@ -1322,7 +1328,7 @@
 	动作
 	{
 		// 等待(服务器负载 / 100 * 0.032, 无视条件);
-		设置受到伤害(事件玩家, 100 + 事件玩家.dmg_increase - 事件玩家.dmg_reduction);
+		设置受到伤害(事件玩家, 100 + 事件玩家.dmg_increase + 事件玩家.dmg_increase_global - 事件玩家.dmg_reduction - 事件玩家.dmg_reduction_global);
 	}
 }
 
@@ -1337,7 +1343,7 @@
 	动作
 	{
 		// 等待(服务器负载 / 100 * 0.032, 无视条件);
-		设置造成治疗(事件玩家, 100 + 事件玩家.healing_increase - 事件玩家.healing_decrease);
+		设置造成治疗(事件玩家, 100 + 事件玩家.healing_increase + 事件玩家.healing_increase_global - 事件玩家.healing_decrease - 事件玩家.healing_decrease_global);
 	}
 }
 
@@ -2342,7 +2348,8 @@
 			数组(24, 10), // 主宰
 
 			// 卖核弹的小女孩 (索引13)
-			数组(13, 9)  // 征服者
+			数组(13, 9),  // 征服者
+			数组(13, 10) // 主宰
 		);
 	}
 }
@@ -2565,6 +2572,10 @@
 			// Cold (索引9)
 			数组(9, 9),   // 征服者
 			数组(9, 10),  // 主宰
+
+			// 雨鸢 (索引24)
+			数组(24, 9),  // 征服者
+			数组(24, 10), // 主宰
 			
 			// 寒霜冰湮 (索引8)
 			数组(8, 9),   // 征服者
@@ -2855,7 +2866,21 @@
 		全局.creditsPosition = 矢量(126.500, 3, -125.37);
 		开始强制重生室(队伍1, 2);
 		全局.mapTitleRelation = 数组(
-			
+			数组(7, 9), // 吾携秋水揽星河-征服者
+            数组(7, 10), // 吾携秋水揽星河-主宰
+
+			// 寒霜冰湮 (索引8)
+			数组(8, 9),   // 征服者
+			数组(8, 10),  // 主宰
+
+			// 卖核弹的小女孩 (索引13)
+			数组(13, 9),  // 征服者
+			数组(13, 10), // 主宰
+
+			// 眼镜小宅 (索引18)
+			数组(18, 9),  // 征服者
+			数组(18, 10) // 主宰
+
 		);
 	}
 }
@@ -4286,8 +4311,8 @@
 	动作
 	{
 		"make default hero list, which includes all 36 heroes available in Season 2"
-		全局.heroList = 数组(英雄(黑影), 英雄(死神), 英雄(莫伊拉), 英雄(雾子), 英雄(西格玛), 英雄(源氏), 英雄(奥丽莎), 英雄(秩序之光), 英雄(温斯顿), 英雄(D.Va), 英雄(猎空), 英雄(黑百合), 英雄(索杰恩),
-			英雄(巴蒂斯特), 英雄(美), 英雄(回声), 英雄(布丽吉塔), 英雄(士兵：76), 英雄(破坏球), 英雄(卡西迪), 英雄(查莉娅), 英雄(卢西奥), 英雄(法老之鹰), 英雄(天使), 英雄(莱因哈特), 英雄(半藏),
+		全局.heroList = 数组(英雄(黑影), 英雄(死神), 英雄(莫伊拉), 英雄(雾子), 英雄(西格玛), 英雄(无漾), 英雄(源氏), 英雄(奥丽莎), 英雄(秩序之光), 英雄(温斯顿), 英雄(D.Va), 英雄(猎空), 英雄(黑百合), 英雄(索杰恩),
+			英雄(巴蒂斯特), 英雄(美), 英雄(回声), 英雄(布丽吉塔), 英雄(士兵：76), 英雄(朱诺), 英雄(破坏球), 英雄(卡西迪), 英雄(查莉娅), 英雄(卢西奥), 英雄(法老之鹰), 英雄(天使), 英雄(莱因哈特), 英雄(半藏),
 			英雄(末日铁拳), 英雄(路霸), 英雄(渣客女王), 英雄(艾什), 英雄(托比昂), 英雄(安娜), 英雄(禅雅塔), 英雄(狂鼠), 英雄(堡垒));
 		"remove all heroes that are not for some reason in Overwatch's list of all the heroes (at the time of making this, Mei is an example because she was removed to be patched)"
 		修改全局变量(heroList, 根据值从数组中移除, 已过滤的数组(全局.heroList, !数组包含(全部英雄, 当前数组元素)));
@@ -4319,7 +4344,7 @@
 
 	动作
 	{
-		IF(单次赋值(全局.debugMode));
+		IF(!单次赋值(全局.debugMode));
 			禁用查看器录制;
 		END;
 		关闭游戏预设完成条件;
@@ -6099,7 +6124,7 @@
 		);
 		创建HUD文本(全局.devPlayer, 空, 自定义字符串("  服务器负载 {0}", 服务器负载平均值), 空, 右边, -2, 空, 颜色(灰色), 空, 可见和字符串,
 			始终不可见);
-		创建HUD文本(所有玩家(所有队伍), 空, 自定义字符串("版本 25.1203.1"), 空, 右边, -3, 空, 颜色(灰色), 空, 可见和字符串, 始终不可见);
+		创建HUD文本(所有玩家(所有队伍), 空, 自定义字符串("版本 25.1205.1"), 空, 右边, -3, 空, 颜色(灰色), 空, 可见和字符串, 始终不可见);
 		创建效果(所有玩家(所有队伍), 有害光环, 颜色(水绿色), 全局.creditsPosition, 随机实数(1, 2), 可见);
 		创建效果(所有玩家(所有队伍), 有害光环, 颜色(天蓝色), 全局.creditsPosition, 随机实数(1, 2), 可见);
 		创建效果(所有玩家(所有队伍), 有害光环, 颜色(白色), 全局.creditsPosition, 随机实数(1, 2), 可见);
@@ -8360,18 +8385,19 @@
 	动作
 	{
 		// 等待直到(按钮被按下(事件玩家, 按钮(互动)), 事件玩家.eventDuration);
-		事件玩家.possess = 空;
+		// 事件玩家.possess = 空;
 		等待(0.032, 当为“假”时中止);
 		事件玩家.possess = 已排序的数组(已过滤的数组(所有存活玩家(队伍1), 当前数组元素.eventType != 0 && 当前数组元素.eventId != 12 && 当前数组元素.isWinner != 真 && 相距距离(事件玩家, 当前数组元素) < 40), 相距距离(事件玩家, 当前数组元素));
 		等待(0.032, 无视条件);
-		小字体信息(事件玩家, 自定义字符串("  {0}", 数量(事件玩家.possess) == 0 ? 自定义字符串("未找到可附身目标") : 自定义字符串("附身目标：{0}", 首个(事件玩家.possess))));
+		小字体信息(事件玩家, 自定义字符串("  {0}", 数量(事件玩家.possess) == 0 ? 自定义字符串("附近未找到可附身目标") : 自定义字符串("附身目标：{0}", 首个(事件玩家.possess))));
 		// 等待(1, 当为“假”时中止);
 		等待(0.032, 无视条件);
-		根据条件跳过(数量(事件玩家.possess) == 0, 6);
+		根据条件跳过(数量(事件玩家.possess) == 0, 7);
 		事件玩家.healing_increase += 25;
 		调用子程序(setPlayerHealing);
 		传送(事件玩家, 所选位置(首个(事件玩家.possess)));
 		绑定玩家(事件玩家, 首个(事件玩家.possess), 矢量(0, 1, -1));
+		小字体信息(首个(事件玩家.possess), 自定义字符串("  你已被 {0} 附身", 事件玩家));
 		设置状态(事件玩家, 空, 相移, 9999);
 		设置状态(事件玩家, 空, 无敌, 9999);
 		// 开始持续治疗(首个(事件玩家.possess), 事件玩家, 最大生命值(事件玩家) * 0.2, 事件玩家.eventDuration);
