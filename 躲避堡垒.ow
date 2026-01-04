@@ -8970,6 +8970,7 @@
 		事件玩家.controlPlayerRespawnPosition = 数组(所选位置(事件玩家), 面朝方向(事件玩家), 所用英雄(事件玩家));
 		等待(5.000, 无视条件);
 		如条件为“真”则循环;
+		事件玩家.controlPlayerRespawnPosition = 空;
 	}
 }
 
