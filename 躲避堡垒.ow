@@ -1786,8 +1786,24 @@
 
 	动作
 	{
-		
-		事件玩家.categoryRoll = 随机整数(0, 100);
+		// 1. 决定事件类型
+		IF(事件玩家.eventForceRoll != 空);
+			// A. 执行强制指定
+			事件玩家.categoryRoll = 事件玩家.eventForceRoll;
+			// B. 处理计数器 (决定是否消耗掉这次强制机会)
+			// 如果计数器 > 0，说明是“赌徒”效果，需要多次生效
+			If(事件玩家.eventForceCount > 0);
+				事件玩家.eventForceCount -= 1;
+				// 注意：这里不重置 eventForceRoll，因为下一次还要用
+				
+			Else;
+				// 如果计数器为空或为0，说明是“单次验牌”或者“赌徒次数用尽”
+				// 消耗掉这次机会 (重置为空)
+				事件玩家.eventForceRoll = 空;
+			End;
+		Else;
+			事件玩家.categoryRoll = 随机整数(0, 100);
+		End;
 		if(事件玩家.categoryRoll <= 40);
             // 增益事件 40%
             事件玩家.eventType = 0;
