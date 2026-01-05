@@ -9684,7 +9684,7 @@
 		事件玩家.hack_timer = 事件玩家.empProMax == 事件玩家 ? 8 : 8 - 相距距离(事件玩家, 事件玩家.empProMax) * 0.08;
 		追踪玩家变量频率(事件玩家, hack_timer, 0, 1, 全部禁用);
 		等待(事件玩家.hack_timer, 无视条件);
-		调用子程序(clearEventEffect);
+		// 调用子程序(clearEventEffect);
 		事件玩家.empProMax = 空;
 	}
 }
