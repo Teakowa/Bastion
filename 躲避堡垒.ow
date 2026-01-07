@@ -579,6 +579,8 @@
 		103: eventForceCount
 		104: eventSize
 		105: eventTargetHP
+		106: overhealthDecay
+		107: storedOverhealth
 		110: tempIndices
 		111: tempMapIndices
 		112: tempMapMatches
@@ -599,6 +601,7 @@
 	10: setEventDuration
 	11: rejecSampling
 	12: resetPlayerCD
+	13: StoreOverhealth
 	14: clearEventEffect
 	15: updatePlayerPhase
 	16: setPlayerSize
@@ -2082,6 +2085,63 @@
 	{
 		根据条件跳过(事件玩家.combatRegen, 1);
 		事件玩家.combatRegen = 真;
+	}
+}
+
+禁用 规则("Decay Overhealth")
+{
+	事件
+	{
+		持续 - 每名玩家;
+		队伍1;
+		全部;
+	}
+
+	条件
+	{
+		事件玩家.overhealthDecay == 真;
+		最大生命值(事件玩家) - 类型的最大生命值(事件玩家, 生命值) - 类型的最大生命值(事件玩家, 护甲) - 类型的最大生命值(事件玩家, 护盾) > 0;
+	}
+
+	动作
+	{
+		等待(4, 当为“真”时重新开始);
+		调用子程序(StoreOverhealth);
+		"While has OH"
+		While(最大生命值(事件玩家) - 类型的最大生命值(事件玩家, 生命值) - 类型的最大生命值(事件玩家, 护甲) - 类型的最大生命值(事件玩家, 护盾) > 0);
+			"If OH gained, delay again"
+			根据条件循环(最大生命值(事件玩家) - 类型的最大生命值(事件玩家, 生命值) - 类型的最大生命值(事件玩家, 护甲) - 类型的最大生命值(事件玩家, 护盾) > 事件玩家.storedOverhealth[0]);
+			"If not full HP, replace current OH with current OH - 1"
+			If(生命值(事件玩家) < 最大生命值(事件玩家));
+				事件玩家.storedOverhealth[1] = 生命值(事件玩家) - 事件玩家.storedOverhealth[0];
+				While(生命值(事件玩家) > 事件玩家.storedOverhealth[1]);
+					设置玩家生命值(事件玩家, 事件玩家.storedOverhealth[1]);
+				End;
+				事件玩家.storedOverhealth[0] -= 10;
+				根据条件中止(事件玩家.storedOverhealth[0] < 1);
+				为玩家添加生命池(事件玩家, 生命值, 事件玩家.storedOverhealth[0], 假, 假);
+			"Else just subtract 1 from health"
+			Else;
+				设置玩家生命值(事件玩家, 生命值(事件玩家) - 10);
+				调用子程序(StoreOverhealth);
+			End;
+			等待(0.120, 无视条件);
+		End;
+		事件玩家.overhealthDecay = 假;
+	}
+}
+
+规则("Store Overhealth")
+{
+	事件
+	{
+		子程序;
+		StoreOverhealth;
+	}
+
+	动作
+	{
+		事件玩家.storedOverhealth[0] = 最大生命值(事件玩家) - 类型的最大生命值(事件玩家, 生命值) - 类型的最大生命值(事件玩家, 护甲) - 类型的最大生命值(事件玩家, 护盾);
 	}
 }
 
