@@ -1952,6 +1952,7 @@
 		事件玩家.targetSilence = 假;
 		事件玩家.knockback = 空;
 		事件玩家.sizeHealth = 1;
+		事件玩家.eventSize = 0;
 		根据条件跳过(事件玩家.isWinner, 1);
 		消除效果(事件玩家.invincibleEffect);
 		// 事件玩家.eventEffect = 空;
@@ -1960,6 +1961,9 @@
 		事件玩家.hudTextId = 空;
 		事件玩家.target = 空;
 		事件玩家.possess = 空;
+		停止调整玩家大小(事件玩家);
+		停止调整障碍大小(事件玩家);
+		停止修改英雄语音(事件玩家);
 		调用子程序(updatePlayerStats);
 		调用子程序(clearEventEffect);
 		小字体信息(事件玩家, 自定义字符串("  {0} 事件已结束", 技能图标字符串(英雄(莫伊拉), 按钮(技能2))));
