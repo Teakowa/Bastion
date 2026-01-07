@@ -1891,7 +1891,7 @@
 			// 事件玩家.eventId = 随机整数(0, 100) < 33 ? 数组随机取值(全局.buffEventId) : 数组随机取值(从数组中移除(全局.buffEventId, 事件玩家.eventLastId));
 			事件玩家.eventName = 首个(全局.buffEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.buffEvent[事件玩家.eventId][1];
-			事件玩家.eventDuration = 最后(全局.buffEvent[事件玩家.eventId]);
+			事件玩家.eventDuration = 全局.buffEvent[事件玩家.eventId][2];
 			根据条件跳过(事件玩家.eventId == 0, 1);
 			事件玩家.eventCount[0] += 1;
 			事件玩家.eventLucky = 事件玩家.eventLucky > 0 ? 事件玩家.eventLucky + 1 : 1;
@@ -1902,7 +1902,7 @@
 			调用子程序(rejecSampling);
 			事件玩家.eventName = 首个(全局.debuffEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.debuffEvent[事件玩家.eventId][1];
-			事件玩家.eventDuration = 最后(全局.debuffEvent[事件玩家.eventId]);
+			事件玩家.eventDuration = 全局.debuffEvent[事件玩家.eventId][2];
 			事件玩家.eventCount[1] += 1;
 			事件玩家.eventLucky = 事件玩家.eventLucky < 0 ? 事件玩家.eventLucky - 1 : -1;
 		else;
@@ -1912,7 +1912,7 @@
 			调用子程序(rejecSampling);
 			事件玩家.eventName = 首个(全局.mechEvent[事件玩家.eventId]);
 			事件玩家.eventDesc = 全局.mechEvent[事件玩家.eventId][1];
-			事件玩家.eventDuration = 最后(全局.mechEvent[事件玩家.eventId]);
+			事件玩家.eventDuration = 全局.mechEvent[事件玩家.eventId][2];
 			事件玩家.eventCount[2] += 1;
 		end;
 		等待(服务器负载 / 100 * 0.032, 无视条件);
