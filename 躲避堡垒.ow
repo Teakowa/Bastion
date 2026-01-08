@@ -7987,13 +7987,19 @@
 
 	动作
 	{
-		根据条件中止(全局.targetPlayer == 空 || 数组包含(全局.devPlayer, 全局.targetPlayer));
+		// 预检查：如果目标为空，或目标是开发人员，直接中止
+        根据条件中止(全局.targetPlayer == 空 || 数组包含(全局.devPlayer, 全局.targetPlayer));
+
 		小字体信息(添加至数组(全局.devPlayer, 主机玩家), 自定义字符串("  {0}  房主操作： 长按 {1} 移除 {2}", 图标字符串(箭矢), 输入绑定字符串(按钮(装填)), 全局.targetPlayer));
+
 		等待(2, 当为“假”时中止);
 		小字体信息(添加至数组(全局.devPlayer, 主机玩家), 自定义字符串("  {0}  房主操作： 即将移除玩家 {1}", 图标字符串(箭矢), 全局.targetPlayer));
 		等待(1, 当为“假”时中止);
 		小字体信息(添加至数组(全局.devPlayer, 主机玩家), 自定义字符串("  {0}  房主操作： 已移除玩家 {1}", 图标字符串(箭矢), 全局.targetPlayer));
-		修改全局变量(blackList, 添加至数组, 全局.targetPlayer);
+
+		根据条件跳过(数组包含(全局.blackList, 自定义字符串("{0}", 全局.targetPlayer)), 1);
+		修改全局变量(blackList, 添加至数组, 自定义字符串("{0}", 全局.targetPlayer));
+
 		移除玩家(全局.targetPlayer);
 		全局.targetPlayerIndex = 0;
 		全局.targetPlayer = 空;
@@ -8055,7 +8061,8 @@
 		小字体信息(全局.devPlayer, 自定义字符串("  {0}  开发者模式： 即将移除玩家 {1}", 图标字符串(箭矢), 全局.targetPlayer));
 		等待(1, 当为“假”时中止);
 		小字体信息(全局.devPlayer, 自定义字符串("  {0}  开发者模式： 已移除玩家 {1}", 图标字符串(箭矢), 全局.targetPlayer));
-		修改全局变量(blackList, 添加至数组, 全局.targetPlayer);
+		根据条件跳过(数组包含(全局.blackList, 自定义字符串("{0}", 全局.targetPlayer)), 1);
+		修改全局变量(blackList, 添加至数组, 自定义字符串("{0}", 全局.targetPlayer));
 		移除玩家(全局.targetPlayer);
 		全局.targetPlayerIndex = 0;
 		全局.targetPlayer = 空;
