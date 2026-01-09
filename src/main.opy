@@ -411,7 +411,6 @@ subroutine createBastionBot 17
 #!extension energyExplosionEffects
 #!extension spawnMoreDummyBots
 
-
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
@@ -432,9 +431,9 @@ rule "在模式描述中保留原作者署名与原模式代码的前提下，�
 
 #!include "title/title-cn.opy"
 
-#!include "event/check-flag.opy"
+#!include "events/check-flag.opy"
 
-#!include "event/events.opy"
+#!include "events/init.opy"
 
 #!include "utilities/setPlayerEvent.opy"
 
@@ -452,22 +451,169 @@ rule "在模式描述中保留原作者署名与原模式代码的前提下，�
 
 #!include "utilities/setPlayerTitle.opy"
 
-#!include "event/get_player_event.opy"
+#!include "utilities/anticrash.opy"
+
+#!include "events/get_player_event.opy"
 
 # Maps
-
 #!include "map/setup_all_map.opy"
 
-rule "bastion init position, unkillable status, and damage dealt scaling with difficulty setting":
+#!include "bastion/init.opy"
+
+#!include "utilities/playerRegen.opy"
+
+rule "players pick up speed while not targeted for 3 seconds":
     @Event eachPlayer
-    @Team 2
-    @Hero bastion
-    @Condition eventPlayer.isAlive() == true
-    @Condition eventPlayer.hasSpawned() == true
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent) == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
     
-    wait(0.25)
-    eventPlayer.setDamageDealt(100 + 50 * difficulty)
-    eventPlayer.teleport(bastionPosition[eventPlayer.getSlot()])
-    if not eventPlayer.hasStatus(Status.UNKILLABLE):
-        eventPlayer.setStatusEffect(null, Status.UNKILLABLE, 99999)
-        eventPlayer.setKnockbackReceived(1)
+    wait(3, Wait.ABORT_WHEN_FALSE)
+    eventPlayer.setMoveSpeed(160)
+    waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
+    eventPlayer.setMoveSpeed(100)
+
+
+rule "player deaths are counted manually rather than relying on in-game statistics":
+    @Event playerDied
+    @Team 1
+    @Condition eventPlayer.isWinner == false
+    
+    wait(0.5 * getServerLoad() / 100)
+    eventPlayer.runDeathCount++
+    if eventPlayer in savedIndex:
+        wait(0.032)
+        savedDeaths[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.runDeathCount
+    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
+
+
+rule "when a mercy might rez, respawn time is increased":
+    @Event playerDied
+    @Team 1
+    @Condition isHeroBeingPlayed(Hero.MERCY, Team.1) == true
+    @Condition eventPlayer.controlPlayerRespawnPosition == null
+    
+    if evalOnce(dlcVishkarEvent) and eventPlayer.eventType == 0 and eventPlayer.eventId == 8:
+        return
+    if any([distance(eventPlayer.getPosition(), player.getPosition()) < 40 and player.isAlive() and player.getAbilityCooldown(Button.ABILITY_2) < 8 for player in getPlayersOnHero(Hero.MERCY, Team.1)]):
+        bigMessage(eventPlayer, "附近有 天使 等待复活...")
+        eventPlayer.disableRespawn()
+        wait(4)
+        eventPlayer.enableRespawn()
+
+#!include "heros/all_hero.opy"
+
+#!include "utilities/hashtag.opy"
+
+rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
+    @Event eachPlayer
+    @Team 1
+    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isInSpawnRoom() == true
+    @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
+    
+    eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
+    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
+    wait(0.032)
+
+
+rule "when a player reaches the control jump point, they move on to the next map":
+    @Event eachPlayer
+    @Team 1
+    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isInSpawnRoom() != true
+    @Condition eventPlayer.isMoving() == true
+    #@Condition eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y
+    #@Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4
+    
+    wait(0.032, Wait.ABORT_WHEN_FALSE)
+    wait(0.2)
+    if all([eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y, distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
+        if controlJumpPosition[eventPlayer.controlJumpIndex] == null:
+            goto lbl_0
+        eventPlayer.controlJumpIndex++
+        wait()
+        if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]):
+            goto lbl_1
+        eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 0.5)
+        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 0.5)
+        lbl_1:
+        eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
+        eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
+        wait(2.16)
+    lbl_0:
+    loop()
+
+rule "when a player reaches the end, they move on to the next hero or win if they're bastion":
+    @Event eachPlayer
+    @Team 1
+    @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.getPosition().y >= endPosition.y
+    @Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
+    
+    eventPlayer.respawn()
+    wait(0.032)
+    if controlRespawnPosition == null:
+        goto lbl_0
+    eventPlayer.controlJumpIndex = 0
+    eventPlayer.teleport(controlRespawnPosition[0])
+    wait(0.032)
+    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
+    lbl_0:
+    if eventPlayer.heroNumber + 1 < len(heroList) and eventPlayer.getHero() == heroList[eventPlayer.heroNumber]:
+        progressHero()
+    elif eventPlayer.getHero() == heroList.last() and not eventPlayer.isWinner:
+        eventPlayer.isWinner = true
+        eventPlayer.winnerTime = evalOnce(getTotalTimeElapsed()) - eventPlayer.joinTime
+        if any([eventPlayer.dmgReduc, eventPlayer.invincible, eventPlayer.isPortalEnabled, eventPlayer.isAirWalkEnabled]):
+            goto lbl_1
+        bigMessage(getPlayers(Team.1), "祝贺 {0} 以 {1} 耗时 {2} 通关!".format(eventPlayer, "{0} 次阵亡 & {1} 次跳过".format(eventPlayer.runDeathCount, eventPlayer.skipCount), "{0}{1}{2}".format("{0}小时".format(floor(eventPlayer.winnerTime / 3600)) if eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 3600 else "", "{0}分".format(floor(eventPlayer.winnerTime % 3600 / 60)) if eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 60 else "", "{0}秒".format(floor(eventPlayer.winnerTime % 60)) if eventPlayer.winnerTime != null else "0秒")))
+        lbl_1:
+        smallMessage(eventPlayer, "  {0} 你已通关，可以加入聊天群 发送截图 获取通关称号".format(iconString(Icon.CHECKMARK)))
+        savePlayerData()
+
+
+rule "winners earn their ult once per minute":
+    @Event eachPlayer
+    @Team 1
+    @Condition eventPlayer.isWinner != false
+    @Condition eventPlayer.getUltCharge() < 100
+    @Condition eventPlayer.isUsingUltimate() == false
+    
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 5)
+    wait(3)
+    if ruleCondition:
+        loop()
+
+rule "update scoreboard every few seconds":
+    @Condition getPlayers(Team.1)[0] != false
+    @Disabled
+    
+    scoreboardArray = sorted([player for player in getPlayers(Team.1) if not player.isWinner], lambda i: 0 - i.heroNumber)
+    firstPlace = scoreboardArray[0]
+    secondPlace = scoreboardArray[1]
+    thirdPlace = scoreboardArray[2]
+    wait(getAverageServerLoad() / 50)
+    if ruleCondition:
+        loop()
+
+#!include "effects/init.opy"
+#!include "effects/nano.opy"
+#!include "effects/player.opy"
+
+#!include "player/status.opy"
+#!include "player/init.opy"
+#!include "title/init.opy"
+
+
+rule "auto reboot":
+    @Condition getTotalTimeElapsed() >= rebootTime - 60
+    
+    bigMessage(getAllPlayers(), "游戏将在 1 分钟后自动重开")
+    wait(60)
+    restartMatch()
+
+#!include "utilities/devTool.opy"
+
+#!include "events/effect.opy"

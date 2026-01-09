@@ -1,0 +1,546 @@
+#!mainFile "../main.opy"
+
+#Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
+#!optimizeStrict
+
+
+rule "dev menu in game":
+    @Event eachPlayer
+    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
+    @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
+    @Condition eventPlayer.isHoldingButton(Button.MELEE) == true
+    #@Condition (eventPlayer.getHero() == Hero.LIFEWEAVER or eventPlayer.getHero() == Hero.SYMMETRA) == false
+    
+    if (eventPlayer.isHoldingButton(Button.INTERACT) and eventPlayer.isHoldingButton(Button.CROUCH)) == true:
+        return
+    if eventPlayer.menu != 0:
+        goto lbl_0
+    eventPlayer.disallowButton(Button.PRIMARY_FIRE)
+    eventPlayer.disallowButton(Button.SECONDARY_FIRE)
+    eventPlayer.disallowButton(Button.ABILITY_1)
+    eventPlayer.disallowButton(Button.ABILITY_2)
+    eventPlayer.disallowButton(Button.ULTIMATE)
+    eventPlayer.disallowButton(Button.JUMP)
+    eventPlayer.disallowButton(Button.CROUCH)
+    eventPlayer.disallowButton(Button.MELEE)
+    eventPlayer.disallowButton(Button.RELOAD)
+    eventPlayer.menu = 1
+    return
+    lbl_0:
+    eventPlayer.menu = 0
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    eventPlayer.allowButton(Button.PRIMARY_FIRE)
+    eventPlayer.allowButton(Button.SECONDARY_FIRE)
+    eventPlayer.allowButton(Button.ABILITY_1)
+    eventPlayer.allowButton(Button.ABILITY_2)
+    eventPlayer.allowButton(Button.ULTIMATE)
+    eventPlayer.allowButton(Button.JUMP)
+    eventPlayer.allowButton(Button.MELEE)
+    eventPlayer.allowButton(Button.RELOAD)
+    eventPlayer.allowButton(Button.CROUCH)
+
+
+rule "dev menu disable":
+    @Event eachPlayer
+    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
+    @Condition eventPlayer.menu == 0
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    eventPlayer.allowButton(Button.PRIMARY_FIRE)
+    eventPlayer.allowButton(Button.SECONDARY_FIRE)
+    eventPlayer.allowButton(Button.ABILITY_1)
+    eventPlayer.allowButton(Button.ABILITY_2)
+    eventPlayer.allowButton(Button.ULTIMATE)
+    eventPlayer.allowButton(Button.JUMP)
+    eventPlayer.allowButton(Button.MELEE)
+    eventPlayer.allowButton(Button.RELOAD)
+    eventPlayer.allowButton(Button.CROUCH)
+
+
+rule "page down in dev menu":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
+    @Condition eventPlayer.menu != 0
+    
+    if eventPlayer.menu >= 3:
+        goto lbl_0
+    eventPlayer.menu++
+    return
+    lbl_0:
+    eventPlayer.menu = 1
+
+
+rule "menu mode settings display":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 1
+    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    hudHeader(eventPlayer, "{0}".format("开发者模式" if eventPlayer.isDev else "游戏内面板"), HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+    if eventPlayer.isDev:
+        hudSubheader(eventPlayer, "{0}    自动重开：延长5分钟    \n{1}".format(inputBindingString(Button.PRIMARY_FIRE), "{0}    自动重开：缩短5分钟    \n{1}".format(inputBindingString(Button.SECONDARY_FIRE), "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    增加难度    \n{1}".format(inputBindingString(Button.ABILITY_1), "{0}    降低难度    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    第三人称视角    {1}\n{2}".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X", "{0}    下一页    ".format(inputBindingString(Button.CROUCH))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    elif hostPlayer == eventPlayer:
+        hudSubheader(eventPlayer, "{0}    自动重开：延长5分钟    \n{1}".format(inputBindingString(Button.PRIMARY_FIRE), "{0}    自动重开：缩短5分钟    \n{1}".format(inputBindingString(Button.SECONDARY_FIRE), "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    标记玩家    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else "空", "{0}    移除标记玩家并临时拉黑    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    第三人称视角    {1}\n".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X"))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    else:
+        hudSubheader(eventPlayer, "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    第三人称视角    {1}\n".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X"))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+
+rule "menu dev control display":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    hudHeader(eventPlayer, "开发者模式", HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+    hudSubheader(eventPlayer, "{0}    Debug 信息    {1}\n{2}".format(inputBindingString(Button.PRIMARY_FIRE), "O" if debugInfo else "X", "{0}    解锁全英雄    {1}\n{2}".format(inputBindingString(Button.SECONDARY_FIRE), "O" if eventPlayer.isWinner == true else "X", "{0}    立即重开    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    标记玩家    {1}\n{2}".format(inputBindingString(Button.JUMP), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else "空", "{0}    移除标记玩家    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    传送到标记玩家    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    受到伤害降低    {1}\n{2}".format(inputBindingString(Button.MELEE), "O" if eventPlayer.dmgReduc == true else "X", "{0}    无敌    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), "O" if eventPlayer.invincible == true else "X", "{0}    下一页    ".format(inputBindingString(Button.CROUCH)))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+
+rule "menu dev devlop display":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 3
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    hudHeader(eventPlayer, "开发者面板", HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+    hudSubheader(eventPlayer, "{0}    浮空    {1}\n{2}".format(inputBindingString(Button.PRIMARY_FIRE), "O" if eventPlayer.isAirWalkEnabled else "X", "{0}    穿墙    {1}\n{2}".format(inputBindingString(Button.SECONDARY_FIRE), "O" if eventPlayer.isPortalEnabled == true else "X", "{0}    选择目标点索引    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), eventPlayer.controlCenterIndex, "{0}    传送到目标点    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    下一页    ".format(inputBindingString(Button.CROUCH)))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+
+rule "3rd camera toggle":
+    @Event eachPlayer
+    #@Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
+    @Condition eventPlayer.menu == 1
+    
+    wait(getServerLoad() / 100 * 0.032)
+    setThirdPerson()
+
+
+rule "dev debug mode toggle":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true
+    @Condition eventPlayer.menu == 2
+    
+    debugInfo = not debugInfo
+    wait(getServerLoad() / 100 * 0.032)
+    devPlayer.debugInfo = debugInfo
+
+
+rule "dev set difficulty":
+    @Event eachPlayer
+    @Team 1
+    @Condition difficulty < 5
+    @Condition eventPlayer.menu == 1
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    difficulty++
+    setDifficulty()
+    wait(getServerLoad() / 100 * 0.032)
+    smallMessage(devPlayer, "  {0}  开发者模式： 已将难度设置为 {1}({2})".format(iconString(Icon.BOLT), difficultyText[0], difficulty))
+
+
+rule "dev set difficulty":
+    @Event eachPlayer
+    @Condition difficulty > 0
+    @Condition eventPlayer.menu == 1
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    
+    difficulty--
+    setDifficulty()
+    wait(getServerLoad() / 100 * 0.032)
+    smallMessage(devPlayer, "  {0}  开发者模式： 已将难度设置为 {1}({2})".format(iconString(Icon.BOLT), difficultyText[0], difficulty))
+
+
+rule "dev add auto reboot time":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 1
+    @Condition (eventPlayer.isDev or hostPlayer == eventPlayer) == true
+    @Condition eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true
+    
+    if rebootTime + 300 <= 15900:
+        rebootTime += 300
+        if eventPlayer.isDev:
+            smallMessage(devPlayer, "  {0}  开发者模式： 已将自动重开时间延长 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
+        else:
+            smallMessage(getAllPlayers(), "  {0}  模式调整： 房主已将自动重开时间延长 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
+    else:
+        smallMessage(eventPlayer, "  {0}  已达到最大上限".format(iconString(Icon.WARNING)))
+
+
+rule "dev remove auto reboot time":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 1
+    @Condition (eventPlayer.isDev or hostPlayer == eventPlayer) == true
+    @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true
+    
+    #wait(0.16, Wait.ABORT_WHEN_FALSE)
+    if rebootTime - 300 >= 300:
+        rebootTime -= 300
+        if eventPlayer.isDev:
+            smallMessage(devPlayer, "  {0}  开发者模式： 已将自动重开时间缩短 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
+        else:
+            smallMessage(getAllPlayers(), "  {0}  模式调整： 房主已将自动重开时间缩短 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
+
+
+rule "player title menu - next":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 1
+    #@Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) == true
+    @Condition len(eventPlayer.playerTitles) > 0
+    
+    #wait(0.16, Wait.ABORT_WHEN_FALSE)
+    if eventPlayer.playerTitleIndex == null:
+        eventPlayer.playerTitleIndex = 0
+    wait(getServerLoad() / 100 * 0.032)
+    eventPlayer.playerTitleIndex = (eventPlayer.playerTitleIndex + 1) % len(eventPlayer.playerTitles)
+    wait(getServerLoad() / 100 * 0.032)
+    eventPlayer.playerTitleAndColor = [eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0], eventPlayer.playerTitles[eventPlayer.playerTitleIndex].last()]
+    wait()
+    if eventPlayer.playerTitleAndColor[1] == null and len(eventPlayer.playerTitleAndColor[1]) == 0:
+        stopChasingVariable(eventPlayer.rgb_vect)
+        eventPlayer.info_pvar = 0
+        eventPlayer.rgb_vect = rgbList[eventPlayer.info_pvar[0]]
+        eventPlayer.rgb_activated = true
+    elif eventPlayer.playerTitleAndColor[1] != null and len(eventPlayer.playerTitleAndColor[1]) >= 1:
+        stopChasingVariable(eventPlayer.rgb_vect)
+        eventPlayer.info_pvar = 0
+        eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1][0]
+        eventPlayer.rgb_activated = true
+    else:
+        eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1]
+        eventPlayer.rgb_activated = false
+    smallMessage(eventPlayer, "  {0}  已将称号更改为 {1}".format(iconString(Icon.BOLT), eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0]))
+    wait(getServerLoad() / 100 * 0.032)
+
+
+rule "player title menu - previous":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 1
+    #@Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.ULTIMATE) == true
+    @Condition len(eventPlayer.playerTitles) > 0
+    
+    #wait(0.16, Wait.ABORT_WHEN_FALSE)
+    if eventPlayer.playerTitleIndex == null or eventPlayer.playerTitleIndex <= 0:
+        eventPlayer.playerTitleIndex = len(eventPlayer.playerTitles)
+    wait(getServerLoad() / 100 * 0.032)
+    eventPlayer.playerTitleIndex--
+    wait(getServerLoad() / 100 * 0.032)
+    eventPlayer.playerTitleAndColor = [eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0], eventPlayer.playerTitles[eventPlayer.playerTitleIndex].last()]
+    wait()
+    if eventPlayer.playerTitleAndColor[1] == null and len(eventPlayer.playerTitleAndColor[1]) == 0:
+        stopChasingVariable(eventPlayer.rgb_vect)
+        eventPlayer.info_pvar = 0
+        eventPlayer.rgb_vect = rgbList[eventPlayer.info_pvar[0]]
+        eventPlayer.rgb_activated = true
+    elif eventPlayer.playerTitleAndColor[1] != null and len(eventPlayer.playerTitleAndColor[1]) >= 1:
+        stopChasingVariable(eventPlayer.rgb_vect)
+        eventPlayer.info_pvar = 0
+        eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1][0]
+        eventPlayer.rgb_activated = true
+    else:
+        eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1]
+        eventPlayer.rgb_activated = false
+    smallMessage(eventPlayer, "  {0}  已将称号更改为 {1}".format(iconString(Icon.BOLT), eventPlayer.playerTitleAndColor[0]))
+    wait(getServerLoad() / 100 * 0.032)
+
+
+rule "dev reboot":
+    @Event eachPlayer
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    
+    smallMessage(devPlayer, "  {0}  开发者模式： 长按 {1} 进行重启".format(iconString(Icon.BOLT), inputBindingString(Button.RELOAD)))
+    wait(2, Wait.ABORT_WHEN_FALSE)
+    smallMessage(devPlayer, "  {0}  开发者模式： 正在重启...".format(iconString(Icon.BOLT)))
+    wait(2, Wait.ABORT_WHEN_FALSE)
+    restartMatch()
+
+
+rule "host set target player":
+    @Event eachPlayer
+    @Condition eventPlayer == hostPlayer
+    @Condition eventPlayer.menu == 1
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    if targetPlayerIndex == null or targetPlayerIndex >= len(sorted(getPlayers(Team.1))):
+        targetPlayerIndex = 0
+        wait(getServerLoad() / 100 * 0.032)
+    wait(getServerLoad() / 100 * 0.032)
+    targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[targetPlayerIndex]
+    targetPlayerIndex++
+    wait(getServerLoad() / 100 * 0.032)
+    smallMessage(devPlayer.concat(hostPlayer), "  {0}  没有可标记的玩家".format(iconString(Icon.BOLT)) if targetPlayer == null else "  {0}  房主操作： 已标记 {1}（{2}）".format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
+
+
+rule "host remove target player":
+    @Event eachPlayer
+    @Condition eventPlayer == hostPlayer
+    @Condition eventPlayer.menu == 1
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    
+    if targetPlayer == null or targetPlayer in devPlayer:
+        return
+    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 长按 {1} 移除 {2}".format(iconString(Icon.BOLT), inputBindingString(Button.RELOAD), targetPlayer))
+    wait(2, Wait.ABORT_WHEN_FALSE)
+    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 即将移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    wait(1, Wait.ABORT_WHEN_FALSE)
+    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 已移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    if "{0}".format(targetPlayer) in blackList:
+        goto lbl_0
+    blackList.append("{0}".format(targetPlayer))
+    lbl_0:
+    targetPlayer.removeFromGame()
+    targetPlayerIndex = 0
+    targetPlayer = null
+
+
+rule "dev set target player":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
+    
+    if targetPlayerIndex == null or targetPlayerIndex >= len(sorted(getPlayers(Team.1))):
+        targetPlayerIndex = 0
+        wait(getServerLoad() / 100 * 0.032)
+    wait(getServerLoad() / 100 * 0.032)
+    targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[targetPlayerIndex]
+    targetPlayerIndex++
+    wait(getServerLoad() / 100 * 0.032)
+    smallMessage(devPlayer, "  {0}  没有可标记的玩家".format(iconString(Icon.BOLT)) if targetPlayer == null else "  {0}  开发者模式： 已标记 {1}（{2}）".format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
+
+
+rule "dev remove target player":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.ULTIMATE) == true
+    
+    if targetPlayer == null or targetPlayer in devPlayer:
+        return
+    smallMessage(devPlayer, "  {0}  开发者模式： 长按 {1} 移除 {2}".format(iconString(Icon.BOLT), inputBindingString(Button.ULTIMATE), targetPlayer))
+    wait(2, Wait.ABORT_WHEN_FALSE)
+    smallMessage(devPlayer, "  {0}  开发者模式： 即将移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    wait(1, Wait.ABORT_WHEN_FALSE)
+    smallMessage(devPlayer, "  {0}  开发者模式： 已移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    if "{0}".format(targetPlayer) in blackList:
+        goto lbl_0
+    blackList.append("{0}".format(targetPlayer))
+    lbl_0:
+    targetPlayer.removeFromGame()
+    targetPlayerIndex = 0
+    targetPlayer = null
+
+
+rule "dev set dmg reduction":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.MELEE) == true
+    
+    eventPlayer.dmgReduc = not eventPlayer.dmgReduc
+    wait(getServerLoad() / 100 * 0.032)
+    if eventPlayer.dmgReduc:
+        eventPlayer.setDamageReceived(1)
+        createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+        eventPlayer.nanoEffect = getLastCreatedEntity()
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已将伤害减免设置为 -{1}%".format(iconString(Icon.BOLT), 99))
+    else:
+        eventPlayer.setDamageReceived(100)
+        destroyEffect(eventPlayer.nanoEffect)
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已取消伤害减免".format(iconString(Icon.BOLT)))
+
+
+rule "dev set invincible":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    eventPlayer.invincible = not eventPlayer.invincible
+    wait(getServerLoad() / 100 * 0.032)
+    if eventPlayer.invincible:
+        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 999999986991104)
+        createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+        eventPlayer.invincibleEffect = getLastCreatedEntity()
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已设置为无敌状态".format(iconString(Icon.BOLT)))
+    else:
+        eventPlayer.clearStatusEffect(Status.INVINCIBLE)
+        destroyEffect(eventPlayer.invincibleEffect)
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已取消无敌状态".format(iconString(Icon.BOLT)))
+
+
+rule "dev air walk toggle":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true
+    @Condition eventPlayer.menu == 3
+    
+    if eventPlayer.isAirWalkEnabled == true:
+        goto lbl_0
+    eventPlayer.setGravity(0)
+    eventPlayer.isAirWalkEnabled = true
+    smallMessage(eventPlayer, "  {0}  开发者模式： 已开启浮空".format(iconString(Icon.BOLT)))
+    return
+    lbl_0:
+    eventPlayer.setGravity(100)
+    eventPlayer.isAirWalkEnabled = false
+    smallMessage(eventPlayer, "  {0}  开发者模式： 已关闭浮空".format(iconString(Icon.BOLT)))
+
+
+rule "dev air lock":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.isAirWalkEnabled == true
+    @Condition eventPlayer.getThrottle() == vect(0, 0, 0)
+    @Condition eventPlayer.isHoldingButton(Button.JUMP) == false
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH) == false
+    
+    eventPlayer.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    eventPlayer.applyImpulse(eventPlayer.getVelocity() * -1, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+
+
+rule "dev portal toggle":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 3
+    @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true
+    
+    if eventPlayer.isPortalEnabled == true:
+        goto lbl_0
+    eventPlayer.isPortalEnabled = true
+    smallMessage(eventPlayer, "  {0}  开发者模式： 已开启穿墙".format(iconString(Icon.BOLT)))
+    return
+    lbl_0:
+    eventPlayer.isPortalEnabled = false
+    smallMessage(eventPlayer, "  {0}  开发者模式： 已关闭穿墙".format(iconString(Icon.BOLT)))
+
+
+rule "dev R portal":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 0
+    @Condition eventPlayer.isPortalEnabled == true
+    @Condition eventPlayer.isAlive() == true
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    @Condition eventPlayer.isCommunicatingEmote() == false
+    @Condition (getCurrentMap() == Map.HORIZON_LUNAR_COLONY and distance(eventPlayer, vect(-9.38, 8.74, 2.05)) < 1) == false
+    
+    eventPlayer.setGravity(abs(0))
+    if eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true:
+        goto lbl_0
+    eventPlayer.teleport(eventPlayer.getPosition() + eventPlayer.getFacingDirection() * 4)
+    goto lbl_1
+    lbl_0:
+    eventPlayer.teleport(eventPlayer.getPosition() + eventPlayer.getFacingDirection() * 20)
+    lbl_1:
+    wait(0.16)
+    if ruleCondition:
+        loop()
+    if eventPlayer.isAirWalkEnabled == true:
+        return
+    eventPlayer.setGravity(abs(100))
+
+
+rule "dev pick control center Position":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 3
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    if controlCenterPosition == null:
+        smallMessage(eventPlayer, "  {0}  开发者模式： 目标点坐标为空".format(iconString(Icon.BOLT)))
+        return
+    else:
+        if eventPlayer.controlCenterIndex >= 2:
+            goto lbl_0
+        eventPlayer.controlCenterIndex++
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已选择目标点坐标：{1}".format(iconString(Icon.BOLT), controlCenterPosition[eventPlayer.controlCenterIndex]))
+        return
+        lbl_0:
+        eventPlayer.controlCenterIndex = 0
+        smallMessage(eventPlayer, "  {0}  开发者模式： 已选择目标点坐标：{1}".format(iconString(Icon.BOLT), controlCenterPosition[eventPlayer.controlCenterIndex]))
+
+
+rule "dev to control center Position":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 3
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) == true
+    @Condition controlCenterPosition != null
+    
+    eventPlayer.teleport(nearestWalkablePosition(controlCenterPosition[eventPlayer.controlCenterIndex]))
+
+
+rule "dev to Target Player Position":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) == true
+    @Condition targetPlayer != null
+    
+    eventPlayer.teleport(nearestWalkablePosition(targetPlayer.getPosition() - vect(0, 0, -1)))
+    eventPlayer.setFacing(targetPlayer.getFacingDirection(), Relativity.TO_WORLD)
+
+
+rule "Dev to release heros":
+    @Event eachPlayer
+    @Condition evalOnce("{0}".format(eventPlayer) in devList) != false
+    @Condition eventPlayer.menu == 2
+    @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true
+    @Condition eventPlayer.isWinner == false
+    
+    if eventPlayer.heroNumber < len(heroList) - 1:
+        eventPlayer.heroNumber = len(heroList) - 1
+        wait(getServerLoad() / 100 * 0.5)
+        eventPlayer.setAllowedHeroes(heroList.slice(0, eventPlayer.heroNumber + 1))
+        wait(getServerLoad() / 100 * 0.5)
+        smallMessage(eventPlayer, "  {0} 开发者模式：已解锁全英雄".format(iconString(Icon.BOLT)))
+        #savePlayerData()
+    elif eventPlayer.isWinner == false:
+        eventPlayer.isWinner = true
+        wait(getServerLoad() / 100 * 0.5)
+        smallMessage(eventPlayer, "  {0} 开发者模式：已通关".format(iconString(Icon.BOLT)))
+
+
+rule "[debug.opy]: player debug (Top Right)":
+    @Event eachPlayer
+    @Condition evalOnce(eventPlayer.debugInfo) == true
+    @Condition evalOnce("{0}".format(eventPlayer) in devList) != false
+    
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "难度 = {0}".format(difficultyText[0]), HudPosition.RIGHT, 10, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前位置 = {0}".format(eventPlayer.getPosition()), HudPosition.RIGHT, 26, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前速度 = {0}".format(eventPlayer.getSpeed()), HudPosition.RIGHT, 27, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前速率 = {0}".format(eventPlayer.getVelocity()), HudPosition.RIGHT, 28, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前地图 = {0}/{1}".format(__currentMap___, getCurrentMap()), HudPosition.RIGHT, 29, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "重生室位置 = {0}".format(getSpawnPoints(Team.1).getPosition()), HudPosition.RIGHT, 30, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    #hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "重生室距离 X = {0}/{1}/{2}".format(eventPlayer.getPosition().x, controlRespawnPosition[0].x, distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[0].y, 0, 0))), HudPosition.RIGHT, 31, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    #hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "重生室距离 Y = {0}/{1}/{2}".format(eventPlayer.getPosition().y, controlRespawnPosition[0].y, distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[0].y, 0))), HudPosition.RIGHT, 32, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    #hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "重生室距离 Z = {0}/{1}/{2}".format(eventPlayer.getPosition().z, controlRespawnPosition[0].z, distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[0].z))), HudPosition.RIGHT, 33, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前事件 = {0}/{1}".format(localPlayer.eventName, localPlayer.eventId), HudPosition.RIGHT, 34, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "上一个事件 = {0}/{1}".format(buffEvent[localPlayer.eventLastId][0], localPlayer.eventLastId), HudPosition.RIGHT, 34, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "重生室索引 = {0}".format(localPlayer.controlJumpIndex), HudPosition.RIGHT, 34, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+
+

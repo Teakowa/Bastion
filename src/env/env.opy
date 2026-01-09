@@ -3,6 +3,7 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+macro MAX_TIME = 999999986991104.000
 
 rule "Initialize global variables":
     dlcVishkarEvent = createWorkshopSettingBool("2. DLC 扩展内容", "随机事件扩展包", true, 5)
