@@ -35,6 +35,7 @@ settings {
         },
         "general": {
             "enablePerks": true,
+            "perkGeneration%": 500,
             "respawnTime%": 10,
             "healthPackRespawnTime%": 20,
             "enableEnemyHealthBars": false,
