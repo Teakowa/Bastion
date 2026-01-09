@@ -14,4 +14,3 @@ rule "map - hollywood":
     startForcingSpawn(Team.1, 2)
     __currentMapText___ = "好莱坞"
     __currentMapPioneerText___ = __currentMapText___
-    mapTitleRelation = [[7, 9], [7, 10], [8, 9], [8, 10], [10, 9], [10, 10], [18, 9], [18, 10], [19, 9], [19, 10], [24, 9], [24, 10], [29, 9], [29, 10], [13, 9], [13, 10]]

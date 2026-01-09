@@ -20,5 +20,3 @@ rule "map - horizon lunar colony":
     startForcingSpawn(Team.1, 0)
     __currentMapText___ = "月球基地"
     __currentMapPioneerText___ = __currentMapText___
-    mapTitleRelation = [[3, 9], [3, 10], [6, 9], [6, 10], [9, 9], [9, 10], [4, 9], [13, 9], [13, 10], [7, 9], [7, 10], [10, 9], [10, 10], [12, 9], [12, 10], [18, 9], [18, 10], [19, 9], [19, 10], [24, 9], [24, 10], [8, 9], [8, 10]]
-

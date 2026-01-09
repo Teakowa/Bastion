@@ -14,4 +14,3 @@ rule "map - blizzworld":
     startForcingSpawn(Team.1, 2)
     __currentMapText___ = "暴雪世界"
     __currentMapPioneerText___ = __currentMapText___
-    mapTitleRelation = [[7, 9], [7, 10], [8, 9], [8, 10], [10, 9], [10, 10], [24, 9], [24, 10], [29, 9], [29, 10], [33, 9], [33, 10], [13, 9], [13, 10]]

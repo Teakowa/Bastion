@@ -14,4 +14,3 @@ rule "map - 中城":
     resetPosition = vect(119.51, 1.84, -104.94)
     creditsPosition = vect(126.5, 3, -125.37)
     startForcingSpawn(Team.1, 2)
-    mapTitleRelation = [[7, 9], [7, 10], [8, 9], [8, 10], [10, 9], [10, 10], [13, 9], [13, 10], [24, 9], [24, 10], [28, 9], [28, 10], [18, 9], [18, 10]]

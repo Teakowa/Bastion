@@ -13,4 +13,3 @@ rule "map - numbani":
     resetPosition = vect(224.54, 0.2, 0.39)
     creditsPosition = vect(254.54, 3.2, 22.87)
     startForcingSpawn(Team.1, 1)
-    mapTitleRelation = [[8, 9], [8, 10], [7, 9], [7, 10], [10, 9], [10, 10], [13, 9], [13, 10], [18, 9], [18, 10], [19, 9], [19, 10], [28, 9], [28, 10], [24, 9], [24, 10]]

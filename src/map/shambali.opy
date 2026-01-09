@@ -14,4 +14,3 @@ rule "map - shambali monastery":
     resetPosition = vect(-1.97, 31.07, 221.85)
     creditsPosition = vect(1.75, 35, 232.5)
     startForcingSpawn(Team.1, 2)
-    mapTitleRelation = [[0, 0], [1, 0], [7, 9], [7, 10], [8, 9], [8, 10], [10, 9], [10, 10], [13, 9], [13, 10], [19, 9], [19, 10], [24, 9], [24, 10], [28, 9], [28, 10], [18, 9], [18, 10]]

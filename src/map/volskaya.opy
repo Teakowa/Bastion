@@ -14,4 +14,3 @@ rule "map - volskaya industries":
     startForcingSpawn(Team.1, 0)
     __currentMapText___ = "沃斯卡娅"
     __currentMapPioneerText___ = __currentMapText___
-    mapTitleRelation = [[7, 9], [7, 10], [7, 0], [8, 9], [8, 10], [8, 0], [10, 9], [10, 10], [13, 9], [13, 10], [13, 0], [19, 9], [19, 10], [18, 9], [18, 10], [18, 0]]

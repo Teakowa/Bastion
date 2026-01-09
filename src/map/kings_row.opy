@@ -20,4 +20,3 @@ rule "map - king's row":
     __currentMapText___ = "国王大道"
     __currentMapPioneerText___ = __currentMapText___
     startForcingSpawn(Team.1, 1)
-    mapTitleRelation = [[6, 9], [6, 10], [7, 9], [7, 10], [9, 9], [9, 10], [10, 9], [10, 10], [8, 9], [8, 10], [12, 9], [12, 10], [18, 9], [18, 10], [19, 9], [19, 10], [24, 9], [24, 10], [28, 9], [28, 10], [32, 9], [13, 9], [13, 10]]
