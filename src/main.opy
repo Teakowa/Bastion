@@ -447,6 +447,8 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/init.opy"
 
+#!include "utilities/savePlayerData.opy"
+
 #!include "utilities/setPlayerEvent.opy"
 
 #!include "utilities/clearPlayerEvent.opy"
