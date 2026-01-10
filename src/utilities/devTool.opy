@@ -83,14 +83,14 @@ rule "menu mode settings display":
     destroyHudText(eventPlayer.menuTextID[0])
     destroyHudText(eventPlayer.menuTextID[1])
     destroyHudText(eventPlayer.menuTextID[2])
-    hudHeader(eventPlayer, "{0}".format("开发者模式" if eventPlayer.isDev else "游戏内面板"), HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    hudHeader(eventPlayer, "{0}".format(STR_MENU_TITLE_DEV if eventPlayer.isDev else STR_MENU_TITLE_INGAME), HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
     eventPlayer.menuTextID[0] = getLastCreatedText()
     if eventPlayer.isDev:
-        hudSubheader(eventPlayer, "{0}    自动重开：延长5分钟    \n{1}".format(inputBindingString(Button.PRIMARY_FIRE), "{0}    自动重开：缩短5分钟    \n{1}".format(inputBindingString(Button.SECONDARY_FIRE), "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    增加难度    \n{1}".format(inputBindingString(Button.ABILITY_1), "{0}    降低难度    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    第三人称视角    {1}\n{2}".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X", "{0}    下一页    ".format(inputBindingString(Button.CROUCH))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_DIFF_INC.format(inputBindingString(Button.ABILITY_1), STR_MENU_OPT_DIFF_DEC.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     elif hostPlayer == eventPlayer:
-        hudSubheader(eventPlayer, "{0}    自动重开：延长5分钟    \n{1}".format(inputBindingString(Button.PRIMARY_FIRE), "{0}    自动重开：缩短5分钟    \n{1}".format(inputBindingString(Button.SECONDARY_FIRE), "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    标记玩家    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else "空", "{0}    移除标记玩家并临时拉黑    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    第三人称视角    {1}\n".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X"))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_MARK_PLAYER.format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else STR_MENU_STATE_NULL, STR_MENU_OPT_UNMARK_BLOCK.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, ""))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     else:
-        hudSubheader(eventPlayer, "{0}    上一个称号    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    下一个称号    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    第三人称视角    {1}\n".format(inputBindingString(Button.JUMP), "O" if eventPlayer.third == true else "X"))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        hudSubheader(eventPlayer, STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, ""))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     eventPlayer.menuTextID[1] = getLastCreatedText()
 
 
@@ -102,9 +102,9 @@ rule "menu dev control display":
     destroyHudText(eventPlayer.menuTextID[0])
     destroyHudText(eventPlayer.menuTextID[1])
     destroyHudText(eventPlayer.menuTextID[2])
-    hudHeader(eventPlayer, "开发者模式", HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    hudHeader(eventPlayer, STR_MENU_TITLE_DEV, HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
     eventPlayer.menuTextID[0] = getLastCreatedText()
-    hudSubheader(eventPlayer, "{0}    Debug 信息    {1}\n{2}".format(inputBindingString(Button.PRIMARY_FIRE), "O" if debugInfo else "X", "{0}    解锁全英雄    {1}\n{2}".format(inputBindingString(Button.SECONDARY_FIRE), "O" if eventPlayer.isWinner == true else "X", "{0}    立即重开    \n{1}".format(inputBindingString(Button.RELOAD), "{0}    标记玩家    {1}\n{2}".format(inputBindingString(Button.JUMP), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else "空", "{0}    移除标记玩家    \n{1}".format(inputBindingString(Button.ULTIMATE), "{0}    传送到标记玩家    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    受到伤害降低    {1}\n{2}".format(inputBindingString(Button.MELEE), "O" if eventPlayer.dmgReduc == true else "X", "{0}    无敌    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), "O" if eventPlayer.invincible == true else "X", "{0}    下一页    ".format(inputBindingString(Button.CROUCH)))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer, STR_MENU_OPT_DEBUG_INFO.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_STATE_ON if debugInfo else STR_MENU_STATE_OFF, STR_MENU_OPT_UNLOCK_ALL.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_STATE_ON if eventPlayer.isWinner == true else STR_MENU_STATE_OFF, STR_MENU_OPT_RESTART_NOW.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_MARK_PLAYER.format(inputBindingString(Button.JUMP), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else STR_MENU_STATE_NULL, STR_MENU_OPT_UNMARK_PLAYER.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TP_TO_TARGET.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_DMG_REDUCE.format(inputBindingString(Button.MELEE), STR_MENU_STATE_ON if eventPlayer.dmgReduc == true else STR_MENU_STATE_OFF, STR_MENU_OPT_INVINCIBLE.format(inputBindingString(Button.ABILITY_1), STR_MENU_STATE_ON if eventPlayer.invincible == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH)))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     eventPlayer.menuTextID[1] = getLastCreatedText()
 
 
@@ -116,9 +116,9 @@ rule "menu dev devlop display":
     destroyHudText(eventPlayer.menuTextID[0])
     destroyHudText(eventPlayer.menuTextID[1])
     destroyHudText(eventPlayer.menuTextID[2])
-    hudHeader(eventPlayer, "开发者面板", HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    hudHeader(eventPlayer, STR_MENU_TITLE_DEV_PANEL, HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
     eventPlayer.menuTextID[0] = getLastCreatedText()
-    hudSubheader(eventPlayer, "{0}    浮空    {1}\n{2}".format(inputBindingString(Button.PRIMARY_FIRE), "O" if eventPlayer.isAirWalkEnabled else "X", "{0}    穿墙    {1}\n{2}".format(inputBindingString(Button.SECONDARY_FIRE), "O" if eventPlayer.isPortalEnabled == true else "X", "{0}    选择目标点索引    {1}\n{2}".format(inputBindingString(Button.ABILITY_1), eventPlayer.controlCenterIndex, "{0}    传送到目标点    \n{1}".format(inputBindingString(Button.ABILITY_2), "{0}    下一页    ".format(inputBindingString(Button.CROUCH)))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer, STR_MENU_OPT_AIR_WALK.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_STATE_ON if eventPlayer.isAirWalkEnabled else STR_MENU_STATE_OFF, STR_MENU_OPT_NOCLIP.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_STATE_ON if eventPlayer.isPortalEnabled == true else STR_MENU_STATE_OFF, STR_MENU_OPT_SELECT_INDEX.format(inputBindingString(Button.ABILITY_1), eventPlayer.controlCenterIndex, STR_MENU_OPT_TP_TO_INDEX.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH)))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     eventPlayer.menuTextID[1] = getLastCreatedText()
 
 
@@ -291,7 +291,7 @@ rule "host set target player":
     targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[targetPlayerIndex]
     targetPlayerIndex++
     wait(getServerLoad() / 100 * 0.032)
-    smallMessage(devPlayer.concat(hostPlayer), "  {0}  没有可标记的玩家".format(iconString(Icon.BOLT)) if targetPlayer == null else "  {0}  房主操作： 已标记 {1}（{2}）".format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
+    smallMessage(devPlayer.concat(hostPlayer), STR_MSG_ADMIN_NO_TARGET.format(iconString(Icon.BOLT)) if targetPlayer == null else STR_MSG_ADMIN_MARKED.format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
 
 
 rule "host remove target player":
@@ -302,11 +302,11 @@ rule "host remove target player":
     
     if targetPlayer == null or targetPlayer in devPlayer:
         return
-    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 长按 {1} 移除 {2}".format(iconString(Icon.BOLT), inputBindingString(Button.RELOAD), targetPlayer))
+    smallMessage(devPlayer.concat(hostPlayer), STR_MSG_ADMIN_HOLD_TO_KICK.format(iconString(Icon.BOLT), inputBindingString(Button.RELOAD), targetPlayer))
     wait(2, Wait.ABORT_WHEN_FALSE)
-    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 即将移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    smallMessage(devPlayer.concat(hostPlayer), STR_MSG_ADMIN_KICK_WARNING.format(iconString(Icon.BOLT), targetPlayer))
     wait(1, Wait.ABORT_WHEN_FALSE)
-    smallMessage(devPlayer.concat(hostPlayer), "  {0}  房主操作： 已移除玩家 {1}".format(iconString(Icon.BOLT), targetPlayer))
+    smallMessage(devPlayer.concat(hostPlayer), STR_MSG_ADMIN_KICK_SUCCESS.format(iconString(Icon.BOLT), targetPlayer))
     if "{0}".format(targetPlayer) in blackList:
         goto lbl_0
     blackList.append("{0}".format(targetPlayer))

@@ -9,7 +9,7 @@ rule "anti crash":
     @Condition getServerLoad() > 235
     
     wait(1, Wait.ABORT_WHEN_FALSE)
-    smallMessage(getAllPlayers(), "  防炸房系统工作中...")
+    smallMessage(getAllPlayers(), STR_MSG_ANTI_CRASH_WORKING)
     setSlowMotion(20)
     antiCrashActivated = true
 

@@ -51,7 +51,7 @@ rule "create baby d.va goal header":
     @Condition isHeroBeingPlayed(Hero.DVA, Team.1) == true
     
     wait(2, Wait.ABORT_WHEN_FALSE)
-    hudHeader(localPlayer if localPlayer.getHero() == Hero.DVA and localPlayer.isInAlternateForm() and localPlayer.isAlive() and localPlayer.dvaStart != 0 else null, "目标距离:{0} m".format(max(0, 30 - distance(localPlayer.getPosition() * vect(1, 0, 1), localPlayer.dvaStart * vect(1, 0, 1)))), HudPosition.TOP, 5, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    hudHeader(localPlayer if localPlayer.getHero() == Hero.DVA and localPlayer.isInAlternateForm() and localPlayer.isAlive() and localPlayer.dvaStart != 0 else null, STR_DVA_DISTANCE_GOAL.format(max(0, 30 - distance(localPlayer.getPosition() * vect(1, 0, 1), localPlayer.dvaStart * vect(1, 0, 1)))), HudPosition.TOP, 5, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     textIDs[1] = getLastCreatedText()
     waitUntil(not isHeroBeingPlayed(Hero.DVA, Team.1), MAX_TIME)
     destroyHudText(textIDs[1])

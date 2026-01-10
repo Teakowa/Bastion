@@ -35,6 +35,11 @@ def clearPlayerEvent():
     eventPlayer.possess = null
     updatePlayerStats()
     clearEventEffect()
-    smallMessage(eventPlayer, "  {0} 事件已结束".format(abilityIconString(Hero.MOIRA, Button.ABILITY_2)))
+    smallMessage(
+        eventPlayer, 
+        STR_MSG_EVENT_ENDED.format(
+            abilityIconString(Hero.MOIRA, Button.ABILITY_2)
+        )
+    )
 
 

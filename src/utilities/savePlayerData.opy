@@ -33,12 +33,16 @@ def savePlayerData():
         wait(getServerLoad() / 100 * 0.5)
         savedA36TGrenadeAlive[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.A36TGrenadeAlive
         savedJoinTime[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.joinTime
-        smallMessage(eventPlayer, "  你的挑战进度已保存")
+        smallMessage(eventPlayer, STR_MSG_PROGRESS_SAVED)
+
         wait(2)
-        if eventPlayer != hostPlayer:
-            goto lbl_1
-        smallMessage(hostPlayer, "  如果当前游戏重开，所有人的进度数据将被清空")
-        lbl_1:
+
+        # 如果是主机玩家，提示重开清空
+        if eventPlayer == hostPlayer:
+            smallMessage(hostPlayer, STR_MSG_HOST_WARNING_RESET)
+
         wait(2)
+
+        # 随机提示赞赏等级
         if random.randint(0, 2) == 0:
-            smallMessage(eventPlayer, "  为了保证房间处于公开状态，请确保房主赞赏等级为 3 级或以上")
+            smallMessage(eventPlayer, STR_MSG_HOST_ENDORSEMENT_HINT)

@@ -71,7 +71,7 @@ rule "if someone starts the game mode, restart the match":
         setMatchTime(0)
         wait()
     createIcon(getPlayers(Team.1), vect(0, 101, -0.25), Icon.WARNING, IconReeval.COLOR, rgb(220 + sin(getTotalTimeElapsed() * 3.141) * 35, 0, 0), false)
-    createInWorldText(getPlayers(Team.1), "主机开始了游戏模式.\n这将导致智械危机.\n\n                      正在重开...", vect(0, 101, 0), 3, Clip.NONE, WorldTextReeval.COLOR, rgb(220 + sin(getTotalTimeElapsed() * 3.141) * 35, 0, 0), SpecVisibility.ALWAYS)
+    createInWorldText(getPlayers(Team.1), STR_TEXT_HOST_RESTARTING, vect(0, 101, 0), 3, Clip.NONE, WorldTextReeval.COLOR, rgb(220 + sin(getTotalTimeElapsed() * 3.141) * 35, 0, 0), SpecVisibility.ALWAYS)
     for I in range(5):
         createEffect(getPlayers(Team.1), Effect.ORB, Color.BLACK, vect(0, 100 + ((0.5 * (I + 1)) / 5), 0), 2 + (2 * (I + 5)), EffectReeval.NONE)
         createEffect(getPlayers(Team.1), Effect.SPHERE, Color.BLACK, vect(0, 100, 0), 2 + (2 * (I + 5)), EffectReeval.NONE)
@@ -95,7 +95,7 @@ rule "bastions are numbered and list their kills (by changing their names when t
     @Event playerJoined
     @Team 2
     
-    eventPlayer.startForcingName("看守{0} {1}".format(eventPlayer.getSlot() + 1, kills[eventPlayer.getSlot()]))
+    eventPlayer.startForcingName(STR_BOT_NAME_FORMAT.format(eventPlayer.getSlot() + 1, kills[eventPlayer.getSlot()]))
 
 
 rule "damage modifier: players can't hurt bastions":
@@ -469,7 +469,7 @@ rule "bastion counts kills and marks himself after killing you":
     @Team 2
     
     kills[eventPlayer.getSlot()]++
-    eventPlayer.startForcingName("看守{0} 击杀{1}".format(eventPlayer.getSlot() + 1, kills[eventPlayer.getSlot()]))
+    eventPlayer.startForcingName(STR_BOT_NAME_FORMAT.format(eventPlayer.getSlot() + 1, kills[eventPlayer.getSlot()]))
     victim.attacker.stopForcingOutlineFor(victim)
     wait(0.032)
     victim.attacker = attacker

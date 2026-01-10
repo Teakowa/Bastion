@@ -1,8 +1,19 @@
 #!include "env/env.opy"
+#!include "locales/zh-CN.opy"
+
+#!define FULL_DESCRIPTION \
+    STR_DESC_EVENT_STATUS "\n" \
+    STR_DESC_GAMEPLAY_TAG "\n" \
+    "————————————————\n" \
+    STR_MODE_CODE "  |  " STR_DESC_LAST_UPDATE_PREFIX VERSION "\n\n" \
+    "owmod.net/2650\n\n" \
+    STR_DESC_CONTACT_INFO "\n\n" \
+    STR_DESC_ORIGINAL_CREDIT
+
 settings {
     "main": {
-        "description": "随机事件 3.0 已上线\n!!!使用全英雄逃出生天!!!\n————————————————\n代码【SVMQK】  | 最近更新：26.0108.1\n\nowmod.net/2650\n\n企鹅聊天群：445152554\n\n原作［OW2 PASTION ESCAPE］",
-        "modeName": "躲避堡垒3"
+        "description": FULL_DESCRIPTION,
+        "modeName": STR_MODE_NAME
     },
     "lobby": {
         "mapRotation": "afterGame",
@@ -416,11 +427,11 @@ subroutine createBastionBot 17
 #!optimizeStrict
 
 
-rule "声明：本模式代码不得用于商业用途":
+rule STR_LICENSE_TITLE:
     @Disabled
     @Delimiter
 
-rule "在模式描述中保留原作者署名与原模式代码的前提下，你可基于本模式及其代码进行二次创作与发布":
+rule STR_LICENSE_PERMIT:
     @Disabled
     @Delimiter
 
@@ -498,7 +509,7 @@ rule "when a mercy might rez, respawn time is increased":
     if evalOnce(dlcVishkarEvent) and eventPlayer.eventType == 0 and eventPlayer.eventId == 8:
         return
     if any([distance(eventPlayer.getPosition(), player.getPosition()) < 40 and player.isAlive() and player.getAbilityCooldown(Button.ABILITY_2) < 8 for player in getPlayersOnHero(Hero.MERCY, Team.1)]):
-        bigMessage(eventPlayer, "附近有 天使 等待复活...")
+        bigMessage(eventPlayer, STR_MSG_MERCY_NEARBY)
         eventPlayer.disableRespawn()
         wait(4)
         eventPlayer.enableRespawn()
@@ -571,9 +582,27 @@ rule "when a player reaches the end, they move on to the next hero or win if the
         eventPlayer.winnerTime = evalOnce(getTotalTimeElapsed()) - eventPlayer.joinTime
         if any([eventPlayer.dmgReduc, eventPlayer.invincible, eventPlayer.isPortalEnabled, eventPlayer.isAirWalkEnabled]):
             goto lbl_1
-        bigMessage(getPlayers(Team.1), "祝贺 {0} 以 {1} 耗时 {2} 通关!".format(eventPlayer, "{0} 次阵亡 & {1} 次跳过".format(eventPlayer.runDeathCount, eventPlayer.skipCount), "{0}{1}{2}".format("{0}小时".format(floor(eventPlayer.winnerTime / 3600)) if eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 3600 else "", "{0}分".format(floor(eventPlayer.winnerTime % 3600 / 60)) if eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 60 else "", "{0}秒".format(floor(eventPlayer.winnerTime % 60)) if eventPlayer.winnerTime != null else "0秒")))
+        bigMessage(
+            getPlayers(Team.1),
+            STR_MSG_WIN_ANNOUNCE.format(
+                eventPlayer,
+                # 统计部分
+                STR_MSG_WIN_STATS.format(eventPlayer.runDeathCount, eventPlayer.skipCount),
+                # 时间部分
+                "{0}{1}{2}".format(
+                    # 小时部分
+                    STR_TIME_UNIT_HOUR.format(floor(eventPlayer.winnerTime / 3600)) if (eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 3600) else "",
+                    
+                    # 分钟部分
+                    STR_TIME_UNIT_MIN.format(floor((eventPlayer.winnerTime % 3600) / 60)) if (eventPlayer.winnerTime != null and eventPlayer.winnerTime >= 60) else "",
+                    
+                    # 秒部分
+                    STR_TIME_UNIT_SEC.format(floor(eventPlayer.winnerTime % 60)) if (eventPlayer.winnerTime != null) else STR_TIME_UNIT_ZERO_SEC
+                )
+            )
+        )
         lbl_1:
-        smallMessage(eventPlayer, "  {0} 你已通关，可以加入聊天群 发送截图 获取通关称号".format(iconString(Icon.CHECKMARK)))
+        smallMessage(eventPlayer, STR_MSG_WIN_HINT.format(iconString(Icon.CHECKMARK)))
         savePlayerData()
 
 
@@ -613,7 +642,7 @@ rule "update scoreboard every few seconds":
 rule "auto reboot":
     @Condition getTotalTimeElapsed() >= rebootTime - 60
     
-    bigMessage(getAllPlayers(), "游戏将在 1 分钟后自动重开")
+    bigMessage(getAllPlayers(), STR_MSG_AUTO_RESTART_1MIN)
     wait(60)
     restartMatch()
 

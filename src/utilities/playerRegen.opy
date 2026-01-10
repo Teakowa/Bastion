@@ -15,7 +15,12 @@ rule "SYSTEM: Core Regen Logic (Signal Based)":
     wait(3, Wait.RESTART_WHEN_TRUE)
     if any([eventPlayer.isDead(), eventPlayer.getNormalizedHealth() == 1, eventPlayer.heal_recv <= -100]):
         return
-    smallMessage(eventPlayer, "  {0}  脱战自动回复启动 ".format(abilityIconString(Hero.BAPTISTE, Button.ABILITY_1)))
+    smallMessage(
+        eventPlayer, 
+        STR_MSG_PASSIVE_HEAL_START.format(
+            abilityIconString(Hero.BAPTISTE, Button.ABILITY_1)
+        )
+    )
     eventPlayer.startHealingOverTime(eventPlayer, 999999986991104.000, 50 + eventPlayer.getMaxHealth() * 0.08)
     eventPlayer.healID = getLastHealingOverTimeId()
 

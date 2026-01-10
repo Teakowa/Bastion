@@ -42,7 +42,7 @@ rule "display message if hero available":
     if eventPlayer.getUltCharge() == 100:
         eventPlayer.setUltCharge(0)
         wait(0.2)
-    bigMessage(eventPlayer, "可跳过当前英雄")
+    bigMessage(eventPlayer, STR_MSG_SKIP_AVAILABLE)
     eventPlayer.I = 0
     while eventPlayer.getUltCharge() != 100:
         eventPlayer.setUltCharge(100)
@@ -76,7 +76,7 @@ rule "display instructions when a player enters the reset ring":
     @Condition eventPlayer in getPlayersInRadius(resetPosition, 20, Team.1) == true
     @Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), resetPosition * vect(1, 0, 1)) <= 1.2
     
-    bigMessage(eventPlayer, "长按装填键重置")
+    bigMessage(eventPlayer, STR_MSG_HOLD_RELOAD_RESET)
 
 
 rule "holding rel\ufeffoad while in the reset ring resets your progress":
@@ -87,7 +87,7 @@ rule "holding rel\ufeffoad while in the reset ring resets your progress":
     @Condition distance(eventPlayer * vect(1, 0, 1), resetPosition * vect(1, 0, 1)) <= 1.2
     
     eventPlayer.preloadHero(heroList[0])
-    smallMessage(eventPlayer, "  正在重置进度...")
+    smallMessage(eventPlayer, STR_MSG_RESETTING_PROGRESS)
     wait(2, Wait.ABORT_WHEN_FALSE)
     playEffect(eventPlayer, DynamicEffect.DEBUFF_IMPACT_SOUND, null, eventPlayer.getPosition(), 100)
     eventPlayer.runDeathCount = 0
@@ -96,7 +96,7 @@ rule "holding rel\ufeffoad while in the reset ring resets your progress":
     eventPlayer.winnerTime = 0
     eventPlayer.heroNumber = 0
     eventPlayer.skipCount = 0
-    smallMessage(getAllPlayers(), "  {0} 重置了进度".format(eventPlayer))
+    smallMessage(getAllPlayers(), STR_MSG_PLAYER_RESET_PROGRESS.format(eventPlayer))
     wait()
     eventPlayer.startForcingHero(heroList[0])
     wait()

@@ -40,8 +40,22 @@ def setPlayerEvent():
         goto lbl_1
     if eventPlayer.eventId == 666:
         goto lbl_2
-    smallMessage(eventPlayer, "  {0}  触发事件：{1}（{2}）".format(abilityIconString(Hero.SOMBRA, Button.ULTIMATE), eventPlayer.eventName, "{0}秒".format(eventPlayer.eventDuration) if eventPlayer.eventDuration > 0 else "一次性"))
-    smallMessage(eventPlayer, "  {0}  事件效果：{1}".format(abilityIconString(Hero.SOMBRA, Button.ULTIMATE), eventPlayer.eventDesc))
+    smallMessage(
+    eventPlayer, 
+        STR_MSG_EVENT_TRIGGER.format(
+            abilityIconString(Hero.SOMBRA, Button.ULTIMATE), 
+            eventPlayer.eventName, 
+            STR_MSG_DURATION_SEC.format(eventPlayer.eventDuration) if eventPlayer.eventDuration > 0 else STR_MSG_DURATION_INSTANT
+        )
+    )
+
+    smallMessage(
+        eventPlayer, 
+        STR_MSG_EVENT_EFFECT.format(
+            abilityIconString(Hero.SOMBRA, Button.ULTIMATE), 
+            eventPlayer.eventDesc
+        )
+    )
     lbl_2:
     setEventDuration()
     lbl_1:

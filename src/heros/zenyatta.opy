@@ -63,7 +63,7 @@ rule "create zen instructions":
     @Condition isHeroBeingPlayed(Hero.ZENYATTA, Team.1) == true
     @Disabled
     
-    hudHeader(localPlayer if localPlayer.getHero() == Hero.ZENYATTA and localPlayer.isInSpawnRoom() else null, "踹击地面可以向后击退 {0}\n按住跳跃可以悬浮 {1}".format(abilityIconString(Hero.ZENYATTA, Button.MELEE), iconString(Icon.ARROW_UP)), HudPosition.TOP, 5, Color.WHITE, HudReeval.VISIBILITY)
+    hudHeader(localPlayer if localPlayer.getHero() == Hero.ZENYATTA and localPlayer.isInSpawnRoom() else null, STR_ZEN_KICK_HINT.format(abilityIconString(Hero.ZENYATTA, Button.MELEE), iconString(Icon.ARROW_UP)), HudPosition.TOP, 5, Color.WHITE, HudReeval.VISIBILITY)
     textIDs[2] = getLastCreatedText()
     waitUntil(not isHeroBeingPlayed(Hero.ZENYATTA, Team.1), MAX_TIME)
     destroyHudText(textIDs[2])
