@@ -451,6 +451,12 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/savePlayerData.opy"
 
+#!include "utilities/progressHero.opy"
+
+#!include "utilities/setDifficulty.opy"
+
+#!include "utilities/setThirdPerson.opy"
+
 #!include "utilities/setPlayerEvent.opy"
 
 #!include "utilities/clearPlayerEvent.opy"
@@ -460,6 +466,8 @@ rule STR_LICENSE_PERMIT:
 #!include "utilities/setEventDuration.opy"
 
 #!include "utilities/resetPlayerCD.opy"
+
+#!include "utilities/clearEventEffect.opy"
 
 #!include "utilities/updatePlayerStats.opy"
 
