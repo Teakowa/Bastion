@@ -435,6 +435,8 @@ rule STR_LICENSE_PERMIT:
     @Disabled
     @Delimiter
 
+#!include "utilities/mapDetection.opy"
+
 #!include "blacklist/init.opy"
 
 #!include "utilities/removeFromBlacklist.opy"
