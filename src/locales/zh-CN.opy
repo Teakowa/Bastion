@@ -1,0 +1,386 @@
+
+
+# 核心信息
+#!define STR_MODE_NAME "躲避堡垒3"
+#!define STR_MODE_CODE "代码【SVMQK】"
+
+# 描述文本 - 标题与状态
+#!define STR_DESC_EVENT_STATUS "随机事件 3.0 已上线"
+#!define STR_DESC_GAMEPLAY_TAG "!!!使用全英雄逃出生天!!!"
+
+# 描述文本 - 元数据
+#!define STR_DESC_LAST_UPDATE_PREFIX "最近更新："
+#!define STR_DESC_CONTACT_INFO "企鹅聊天群：445152554"
+#!define STR_DESC_ORIGINAL_CREDIT "原作［OW2 PASTION ESCAPE］"
+
+#!define STR_LICENSE_TITLE "声明：本模式代码不得用于商业用途"
+#!define STR_LICENSE_PERMIT "在模式描述中保留原作者署名与原模式代码的前提下，你可基于本模式及其代码进行二次创作与发布"
+
+# 设置分类
+#!define STR_SETTING_CAT_GAME "1. 游戏"
+#!define STR_SETTING_CAT_DLC "2. DLC 扩展内容"
+
+# 设置项名称
+#!define STR_SETTING_DLC_VISHKAR "随机事件扩展包"
+#!define STR_SETTING_REBOOT_TIME "自动重开时间间隔（小时）"
+#!define STR_SETTING_DEBUG "Debug 模式"
+#!define STR_SETTING_BASTION_TARGET "AI 堡垒瞄准规则"
+#!define STR_SETTING_DIFFICULTY "难度"
+#!define STR_SETTING_ULT_CHARGE "全英雄威能充能"
+#!define STR_SETTING_BASTION_GRENADE "AI 堡垒使用榴弹（忽略难度）"
+
+# 枚举选项 (数组格式)
+# 不定义整个数组，而是定义单个选项
+#!define STR_OPT_TARGET_0 "自动"
+#!define STR_OPT_TARGET_1 "近距离优先"
+#!define STR_OPT_TARGET_2 "低生命值优先"
+#!define STR_ENUM_TARGET_OPTIONS ["自动", "近距离优先", "低生命值优先"]
+
+#!define STR_OPT_DIFF_0 "简单"
+#!define STR_OPT_DIFF_1 "一般"
+#!define STR_OPT_DIFF_2 "困难"
+#!define STR_OPT_DIFF_3 "专家"
+#!define STR_OPT_DIFF_4 "传奇"
+#!define STR_OPT_DIFF_5 "地狱：无法跳过英雄"
+# ... 以此类推
+
+#!define STR_ENUM_DIFFICULTY_OPTIONS ["简单", "一般", "困难", "专家", "传奇", "地狱：无法跳过英雄"]
+
+# ------------------------------------------------
+# 全局事件 (Global Events)
+# ------------------------------------------------
+#!define STR_EVT_GLOBAL_0_TITLE "势不可挡"
+#!define STR_EVT_GLOBAL_0_DESC "堡垒获得控制免疫"
+#!define STR_EVT_GLOBAL_1_TITLE "超算进化"
+#!define STR_EVT_GLOBAL_1_DESC "堡垒发射榴弹会附带1.5秒的控制特效"
+#!define STR_EVT_GLOBAL_2_TITLE "任务：生存"
+#!define STR_EVT_GLOBAL_2_DESC "持续期间内玩家团队总阵亡次数不超过10次"
+#!define STR_EVT_GLOBAL_3_TITLE "任务：占领"
+#!define STR_EVT_GLOBAL_3_DESC "倒计时结束时目标点范围内有4名玩家"
+#!define STR_EVT_GLOBAL_4_TITLE "任务：竞速"
+#!define STR_EVT_GLOBAL_4_DESC "倒计时结束时有 50% 以上的玩家挑战进度过半"
+
+# ------------------------------------------------
+# 增益事件 (Buff Events)
+# ------------------------------------------------
+#!define STR_EVT_BUFF_0_TITLE "奥利维娅的礼物"
+#!define STR_EVT_BUFF_0_DESC "你好"
+#!define STR_EVT_BUFF_1_TITLE "疾风祝福"
+#!define STR_EVT_BUFF_1_DESC "移动速度提高50%"
+#!define STR_EVT_BUFF_2_TITLE "钢铁防线"
+#!define STR_EVT_BUFF_2_DESC "获得1500点临时护甲与25%伤害减免"
+#!define STR_EVT_BUFF_3_TITLE "肾上腺素"
+#!define STR_EVT_BUFF_3_DESC "获得50%额外伤害减免"
+#!define STR_EVT_BUFF_4_TITLE "生命源泉"
+#!define STR_EVT_BUFF_4_DESC "每秒恢复15%最大生命值"
+#!define STR_EVT_BUFF_5_TITLE "黑粉来袭"
+#!define STR_EVT_BUFF_5_DESC "显示正在瞄准你的堡垒数量"
+#!define STR_EVT_BUFF_6_TITLE "足力健"
+#!define STR_EVT_BUFF_6_DESC "持续移动1秒获得3%可叠加的移动速度"
+#!define STR_EVT_BUFF_7_TITLE "血肉再生"
+#!define STR_EVT_BUFF_7_DESC "获得50+25%最大生命值的临时生命值，每4秒自动刷新"
+#!define STR_EVT_BUFF_8_TITLE "心之钢"
+#!define STR_EVT_BUFF_8_DESC "阵亡后永久增加0.75%最大生命值"
+#!define STR_EVT_BUFF_9_TITLE "危险感知"
+#!define STR_EVT_BUFF_9_DESC "被锁定时获得60%移动速度与25%伤害减免"
+#!define STR_EVT_BUFF_10_TITLE "反应装甲"
+#!define STR_EVT_BUFF_10_DESC "获得一个可恢复的护甲\n如果堡垒对你的伤害未能击穿护甲\n堡垒将被短暂击晕"
+#!define STR_EVT_BUFF_11_TITLE "死亡延迟"
+#!define STR_EVT_BUFF_11_DESC "受到致命伤害时\n阵亡将被延迟到事件结束后"
+#!define STR_EVT_BUFF_12_TITLE "有我有你"
+#!define STR_EVT_BUFF_12_DESC "长按{0}附身一名队友\n该队友获得你最大生命值5%伤害减免\n你获得25%治疗增益并且会治疗队友"
+#!define STR_EVT_BUFF_13_TITLE "↑↑↓↓←→←→BABA"
+#!define STR_EVT_BUFF_13_DESC "如果在事件持续期间阵亡，你会在5秒前的位置复活，事件立刻结束"
+#!define STR_EVT_BUFF_14_TITLE "费斯卡光子护盾"
+#!define STR_EVT_BUFF_14_DESC "所有人获得一个可恢复的护盾\n其数值为你最大生命值的 20%\n护盾持续到你阵亡或事件结束"
+#!define STR_EVT_BUFF_15_TITLE "费斯卡呼吸机"
+#!define STR_EVT_BUFF_15_DESC "不受所有阻挡视线机制效果的影响"
+#!define STR_EVT_BUFF_16_TITLE "向我靠拢"
+#!define STR_EVT_BUFF_16_DESC "你和你附近的队友每5秒获得2.5秒伤害免疫"
+#!define STR_EVT_BUFF_17_TITLE "我独自闯关"
+#!define STR_EVT_BUFF_17_DESC "获得伤害减免、治疗增益、移速加成与击退抵抗"
+#!define STR_EVT_BUFF_18_TITLE "坚定"
+#!define STR_EVT_BUFF_18_DESC "获得95%击退抵抗\n受到击退获得5%可叠加的伤害减免并回复8%最大生命值"
+#!define STR_EVT_BUFF_19_TITLE "胜利意志"
+#!define STR_EVT_BUFF_19_DESC "生命值低于30%触发，获得5秒伤害免疫并清除负面状态，回复所有已损失生命值"
+#!define STR_EVT_BUFF_20_TITLE "任务：菲迪皮德斯之力"
+#!define STR_EVT_BUFF_20_DESC "持续移动42.195秒后永久获得5%移速加成"
+#!define STR_EVT_BUFF_21_TITLE "心之钢 Pro"
+#!define STR_EVT_BUFF_21_DESC "基于心之钢层数提升最大生命值，数值为心之钢层数×2"
+#!define STR_EVT_BUFF_22_TITLE "数值之力"
+#!define STR_EVT_BUFF_22_DESC "获得 500% 治疗增益与受治疗增益"
+#!define STR_EVT_BUFF_23_TITLE "我按Q辣"
+#!define STR_EVT_BUFF_23_DESC "持续移动获得终极技能充能，终极技能持续期间获得75%伤害减免"
+
+# ------------------------------------------------
+# 减益事件 (Debuff Events)
+# ------------------------------------------------
+#!define STR_EVT_DEBUFF_0_TITLE "重力异常"
+#!define STR_EVT_DEBUFF_0_DESC "移动速度降低50%，跳跃高度降低70%"
+#!define STR_EVT_DEBUFF_1_TITLE "电磁脉冲"
+#!define STR_EVT_DEBUFF_1_DESC "被侵入，无法使用技能"
+#!define STR_EVT_DEBUFF_2_TITLE "吸血鬼"
+#!define STR_EVT_DEBUFF_2_DESC "队友使用技能时会消耗你 10% 最大生命值"
+#!define STR_EVT_DEBUFF_3_TITLE "易损"
+#!define STR_EVT_DEBUFF_3_DESC "受到的所有伤害提高25%"
+#!define STR_EVT_DEBUFF_4_TITLE "限速40"
+#!define STR_EVT_DEBUFF_4_DESC "移动时每秒损失25+7.5%最大生命值"
+#!define STR_EVT_DEBUFF_5_TITLE "引力异常"
+#!define STR_EVT_DEBUFF_5_DESC "被持续性拉向最近的堡垒，移动速度降低25%"
+#!define STR_EVT_DEBUFF_6_TITLE "骨质疏松"
+#!define STR_EVT_DEBUFF_6_DESC "移动速度随时间降低，最多50%"
+#!define STR_EVT_DEBUFF_7_TITLE "电磁脉冲 ProMax"
+#!define STR_EVT_DEBUFF_7_DESC "被侵入，无法使用技能，以你为中心扩散至75米以内的队友"
+#!define STR_EVT_DEBUFF_8_TITLE "能量泄漏"
+#!define STR_EVT_DEBUFF_8_DESC "使用技能会消耗25%生命值"
+#!define STR_EVT_DEBUFF_9_TITLE "生命在于运动"
+#!define STR_EVT_DEBUFF_9_DESC "每秒扣除1.5%最大生命值，移动时扣除速度翻倍"
+#!define STR_EVT_DEBUFF_10_TITLE "有难同当"
+#!define STR_EVT_DEBUFF_10_DESC "受到的75%伤害会扩散给15米内的友方"
+#!define STR_EVT_DEBUFF_11_TITLE "狂欢盛宴"
+#!define STR_EVT_DEBUFF_11_DESC "当你在盛宴期间内阵亡，堡垒将进入10秒狂暴状态"
+#!define STR_EVT_DEBUFF_12_TITLE "无能的丈夫/妻子"
+#!define STR_EVT_DEBUFF_12_DESC "附近的友方将被击倒2秒"
+#!define STR_EVT_DEBUFF_13_TITLE "重伤"
+#!define STR_EVT_DEBUFF_13_DESC "造成治疗与受到的治疗降低85%"
+#!define STR_EVT_DEBUFF_14_TITLE "减半"
+#!define STR_EVT_DEBUFF_14_DESC "每5秒损失50%生命值，当生命值低于5%时立即阵亡"
+#!define STR_EVT_DEBUFF_15_TITLE "舍己为人"
+#!define STR_EVT_DEBUFF_15_DESC "基于玩家数量降低你的最大生命值，每名玩家降低1%，由其他玩家均分"
+
+# ------------------------------------------------
+# 机制事件 (Mech Events)
+# ------------------------------------------------
+#!define STR_EVT_MECH_0_TITLE "极限挑战"
+#!define STR_EVT_MECH_0_DESC "获得99%伤害减免，生命值被锁定在30%，无法受到任何治疗与生命恢复效果"
+#!define STR_EVT_MECH_1_TITLE "纳米战甲"
+#!define STR_EVT_MECH_1_DESC "获得最大生命值800%的临时生命值，被减速25%"
+#!define STR_EVT_MECH_2_TITLE "赌徒"
+#!define STR_EVT_MECH_2_DESC "长按{0}触发：50%概率永久损失/增加10%最大生命值"
+#!define STR_EVT_MECH_3_TITLE "有点松弛"
+#!define STR_EVT_MECH_3_DESC "移动时产生阻挡友方视线的迷雾"
+#!define STR_EVT_MECH_4_TITLE "体积膨胀"
+#!define STR_EVT_MECH_4_DESC "体积变大175%，最大生命值提高400%，获得20%伤害减免"
+#!define STR_EVT_MECH_5_TITLE "迷你形态"
+#!define STR_EVT_MECH_5_DESC "体积缩小60%，最大生命值降低50%，获得25%移速加成"
+#!define STR_EVT_MECH_6_TITLE "悄悄滴进村"
+#!define STR_EVT_MECH_6_DESC "下蹲隐身，移动速度降低 25%"
+#!define STR_EVT_MECH_7_TITLE "紧急避障"
+#!define STR_EVT_MECH_7_DESC "受到伤害3秒内移动速度提高 80%"
+#!define STR_EVT_MECH_8_TITLE "逆风而行"
+#!define STR_EVT_MECH_8_DESC "移动速度提高 60%，但只能向后移动"
+#!define STR_EVT_MECH_9_TITLE "刹车失灵"
+#!define STR_EVT_MECH_9_DESC "不受控的向前移动，移动速度会逐渐提高至 175%"
+#!define STR_EVT_MECH_10_TITLE "冲锋激励"
+#!define STR_EVT_MECH_10_DESC "持续移动5秒获得100能量，能量充满后转化为临时护甲"
+#!define STR_EVT_MECH_11_TITLE "生命在于反击"
+#!define STR_EVT_MECH_11_DESC "基于已损失生命值获得移速加成与伤害减免，每损失1%生命值获得1%加成（最高75%）"
+#!define STR_EVT_MECH_12_TITLE "屁动力"
+#!define STR_EVT_MECH_12_DESC "长按{0}朝你的前方飞行，飞行时获得50%伤害减免"
+#!define STR_EVT_MECH_13_TITLE "赌徒：竞速挑战"
+#!define STR_EVT_MECH_13_DESC "长按{0}消耗50%生命值\n49%概率永久获得/损失5%移速加成\n2% 概率永久获得/损失 12% 移速加成"
+
+# 设置菜单分类 (如果还没定义)
+#!define STR_CAT_RANDOM_PACK_1_BUFF "随机事件包 1：增益"
+#!define STR_CAT_RANDOM_PACK_2_BUFF "随机事件包 2：增益"
+#!define STR_CAT_RANDOM_PACK_3_BUFF "随机事件包 3：增益"
+#!define STR_CAT_RANDOM_PACK_1_DEBUFF "随机事件包 1：减益"
+#!define STR_CAT_RANDOM_PACK_2_DEBUFF "随机事件包 2：减益"
+#!define STR_CAT_RANDOM_PACK_3_DEBUFF "随机事件包 3：减益"
+#!define STR_CAT_RANDOM_PACK_1_MECH "随机事件包 1：机制"
+#!define STR_CAT_RANDOM_PACK_2_MECH "随机事件包 2：机制"
+#!define STR_CAT_RANDOM_PACK_3_MECH "随机事件包 3：机制"
+
+# ------------------------------------------------
+# 游戏内提示信息 (In-game Notifications)
+# ------------------------------------------------
+# 原文："{0} 触发事件：{1}（{2}）"
+# {0}=图标, {1}=事件名, {2}=持续时间
+#!define STR_MSG_EVENT_TRIGGER "  {0}  触发事件：{1}（{2}）"
+
+# 原文："{0}秒"
+# {0}=秒数
+#!define STR_MSG_DURATION_SEC "{0}秒"
+
+# 原文："一次性"
+#!define STR_MSG_DURATION_INSTANT "一次性"
+
+# 原文："{0} 事件效果：{1}"
+# {0}=图标, {1}=事件描述
+#!define STR_MSG_EVENT_EFFECT "  {0}  事件效果：{1}"
+#!define STR_MSG_EVENT_ENDED "  {0} 事件已结束"
+#!define STR_MSG_PROGRESS_SAVED "  你的挑战进度已保存"
+#!define STR_MSG_HOST_WARNING_RESET "  如果当前游戏重开，所有人的进度数据将被清空"
+#!define STR_MSG_HOST_ENDORSEMENT_HINT "  为了保证房间处于公开状态，请确保房主赞赏等级为 3 级或以上"
+#!define STR_MSG_ANTI_CRASH_WORKING "  防炸房系统工作中..."
+
+# {0}=技能图标
+#!define STR_MSG_PASSIVE_HEAL_START "  {0}  脱战自动回复启动 "
+
+#!define STR_MSG_MERCY_NEARBY "附近有 天使 等待复活..."
+#!define STR_MSG_I_AM_UP "{0} 我起了！ {0}时间到了！"
+
+# 通关公告
+# {0}=玩家名, {1}=详细统计(STR_MSG_WIN_STATS), {2}=耗时字符串
+#!define STR_MSG_WIN_ANNOUNCE "祝贺 {0} 以 {1} 耗时 {2} 通关!"
+
+# 统计详情
+# {0}=死亡数, {1}=跳过数
+#!define STR_MSG_WIN_STATS "{0} 次阵亡 & {1} 次跳过"
+
+# 时间单位
+#!define STR_TIME_UNIT_HOUR "{0} 小时"
+#!define STR_TIME_UNIT_MIN "{0} 分"
+#!define STR_TIME_UNIT_SEC "{0} 秒"
+#!define STR_TIME_UNIT_ZERO_SEC "0 秒"
+
+# 结尾提示
+# {0}=图标
+#!define STR_MSG_WIN_HINT "  {0} 你已通关，可以加入聊天群 发送截图 获取通关称号"
+# ------------------------------------------------
+# 系统文本 - 重启提示
+# ------------------------------------------------
+#!define STR_TEXT_HOST_RESTARTING "主机开始了游戏模式.\n这将导致智械危机.\n\n                      正在重开..."
+
+# ------------------------------------------------
+# 机器人名称格式
+# ------------------------------------------------
+# {0}=编号 (Slot+1), {1}=击杀数
+#!define STR_BOT_NAME_FORMAT "看守{0} 击杀{1}"
+
+# ------------------------------------------------
+# HUD 文本
+# ------------------------------------------------
+#!define STR_HUD_DEATHS "阵亡"
+#!define STR_HUD_DEATHS_VAL "{0} / {1}"
+#!define STR_HUD_HEROES "英雄"
+#!define STR_HUD_HEROES_VAL "{0} / {1}"
+#!define STR_HUD_NEXT_HERO "下一个英雄"
+#!define STR_HUD_ESCAPED "逃脱成功"
+#!define STR_HUD_UNLOCKED "{0} 已解锁！"
+#!define STR_HUD_CHALLENGE_COMPLETE "挑战完成"
+#!define STR_HUD_ACHIEVEMENT_DISABLED "成就挑战已禁用 {0}"
+#!define STR_HUD_RUN_DEATHS "本轮共计 {0} 次阵亡"
+#!define STR_HUD_RUN_SKIPS "本轮共计 {0} 次跳过"
+#!define STR_HUD_GRENADE_DMG "榴弹共计 {0} 点伤害"
+#!define STR_HUD_GRENADE_HIT "榴弹共计 {0}/{1} 命中/锁定"
+#!define STR_HUD_SURVIVOR "大难不死 {0} "
+#!define STR_HUD_GAMBLER_KING "赌王 {0} "
+#!define STR_HUD_TOTAL_TIME "通关总计耗时 {0}"
+#!define STR_HUD_SKIP_HINT "[秘籍] 使用终极技能跳过（{0}） "
+#!define STR_HUD_WELCOME_MULTI "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！阵亡 {0} 次之后可跳过英雄"
+#!define STR_HUD_WELCOME_MULTI_HARD "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！当前难度无法跳过英雄，加油吧！"
+#!define STR_HUD_WELCOME_NORMAL "使用全部英雄通关，一旦你解锁了一个英雄就可以在后续的游戏中随时使用！当阵亡 {0} 次之后可跳过英雄"
+#!define STR_HUD_WELCOME_NORMAL_HARD "使用全部英雄通关！当前难度无法跳过英雄，加油吧！"
+#!define STR_HUD_FOOTER_INFO "500强交流群：445152554 | 加群给你喜欢的事件点赞 \n"
+#!define STR_HUD_EVENT_GLOBAL "全局事件：{0} {1}（{2}）"
+#!define STR_HUD_EVENT_DESC "{0} {1}"
+#!define STR_HUD_EVENT_STATS "{0}/{1}/{2} 增益/减益/总计"
+#!define STR_HUD_RANDOM_EVENTS "［随机事件］"
+#!define STR_HUD_AUTO_RESTART "距自动重开 {0}"
+#!define STR_HUD_SERVER_UPTIME "已运行 {0}"
+#!define STR_HUD_SERVER_LOAD "  服务器负载 {0}"
+#!define STR_HUD_VERSION "版本"
+
+# ------------------------------------------------
+# World Text (In-World)
+# ------------------------------------------------
+#!define STR_WORLD_THIRD_PERSON "      按{0}切换第三人称视角\n                    {1}"
+#!define STR_WORLD_RESET_PROGRESS "重置进度\n                {0}"
+#!define STR_WORLD_SPRINGBOARD "      按{0}向上弹射\n                    {1}"
+
+# ------------------------------------------------
+# Hero Specific HUD Text
+# ------------------------------------------------
+# D.Va
+#!define STR_DVA_DISTANCE_GOAL "目标距离:{0} m"
+
+# Ana
+# {0}=Skill Icon, {1}=Cooldown Seconds (30)
+#!define STR_ANA_SLEEP_LIMIT_HINT "{0} 麻醉镖限制: \n 每个堡垒每 {1} 秒只能被麻醉一次"
+# {0}=Remaining Seconds
+#!define STR_ANA_SLEEP_LIMIT_BAR "麻醉限制: 剩余 {0} 秒 "
+
+# Zenyatta (Disabled rule, but good to have)
+#!define STR_ZEN_KICK_HINT "踹击地面可以向后击退 {0}\n按住跳跃可以悬浮 {1}"
+
+# ------------------------------------------------
+# 游戏机制 - 进度与跳过
+# ------------------------------------------------
+#!define STR_MSG_SKIP_AVAILABLE "可跳过当前英雄"
+#!define STR_MSG_HOLD_RELOAD_RESET "长按装填键重置"
+#!define STR_MSG_RESETTING_PROGRESS "  正在重置进度..."
+#!define STR_MSG_PLAYER_RESET_PROGRESS "  {0} 重置了进度"
+
+# ------------------------------------------------
+# 菜单标题
+# ------------------------------------------------
+#!define STR_MENU_TITLE_DEV "开发者模式"
+#!define STR_MENU_TITLE_INGAME "游戏内面板"
+#!define STR_MENU_TITLE_DEV_PANEL "开发者面板"
+
+# ------------------------------------------------
+# 菜单状态显示
+# ------------------------------------------------
+#!define STR_MENU_STATE_ON "O"
+#!define STR_MENU_STATE_OFF "X"
+#!define STR_MENU_STATE_NULL "空"
+#!define STR_MENU_TARGET_PLAYER "{0}（{1}）"
+
+# ------------------------------------------------
+# 菜单选项 (Page 1 - General/Host)
+# ------------------------------------------------
+# {0}=Button, {1}=Next Line
+#!define STR_MENU_OPT_RESTART_EXTEND "{0}    自动重开：延长5分钟    \n{1}"
+#!define STR_MENU_OPT_RESTART_REDUCE "{0}    自动重开：缩短5分钟    \n{1}"
+#!define STR_MENU_OPT_TITLE_PREV "{0}    上一个称号    \n{1}"
+#!define STR_MENU_OPT_TITLE_NEXT "{0}    下一个称号    \n{1}"
+#!define STR_MENU_OPT_DIFF_INC "{0}    增加难度    \n{1}"
+#!define STR_MENU_OPT_DIFF_DEC "{0}    降低难度    \n{1}"
+# {0}=Button, {1}=State, {2}=Next Line
+#!define STR_MENU_OPT_THIRD_PERSON "{0}    第三人称视角    {1}\n{2}"
+#!define STR_MENU_OPT_MARK_PLAYER "{0}    标记玩家    {1}\n{2}"
+#!define STR_MENU_OPT_UNMARK_BLOCK "{0}    移除标记玩家并临时拉黑    \n{1}"
+#!define STR_MENU_OPT_NEXT_PAGE "{0}    下一页    "
+
+# ------------------------------------------------
+# 菜单选项 (Page 2 - Dev Control)
+# ------------------------------------------------
+#!define STR_MENU_OPT_DEBUG_INFO "{0}    Debug 信息    {1}\n{2}"
+#!define STR_MENU_OPT_UNLOCK_ALL "{0}    解锁全英雄    {1}\n{2}"
+#!define STR_MENU_OPT_RESTART_NOW "{0}    立即重开    \n{1}"
+#!define STR_MENU_OPT_UNMARK_PLAYER "{0}    移除标记玩家    \n{1}"
+#!define STR_MENU_OPT_TP_TO_TARGET "{0}    传送到标记玩家    \n{1}"
+#!define STR_MENU_OPT_DMG_REDUCE "{0}    受到伤害降低    {1}\n{2}"
+#!define STR_MENU_OPT_INVINCIBLE "{0}    无敌    {1}\n{2}"
+
+# ------------------------------------------------
+# 菜单选项 (Page 3 - Dev Develop)
+# ------------------------------------------------
+#!define STR_MENU_OPT_AIR_WALK "{0}    浮空    {1}\n{2}"
+#!define STR_MENU_OPT_NOCLIP "{0}    穿墙    {1}\n{2}"
+#!define STR_MENU_OPT_SELECT_INDEX "{0}    选择目标点索引    {1}\n{2}"
+#!define STR_MENU_OPT_TP_TO_INDEX "{0}    传送到目标点    \n{1}"
+
+# ------------------------------------------------
+# Host/Dev Administration Messages
+# ------------------------------------------------
+# {0}=Icon
+#!define STR_MSG_ADMIN_NO_TARGET "  {0}  没有可标记的玩家"
+
+# {0}=Icon, {1}=Player Name, {2}=Hero
+#!define STR_MSG_ADMIN_MARKED "  {0}  房主操作： 已标记 {1}（{2}）"
+
+# {0}=Icon, {1}=Button, {2}=Player Name
+#!define STR_MSG_ADMIN_HOLD_TO_KICK "  {0}  房主操作： 长按 {1} 移除 {2}"
+
+# {0}=Icon, {1}=Player Name
+#!define STR_MSG_ADMIN_KICK_WARNING "  {0}  房主操作： 即将移除玩家 {1}"
+
+# {0}=Icon, {1}=Player Name
+#!define STR_MSG_ADMIN_KICK_SUCCESS "  {0}  房主操作： 已移除玩家 {1}"
+
+# ------------------------------------------------
+# 自动重开倒计时
+# ------------------------------------------------
+#!define STR_MSG_AUTO_RESTART_1MIN "游戏将在 1 分钟后自动重开"
