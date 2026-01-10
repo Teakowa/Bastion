@@ -788,7 +788,11 @@ rule "initialize title array":
         name: titlePlayer,
         titles: playerTitleRelation
     }, player_database)
-    
+
+
+rule "initialize map title array":
+    wait(getServerLoad() / 100 * 0.5)
+    waitUntil(__currentMap___ != null, 999999986991104.000)
     # 5.3 动态加载当前地图专属数据
     # 使用 switch 只加载对应地图的数据到 mtName 和 mtTitles
     switch getCurrentMap():
