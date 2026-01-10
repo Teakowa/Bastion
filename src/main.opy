@@ -504,20 +504,6 @@ rule "player deaths are counted manually rather than relying on in-game statisti
     eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
 
 
-rule "when a mercy might rez, respawn time is increased":
-    @Event playerDied
-    @Team 1
-    @Condition isHeroBeingPlayed(Hero.MERCY, Team.1) == true
-    @Condition eventPlayer.controlPlayerRespawnPosition == null
-    
-    if evalOnce(dlcVishkarEvent) and eventPlayer.eventType == 0 and eventPlayer.eventId == 8:
-        return
-    if any([distance(eventPlayer.getPosition(), player.getPosition()) < 40 and player.isAlive() and player.getAbilityCooldown(Button.ABILITY_2) < 8 for player in getPlayersOnHero(Hero.MERCY, Team.1)]):
-        bigMessage(eventPlayer, STR_MSG_MERCY_NEARBY)
-        eventPlayer.disableRespawn()
-        wait(4)
-        eventPlayer.enableRespawn()
-
 #!include "heros/all_hero.opy"
 
 #!include "utilities/hashtag.opy"

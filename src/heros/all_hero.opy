@@ -1,5 +1,7 @@
 #!mainFile "../main.opy"
 
+#!include "./mercy.opy"
+
 #!include "./symmetra.opy"
 
 #!include "./dva.opy"
