@@ -37,4 +37,6 @@
 #!include "nepal.opy"
 #!include "throne_of_anubis.opy"
 #!include "hanaoka.opy"
+#!include "suravasa.opy"
+#!include "ayutthaya.opy"
 #!include "aatlis.opy"
