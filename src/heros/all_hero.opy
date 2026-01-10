@@ -4,6 +4,8 @@
 
 #!include "./dva.opy"
 
+#!include "./ana.opy"
+
 #!include "./reinhardt.opy"
 
 #!include "./zenyatta.opy"
