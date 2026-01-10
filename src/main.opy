@@ -1,3 +1,4 @@
+#!include "env/env.opy"
 settings {
     "main": {
         "description": "随机事件 3.0 已上线\n!!!使用全英雄逃出生天!!!\n————————————————\n代码【SVMQK】  | 最近更新：26.0108.1\n\nowmod.net/2650\n\n企鹅聊天群：445152554\n\n原作［OW2 PASTION ESCAPE］",
@@ -427,7 +428,7 @@ rule "在模式描述中保留原作者署名与原模式代码的前提下，�
 
 #!include "utilities/removeFromBlacklist.opy"
     
-#!include "env/env.opy"
+#!include "env/game.opy"
 
 #!include "title/title-cn.opy"
 
