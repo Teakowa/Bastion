@@ -783,13 +783,6 @@ rule "initialize title array":
         titles: playerTitleRelation
     }, player_database)
 
-    # 5.2 初始化通用玩家数据
-    splitDictArray({
-        name: titlePlayer,
-        titles: playerTitleRelation
-    }, player_database)
-
-
 rule "initialize map title array":
     wait(getServerLoad() / 100 * 0.5)
     waitUntil(__currentMap___ != null, 999999986991104.000)
