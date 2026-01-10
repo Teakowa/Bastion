@@ -434,6 +434,7 @@ rule "[VishkarEvent]: 胜利意志":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 19, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * 0.3]) == true
     
+    waitUntil(eventPlayer.isAlive(), MAX_TIME)
     eventPlayer.setStatusEffect(eventPlayer, Status.PHASED_OUT, 0.016)
     wait()
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
@@ -859,6 +860,7 @@ rule "[VishkarEvent]: 极限挑战":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
     
+    waitUntil(eventPlayer.isAlive(), MAX_TIME)
     eventPlayer.mod_heal_event = -1000
     eventPlayer.heal_recv = -1000
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
