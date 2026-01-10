@@ -449,6 +449,8 @@ rule "在模式描述中保留原作者署名与原模式代码的前提下，�
 
 #!include "utilities/stopCombatRegen.opy"
 
+#!include "utilities/createBastionBot.opy"
+
 #!include "utilities/setPlayerTitle.opy"
 
 #!include "utilities/anticrash.opy"

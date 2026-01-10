@@ -24,7 +24,7 @@ rule "create bastion bots when the game starts and there are not enough":
     if getNumberOfPlayers(Team.2) < len(bastionPosition):
         createBastionBot()
     wait(5)
-    wait(getServerLoad() / 100 * 0.8)
+    wait(max(0.5, getServerLoad() / 100 * 0.8))
     if ruleCondition:
         loop()
 
@@ -39,7 +39,7 @@ rule "SAFE create bastion bots when the game start and there are no bastion bots
         destroyAllDummies()
         wait(0.5)
         createBastionBot()
-    wait(getServerLoad() / 100 * 3.2)
+    wait(max(2, getServerLoad() / 100 * 3.2))
     if ruleCondition:
         loop()
 
