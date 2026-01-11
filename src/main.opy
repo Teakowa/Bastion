@@ -49,7 +49,7 @@ settings {
             "enablePerks": true,
             "perkGeneration%": 500,
             "respawnTime%": 10,
-            "healthPackRespawnTime%": 20,
+            "healthPackRespawnTime%": 75,
             "enableEnemyHealthBars": false,
             "gamemodeStartTrigger": "manual",
             "heroLimit": "off",
@@ -225,6 +225,7 @@ settings {
 #Global variables
 
 globalvar bastionPosition 0
+globalvar heroRingPosition 1
 globalvar resetPosition 2
 globalvar creditsPosition 3
 globalvar endPosition 4
@@ -280,9 +281,12 @@ globalvar eventDuration 58
 globalvar eventName 59
 globalvar eventDesc 60
 globalvar eventCount 61
+globalvar eventRoll 62
 globalvar eventType 63
 globalvar eventDurationHud 64
+globalvar eventWeight 65
 globalvar hashTag 69
+globalvar dlcBerserker 70
 globalvar dlcVishkarEvent 71
 globalvar vishkarEventActivated 72
 globalvar globalEvent 79
@@ -303,6 +307,7 @@ globalvar breathGold 95
 globalvar springBoardPosition 100
 globalvar portalPosition 101
 globalvar heroGender 102
+globalvar phaseHero 103
 globalvar __currentMapText___ 105
 globalvar __currentPioneerText___ 106
 globalvar __currentMapPioneerText___ 107
@@ -353,6 +358,7 @@ playervar winnerTime 42
 playervar playerTitles 43
 playervar playerTitleIndex 44
 playervar playerTitleRelationIndex 45
+playervar playerTitleWhileIndex 46
 playervar A36TGrenade 50
 playervar A36TGrenadeHit 51
 playervar A36TGrenadeDmg 52
@@ -369,32 +375,43 @@ playervar eventDesc 65
 playervar eventCount 66
 playervar eventLucky 67
 playervar eventEffect 68
-playervar categoryRoll 69
-playervar combatRegen 70
-playervar mod_speed_event 71
-playervar mod_speed_perma 72
-playervar mod_heal_event 74
-playervar heal_recv 75
-playervar mod_dmg_taken 80
-playervar mod_dmg_perma 81
-playervar healthId 84
-playervar hack_timer 85
-playervar targetWeight 86
-playervar targetSilence 87
-playervar hudTextId 88
-playervar heart_steel 89
-playervar obstrucVis 90
-playervar sizeHealth 91
-playervar eventDurationHud 92
+playervar eventDurationHud 69
+playervar eventLoopCount 70
+playervar eventIsSelected 71
+playervar eventTempId 72
+playervar eventTempWeight 73
+playervar categoryRoll 74
+playervar combatRegen 75
+playervar mod_speed_event 76
+playervar mod_speed_perma 77
+playervar mod_heal_event 78
+playervar heal_recv 79
+playervar healing_global 80
+playervar mod_dmg_taken 81
+playervar mod_dmg_perma 82
+playervar healthId 85
+playervar hack_timer 86
+playervar targetWeight 87
+playervar targetSilence 88
+playervar hudTextId 89
+playervar heart_steel 90
+playervar obstrucVis 91
+playervar sizeHealth 92
 playervar possess 93
 playervar possessed 94
 playervar empProMax 95
 playervar setPlayerHP 96
 playervar dlcTimeChallenge 97
+playervar toggleSpectate 98
 playervar knockback 99
-playervar tempIndices 110
-playervar tempMapIndices 111
-playervar tempMapMatches 112
+playervar phase_trigger 100
+playervar hp_data 101
+playervar eventForceRoll 102
+playervar eventForceCount 103
+playervar eventSize 104
+playervar eventTargetHP 105
+playervar overhealthDecay 106
+playervar storedOverhealth 107
 
 
 #Subroutine names
@@ -410,8 +427,12 @@ subroutine updatePlayerStats 7
 subroutine stopCombatRegen 8
 subroutine setPlayerHP 9
 subroutine setEventDuration 10
+subroutine rejecSampling 11
 subroutine resetPlayerCD 12
+subroutine StoreOverhealth 13
 subroutine clearEventEffect 14
+subroutine updatePlayerPhase 15
+subroutine setPlayerSize 16
 subroutine createBastionBot 17
 
 
@@ -449,6 +470,10 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/init.opy"
 
+#!include "utilities/dashDetector.opy"
+
+#!include "utilities/setPlayerSize.opy"
+
 #!include "utilities/savePlayerData.opy"
 
 #!include "utilities/progressHero.opy"
@@ -462,6 +487,8 @@ rule STR_LICENSE_PERMIT:
 #!include "utilities/clearPlayerEvent.opy"
 
 #!include "utilities/setPlayerHP.opy"
+
+#!include "utilities/overhealthDecay.opy"
 
 #!include "utilities/setEventDuration.opy"
 

@@ -180,7 +180,75 @@
 #!define STR_EVT_MECH_13_TITLE "赌徒：竞速挑战"
 #!define STR_EVT_MECH_13_DESC "长按{0}消耗50%生命值\n49%概率永久获得/损失5%移速加成\n2% 概率永久获得/损失 12% 移速加成"
 
-# 设置菜单分类 (如果还没定义)
+# ------------------------------------------------
+# 随机事件包 4：增益 (Buff Events Pack 4)
+# ------------------------------------------------
+#!define STR_EVT_BUFF_24_TITLE "相位猛冲"
+#!define STR_EVT_BUFF_24_DESC "位移技能获得300%移速加成"
+#!define STR_EVT_BUFF_25_TITLE "操盘手"
+#!define STR_EVT_BUFF_25_DESC "控制技能命中返还50%冷却"
+#!define STR_EVT_BUFF_26_TITLE "保镖"
+#!define STR_EVT_BUFF_26_DESC "位移技能为周围友方提供临时护甲"
+#!define STR_EVT_BUFF_27_TITLE "任务：殉道者"
+# {0}=堡垒数量
+#!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀{0}次，奖励：5% 永久伤害减免"
+#!define STR_EVT_BUFF_28_TITLE "多动症"
+#!define STR_EVT_BUFF_28_DESC "位移技能冷却减半释放时获得治疗"
+#!define STR_EVT_BUFF_29_TITLE "操盘手 ProMax"
+#!define STR_EVT_BUFF_29_DESC "控制技能命中返还75%冷却\n并将控制效果扩散给其他堡垒"
+#!define STR_EVT_BUFF_30_TITLE "鼓舞士气 ProMax"
+#!define STR_EVT_BUFF_30_DESC "每秒为5米内的友方回复50+50%最大生命值"
+#!define STR_EVT_BUFF_31_TITLE "成吨的增益"
+#!define STR_EVT_BUFF_31_DESC "+50%生命/移速/减伤/治疗,-50%冷却"
+#!define STR_EVT_BUFF_32_TITLE "F5"
+#!define STR_EVT_BUFF_32_DESC "每5秒重置所有技能冷却"
+#!define STR_EVT_BUFF_33_TITLE "治疗光塔 ProMax"
+#!define STR_EVT_BUFF_33_DESC "无视距离，每秒为全队提供25+125%最大生命值的治疗"
+
+# ------------------------------------------------
+# 随机事件包 4：减益 (Debuff Events Pack 4)
+# ------------------------------------------------
+#!define STR_EVT_DEBUFF_16_TITLE "保持距离"
+#!define STR_EVT_DEBUFF_16_DESC "距离队友越近受到伤害越高"
+#!define STR_EVT_DEBUFF_17_TITLE "404"
+#!define STR_EVT_DEBUFF_17_DESC "随机禁用一个技能"
+#!define STR_EVT_DEBUFF_18_TITLE "连锁过载"
+#!define STR_EVT_DEBUFF_18_DESC "使用技能会导致\n所有技能进入冷却"
+#!define STR_EVT_DEBUFF_19_TITLE "我和你"
+#!define STR_EVT_DEBUFF_19_DESC "生命值与最低血量的队友同步"
+#!define STR_EVT_DEBUFF_20_TITLE "吸血鬼 ProMax"
+#!define STR_EVT_DEBUFF_20_DESC "吸取队友生命值来治疗自己"
+#!define STR_EVT_DEBUFF_21_TITLE "成吨的减益"
+#!define STR_EVT_DEBUFF_21_DESC "全属性大幅降低\n祝你好运"
+
+# ------------------------------------------------
+# 随机事件包 4：机制 (Mech Events Pack 4)
+# ------------------------------------------------
+#!define STR_EVT_MECH_14_TITLE "作弊：我要验牌"
+#!define STR_EVT_MECH_14_DESC "长按{0}永久损失10%生命值，下个事件必为增益"
+#!define STR_EVT_MECH_15_TITLE "作弊：回溯"
+#!define STR_EVT_MECH_15_DESC "按下{0}回到3秒前的位置，每次消耗10%生命值"
+#!define STR_EVT_MECH_16_TITLE "赌徒：短期投资"
+#!define STR_EVT_MECH_16_DESC "长按{0}锁定3个减益\n75%概率获得4层心之钢"
+#!define STR_EVT_MECH_17_TITLE "命运共同体"
+#!define STR_EVT_MECH_17_DESC "与随机友方共享事件"
+#!define STR_EVT_MECH_18_TITLE "作弊：跳过"
+#!define STR_EVT_MECH_18_DESC "长按{0}跳过当前英雄且不计入挑战进度"
+#!define STR_EVT_MECH_19_TITLE "俄罗斯方块"
+#!define STR_EVT_MECH_19_DESC "阵亡2秒后复活\n每次复活体型变大5%并临时提升5%生命值"
+#!define STR_EVT_MECH_20_TITLE "俄罗斯套娃"
+#!define STR_EVT_MECH_20_DESC "阵亡2秒后复活\n每次复活变小5%并加速5%"
+#!define STR_EVT_MECH_21_TITLE "作弊：0CD"
+#!define STR_EVT_MECH_21_DESC "技能无冷却，释放消耗25%最大生命"
+#!define STR_EVT_MECH_22_TITLE "赌徒：长期投资"
+#!define STR_EVT_MECH_22_DESC "长按{0}锁定5个减益\n33%概率获得20层心之钢"
+#!define STR_EVT_MECH_23_TITLE "瓦尔基里降临"
+#!define STR_EVT_MECH_23_DESC "化身BOSS：500%生命\n无法被治疗，靠大招回血"
+#!define STR_EVT_MECH_24_TITLE "三位一体"
+#!define STR_EVT_MECH_24_DESC "100HP→2.5%减伤，1%减伤→2%移速，100%移速/秒→1层心之钢"
+
+
+# 设置菜单分类 (Pack)
 #!define STR_CAT_RANDOM_PACK_1_BUFF "随机事件包 1：增益"
 #!define STR_CAT_RANDOM_PACK_2_BUFF "随机事件包 2：增益"
 #!define STR_CAT_RANDOM_PACK_3_BUFF "随机事件包 3：增益"
@@ -190,6 +258,9 @@
 #!define STR_CAT_RANDOM_PACK_1_MECH "随机事件包 1：机制"
 #!define STR_CAT_RANDOM_PACK_2_MECH "随机事件包 2：机制"
 #!define STR_CAT_RANDOM_PACK_3_MECH "随机事件包 3：机制"
+#!define STR_CAT_RANDOM_PACK_4_BUFF "随机事件包 4：增益"
+#!define STR_CAT_RANDOM_PACK_4_DEBUFF "随机事件包 4：减益"
+#!define STR_CAT_RANDOM_PACK_4_MECH "随机事件包 4：机制"
 
 # ------------------------------------------------
 # 游戏内提示信息 (In-game Notifications)
@@ -281,6 +352,37 @@
 #!define STR_HUD_SERVER_UPTIME "已运行 {0}"
 #!define STR_HUD_SERVER_LOAD "  服务器负载 {0}"
 #!define STR_HUD_VERSION "版本"
+
+# ------------------------------------------------
+# HUD 面板结构 (4.0 New)
+# ------------------------------------------------
+#!define STR_HUD_PANEL_TOP "┌──────────┐"
+#!define STR_HUD_PANEL_BOTTOM "└──────────┘"
+
+# 统计面板内容 (多行格式)
+# {0}=阵亡/跳过数值, {1}=榴弹数据, {2}=事件统计(可选)
+#!define STR_HUD_STATS_PANEL "{0}\r\n{1}\r\n{2}"
+
+# 阵亡/跳过
+# {0}=阵亡数, {1}=跳过数
+#!define STR_HUD_STATS_DEATH_SKIP "阵亡/跳过 \n{0}/{1}"
+
+# 榴弹数据
+# {0}=命中/锁定/伤害
+#!define STR_HUD_STATS_GRENADE "榴弹命中/锁定/伤害\r\n{0}"
+#!define STR_HUD_STATS_GRENADE_VAL "{0}/{1}/{2}"
+
+# 事件统计
+# {0}=增益, {1}=减益, {2}=总计
+#!define STR_HUD_STATS_EVENT "增益/减益/总计\r\n{0}/{1}/{2} "
+
+# 随机事件 4.0 标题
+#!define STR_HUD_RANDOM_EVENTS_V4 "［随机事件 4.0］"
+
+# 事件详情格式 (HUD Text)
+# {0}=名称, {1}=时间, {2}=描述
+#!define STR_HUD_EVENT_DETAIL "{0}（{1}）\n{2}"
+
 
 # ------------------------------------------------
 # World Text (In-World)

@@ -24,6 +24,7 @@ def clearPlayerEvent():
     eventPlayer.targetSilence = false
     eventPlayer.knockback = null
     eventPlayer.sizeHealth = 1
+    eventPlayer.eventSize = 0
     if eventPlayer.isWinner:
         goto lbl_0
     destroyEffect(eventPlayer.invincibleEffect)
@@ -33,6 +34,9 @@ def clearPlayerEvent():
     eventPlayer.hudTextId = null
     eventPlayer.target = null
     eventPlayer.possess = null
+    eventPlayer.stopScalingSize()
+    eventPlayer.stopScalingBarriers()
+    eventPlayer.stopModifyingVoicelinePitch()
     updatePlayerStats()
     clearEventEffect()
     smallMessage(

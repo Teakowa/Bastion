@@ -166,6 +166,72 @@
 #!define STR_EVT_MECH_13_TITLE "Gambler: Speedrun"
 #!define STR_EVT_MECH_13_DESC "Hold {0} (Costs 50% HP)\n49% chance: +/- 5% permanent speed\n2% chance: +/- 12% permanent speed"
 
+# ------------------------------------------------
+# Random Pack 4: Buffs
+# ------------------------------------------------
+#!define STR_EVT_BUFF_24_TITLE "Phase Rush"
+#!define STR_EVT_BUFF_24_DESC "Movement abilities grant 300% speed boost."
+#!define STR_EVT_BUFF_25_TITLE "Mastermind"
+#!define STR_EVT_BUFF_25_DESC "Landing CC refunds 50% cooldowns."
+#!define STR_EVT_BUFF_26_TITLE "Bodyguard"
+#!define STR_EVT_BUFF_26_DESC "Movement abilities grant temp armor to nearby allies."
+#!define STR_EVT_BUFF_27_TITLE "Mission: Martyr"
+#!define STR_EVT_BUFF_27_DESC "Die to {0} different Bastions. Reward: 5% Permanent DR."
+#!define STR_EVT_BUFF_28_TITLE "ADHD"
+#!define STR_EVT_BUFF_28_DESC "Movement cooldowns halved. Using them heals you."
+#!define STR_EVT_BUFF_29_TITLE "Mastermind ProMax"
+#!define STR_EVT_BUFF_29_DESC "Landing CC refunds 75% cooldowns\nand spreads CC to other Bastions."
+#!define STR_EVT_BUFF_30_TITLE "Inspire ProMax"
+#!define STR_EVT_BUFF_30_DESC "Heals allies within 5m for 50 + 50% Max HP per second."
+#!define STR_EVT_BUFF_31_TITLE "Tons of Buffs"
+#!define STR_EVT_BUFF_31_DESC "+50% HP/Speed/DR/Healing, -50% Cooldowns."
+#!define STR_EVT_BUFF_32_TITLE "F5"
+#!define STR_EVT_BUFF_32_DESC "Resets all cooldowns every 5s."
+#!define STR_EVT_BUFF_33_TITLE "Healing Pylon ProMax"
+#!define STR_EVT_BUFF_33_DESC "Global range. Heals team for 25 + 125% Max HP/s."
+
+# ------------------------------------------------
+# Random Pack 4: Debuffs
+# ------------------------------------------------
+#!define STR_EVT_DEBUFF_16_TITLE "Social Distancing"
+#!define STR_EVT_DEBUFF_16_DESC "Taking damage increases when closer to allies."
+#!define STR_EVT_DEBUFF_17_TITLE "404"
+#!define STR_EVT_DEBUFF_17_DESC "Randomly disables one ability."
+#!define STR_EVT_DEBUFF_18_TITLE "Chain Overload"
+#!define STR_EVT_DEBUFF_18_DESC "Using an ability puts ALL abilities on cooldown."
+#!define STR_EVT_DEBUFF_19_TITLE "You and Me"
+#!define STR_EVT_DEBUFF_19_DESC "HP synced with the lowest HP teammate."
+#!define STR_EVT_DEBUFF_20_TITLE "Vampire ProMax"
+#!define STR_EVT_DEBUFF_20_DESC "Drains ally HP to heal yourself."
+#!define STR_EVT_DEBUFF_21_TITLE "Tons of Debuffs"
+#!define STR_EVT_DEBUFF_21_DESC "All stats massively reduced.\nGood Luck."
+
+# ------------------------------------------------
+# Random Pack 4: Mechanics
+# ------------------------------------------------
+#!define STR_EVT_MECH_14_TITLE "Cheat: Check Cards"
+#!define STR_EVT_MECH_14_DESC "Hold {0}: Lose 10% Max HP permanently. Next event guaranteed Buff."
+#!define STR_EVT_MECH_15_TITLE "Cheat: Rewind"
+#!define STR_EVT_MECH_15_DESC "Press {0} to rewind 3s. Costs 10% HP per use."
+#!define STR_EVT_MECH_16_TITLE "Gambler: Short Term"
+#!define STR_EVT_MECH_16_DESC "Hold {0}: Lock 3 Debuffs.\n75% chance to gain 4 Heartsteel stacks."
+#!define STR_EVT_MECH_17_TITLE "Shared Fate"
+#!define STR_EVT_MECH_17_DESC "Share events with a random ally."
+#!define STR_EVT_MECH_18_TITLE "Cheat: Skip"
+#!define STR_EVT_MECH_18_DESC "Hold {0}: Skip current hero (Doesn't count for challenge)."
+#!define STR_EVT_MECH_19_TITLE "Tetris"
+#!define STR_EVT_MECH_19_DESC "Respawn after 2s.\nEach respawn: +5% Size & Temp HP."
+#!define STR_EVT_MECH_20_TITLE "Matryoshka"
+#!define STR_EVT_MECH_20_DESC "Respawn after 2s.\nEach respawn: -5% Size & +5% Speed."
+#!define STR_EVT_MECH_21_TITLE "Cheat: 0CD"
+#!define STR_EVT_MECH_21_DESC "Zero cooldowns. Using skills costs 25% Max HP."
+#!define STR_EVT_MECH_22_TITLE "Gambler: Long Term"
+#!define STR_EVT_MECH_22_DESC "Hold {0}: Lock 5 Debuffs.\n33% chance to gain 20 Heartsteel stacks."
+#!define STR_EVT_MECH_23_TITLE "Valkyrie's Descent"
+#!define STR_EVT_MECH_23_DESC "Become BOSS: 500% HP.\nNo healing received. Heal via Ultimate."
+#!define STR_EVT_MECH_24_TITLE "Trinity"
+#!define STR_EVT_MECH_24_DESC "100HP->2.5% DR, 1% DR->2% Speed, 100% Speed/s->1 Heartsteel."
+
 # Settings Categories
 #!define STR_CAT_RANDOM_PACK_1_BUFF "Random Pack 1: Buffs"
 #!define STR_CAT_RANDOM_PACK_2_BUFF "Random Pack 2: Buffs"
@@ -176,6 +242,9 @@
 #!define STR_CAT_RANDOM_PACK_1_MECH "Random Pack 1: Mechanics"
 #!define STR_CAT_RANDOM_PACK_2_MECH "Random Pack 2: Mechanics"
 #!define STR_CAT_RANDOM_PACK_3_MECH "Random Pack 3: Mechanics"
+#!define STR_CAT_RANDOM_PACK_4_BUFF "Random Pack 4: Buffs"
+#!define STR_CAT_RANDOM_PACK_4_DEBUFF "Random Pack 4: Debuffs"
+#!define STR_CAT_RANDOM_PACK_4_MECH "Random Pack 4: Mechanics"
 
 # ------------------------------------------------
 # In-game Notifications
@@ -267,7 +336,38 @@
 #!define STR_HUD_AUTO_RESTART "Auto Restart in {0}"
 #!define STR_HUD_SERVER_UPTIME "Uptime: {0}"
 #!define STR_HUD_SERVER_LOAD "  Server Load: {0}"
-#!define STR_HUD_VERSION "Ver 26.0109.1"
+#!define STR_HUD_VERSION "Ver"
+
+# ------------------------------------------------
+# HUD Panel Structure (4.0 New)
+# ------------------------------------------------
+#!define STR_HUD_PANEL_TOP "┌──────────┐"
+#!define STR_HUD_PANEL_BOTTOM "└──────────┘"
+
+# Stats Panel Content
+# {0}=Deaths/Skips, {1}=Grenade Stats, {2}=Event Stats
+#!define STR_HUD_STATS_PANEL "{0}\r\n{1}\r\n{2}"
+
+# Deaths/Skips
+# {0}=Deaths, {1}=Skips
+#!define STR_HUD_STATS_DEATH_SKIP "Deaths/Skips \n{0}/{1}"
+
+# Grenade Stats
+# {0}=Hit/Lock/Dmg
+#!define STR_HUD_STATS_GRENADE "Grenade Hit/Lock/Dmg\r\n{0}"
+#!define STR_HUD_STATS_GRENADE_VAL "{0}/{1}/{2}"
+
+# Event Stats
+# {0}=Buff, {1}=Debuff, {2}=Total
+#!define STR_HUD_STATS_EVENT "Buff/Debuff/Total\r\n{0}/{1}/{2} "
+
+# Random Events 4.0 Title
+#!define STR_HUD_RANDOM_EVENTS_V4 "[Random Events 4.0]"
+
+# Event Detail Format
+# {0}=Name, {1}=Time, {2}=Desc
+#!define STR_HUD_EVENT_DETAIL "{0} ({1})\n{2}"
+
 
 # ------------------------------------------------
 # World Text (In-World)

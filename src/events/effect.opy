@@ -901,7 +901,8 @@ rule "[VishkarEvent]: 纳米战甲":
     waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
     eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.getMaxHealth() * 8, false, false)
     eventPlayer.healthId[0] = getLastCreatedHealthPool()
-    eventPlayer.mod_speed_event = -25
+    # eventPlayer.mod_speed_event = -25
+    eventPlayer.overhealthDecay = true
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_speed_event = 0
@@ -1199,6 +1200,560 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
     eventPlayer.categoryRoll = 0
     updatePlayerStats()
     eventPlayer.eventDuration = 0
+
+
+rule "[VishkarEvent]: 4.0":
+    @Disabled
+    @Delimiter
+    
+
+
+rule "[VishkarEvent]: 三位一体 (SSR)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 24]) == true
+    
+    eventPlayer.mod_dmg_taken = min(85, eventPlayer.getMaxHealth() / 40) * -1
+    eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -2
+    updatePlayerStats()
+    eventPlayer.heart_steel += 0.5
+    setPlayerHP()
+    smallMessage(eventPlayer, "  {0}  {1}".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))))
+    wait(1)
+    if ruleCondition:
+        loop()
+    eventPlayer.mod_dmg_taken = 0
+    eventPlayer.mod_speed_event = 0
+    updatePlayerStats()
+
+rule "[VishkarEvent]: 相位猛冲 (智能检测版)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 24, eventPlayer.phase_trigger == true, eventPlayer.mod_speed_event == 0]) == true
+    
+    createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    eventPlayer.eventEffect = getLastCreatedEntity()
+    eventPlayer.mod_speed_event += 300
+    updatePlayerStats()
+    wait(2)
+    eventPlayer.mod_speed_event -= 300
+    updatePlayerStats()
+    clearEventEffect()
+    wait(0.5)
+
+
+rule "[VishkarEvent]: 操盘手 (伤害+状态检测)":
+    @Event playerTookDamage
+    @Team 2
+    @Condition all([evalOnce(dlcVishkarEvent), attacker.hasSpawned(), attacker.eventType == 0, attacker.eventId == 25]) == true
+    @Condition any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == true
+    
+    if eventAbility == Button.ABILITY_1 and attacker.getAbilityCooldown(Button.ABILITY_1) > 0:
+        attacker.setAbilityCooldown(Button.ABILITY_1, attacker.getAbilityCooldown(Button.ABILITY_1) * 0.5)
+    if eventAbility == Button.ABILITY_2 and attacker.getAbilityCooldown(Button.ABILITY_2) > 0:
+        attacker.setAbilityCooldown(Button.ABILITY_2, attacker.getAbilityCooldown(Button.ABILITY_2) * 0.5)
+    if eventAbility == Button.SECONDARY_FIRE and attacker.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
+        attacker.setAbilityCooldown(Button.SECONDARY_FIRE, attacker.getAbilityCooldown(Button.SECONDARY_FIRE) * 0.5)
+    wait(1)
+
+rule "[VishkarEvent]: 保镖 (Bodyguard)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 26, eventPlayer.phase_trigger == true]) == true
+    
+    eventPlayer.target = getPlayersInRadius(eventPlayer, 12, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
+    eventPlayer.addHealthPool(Health.ARMOR, round(25 + eventPlayer.getMaxHealth() * 0.5), false, false)
+    eventPlayer.hp_data.append([[getTotalTimeElapsed() + 5, getLastCreatedHealthPool()]])
+    playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
+    wait()
+    if len(eventPlayer.target) > 0:
+        playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer.target[0], 200)
+        eventPlayer.target[0].addHealthPool(Health.ARMOR, round(25 + eventPlayer.getMaxHealth() * 0.5), false, false)
+        eventPlayer.target[0].hp_data.append([[getTotalTimeElapsed() + 5, getLastCreatedHealthPool()]])
+    wait(3)
+
+rule "[VishkarEvent]: 任务：殉道者 (初始化)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27]) == true
+    
+    if eventPlayer.hudTextId != null:
+        goto lbl_0
+    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(len(eventPlayer.eventMission), len(getPlayers(Team.2))), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    eventPlayer.hudTextId = getLastCreatedText()
+    lbl_0:
+    wait(eventPlayer.eventDuration)
+
+
+rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
+    @Event playerDied
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27]) == true
+    @Condition attacker.getTeam() == Team.2
+    @Condition (not attacker in eventPlayer.eventMission) == true
+    
+    eventPlayer.eventMission.append(attacker)
+    if len(eventPlayer.eventMission) == len(getPlayers(Team.2)):
+        waitUntil(eventPlayer.isAlive(), 3)
+        bigMessage(eventPlayer, "任务：殉道者 完成！")
+        smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 伤害减免".format(abilityIconString(Hero.HAZARD, Button.SECONDARY_FIRE), 5))
+        eventPlayer.mod_dmg_perma += 5
+        updatePlayerStats()
+
+        
+rule "[VishkarEvent]: 多动症 (触发回血)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 28, eventPlayer.phase_trigger == true]) == true
+    
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 1:
+        eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 1:
+        eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
+    eventPlayer.startHealingOverTime(eventPlayer, 2, (round(50 + eventPlayer.getMaxHealth() * 0.25)) / 2)
+    wait(2.5)
+
+
+rule "[VishkarEvent]: 操盘手 (伤害+状态检测)":
+    @Event playerTookDamage
+    @Team 2
+    @Condition all([evalOnce(dlcVishkarEvent), attacker.hasSpawned(), attacker.eventType == 0, attacker.eventId == 29]) == true
+    @Condition any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == true
+    
+    if eventAbility == Button.ABILITY_1 and attacker.getAbilityCooldown(Button.ABILITY_1) > 0:
+        attacker.setAbilityCooldown(Button.ABILITY_1, attacker.getAbilityCooldown(Button.ABILITY_1) * 0.25)
+    if eventAbility == Button.ABILITY_2 and attacker.getAbilityCooldown(Button.ABILITY_2) > 0:
+        attacker.setAbilityCooldown(Button.ABILITY_2, attacker.getAbilityCooldown(Button.ABILITY_2) * 0.25)
+    if eventAbility == Button.SECONDARY_FIRE and attacker.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
+        attacker.setAbilityCooldown(Button.SECONDARY_FIRE, attacker.getAbilityCooldown(Button.SECONDARY_FIRE) * 0.25)
+    if victim.hasStatus(Status.STUNNED):
+        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.STUNNED, 5)
+    elif victim.hasStatus(Status.ASLEEP):
+        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.ASLEEP, 5)
+    elif victim.hasStatus(Status.KNOCKED_DOWN):
+        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.KNOCKED_DOWN, 5)
+    waitUntil(any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == false, 10)
+    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.STUNNED)
+    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.ASLEEP)
+    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.KNOCKED_DOWN)
+    wait(2)
+
+
+rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 30]) == true
+    
+    playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_WHIP_SHOT_HEAL_AREA, Color.TEAM_1, eventPlayer, 200)
+    getPlayersInRadius(eventPlayer, 5, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, 1, 50 + eventPlayer.getMaxHealth() * 0.5)
+    wait(1)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 成吨的增益 (初始化与属性)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 31]) == true
+    
+    eventPlayer.mod_speed_event += 50
+    eventPlayer.mod_dmg_taken -= 50
+    eventPlayer.mod_heal_event += 50
+    eventPlayer.heal_recv += 50
+    updatePlayerStats()
+    eventPlayer.sizeHealth = 1.5
+    setPlayerHP()
+    wait(eventPlayer.eventDuration)
+    eventPlayer.mod_speed_event -= 50
+    eventPlayer.mod_dmg_taken -= 50
+    eventPlayer.mod_heal_event -= 50
+    eventPlayer.heal_recv -= 50
+    updatePlayerStats()
+    eventPlayer.sizeHealth = 1
+    setPlayerHP()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 成吨的增益 (冷却缩减循环)":
+    @Event eachPlayer
+    @Team 1
+    @Condition eventPlayer.eventType == 0
+    @Condition eventPlayer.eventId == 31
+    @Condition any([eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0, eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0]) == true
+    
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0:
+        eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0:
+        eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
+    if eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
+        eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) * 0.5)
+    wait(1)
+
+
+rule "[VishkarEvent]: F5 (循环刷新)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 32]) == true
+    
+    resetPlayerCD()
+    wait(5)
+    if ruleCondition:
+        loop()
+
+
+rule "[VishkarEvent]: 治疗光塔 ProMax (全图奶)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 33]) == true
+    
+    smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
+    getPlayers(Team.1).startHealingOverTime(eventPlayer, 1, round(25 + eventPlayer.getMaxHealth() * 1.25))
+    wait(1)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 保持距离 (易伤光环)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 16]) == true
+    
+    eventPlayer.target = sorted(getPlayersInRadius(eventPlayer, 25, Team.1, LosCheck.SURFACES).exclude(eventPlayer), lambda i: distance(eventPlayer, i))[0]
+    if eventPlayer.target != null:
+        eventPlayer.mod_dmg_taken = min(50, max(0, (25 - distance(eventPlayer, eventPlayer.target)) * 2))
+    else:
+        eventPlayer.mod_dmg_taken = 0
+    updatePlayerStats()
+    wait(1)
+    if ruleCondition:
+        loop()
+    eventPlayer.mod_dmg_taken = 0
+    updatePlayerStats()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 404 (随机禁用技能)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
+    
+    if eventPlayer.getHero() == Hero.LIFEWEAVER:
+        eventPlayer.eventMission = 1
+    elif eventPlayer.getHero() == Hero.TORBJORN or eventPlayer.getHero() == Hero.SYMMETRA:
+        eventPlayer.eventMission = 2
+    else:
+        eventPlayer.eventMission = random.randint(1, 3)
+    if eventPlayer.eventMission == 1:
+        eventPlayer.disallowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(false)
+        smallMessage(eventPlayer, "  {0}  你的技能 1 已被禁用".format(iconString(Icon.WARNING)))
+    elif eventPlayer.eventMission == 2:
+        eventPlayer.disallowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(false)
+        smallMessage(eventPlayer, "  {0}  你的技能 2 已被禁用".format(iconString(Icon.WARNING)))
+    else:
+        eventPlayer.disallowButton(Button.SECONDARY_FIRE)
+        eventPlayer.setSecondaryFireEnabled(false)
+        smallMessage(eventPlayer, "  {0}  你的辅助攻击 已被禁用".format(iconString(Icon.WARNING)))
+    wait(eventPlayer.eventDuration)
+    if eventPlayer.eventMission == 1:
+        eventPlayer.allowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(true)
+    elif eventPlayer.eventMission == 2:
+        eventPlayer.allowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(true)
+    else:
+        eventPlayer.allowButton(Button.SECONDARY_FIRE)
+        eventPlayer.setSecondaryFireEnabled(true)
+    eventPlayer.eventMission = 0
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 18]) == true
+    
+    if any([eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0, eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.RELOAD) > 0, eventPlayer.getAbilityCooldown(Button.JUMP) > 0]) == true:
+        eventPlayer.setAbilityCooldown(Button.ABILITY_1, max(eventPlayer.getAbilityCooldown(Button.ABILITY_1), random.randint(15, 30)))
+        eventPlayer.setAbilityCooldown(Button.ABILITY_2, max(eventPlayer.getAbilityCooldown(Button.ABILITY_2), random.randint(15, 30)))
+        eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, max(eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE), random.randint(15, 30)))
+        eventPlayer.setAbilityCooldown(Button.PRIMARY_FIRE, max(eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE), random.randint(15, 30)))
+        eventPlayer.setAbilityCooldown(Button.RELOAD, max(eventPlayer.getAbilityCooldown(Button.RELOAD), random.randint(15, 30)))
+        eventPlayer.setAbilityCooldown(Button.JUMP, max(eventPlayer.getAbilityCooldown(Button.JUMP), random.randint(15, 30)))
+    wait(2)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 我和你 (生命同步)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 19]) == true
+    
+    stopCombatRegen()
+    eventPlayer.target = (sorted(getLivingPlayers(Team.1).exclude(eventPlayer), lambda i: i.getHealth() / i.getMaxHealth()))[0]
+    if eventPlayer.target != null:
+        eventPlayer.setHealth(eventPlayer.getMaxHealth() * (eventPlayer.target.getHealth() / eventPlayer.target.getMaxHealth()))
+    wait(1)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+    eventPlayer.target = null
+
+
+rule "[VishkarEvent]: 吸血鬼 ProMax (按需吸血)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 20, eventPlayer.getNormalizedHealth() != 1]) == true
+    
+    stopCombatRegen()
+    eventPlayer.target = [i for i in getPlayersInRadius(eventPlayer, 45, Team.1, LosCheck.SURFACES).exclude(eventPlayer) if i.isAlive()]
+    if len(eventPlayer.target) > 0:
+        damage(eventPlayer.target, eventPlayer, 25)
+        heal(eventPlayer, eventPlayer.target, len(eventPlayer.target) * 25)
+        playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.RED, eventPlayer.target, 200)
+    wait(1)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+    eventPlayer.target = null
+
+
+rule "[VishkarEvent]: 成吨的减益 (全属性削弱)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 21]) == true
+    
+    eventPlayer.mod_speed_event -= 50
+    eventPlayer.mod_dmg_taken += 50
+    eventPlayer.mod_heal_event -= 50
+    eventPlayer.heal_recv -= 50
+    updatePlayerStats()
+    eventPlayer.sizeHealth = 0.5
+    setPlayerHP()
+    wait(eventPlayer.eventDuration)
+    eventPlayer.mod_speed_event += 50
+    eventPlayer.mod_dmg_taken -= 50
+    eventPlayer.mod_heal_event += 50
+    eventPlayer.heal_recv += 50
+    eventPlayer.sizeHealth = 1
+    setPlayerHP()
+    updatePlayerStats()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 14, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    
+    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    eventPlayer.heart_steel -= 10
+    setPlayerHP()
+    playEffect(getAllPlayers(), DynamicEffect.BAD_PICKUP_EFFECT, Color.TEAM_1, eventPlayer, 100)
+    eventPlayer.eventForceRoll = 20
+    smallMessage(eventPlayer, "  {0}  已扣除 10% 最大生命值".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)))
+    wait(0.2)
+    smallMessage(eventPlayer, "  {0}  下一个事件必然是增益，祝你好运".format(iconString(Icon.CLUB)))
+    eventPlayer.eventDuration = 0
+
+
+rule "[VishkarEvent]: 作弊：回溯 (记录位置 - 0.5秒心跳)":
+    @Event eachPlayer
+    @Team 1
+    @Condition evalOnce(controlRespawnPosition) == null
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15]) == true
+    
+    if evalOnce(controlRespawnPosition) != null:
+        eventPlayer.eventDuration = 0
+    eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
+    wait(3)
+    if ruleCondition:
+        loop()
+    eventPlayer.controlPlayerRespawnPosition = null
+
+
+rule "[VishkarEvent]: 作弊：回溯 (按键触发)":
+    @Event eachPlayer
+    @Team 1
+    @Condition evalOnce(controlRespawnPosition) == null
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    
+    damage(eventPlayer, null, eventPlayer.getMaxHealth() * 0.1)
+    playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
+    wait(0.032)
+    eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])
+    playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_REAPPEAR, Color.TEAM_1, eventPlayer, 200)
+    wait(3)
+
+
+rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 16, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    
+    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    if random.randint(0, 99) < 75:
+        eventPlayer.heart_steel += 4
+        smallMessage(eventPlayer, "  {0}  赢！获得 4 层心之钢".format(iconString(Icon.CLUB)))
+    else:
+        smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
+    eventPlayer.eventForceRoll = 50
+    eventPlayer.eventForceCount = 2
+    smallMessage(eventPlayer, "  {0}  合约已生效：未来 3 个事件为 减益".format(iconString(Icon.DIAMOND)))
+    clearPlayerEvent()
+
+
+rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 22, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    
+    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    if random.randint(0, 99) < 33:
+        eventPlayer.heart_steel += 20
+        smallMessage(eventPlayer, "  {0}  赢！获得 5% 最大生命值".format(iconString(Icon.CLUB)))
+    else:
+        smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
+    eventPlayer.eventForceRoll = 50
+    eventPlayer.eventForceCount = 4
+    smallMessage(eventPlayer, "  {0}  合约已生效：未来 5 个事件为 减益".format(iconString(Icon.DIAMOND)))
+    clearPlayerEvent()
+
+
+rule "[VishkarEvent]: 命运共同体 (事件复制)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 17]) == true
+    
+    eventPlayer.target = [player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.eventId != -1 and player.eventId != 17]
+    if len(eventPlayer.target) > 0:
+        eventPlayer.target = random.choice(eventPlayer.target)
+        eventPlayer.eventType = eventPlayer.target.eventType
+        eventPlayer.eventId = eventPlayer.target.eventId
+        if eventPlayer.eventType == 0:
+            eventPlayer.eventDuration = buffEvent[eventPlayer.eventId].last()
+            eventPlayer.eventName = buffEvent[eventPlayer.eventId][0]
+            eventPlayer.eventDesc = buffEvent[eventPlayer.eventId][1]
+        elif eventPlayer.eventType == 1:
+            eventPlayer.eventDuration = debuffEvent[eventPlayer.eventId].last()
+            eventPlayer.eventName = debuffEvent[eventPlayer.eventId][0]
+            eventPlayer.eventDesc = debuffEvent[eventPlayer.eventId][1]
+        else:
+            eventPlayer.eventDuration = mechEvent[eventPlayer.eventId].last()
+            eventPlayer.eventName = mechEvent[eventPlayer.eventId][0]
+            eventPlayer.eventDesc = mechEvent[eventPlayer.eventId][1]
+        smallMessage(getAllPlayers(), "  {0} 与 {1} 命运相连！共同承担：{2}".format(eventPlayer, eventPlayer.target, eventPlayer.eventName))
+    else:
+        eventPlayer.eventDuration = 0
+        clearPlayerEvent()
+
+
+rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 18, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    
+    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    progressHero()
+    eventPlayer.eventDuration = 0
+    clearPlayerEvent()
+
+
+rule "[VishkarEvent]: 俄罗斯方块 (变大复活)":
+    @Event playerDied
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 19]) == true
+    
+    eventPlayer.disableRespawn()
+    wait(2)
+    eventPlayer.enableRespawn()
+    eventPlayer.resurrect()
+    eventPlayer.eventSize++
+    eventPlayer.startScalingSize(1 + 0.05 * eventPlayer.eventSize, false)
+    eventPlayer.startModifyingVoicelinePitch(max(0.2, 1 - 0.05 * eventPlayer.eventSize), false)
+    eventPlayer.sizeHealth += 0.05
+    setPlayerHP()
+
+
+rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
+    @Event playerDied
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 20]) == true
+    
+    eventPlayer.disableRespawn()
+    wait(2)
+    eventPlayer.enableRespawn()
+    eventPlayer.resurrect()
+    eventPlayer.eventSize++
+    eventPlayer.startScalingSize(max(0.2, 1 - 0.05 * eventPlayer.eventSize), false)
+    eventPlayer.startModifyingVoicelinePitch(max(1.8, 1 + 0.05 * eventPlayer.eventSize), false)
+    eventPlayer.mod_speed_event += 5
+    updatePlayerStats()
+
+
+rule "[VishkarEvent]: 作弊：0CD (血量换CD)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 21]) == true
+    @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == true
+    
+    waitUntil(any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == false, 2)
+    damage(eventPlayer, null, eventPlayer.getMaxHealth() * 0.25)
+    resetPlayerCD()
+    playEffect(getAllPlayers(), DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION, Color.TEAM_2, eventPlayer, 3)
+    wait(0.25)
+    if ruleCondition:
+        loop()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 瓦尔基里降临":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
+    
+    eventPlayer.sizeHealth = 10
+    setPlayerHP()
+    eventPlayer.heal_recv = -100
+    eventPlayer.mod_heal_event = -100
+    updatePlayerStats()
+    eventPlayer.eventMission = eventPlayer.getMaxHealth()
+    wait(eventPlayer.eventDuration)
+    eventPlayer.sizeHealth = 1
+    setPlayerHP()
+    eventPlayer.heal_recv = 0
+    eventPlayer.mod_heal_event = 0
+    updatePlayerStats()
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 瓦尔基里降临 大招充能":
+    @Event playerTookDamage
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
+    @Condition attacker != eventPlayer
+    
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 10)
+    wait(0.5)
+
+
+rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23, eventPlayer.isUsingUltimate()]) == true
+    
+    if eventPlayer.eventTargetHP == 0:
+        eventPlayer.eventTargetHP = eventPlayer.getMaxHealth()
+    eventPlayer.eventTargetHP = eventPlayer.getHealth() + ((eventPlayer.eventTargetHP - eventPlayer.getHealth()) * 0.85)
+    while all([eventPlayer.isUsingUltimate(), eventPlayer.getHealth() < eventPlayer.eventTargetHP]):
+        eventPlayer.setHealth(min(eventPlayer.eventTargetHP, eventPlayer.getHealth() + eventPlayer.getMaxHealth() * 0.04))
+        playEffect(getAllPlayers(), DynamicEffect.HEAL_TARGET_ACTIVE, Color.YELLOW, eventPlayer, 60)
+        wait(0.2)
 
 
 rule "[VishkarEvent]: Global event - 势不可挡":
