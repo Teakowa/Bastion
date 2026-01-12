@@ -78,31 +78,31 @@
 #!define STR_EVT_BUFF_6_TITLE "足力健"
 #!define STR_EVT_BUFF_6_DESC "持续移动1秒获得3%可叠加的移动速度"
 #!define STR_EVT_BUFF_7_TITLE "血肉再生"
-#!define STR_EVT_BUFF_7_DESC "获得50+25%最大生命值的临时生命值，每4秒自动刷新"
+#!define STR_EVT_BUFF_7_DESC "获得50+25%最大生命值的临时生命值\n每4秒自动刷新"
 #!define STR_EVT_BUFF_8_TITLE "心之钢"
 #!define STR_EVT_BUFF_8_DESC "阵亡后永久增加0.75%最大生命值"
 #!define STR_EVT_BUFF_9_TITLE "危险感知"
 #!define STR_EVT_BUFF_9_DESC "被锁定时获得60%移动速度与25%伤害减免"
 #!define STR_EVT_BUFF_10_TITLE "反应装甲"
-#!define STR_EVT_BUFF_10_DESC "获得一个可恢复的护甲\n如果堡垒对你的伤害未能击穿护甲\n堡垒将被短暂击晕"
+#!define STR_EVT_BUFF_10_DESC "获得可恢复的护甲\n如果堡垒对你的伤害未能击穿护甲\n堡垒将被短暂击晕"
 #!define STR_EVT_BUFF_11_TITLE "死亡延迟"
 #!define STR_EVT_BUFF_11_DESC "受到致命伤害时\n阵亡将被延迟到事件结束后"
 #!define STR_EVT_BUFF_12_TITLE "有我有你"
 #!define STR_EVT_BUFF_12_DESC "长按{0}附身一名队友\n该队友获得你最大生命值5%伤害减免\n你获得25%治疗增益并且会治疗队友"
 #!define STR_EVT_BUFF_13_TITLE "↑↑↓↓←→←→BABA"
-#!define STR_EVT_BUFF_13_DESC "如果在事件持续期间阵亡，你会在5秒前的位置复活，事件立刻结束"
+#!define STR_EVT_BUFF_13_DESC "阵亡后在5秒前的位置复活"
 #!define STR_EVT_BUFF_14_TITLE "费斯卡光子护盾"
-#!define STR_EVT_BUFF_14_DESC "所有人获得一个可恢复的护盾\n其数值为你最大生命值的 20%\n护盾持续到你阵亡或事件结束"
+#!define STR_EVT_BUFF_14_DESC "所有人获得一个可恢复的护盾\n数值为你20%最大生命值\n护盾持续到你阵亡或事件结束"
 #!define STR_EVT_BUFF_15_TITLE "费斯卡呼吸机"
 #!define STR_EVT_BUFF_15_DESC "不受所有阻挡视线机制效果的影响"
 #!define STR_EVT_BUFF_16_TITLE "向我靠拢"
-#!define STR_EVT_BUFF_16_DESC "你和你附近的队友每5秒获得2.5秒伤害免疫"
+#!define STR_EVT_BUFF_16_DESC "你和你附近的队友每5秒获得2.5秒无敌"
 #!define STR_EVT_BUFF_17_TITLE "我独自闯关"
 #!define STR_EVT_BUFF_17_DESC "获得伤害减免、治疗增益、移速加成与击退抵抗"
 #!define STR_EVT_BUFF_18_TITLE "坚定"
-#!define STR_EVT_BUFF_18_DESC "获得95%击退抵抗\n受到击退获得5%可叠加的伤害减免并回复8%最大生命值"
+#!define STR_EVT_BUFF_18_DESC "获得95%击退抵抗\n受到击退获得5%可叠加的伤害减免\n并回复8%最大生命值"
 #!define STR_EVT_BUFF_19_TITLE "胜利意志"
-#!define STR_EVT_BUFF_19_DESC "生命值低于30%触发，获得5秒伤害免疫并清除负面状态，回复所有已损失生命值"
+#!define STR_EVT_BUFF_19_DESC "生命值低于30%触发\n获得5秒无敌并清除负面状态"
 #!define STR_EVT_BUFF_20_TITLE "任务：菲迪皮德斯之力"
 #!define STR_EVT_BUFF_20_DESC "持续移动42.195秒后永久获得5%移速加成"
 #!define STR_EVT_BUFF_21_TITLE "心之钢 Pro"
@@ -110,7 +110,7 @@
 #!define STR_EVT_BUFF_22_TITLE "数值之力"
 #!define STR_EVT_BUFF_22_DESC "获得 500% 治疗增益与受治疗增益"
 #!define STR_EVT_BUFF_23_TITLE "我按Q辣"
-#!define STR_EVT_BUFF_23_DESC "持续移动获得终极技能充能，终极技能持续期间获得75%伤害减免"
+#!define STR_EVT_BUFF_23_DESC "持续移动获得终极技能充能\n终极技能持续期间获得75%伤害减免"
 
 # ------------------------------------------------
 # 减益事件 (Debuff Events)
@@ -130,15 +130,15 @@
 #!define STR_EVT_DEBUFF_6_TITLE "骨质疏松"
 #!define STR_EVT_DEBUFF_6_DESC "移动速度随时间降低，最多50%"
 #!define STR_EVT_DEBUFF_7_TITLE "电磁脉冲 ProMax"
-#!define STR_EVT_DEBUFF_7_DESC "被侵入，无法使用技能，以你为中心扩散至75米以内的队友"
+#!define STR_EVT_DEBUFF_7_DESC "被侵入，并以你为中心扩散至75米以内的队友"
 #!define STR_EVT_DEBUFF_8_TITLE "能量泄漏"
 #!define STR_EVT_DEBUFF_8_DESC "使用技能会消耗25%生命值"
 #!define STR_EVT_DEBUFF_9_TITLE "生命在于运动"
-#!define STR_EVT_DEBUFF_9_DESC "每秒扣除1.5%最大生命值，移动时扣除速度翻倍"
+#!define STR_EVT_DEBUFF_9_DESC "每秒扣除1.5%最大生命值\n移动时扣除速度翻倍"
 #!define STR_EVT_DEBUFF_10_TITLE "有难同当"
 #!define STR_EVT_DEBUFF_10_DESC "受到的75%伤害会扩散给15米内的友方"
 #!define STR_EVT_DEBUFF_11_TITLE "狂欢盛宴"
-#!define STR_EVT_DEBUFF_11_DESC "当你在盛宴期间内阵亡，堡垒将进入10秒狂暴状态"
+#!define STR_EVT_DEBUFF_11_DESC "当你在盛宴期间内阵亡\n堡垒将进入10秒狂暴状态"
 #!define STR_EVT_DEBUFF_12_TITLE "无能的丈夫/妻子"
 #!define STR_EVT_DEBUFF_12_DESC "附近的友方将被击倒2秒"
 #!define STR_EVT_DEBUFF_13_TITLE "重伤"
@@ -146,37 +146,37 @@
 #!define STR_EVT_DEBUFF_14_TITLE "减半"
 #!define STR_EVT_DEBUFF_14_DESC "每5秒损失50%生命值，当生命值低于5%时立即阵亡"
 #!define STR_EVT_DEBUFF_15_TITLE "舍己为人"
-#!define STR_EVT_DEBUFF_15_DESC "基于玩家数量降低你的最大生命值，每名玩家降低1%，由其他玩家均分"
+#!define STR_EVT_DEBUFF_15_DESC "基于玩家数量降低你的最大生命值\n每名玩家降低1%，由其他玩家均分"
 
 # ------------------------------------------------
 # 机制事件 (Mech Events)
 # ------------------------------------------------
 #!define STR_EVT_MECH_0_TITLE "极限挑战"
-#!define STR_EVT_MECH_0_DESC "获得99%伤害减免，生命值被锁定在30%，无法受到任何治疗与生命恢复效果"
+#!define STR_EVT_MECH_0_DESC "获得99%伤害减免\n生命值被锁定在30%\n无法受到任何治疗效果"
 #!define STR_EVT_MECH_1_TITLE "纳米战甲"
-#!define STR_EVT_MECH_1_DESC "获得最大生命值800%的临时生命值，被减速25%"
+#!define STR_EVT_MECH_1_DESC "获得最大生命值800%的临时生命值\n减速25%"
 #!define STR_EVT_MECH_2_TITLE "赌徒"
 #!define STR_EVT_MECH_2_DESC "长按{0}触发：50%概率永久损失/增加10%最大生命值"
 #!define STR_EVT_MECH_3_TITLE "有点松弛"
 #!define STR_EVT_MECH_3_DESC "移动时产生阻挡友方视线的迷雾"
 #!define STR_EVT_MECH_4_TITLE "体积膨胀"
-#!define STR_EVT_MECH_4_DESC "体积变大175%，最大生命值提高400%，获得20%伤害减免"
+#!define STR_EVT_MECH_4_DESC "体积变大175%，最大生命值提高400%\n获得20%伤害减免"
 #!define STR_EVT_MECH_5_TITLE "迷你形态"
-#!define STR_EVT_MECH_5_DESC "体积缩小60%，最大生命值降低50%，获得25%移速加成"
+#!define STR_EVT_MECH_5_DESC "体积缩小60%，最大生命值降低50%\n获得25%移速加成"
 #!define STR_EVT_MECH_6_TITLE "悄悄滴进村"
 #!define STR_EVT_MECH_6_DESC "下蹲隐身，移动速度降低 25%"
 #!define STR_EVT_MECH_7_TITLE "紧急避障"
 #!define STR_EVT_MECH_7_DESC "受到伤害3秒内移动速度提高 80%"
 #!define STR_EVT_MECH_8_TITLE "逆风而行"
-#!define STR_EVT_MECH_8_DESC "移动速度提高 60%，但只能向后移动"
+#!define STR_EVT_MECH_8_DESC "移动速度提高60%但只能向后移动"
 #!define STR_EVT_MECH_9_TITLE "刹车失灵"
-#!define STR_EVT_MECH_9_DESC "不受控的向前移动，移动速度会逐渐提高至 175%"
+#!define STR_EVT_MECH_9_DESC "不受控的向前移动\n移动速度会逐渐提高至 175%"
 #!define STR_EVT_MECH_10_TITLE "冲锋激励"
-#!define STR_EVT_MECH_10_DESC "持续移动5秒获得100能量，能量充满后转化为临时护甲"
+#!define STR_EVT_MECH_10_DESC "持续移动获得能量\n能量充满后转化为临时护甲"
 #!define STR_EVT_MECH_11_TITLE "生命在于反击"
-#!define STR_EVT_MECH_11_DESC "基于已损失生命值获得移速加成与伤害减免，每损失1%生命值获得1%加成（最高75%）"
+#!define STR_EVT_MECH_11_DESC "基于已损失生命值获得移速加成与伤害减免\n每损失1%生命值获得1%加成（最高75%）"
 #!define STR_EVT_MECH_12_TITLE "屁动力"
-#!define STR_EVT_MECH_12_DESC "长按{0}朝你的前方飞行，飞行时获得50%伤害减免"
+#!define STR_EVT_MECH_12_DESC "长按{0}朝你的前方飞行\n飞行时获得50%伤害减免"
 #!define STR_EVT_MECH_13_TITLE "赌徒：竞速挑战"
 #!define STR_EVT_MECH_13_DESC "长按{0}消耗50%生命值\n49%概率永久获得/损失5%移速加成\n2% 概率永久获得/损失 12% 移速加成"
 
@@ -191,7 +191,7 @@
 #!define STR_EVT_BUFF_26_DESC "位移技能为周围友方提供临时护甲"
 #!define STR_EVT_BUFF_27_TITLE "任务：殉道者"
 # {0}=堡垒数量
-#!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀{0}次，奖励：5% 永久伤害减免"
+#!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀{0}次\n奖励：5% 永久伤害减免"
 #!define STR_EVT_BUFF_28_TITLE "多动症"
 #!define STR_EVT_BUFF_28_DESC "位移技能冷却减半释放时获得治疗"
 #!define STR_EVT_BUFF_29_TITLE "操盘手 ProMax"
@@ -225,9 +225,9 @@
 # 随机事件包 4：机制 (Mech Events Pack 4)
 # ------------------------------------------------
 #!define STR_EVT_MECH_14_TITLE "作弊：我要验牌"
-#!define STR_EVT_MECH_14_DESC "长按{0}永久损失10%生命值，下个事件必为增益"
+#!define STR_EVT_MECH_14_DESC "长按{0}永久损失10%生命值\n下个事件必为增益"
 #!define STR_EVT_MECH_15_TITLE "作弊：回溯"
-#!define STR_EVT_MECH_15_DESC "按下{0}回到3秒前的位置，每次消耗10%生命值"
+#!define STR_EVT_MECH_15_DESC "按下{0}回到3秒前的位置\n每次消耗10%生命值"
 #!define STR_EVT_MECH_16_TITLE "赌徒：短期投资"
 #!define STR_EVT_MECH_16_DESC "长按{0}锁定3个减益\n75%概率获得4层心之钢"
 #!define STR_EVT_MECH_17_TITLE "命运共同体"
@@ -243,9 +243,9 @@
 #!define STR_EVT_MECH_22_TITLE "赌徒：长期投资"
 #!define STR_EVT_MECH_22_DESC "长按{0}锁定5个减益\n33%概率获得20层心之钢"
 #!define STR_EVT_MECH_23_TITLE "瓦尔基里降临"
-#!define STR_EVT_MECH_23_DESC "化身BOSS：500%生命\n无法被治疗，靠大招回血"
+#!define STR_EVT_MECH_23_DESC "生命值提高1000%，无法被治疗\n受到伤害获得大招充能\n大招持续期间最多回复85%生命值"
 #!define STR_EVT_MECH_24_TITLE "三位一体"
-#!define STR_EVT_MECH_24_DESC "100HP→2.5%减伤，1%减伤→2%移速，100%移速/秒→1层心之钢"
+#!define STR_EVT_MECH_24_DESC "100HP→2.5%减伤，1%减伤→2%移速\n每5秒获得1层心之钢"
 
 
 # 设置菜单分类 (Pack)
@@ -261,6 +261,9 @@
 #!define STR_CAT_RANDOM_PACK_4_BUFF "随机事件包 4：增益"
 #!define STR_CAT_RANDOM_PACK_4_DEBUFF "随机事件包 4：减益"
 #!define STR_CAT_RANDOM_PACK_4_MECH "随机事件包 4：机制"
+#!define STR_CAT_BUFF "增益"
+#!define STR_CAT_DEBUFF "减益"
+#!define STR_CAT_MECH "机制"
 
 # ------------------------------------------------
 # 游戏内提示信息 (In-game Notifications)
@@ -337,7 +340,7 @@
 #!define STR_HUD_GRENADE_HIT "榴弹共计 {0}/{1} 命中/锁定"
 #!define STR_HUD_SURVIVOR "大难不死 {0} "
 #!define STR_HUD_GAMBLER_KING "赌王 {0} "
-#!define STR_HUD_TOTAL_TIME "通关总计耗时 {0}"
+#!define STR_HUD_TOTAL_TIME "\n通关总计耗时\n{0}"
 #!define STR_HUD_SKIP_HINT "[秘籍] 使用终极技能跳过（{0}） "
 #!define STR_HUD_WELCOME_MULTI "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！阵亡 {0} 次之后可跳过英雄"
 #!define STR_HUD_WELCOME_MULTI_HARD "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！当前难度无法跳过英雄，加油吧！"
@@ -361,7 +364,7 @@
 
 # 统计面板内容 (多行格式)
 # {0}=阵亡/跳过数值, {1}=榴弹数据, {2}=事件统计(可选)
-#!define STR_HUD_STATS_PANEL "{0}\r\n{1}\r\n{2}"
+#!define STR_HUD_STATS_PANEL "{0}\n{1}\n{2}{3}"
 
 # 阵亡/跳过
 # {0}=阵亡数, {1}=跳过数
@@ -420,6 +423,7 @@
 #!define STR_MENU_TITLE_DEV "开发者模式"
 #!define STR_MENU_TITLE_INGAME "游戏内面板"
 #!define STR_MENU_TITLE_DEV_PANEL "开发者面板"
+#!define STR_MENU_TITLE_WEIGHT_MANAGE "事件权重管理"
 
 # ------------------------------------------------
 # 菜单状态显示
