@@ -67,7 +67,7 @@ rule "page down in dev menu":
     @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
     @Condition eventPlayer.menu != 0
     
-    if eventPlayer.menu >= 3:
+    if eventPlayer.menu >= 4:
         goto lbl_0
     eventPlayer.menu++
     return
@@ -523,6 +523,136 @@ rule "Dev to release heros":
         eventPlayer.isWinner = true
         wait(getAverageServerLoad() / 100 * 0.5)
         smallMessage(eventPlayer, "  {0} 开发者模式：已通关".format(iconString(Icon.BOLT)))
+
+#!define getCurrentEventArray() (buffEvent if devEventCategory == 0 else (debuffEvent if devEventCategory == 1 else mechEvent))
+#!define getCurrentEventIdArray() (buffEventId if devEventCategory == 0 else (debuffEventId if devEventCategory == 1 else mechEventId))
+
+rule "menu dev event weight display":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    
+    # 标题
+    hudHeader(eventPlayer, STR_MENU_TITLE_WEIGHT_MANAGE, HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+    
+    # 内容显示
+    # 格式：
+    # [Q] 切换分类：当前分类
+    # [E] 切换事件：事件名 (索引)
+    # [Shift/R] 调整权重：当前权重
+    # [Ctrl] 下一页
+    hudSubheader(eventPlayer, 
+        "{0} 切换分类：{1}\n{2} 切换事件：{3}\n{4} 调整权重：{5}\n{6}".format(
+            inputBindingString(Button.ULTIMATE),
+            STR_CAT_BUFF if devEventCategory == 0 else (STR_CAT_DEBUFF if devEventCategory == 1 else STR_CAT_MECH),
+            
+            inputBindingString(Button.ABILITY_2),
+            "{0} (Idx: {1})".format(
+                getCurrentEventArray()[devEventIndex][0], 
+                devEventIndex
+            ) if len(getCurrentEventArray()) > 0 else "无事件",
+            
+            "{0}/{1}".format(inputBindingString(Button.ABILITY_1), inputBindingString(Button.RELOAD)),
+            # 获取权重：如果数组长度>=4则取第4个元素，否则默认为 1.0
+            (getCurrentEventArray()[devEventIndex][3] if len(getCurrentEventArray()[devEventIndex]) >= 4 else 1.0) 
+            if len(getCurrentEventArray()) > 0 else "N/A",
+            
+            STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH))
+        ), 
+        HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER
+    )
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+rule "dev event category switch (Q)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ULTIMATE) == true
+    
+    devEventCategory = (devEventCategory + 1) % 3
+    devEventIndex = 0 # 切换分类重置索引
+    wait(0.2)
+
+rule "dev event select next (E)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) == true
+    
+    # 循环切换索引
+    if len(getCurrentEventArray()) > 0:
+        devEventIndex = (devEventIndex + 1) % len(getCurrentEventArray())
+    wait(0.1)
+
+rule "dev event weight increase (Shift)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    # 必须显式区分变量来修改
+    if devEventCategory == 0:
+        if len(buffEvent) > 0:
+            # 检查并初始化权重
+            if len(buffEvent[devEventIndex]) < 4:
+                buffEvent[devEventIndex][3] = 1.0
+            # 增加权重
+            buffEvent[devEventIndex][3] += 0.1
+            
+    elif devEventCategory == 1:
+        if len(debuffEvent) > 0:
+            if len(debuffEvent[devEventIndex]) < 4:
+                debuffEvent[devEventIndex][3] = 1.0
+            debuffEvent[devEventIndex][3] += 0.1
+            
+    elif devEventCategory == 2:
+        if len(mechEvent) > 0:
+            if len(mechEvent[devEventIndex]) < 4:
+                mechEvent[devEventIndex][3] = 1.0
+            mechEvent[devEventIndex][3] += 0.1
+            
+    wait(0.1)
+
+rule "dev event weight decrease (R)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    
+    if devEventCategory == 0:
+        if len(buffEvent) > 0:
+            if len(buffEvent[devEventIndex]) < 4:
+                buffEvent[devEventIndex][3] = 1.0
+            # 减少权重
+            if buffEvent[devEventIndex][3] >= 0.1:
+                buffEvent[devEventIndex][3] -= 0.1
+            else:
+                buffEvent[devEventIndex][3] = 0
+                
+    elif devEventCategory == 1:
+        if len(debuffEvent) > 0:
+            if len(debuffEvent[devEventIndex]) < 4:
+                debuffEvent[devEventIndex][3] = 1.0
+            if debuffEvent[devEventIndex][3] >= 0.1:
+                debuffEvent[devEventIndex][3] -= 0.1
+            else:
+                debuffEvent[devEventIndex][3] = 0
+
+    elif devEventCategory == 2:
+        if len(mechEvent) > 0:
+            if len(mechEvent[devEventIndex]) < 4:
+                mechEvent[devEventIndex][3] = 1.0
+            if mechEvent[devEventIndex][3] >= 0.1:
+                mechEvent[devEventIndex][3] -= 0.1
+            else:
+                mechEvent[devEventIndex][3] = 0
+                
+    wait(0.1)
 
 
 rule "[debug.opy]: player debug (Top Right)":
