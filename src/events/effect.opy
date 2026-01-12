@@ -1223,7 +1223,7 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     updatePlayerStats()
     eventPlayer.heart_steel += 0.5
     setPlayerHP()
-    smallMessage(eventPlayer, "  {0}  {1}".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))))
+    smallMessage(eventPlayer, "  {0}  {1}".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))))
     wait(1)
     if ruleCondition:
         loop()
