@@ -58,7 +58,7 @@ rule "[VishkarEvent]: 肾上腺素":
     eventPlayer.eventEffect[0] = getLastCreatedEntity()
     createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
-    eventPlayer.mod_dmg_taken = -50
+    eventPlayer.mod_dmg_taken = EVT_3_DMG_TAKEN
     wait(getAverageServerLoad() / 100 * 0.032)
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
