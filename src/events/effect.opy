@@ -906,8 +906,7 @@ rule "[VishkarEvent]: 纳米战甲":
     waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
     eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.getMaxHealth() * 8, false, false)
     eventPlayer.healthId[0] = getLastCreatedHealthPool()
-    # eventPlayer.mod_speed_event = -25
-    eventPlayer.overhealthDecay = true
+    eventPlayer.mod_speed_event = -25
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_speed_event = 0
