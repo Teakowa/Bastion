@@ -148,7 +148,7 @@ rule "[VishkarEvent]: 心之钢":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 8]) == true
     @Condition attacker.getHero() == Hero.BASTION
     
-    eventPlayer.heart_steel += 0.75
+    eventPlayer.heart_steel += EVT_8_HP_LAYER_PER_DEATH
     smallMessage(eventPlayer, "  {0}  已获得 0.75% 额外最大生命值".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)))
     wait(0.032)
     waitUntil(eventPlayer.isAlive(), 0.5)
