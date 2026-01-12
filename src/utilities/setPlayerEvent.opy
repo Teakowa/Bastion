@@ -60,7 +60,7 @@ def setPlayerEvent():
         eventPlayer, 
         STR_MSG_EVENT_EFFECT.format(
             abilityIconString(Hero.SOMBRA, Button.ULTIMATE), 
-            eventPlayer.eventDesc
+            eventPlayer.eventDesc.replace("\n", "，")
         )
     )
     lbl_2:
