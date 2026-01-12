@@ -212,7 +212,7 @@ rule "[VishkarEvent]: 死亡延迟":
     @Event playerTookDamage
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 11]) == true
-    @Condition (any([eventDamage >= eventPlayer.getHealth(), eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * 0.15, eventAbility == Button.SECONDARY_FIRE and attacker.getHero() == Hero.BASTION and eventPlayer.getMaxHealth() <= 500])) == true
+    @Condition (any([eventDamage >= eventPlayer.getHealth(), eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_11_TRIGGER_HP_PERCENT, eventAbility == Button.SECONDARY_FIRE and attacker.getHero() == Hero.BASTION and eventPlayer.getMaxHealth() <= EVT_11_BASTION_EXECUTE_HP])) == true
     
     wait(0.016, Wait.ABORT_WHEN_FALSE)
     eventPlayer.setStatusEffect(eventPlayer, Status.UNKILLABLE, eventPlayer.eventDuration)
@@ -228,7 +228,7 @@ rule "[VishkarEvent]: 死亡延迟":
     wait()
     if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE), eventPlayer.hasStatus(Status.UNKILLABLE)]):
         goto lbl_0
-    damage(eventPlayer, attacker, 9999999999)
+    damage(eventPlayer, attacker, EVT_11_EXECUTE_DAMAGE)
     lbl_0:
 
 
@@ -274,12 +274,12 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
-    eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
-    playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
+        eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
+        playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(5)
+    wait(EVT_13_CHECKPOINT_INTERVAL)
     if ruleCondition:
         loop()
 
@@ -295,7 +295,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     bigMessage(eventPlayer, "↑↑↓↓←→←→BABA")
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
     eventPlayer.disableRespawn()
-    wait(3)
+    wait(EVT_13_RESPAWN_DELAY)
     eventPlayer.enableRespawn()
     eventPlayer.resurrect()
     eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])
@@ -325,7 +325,7 @@ rule "[VishkarEvent]: 费斯卡光子护盾":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.target != null]) == true
     
     wait()
-    eventPlayer.addHealthPool(Health.SHIELDS, eventPlayer.target.getMaxHealth() * 0.2 if eventPlayer.target.getMaxHealth() * 0.2 > 50 else 50, true, false)
+    eventPlayer.addHealthPool(Health.SHIELDS, eventPlayer.target.getMaxHealth() * EVT_14_SHIELD_PERCENT if eventPlayer.target.getMaxHealth() * EVT_14_SHIELD_PERCENT > EVT_14_MIN_SHIELD else EVT_14_MIN_SHIELD, true, false)
     eventPlayer.healthId[2] = getLastCreatedHealthPool()
     waitUntil(not eventPlayer.target.isAlive() or eventPlayer.target == null, eventPlayer.target.eventDuration)
     removeHealthPool(eventPlayer.healthId[2])
@@ -347,9 +347,9 @@ rule "[VishkarEvent]: 向我靠拢":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 16]) == true
     
-    wait(5)
-    eventPlayer.eventEffectPlayers = [player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= 15 and isInLoS(eventPlayer, player) == true and not player.hasStatus(Status.INVINCIBLE)]
-    eventPlayer.eventEffectPlayers.invincible = [true, eventPlayer, 2.5]
+    wait(EVT_16_CHECK_INTERVAL)
+    eventPlayer.eventEffectPlayers = [player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_16_RADIUS and isInLoS(eventPlayer, player) == true and not player.hasStatus(Status.INVINCIBLE)]
+    eventPlayer.eventEffectPlayers.invincible = [true, eventPlayer, EVT_16_INVINCIBLE_DURATION]
     wait(0.5)
     eventPlayer.eventEffectPlayers = null
     if ruleCondition:
@@ -364,8 +364,8 @@ rule "[VishkarEvent]: 向我靠拢":
     eventPlayer.setStatusEffect(eventPlayer.invincible[1], Status.INVINCIBLE, eventPlayer.invincible[2])
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.invincibleEffect = getLastCreatedEntity()
-    smallMessage(eventPlayer, "  {0}  {1}（{2}） 为你提供 2.5秒无敌效果".format(abilityIconString(Hero.BAPTISTE, Button.ABILITY_2), eventPlayer.invincible[1], eventPlayer.invincible[1].getHero()))
-    wait(2.5)
+    smallMessage(eventPlayer, "  {0}  {1}（{2}） 为你提供 {3}秒无敌效果".format(abilityIconString(Hero.BAPTISTE, Button.ABILITY_2), eventPlayer.invincible[1], eventPlayer.invincible[1].getHero(), EVT_16_INVINCIBLE_DURATION))
+    wait(EVT_16_INVINCIBLE_DURATION)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
     destroyEffect(eventPlayer.invincibleEffect)
     eventPlayer.invincibleEffect = null
@@ -378,25 +378,25 @@ rule "[VishkarEvent]: 我独自闯关":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 17]) == true
     
     wait(0.05)
-    if len(getPlayersInRadius(eventPlayer, 8, Team.1, LosCheck.SURFACES)) > 0:
-        eventPlayer.mod_dmg_taken = -15
-        eventPlayer.mod_heal_event = 30
-        eventPlayer.mod_speed_event = 12.5
-        eventPlayer.setKnockbackReceived(75)
-        smallMessage(eventPlayer, "  {0}  已获得 15% 伤害减免".format(iconString(Icon.DIAMOND)))
-        smallMessage(eventPlayer, "  {0}  已获得 30% 治疗增益".format(iconString(Icon.DIAMOND)))
-        smallMessage(eventPlayer, "  {0}  已获得 12.5% 移速加成".format(iconString(Icon.DIAMOND)))
-        smallMessage(eventPlayer, "  {0}  已获得 25% 击退抵抗".format(iconString(Icon.DIAMOND)))
+    if len([player for player in getPlayersInRadius(eventPlayer, EVT_17_CHECK_RADIUS, Team.1, LosCheck.SURFACES) if player != eventPlayer]) > 0:
+        eventPlayer.mod_dmg_taken = EVT_17_MODE1_DMG_TAKEN
+        eventPlayer.mod_heal_event = EVT_17_MODE1_HEAL_BOOST
+        eventPlayer.mod_speed_event = EVT_17_MODE1_SPEED
+        eventPlayer.setKnockbackReceived(EVT_17_MODE1_KNOCKBACK)
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), EVT_17_MODE1_DMG_TAKEN * -1))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE1_HEAL_BOOST))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE1_SPEED))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE1_KNOCKBACK))
     else:
         bigMessage(eventPlayer, "我独自闯关！")
-        eventPlayer.mod_dmg_taken = -30
-        eventPlayer.mod_heal_event = 60
-        eventPlayer.mod_speed_event = 25
-        eventPlayer.setKnockbackReceived(50)
-        smallMessage(eventPlayer, "  {0}  已获得 30% 伤害减免".format(iconString(Icon.CLUB)))
-        smallMessage(eventPlayer, "  {0}  已获得 60% 治疗增益".format(iconString(Icon.CLUB)))
-        smallMessage(eventPlayer, "  {0}  已获得 25% 移速加成".format(iconString(Icon.CLUB)))
-        smallMessage(eventPlayer, "  {0}  已获得 50% 击退抵抗".format(iconString(Icon.CLUB)))
+        eventPlayer.mod_dmg_taken = EVT_17_MODE2_DMG_TAKEN
+        eventPlayer.mod_heal_event = EVT_17_MODE2_HEAL_BOOST
+        eventPlayer.mod_speed_event = EVT_17_MODE2_SPEED
+        eventPlayer.setKnockbackReceived(EVT_17_MODE2_KNOCKBACK)
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), EVT_17_MODE2_DMG_TAKEN * -1))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE2_HEAL_BOOST))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE2_SPEED))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE2_KNOCKBACK))
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.setKnockbackReceived(100)
@@ -411,7 +411,7 @@ rule "[VishkarEvent]: 坚定":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 18]) == true
     
-    eventPlayer.knockback = -95
+    eventPlayer.knockback = EVT_18_KNOCKBACK_RESISTANCE
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.knockback = 0
@@ -423,18 +423,18 @@ rule "[VishkarEvent]: 坚定":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 18]) == true
     
-    if eventPlayer.mod_dmg_taken == -75:
+    if eventPlayer.mod_dmg_taken == EVT_18_MAX_DMG_REDUCE:
         goto lbl_0
-    eventPlayer.mod_dmg_taken -= 5
+    eventPlayer.mod_dmg_taken -= EVT_18_DMG_REDUCE_PER_STACK
     updatePlayerStats()
     lbl_0:
-    heal(eventPlayer, eventPlayer, eventPlayer.getMaxHealth() * 0.08)
+    heal(eventPlayer, eventPlayer, eventPlayer.getMaxHealth() * EVT_18_HEAL_PERCENT)
 
 
 rule "[VishkarEvent]: 胜利意志":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 19, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * 0.3]) == true
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 19, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_19_TRIGGER_HP_PERCENT]) == true
     
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
     eventPlayer.setStatusEffect(eventPlayer, Status.PHASED_OUT, 0.016)
@@ -444,7 +444,7 @@ rule "[VishkarEvent]: 胜利意志":
     wait()
     if not eventPlayer.isAlive():
         return
-    eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, 5)
+    eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, EVT_19_INVINCIBLE_DURATION)
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.invincibleEffect = getLastCreatedEntity()
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -463,14 +463,14 @@ rule "[VishkarEvent]: 胜利意志":
 rule "[VishkarEvent]: 任务：菲迪皮德斯之力":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 20, eventPlayer.getSpeed() != 0, eventPlayer.eventMission <= 42.195]) == true
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 20, eventPlayer.getSpeed() != 0, eventPlayer.eventMission <= EVT_20_DISTANCE_GOAL]) == true
     
     if eventPlayer.hudTextId != null:
         goto lbl_0
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/42.195".format(eventPlayer.eventMission), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(eventPlayer.eventMission, EVT_20_DISTANCE_GOAL), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     eventPlayer.hudTextId = getLastCreatedText()
     lbl_0:
-    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    wait(EVT_20_DISTANCE_INC, Wait.ABORT_WHEN_FALSE)
     eventPlayer.eventMission += 0.5
     if ruleCondition:
         loop()
@@ -481,12 +481,12 @@ rule "[VishkarEvent]: 任务：菲迪皮德斯之力":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 20]) == true
     
-    waitUntil(eventPlayer.eventMission >= 42.195 or eventPlayer.eventId == null, eventPlayer.eventDuration + 1.5)
+    waitUntil(eventPlayer.eventMission >= EVT_20_DISTANCE_GOAL or eventPlayer.eventId == null, eventPlayer.eventDuration + 1.5)
     wait()
-    if eventPlayer.eventMission >= 42.195:
+    if eventPlayer.eventMission >= EVT_20_DISTANCE_GOAL:
         bigMessage(eventPlayer, "任务：菲迪皮德斯之力 成功！")
-        smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 移动速度加成".format(abilityIconString(Hero.SOLDIER, Button.ABILITY_1), 5))
-        eventPlayer.mod_speed_perma += 5
+        smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 移动速度加成".format(abilityIconString(Hero.SOLDIER, Button.ABILITY_1), EVT_20_REWARD_SPEED))
+        eventPlayer.mod_speed_perma += EVT_20_REWARD_SPEED
         updatePlayerStats()
     else:
         bigMessage(eventPlayer, "任务：菲迪皮德斯之力 失败")
@@ -501,9 +501,9 @@ rule "[VishkarEvent]: 心之钢 Pro":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 21]) == true
     
-    eventPlayer.heart_steel += 6
+    eventPlayer.heart_steel += EVT_21_HP_GAIN_FLAT
     if eventPlayer.heart_steel > 0:
-        eventPlayer.setMaxHealth(100 + eventPlayer.heart_steel * 2)
+        eventPlayer.setMaxHealth(100 + eventPlayer.heart_steel * EVT_21_HP_MULTIPLIER)
         wait(eventPlayer.eventDuration)
         setPlayerHP()
     else:
@@ -515,8 +515,8 @@ rule "[VishkarEvent]: 数值之力":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 22]) == true
     
-    eventPlayer.mod_heal_event = 400
-    eventPlayer.heal_recv = 400
+    eventPlayer.mod_heal_event = EVT_22_HEAL_BOOST
+    eventPlayer.heal_recv = EVT_22_HEAL_BOOST
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_INCREASED_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
@@ -534,7 +534,7 @@ rule "[VishkarEvent]: 我按Q辣":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 23, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     wait(1, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + 10)
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_23_ULT_CHARGE_PER_SEC)
     if ruleCondition:
         loop()
     if eventPlayer.isWinner:
@@ -549,7 +549,7 @@ rule "[VishkarEvent]: 我按Q辣":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 23, eventPlayer.isUsingUltimate()]) == true
     
     resetPlayerCD()
-    eventPlayer.mod_dmg_taken = -75
+    eventPlayer.mod_dmg_taken = EVT_23_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0
@@ -562,9 +562,9 @@ rule "[VishkarEvent]: 重力异常":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 0]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.mod_speed_event = -40
+    eventPlayer.mod_speed_event = EVT_DEBUFF_0_SPEED
     updatePlayerStats()
-    eventPlayer.setGravity(100 + 70)
+    eventPlayer.setGravity(100 + EVT_DEBUFF_0_GRAVITY)
     createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[0] = getLastCreatedEntity()
     createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -582,9 +582,9 @@ rule "[VishkarEvent]: 电磁脉冲":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 1]) == true
     
     stopChasingVariable(eventPlayer.hack_timer)
-    eventPlayer.setStatusEffect(getPlayersOnHero(Hero.BASTION, Team.2)[0], Status.HACKED, 8)
+    eventPlayer.setStatusEffect(getPlayersOnHero(Hero.BASTION, Team.2)[0], Status.HACKED, EVT_DEBUFF_1_HACK_DURATION)
     playEffect(getAllPlayers(), DynamicEffect.SOMBRA_HACKED_STARTING, Color.TEAM_2, eventPlayer, 200)
-    eventPlayer.hack_timer = 8
+    eventPlayer.hack_timer = EVT_DEBUFF_1_HACK_DURATION
     chaseAtRate(eventPlayer.hack_timer, 0, 1, ChaseRateReeval.NONE)
 
 
@@ -596,7 +596,7 @@ rule "[VishkarEvent]: 吸血鬼":
     
     stopCombatRegen()
     playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.TEAM_2, eventPlayer, 200)
-    damage(eventPlayer, (sorted([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()], lambda i: distance(eventPlayer, i)))[0], eventPlayer.getMaxHealth() * 0.1)
+    damage(eventPlayer, (sorted([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()], lambda i: distance(eventPlayer, i)))[0], eventPlayer.getMaxHealth() * EVT_DEBUFF_2_DMG_PERCENT)
     wait(max(0.5, getAverageServerLoad() / 100 * 0.032))
     if ruleCondition:
         loop()
@@ -611,7 +611,7 @@ rule "[VishkarEvent]: 易损":
     eventPlayer.eventEffect[0] = getLastCreatedEntity()
     createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
-    eventPlayer.mod_dmg_taken = 25
+    eventPlayer.mod_dmg_taken = EVT_DEBUFF_3_DMG_TAKEN
     wait(getAverageServerLoad() / 100 * 0.032)
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
@@ -626,12 +626,12 @@ rule "[VishkarEvent]: 限速40":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 4, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     stopCombatRegen()
-    wait(1, Wait.ABORT_WHEN_FALSE)
+    wait(EVT_DEBUFF_4_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if eventPlayer.hasStatus(Status.BURNING):
         goto lbl_0
-    eventPlayer.setStatusEffect(null, Status.BURNING, 3)
+    eventPlayer.setStatusEffect(null, Status.BURNING, EVT_DEBUFF_4_BURN_DURATION)
     lbl_0:
-    eventPlayer.startDamageOverTime(null, 1, 25 + round(eventPlayer.getMaxHealth() * 0.075))
+    eventPlayer.startDamageOverTime(null, EVT_DEBUFF_4_CHECK_INTERVAL, EVT_DEBUFF_4_DMG_BASE + round(eventPlayer.getMaxHealth() * EVT_DEBUFF_4_DMG_PERCENT))
     wait(0.032)
     if ruleCondition:
         loop()
@@ -645,7 +645,7 @@ rule "[VishkarEvent]: 引力异常":
     
     if eventPlayer.mod_speed_event != 0:
         goto lbl_0
-    eventPlayer.mod_speed_event -= 25
+    eventPlayer.mod_speed_event -= EVT_DEBUFF_5_SPEED_REDUCTION
     updatePlayerStats()
     lbl_0:
     if eventPlayer.eventEffect != null:
@@ -655,7 +655,7 @@ rule "[VishkarEvent]: 引力异常":
     createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
     lbl_1:
-    eventPlayer.applyImpulse(directionTowards(eventPlayer, sorted(getPlayers(Team.2), lambda player: distance(eventPlayer, player))[0]), 0.425 if eventPlayer.isInAir() else 0.825, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
+    eventPlayer.applyImpulse(directionTowards(eventPlayer, sorted(getPlayers(Team.2), lambda player: distance(eventPlayer, player))[0]), EVT_DEBUFF_5_PULL_AIR if eventPlayer.isInAir() else EVT_DEBUFF_5_PULL_GROUND, Relativity.TO_WORLD, Impulse.INCORPORATE_CONTRARY_MOTION)
     wait()
     if ruleCondition:
         loop()
@@ -680,8 +680,8 @@ rule "[VishkarEvent]: 骨质疏松":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6]) == true
     
-    while eventPlayer.mod_speed_event != -50:
-        eventPlayer.mod_speed_event -= 5
+    while eventPlayer.mod_speed_event != EVT_DEBUFF_6_MAX_SPEED_DEC:
+        eventPlayer.mod_speed_event -= EVT_DEBUFF_6_SPEED_DEC_PER_SEC
         updatePlayerStats()
         wait(1)
     updatePlayerStats()
@@ -692,7 +692,7 @@ rule "[VishkarEvent]: 电磁脉冲 ProMax":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 7]) == true
     
-    ([player for player in getPlayers(Team.1) if distance(eventPlayer, player) <= 75]).empProMax = eventPlayer
+    ([player for player in getPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_7_RADIUS]).empProMax = eventPlayer
     playEffect(getAllPlayers(), DynamicEffect.SOMBRA_EMP_EXPLOSION_EFFECT, Color.TEAM_2, eventPlayer, 200)
     wait(eventPlayer.eventDuration - 1)
     getPlayers(Team.1).empProMax = null
@@ -704,8 +704,8 @@ rule "[VishkarEvent]: 电磁脉冲 ProMax":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.hasStatus(Status.HACKED) != true, eventPlayer.empProMax != null, eventPlayer.hack_timer == 0]) == true
     
     stopChasingVariable(eventPlayer.hack_timer)
-    eventPlayer.hack_timer = max(0, 8 if eventPlayer.empProMax == eventPlayer else 8 - distance(eventPlayer, eventPlayer.empProMax) * 0.08)
-    if eventPlayer.hack_timer <= 0.9:
+    eventPlayer.hack_timer = max(0, EVT_DEBUFF_7_HACK_BASE_DURATION if eventPlayer.empProMax == eventPlayer else EVT_DEBUFF_7_HACK_BASE_DURATION - distance(eventPlayer, eventPlayer.empProMax) * EVT_DEBUFF_7_DIST_FACTOR)
+    if eventPlayer.hack_timer <= EVT_DEBUFF_7_MIN_HACK_THRESHOLD:
         goto lbl_0
     playEffect(getAllPlayers(), DynamicEffect.SOMBRA_HACKED_STARTING, Color.TEAM_2, eventPlayer, 200)
     lbl_0:
@@ -725,8 +725,8 @@ rule "[VishkarEvent]: 能量泄漏":
     stopCombatRegen()
     wait()
     playEffect(getAllPlayers(), DynamicEffect.ECHO_STICKY_BOMB_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
-    damage(eventPlayer, null, eventPlayer.getMaxHealth() * 0.25)
-    wait(1)
+    damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_DEBUFF_8_DMG_PERCENT)
+    wait(EVT_DEBUFF_8_COOLDOWN)
     if ruleCondition:
         loop()
 
@@ -738,14 +738,14 @@ rule "[VishkarEvent]: 生命在于运动":
     
     stopCombatRegen()
     wait()
-    damage(eventPlayer, null, ceil(0.03 if eventPlayer.getMaxHealth() * eventPlayer.isMoving() else 0.015))
-    eventPlayer.setStatusEffect(null, Status.BURNING, 1)
-    wait(0.96)
+    damage(eventPlayer, null, ceil(eventPlayer.getMaxHealth() * (EVT_DEBUFF_9_DMG_MOVING if eventPlayer.isMoving() else EVT_DEBUFF_9_DMG_STILL)))
+    eventPlayer.setStatusEffect(null, Status.BURNING, EVT_DEBUFF_9_BURN_DURATION)
+    wait(EVT_DEBUFF_9_TICK_RATE)
     if ruleCondition:
         loop()
 
 
-rule "[VishkarEvent]: 有难同当":
+rule "[VishkarEvent]: 有难同当 Effect":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
@@ -765,7 +765,7 @@ rule "[VishkarEvent]: 有难同当":
     @Condition eventAbility != null
     
     wait()
-    damage([player for player in getLivingPlayers(Team.1) if not player.hasStatus(Status.PHASED_OUT) and not player.hasStatus(Status.INVINCIBLE) and distance(eventPlayer, player) <= 15 and eventPlayer != player], attacker, eventDamage * 0.75)
+    damage([player for player in getLivingPlayers(Team.1) if not player.hasStatus(Status.PHASED_OUT) and not player.hasStatus(Status.INVINCIBLE) and distance(eventPlayer, player) <= EVT_DEBUFF_10_RADIUS and eventPlayer != player], attacker, eventDamage * EVT_DEBUFF_10_DMG_FACTOR)
     wait()
 
 
@@ -777,8 +777,8 @@ rule "[VishkarEvent]: 狂欢盛宴":
     bigMessage(getAllPlayers(), "盛宴！")
     smallMessage(getPlayers(Team.1), "  {0} {1} 阵亡触发了狂欢盛宴".format(iconString(Icon.WARNING), eventPlayer))
     getPlayers(Team.2).hasNano = true
-    berserkerTime += 10
-    wait(5)
+    berserkerTime += EVT_DEBUFF_11_BERSERK_ADD
+    wait(EVT_DEBUFF_11_COOLDOWN)
 
 
 rule "[VishkarEvent]: 狂欢盛宴计时器":
@@ -796,7 +796,7 @@ rule "[VishkarEvent]: 无能的丈夫/妻子":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 12]) == true
     
-    ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= 45 and eventPlayer != player]).setStatusEffect(null, Status.KNOCKED_DOWN, 2)
+    ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(null, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
     wait(2)
 
 
@@ -805,8 +805,8 @@ rule "[VishkarEvent]: 重伤":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 13]) == true
     
-    eventPlayer.mod_heal_event = -85
-    eventPlayer.heal_recv = -85
+    eventPlayer.mod_heal_event = EVT_DEBUFF_13_HEAL_DEALT_RED
+    eventPlayer.heal_recv = EVT_DEBUFF_13_HEAL_RECV_RED
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
@@ -825,12 +825,12 @@ rule "[VishkarEvent]: 减半":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.eventType == 1, eventPlayer.eventId == 14, eventPlayer.getHealth() != 0]) == true
     
     stopCombatRegen()
-    if eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * 0.05:
+    if eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_DEBUFF_14_EXECUTE_THRESHOLD:
         kill(eventPlayer, eventPlayer)
         playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
     else:
-        wait(5)
-        eventPlayer.startDamageOverTime(null, 1, eventPlayer.getHealth() * 0.5)
+        wait(EVT_DEBUFF_14_INTERVAL)
+        eventPlayer.startDamageOverTime(null, 1, eventPlayer.getHealth() * EVT_DEBUFF_14_DAMAGE_PERCENT)
         playEffect(getAllPlayers(), DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION, Color.TEAM_2, eventPlayer, 3)
     if ruleCondition:
         loop()
@@ -841,12 +841,12 @@ rule "[VishkarEvent]: 舍己为人":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 15]) == true
     
-    if eventPlayer.getMaxHealth() <= 125:
+    if eventPlayer.getMaxHealth() <= EVT_DEBUFF_15_MIN_MAX_HP:
         eventPlayer.eventDuration = 0
     else:
-        getPlayers(Team.1).exclude(eventPlayer).heart_steel++
+        getPlayers(Team.1).exclude(eventPlayer).heart_steel += EVT_DEBUFF_15_STACKS_GIVE
         getPlayers(Team.1).exclude(eventPlayer).setPlayerHP = true
-        eventPlayer.heart_steel -= 1 * len(getPlayers(Team.1).exclude(eventPlayer))
+        eventPlayer.heart_steel -= EVT_DEBUFF_15_STACKS_TAKE * len(getPlayers(Team.1).exclude(eventPlayer))
         setPlayerHP()
     playEffect(getAllPlayers(), DynamicEffect.ORISA_HALT_IMPLOSION, Color.TEAM_1, eventPlayer, 200)
     playEffect(getAllPlayers(), DynamicEffect.GOOD_PICKUP_EFFECT, Color.GREEN, eventPlayer, 100)
@@ -868,13 +868,13 @@ rule "[VishkarEvent]: 极限挑战":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
     
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
-    eventPlayer.mod_heal_event = -1000
-    eventPlayer.heal_recv = -1000
+    eventPlayer.mod_heal_event = EVT_MECH_0_HEAL_BAN
+    eventPlayer.heal_recv = EVT_MECH_0_HEAL_BAN
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     playEffect(eventPlayer, DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND, Color.WHITE, eventPlayer, 200)
-    eventPlayer.setHealth(eventPlayer.getMaxHealth() * 0.3)
-    eventPlayer.mod_dmg_taken = -99
+    eventPlayer.setHealth(eventPlayer.getMaxHealth() * EVT_MECH_0_HP_PERCENT)
+    eventPlayer.mod_dmg_taken = EVT_MECH_0_DMG_TAKEN
     updatePlayerStats()
     waitUntil(eventPlayer.isDead(), eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0
@@ -890,10 +890,10 @@ rule "[VishkarEvent]: 极限挑战":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
-    @Condition eventPlayer.getHealth() > eventPlayer.getMaxHealth() * 0.3 == true
+    @Condition eventPlayer.getHealth() > eventPlayer.getMaxHealth() * EVT_MECH_0_HP_PERCENT == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setHealth(eventPlayer.getMaxHealth() * 0.3)
+    eventPlayer.setHealth(eventPlayer.getMaxHealth() * EVT_MECH_0_HP_PERCENT)
     wait(5)
     if ruleCondition:
         loop()
@@ -906,9 +906,9 @@ rule "[VishkarEvent]: 纳米战甲":
     
     wait()
     waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
-    eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.getMaxHealth() * 8, false, false)
+    eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.getMaxHealth() * EVT_MECH_1_HP_MULTIPLIER, false, false)
     eventPlayer.healthId[0] = getLastCreatedHealthPool()
-    eventPlayer.mod_speed_event = -25
+    eventPlayer.mod_speed_event = EVT_MECH_1_SPEED_PENALTY
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_speed_event = 0
@@ -923,14 +923,14 @@ rule "[VishkarEvent]: 赌徒":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 2, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
-    if random.randint(0, 100) <= 50:
-        eventPlayer.heart_steel -= 5
+    if random.randint(0, 100) <= EVT_MECH_2_WIN_RATE:
+        eventPlayer.heart_steel -= EVT_MECH_2_STAKE
         eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
-        smallMessage(eventPlayer, "  {0}  输！失去 5% 最大生命值".format(iconString(Icon.DIAMOND)))
+        smallMessage(eventPlayer, "  {0}  输！失去 {1} 层心之钢层数（{2}%）".format(iconString(Icon.DIAMOND), EVT_MECH_2_STAKE, EVT_MECH_2_STAKE * EVT_8_HP_PERCENT_PER_STACK))
     else:
-        eventPlayer.heart_steel += 5
+        eventPlayer.heart_steel += EVT_MECH_2_STAKE
         eventPlayer.dlcTimeChallenge++
-        smallMessage(eventPlayer, "  {0}  赢！获得 5% 最大生命值".format(iconString(Icon.CLUB)))
+        smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢层数（{2}%）".format(iconString(Icon.CLUB), EVT_MECH_2_STAKE, EVT_MECH_2_STAKE * EVT_8_HP_PERCENT_PER_STACK))
     wait()
     setPlayerHP()
     wait()
@@ -948,10 +948,10 @@ rule "[VishkarEvent]: 有点松弛":
     createEffect(getAllPlayers(), Effect.WRECKING_BALL_PILEDRIVER_FIRE, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     lbl_0:
-    createEffect([player for player in getPlayers(Team.1) if not player.ignoreObstrucVis], Effect.CLOUD, random.choice([Color.YELLOW, Color.GREEN, Color.ORANGE, Color.LIME_GREEN, Color.VIOLET]), evalOnce(eventPlayer.getPosition()), 12, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    createEffect([player for player in getPlayers(Team.1) if not player.ignoreObstrucVis], Effect.CLOUD, random.choice([Color.YELLOW, Color.GREEN, Color.ORANGE, Color.LIME_GREEN, Color.VIOLET]), evalOnce(eventPlayer.getPosition()), EVT_MECH_3_CLOUD_RADIUS, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     wait()
     eventPlayer.obstrucVis.append(getLastCreatedEntity())
-    wait(1)
+    wait(EVT_MECH_3_SPAWN_INTERVAL)
     if ruleCondition:
         loop()
     clearEventEffect()
@@ -978,11 +978,11 @@ rule "[VishkarEvent]: 体积膨胀":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 4]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.sizeHealth = 4
-    eventPlayer.startScalingSize(1.75, false)
-    eventPlayer.startScalingBarriers(1.75, false)
-    eventPlayer.startModifyingVoicelinePitch(0.5, false)
-    eventPlayer.mod_dmg_taken = -20
+    eventPlayer.sizeHealth = EVT_MECH_4_HP_SCALE
+    eventPlayer.startScalingSize(EVT_MECH_4_MODEL_SCALE, false)
+    eventPlayer.startScalingBarriers(EVT_MECH_4_MODEL_SCALE, false)
+    eventPlayer.startModifyingVoicelinePitch(EVT_MECH_4_VOICE_PITCH, false)
+    eventPlayer.mod_dmg_taken = EVT_MECH_4_DMG_TAKEN
     updatePlayerStats()
     setPlayerHP()
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
@@ -1001,11 +1001,11 @@ rule "[VishkarEvent]: 迷你形态":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 5]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.sizeHealth = 0.5
-    eventPlayer.startScalingSize(0.4, false)
-    eventPlayer.startScalingBarriers(0.4, false)
-    eventPlayer.startModifyingVoicelinePitch(1.5, false)
-    eventPlayer.mod_speed_event = 25
+    eventPlayer.sizeHealth = EVT_MECH_5_HP_SCALE
+    eventPlayer.startScalingSize(EVT_MECH_5_MODEL_SCALE, false)
+    eventPlayer.startScalingBarriers(EVT_MECH_5_MODEL_SCALE, false)
+    eventPlayer.startModifyingVoicelinePitch(EVT_MECH_5_VOICE_PITCH, false)
+    eventPlayer.mod_speed_event = EVT_MECH_5_SPEED_BOOST
     updatePlayerStats()
     setPlayerHP()
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
@@ -1027,7 +1027,7 @@ rule "[VishkarEvent]: 悄悄地进村":
     createEffect(getAllPlayers(), Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     eventPlayer.targetSilence = true
-    eventPlayer.mod_speed_event -= 25
+    eventPlayer.mod_speed_event -= EVT_MECH_6_SPEED_PENALTY
     updatePlayerStats()
     waitUntil(eventPlayer.isHoldingButton(Button.CROUCH) == false, eventPlayer.eventDuration)
     eventPlayer.targetSilence = false
@@ -1043,11 +1043,11 @@ rule "[VishkarEvent]: 紧急避障":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 7]) == true
     
     wait(0.032, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.mod_speed_event += 30
+    eventPlayer.mod_speed_event += EVT_MECH_7_SPEED_BOOST
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(3)
+    wait(EVT_MECH_7_DURATION)
     eventPlayer.mod_speed_event = 0
     updatePlayerStats()
     clearEventEffect()
@@ -1061,8 +1061,8 @@ rule "[VishkarEvent]: 逆风而行":
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     eventPlayer.stopForcingThrottle()
     eventPlayer.startForcingThrottle(0, 0, 0, 1, 0, eventPlayer.eventDuration)
-    eventPlayer.mod_speed_event += 60
-    eventPlayer.mod_dmg_taken = -60
+    eventPlayer.mod_speed_event += EVT_MECH_8_SPEED_BOOST
+    eventPlayer.mod_dmg_taken = EVT_MECH_8_DMG_TAKEN
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
@@ -1089,14 +1089,14 @@ rule "[VishkarEvent]: 刹车失灵":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 9]) == true
     
-    while eventPlayer.mod_speed_event < 75:
+    while eventPlayer.mod_speed_event < EVT_MECH_9_MAX_SPEED:
         eventPlayer.mod_speed_event += 5
-        if eventPlayer.mod_dmg_taken == 50:
+        if eventPlayer.mod_dmg_taken == EVT_MECH_9_MAX_DMG_TAKEN:
             goto lbl_0
-        eventPlayer.mod_dmg_taken += 5
+        eventPlayer.mod_dmg_taken -= EVT_MECH_9_DMG_TAKEN_INC
         lbl_0:
         updatePlayerStats()
-        wait(1)
+        wait(EVT_MECH_9_INTERVAL)
 
 
 rule "[VishkarEvent]: 冲锋激励":
@@ -1106,13 +1106,13 @@ rule "[VishkarEvent]: 冲锋激励":
     
     if eventPlayer.hudTextId != null:
         goto lbl_0
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/300".format(eventPlayer.eventMission), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(eventPlayer.eventMission, EVT_MECH_10_MISSION_GOAL), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     eventPlayer.hudTextId = getLastCreatedText()
     lbl_0:
-    wait(5, Wait.ABORT_WHEN_FALSE)
-    if eventPlayer.eventMission >= 300:
+    wait(EVT_MECH_10_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
+    if eventPlayer.eventMission >= EVT_MECH_10_MISSION_GOAL:
         goto lbl_1
-    eventPlayer.eventMission += 100
+    eventPlayer.eventMission += EVT_MECH_10_MISSION_INC
     wait()
     lbl_1:
     if ruleCondition:
@@ -1122,7 +1122,7 @@ rule "[VishkarEvent]: 冲锋激励":
 rule "[VishkarEvent]: 冲锋激励":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.eventMission == 300]) == true
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.eventMission == EVT_MECH_10_MISSION_GOAL]) == true
     
     if eventPlayer.healthId[1] == null:
         goto lbl_0
@@ -1131,7 +1131,7 @@ rule "[VishkarEvent]: 冲锋激励":
     eventPlayer.addHealthPool(Health.ARMOR, eventPlayer.eventMission, false, false)
     eventPlayer.healthId[1] = getLastCreatedHealthPool()
     eventPlayer.eventMission = 0
-    wait(15)
+    wait(EVT_MECH_10_REWARD_DURATION)
     removeHealthPool(eventPlayer.healthId[1])
     eventPlayer.healthId[1] = null
 
@@ -1149,7 +1149,7 @@ rule "[VishkarEvent]: 生命在于反击":
     eventPlayer.mod_dmg_taken = ((eventPlayer.getMaxHealth() - eventPlayer.getHealth()) / eventPlayer.getMaxHealth() * 100) if ((eventPlayer.getMaxHealth() - eventPlayer.getHealth()) / eventPlayer.getMaxHealth() * 100) < 75 else 50
     
     updatePlayerStats()
-    wait(1)
+    wait(EVT_MECH_11_INTERVAL)
     if ruleCondition:
         loop()
     eventPlayer.mod_speed_event = 0
@@ -1164,12 +1164,12 @@ rule "[VishkarEvent]: 屁动力":
     
     if eventPlayer.nanoEffect != null:
         goto lbl_0
-    eventPlayer.mod_dmg_taken = -50
+    eventPlayer.mod_dmg_taken = EVT_MECH_12_DMG_TAKEN
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     eventPlayer.nanoEffect = getLastCreatedEntity()
     lbl_0:
-    eventPlayer.applyImpulse(eventPlayer.getFacingDirection(), 15, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    eventPlayer.applyImpulse(eventPlayer.getFacingDirection(), EVT_MECH_12_IMPULSE, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
     wait()
     if ruleCondition:
         loop()
@@ -1185,24 +1185,24 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 13, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setHealth(eventPlayer.getMaxHealth() * 0.5)
+    eventPlayer.setHealth(eventPlayer.getMaxHealth() * EVT_MECH_13_HP_PENALTY)
     eventPlayer.categoryRoll = random.uniform(0, 100)
-    if eventPlayer.categoryRoll <= 49:
-        eventPlayer.mod_speed_perma += 5
+    if eventPlayer.categoryRoll <= EVT_MECH_13_PROB_WIN_NORMAL:
+        eventPlayer.mod_speed_perma += EVT_MECH_13_VAL_NORMAL
         eventPlayer.dlcTimeChallenge++
-        smallMessage(eventPlayer, "  {0}  赢！永久获得 5% 移动速度加成".format(iconString(Icon.CLUB)))
-    elif eventPlayer.categoryRoll <= 98:
-        eventPlayer.mod_speed_perma -= 5
+        smallMessage(eventPlayer, "  {0}  赢！永久获得 {1}% 移动速度加成".format(iconString(Icon.CLUB), EVT_MECH_13_VAL_NORMAL))
+    elif eventPlayer.categoryRoll <= EVT_MECH_13_PROB_LOSE_NORMAL:
+        eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_NORMAL
         eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
-        smallMessage(eventPlayer, "  {0}  输！永久失去 5% 移动速度加成".format(iconString(Icon.DIAMOND)))
-    elif eventPlayer.categoryRoll <= 99:
-        eventPlayer.mod_speed_perma += 12
+        smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_NORMAL))
+    elif eventPlayer.categoryRoll <= EVT_MECH_13_PROB_WIN_RARE:
+        eventPlayer.mod_speed_perma += EVT_MECH_13_VAL_RARE
         eventPlayer.dlcTimeChallenge++
-        smallMessage(eventPlayer, "  {0}  赢！永久获得 12% 移动速度加成".format(iconString(Icon.CLUB)))
+        smallMessage(eventPlayer, "  {0}  赢！永久获得 {1}% 移动速度加成".format(iconString(Icon.CLUB), EVT_MECH_13_VAL_RARE))
     else:
-        eventPlayer.mod_speed_perma -= 12
+        eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_RARE
         eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
-        smallMessage(eventPlayer, "  {0}  输！永久失去 12% 移动速度加成".format(iconString(Icon.DIAMOND)))
+        smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_RARE))
     eventPlayer.categoryRoll = 0
     updatePlayerStats()
     eventPlayer.eventDuration = 0
