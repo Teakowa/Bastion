@@ -65,5 +65,11 @@ rule "initialize color array":
     breathGold = [vect(255, 215, 0), vect(238, 201, 0), vect(255, 223, 70), vect(255, 239, 128), vect(218, 165, 32), vect(250, 250, 210), vect(184, 134, 11)]
     heroColor = [vect(124, 62, 82), vect(214, 145, 65), vect(236, 233, 189), vect(185, 179, 137), vect(191, 115, 110), vect(148, 161, 165), vect(60, 126, 204), vect(160, 169, 186), vect(157, 105, 166), vect(124, 143, 122), vect(45, 187, 209), vect(236, 229, 128), vect(149, 239, 66), vect(179, 139, 80), vect(173, 90, 95), vect(236, 190, 82), vect(231, 130, 184), vect(109, 121, 149), vect(132, 201, 81), vect(237, 147, 199), vect(9, 171, 235), vect(118, 93, 189), vect(131, 83, 76), vect(110, 137, 177), vect(69, 139, 66), vect(139, 98, 94), vect(151, 113, 228), vect(219, 147, 66), vect(198, 28, 65), vect(105, 105, 104), vect(154, 202, 243), vect(85, 178, 204), vect(212, 135, 143), vect(142, 181, 215), vect(148, 160, 165), vect(157, 140, 208), vect(224, 182, 198), vect(220, 132, 125), vect(183, 168, 142), vect(121, 97, 78), vect(173, 143, 203), vect(114, 31, 163), vect(54, 127, 221), vect(238, 75, 43), vect(93, 63, 211), vect(196, 30, 58)]
 
-
+rule "initialize phase hero arrays":
+    @Condition vishkarEventActivated == true
+    
+    phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG]
+    phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER]
+    phaseHero[2] = [Hero.DOOMFIST, Hero.TRACER]
+    phaseHero[3] = [Hero.HANZO]
 
