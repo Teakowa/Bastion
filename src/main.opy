@@ -314,6 +314,8 @@ globalvar phaseHero 103
 globalvar __currentMapText___ 105
 globalvar __currentPioneerText___ 106
 globalvar __currentMapPioneerText___ 107
+globalvar devEventCategory
+globalvar devEventIndex
 globalvar antiCrashActivated 127
 
 
