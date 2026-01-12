@@ -50,7 +50,12 @@ enum Title:
     LAO_DA,             # 40 牢 大
     V_50,               # 41 V我50
     STEEL,              # 42 钢门
-    HACKING             # 43 开了
+    HACKING,             # 43 开了
+    RED_PACKET,         # 44 红包收藏家
+    GOOD_LUCK,          # 45 好运来
+    LONE_WALKER,        # 46 千里独行
+    GREEN_MOUNTAIN,     # 47 踏遍青山
+    SUAN_BU_LA          # 48 我不会放过你的酸不辣
 
 # ------------------------------
 # 2. 定义玩家数据 (Database)
@@ -776,7 +781,16 @@ rule "initialize title array":
         # 42: STEEL
         ["钢门", heroColor[11]],
         # 43: HACKING
-        ["开了", heroColor[20]]
+        ["开了", heroColor[20]],
+        # 44: 红包收藏家
+        ["红包收藏家", Color.ROSE],
+        ["好运来", breathGold], 
+        # 46: LONE_WALKER (千里独行 - 独行侠风格，推荐使用旅行家同款或冷色调)
+        ["千里独行", heroColor[33]], 
+        # 47: GREEN_MOUNTAIN (踏遍青山 - 这里的青山建议用源氏绿或深绿)
+        ["踏遍青山", vect(0, 200, 50)],
+        # 48: SUAN_BU_LA (我不会放过你的酸不辣 - 特殊梗，配个显眼的颜色，如狂鼠炸弹色)
+        ["我不会放过你的酸不辣", heroColor[18]]
     ]
     splitDictArray({
         name: titlePlayer,
