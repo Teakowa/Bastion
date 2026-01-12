@@ -436,7 +436,6 @@ subroutine rejecSampling 11
 subroutine resetPlayerCD 12
 subroutine StoreOverhealth 13
 subroutine clearEventEffect 14
-subroutine updatePlayerPhase 15
 subroutine setPlayerSize 16
 subroutine createBastionBot 17
 
