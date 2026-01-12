@@ -474,6 +474,8 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/init.opy"
 
+#!include "events/rejecSampling.opy"
+
 #!include "utilities/dashDetector.opy"
 
 #!include "utilities/setPlayerSize.opy"
