@@ -1412,9 +1412,12 @@ rule "[VishkarEvent]: 治疗光塔 ProMax (全图奶)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 33]) == true
     
-    smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
-    getPlayers(Team.1).startHealingOverTime(eventPlayer, 1, round(25 + eventPlayer.getMaxHealth() * 1.25))
-    wait(1)
+    if eventPlayer.getNormalizedHealth() == 1:
+        goto lbl_0
+        smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
+    lbl_0:
+    getPlayers(Team.1).startHealingOverTime(eventPlayer, 2, round(25 + eventPlayer.getMaxHealth() * 1.25))
+    wait(2)
     if ruleCondition:
         loop()
     clearEventEffect()
