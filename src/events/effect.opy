@@ -662,22 +662,27 @@ rule "[VishkarEvent]: 引力异常":
     clearEventEffect()
 
 
+rule "[VishkarEvent]: 骨质疏松 Effect":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6, eventPlayer.eventEffect == null]) == true
+
+    createEffect(getAllPlayers(), Effect.MEI_FROZEN, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    eventPlayer.eventEffect = getLastCreatedEntity()
+    wait(eventPlayer.eventDuration, Wait.IGNORE_CONDITION)
+    clearEventEffect()
+
+
 rule "[VishkarEvent]: 骨质疏松":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6]) == true
     
-    if eventPlayer.eventEffect != null:
-        goto lbl_0
-    createEffect(getAllPlayers(), Effect.MEI_FROZEN, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect = getLastCreatedEntity()
-    lbl_0:
     while eventPlayer.mod_speed_event != -50:
         eventPlayer.mod_speed_event -= 5
         updatePlayerStats()
         wait(1)
     updatePlayerStats()
-    clearEventEffect()
 
 
 rule "[VishkarEvent]: 电磁脉冲 ProMax":
