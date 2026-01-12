@@ -20,7 +20,7 @@ rule "[VishkarEvent]: 疾风祝福":
     wait(getAverageServerLoad() / 100 * 0.032)
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    eventPlayer.mod_speed_event = 50
+    eventPlayer.mod_speed_event = EVT_1_SPEED_BOOST
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_speed_event = 0
