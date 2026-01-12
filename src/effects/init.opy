@@ -22,15 +22,15 @@ rule "initialize effects":
     hudText(localPlayer if localPlayer.isWinner else null, iconString(Icon.CHECKMARK), STR_HUD_NEXT_HERO, STR_HUD_CHALLENGE_COMPLETE, HudPosition.LEFT, 4, Color.GREEN, Color.GREEN, Color.GREEN, HudReeval.VISIBILITY_AND_STRING)
     
     # 成就禁用
-    hudSubheader(null if hashTag else localPlayer, STR_HUD_ACHIEVEMENT_DISABLED.format(iconString(Icon.WARNING)), HudPosition.LEFT, 4, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(null if hashTag else localPlayer, STR_HUD_ACHIEVEMENT_DISABLED.format(iconString(Icon.WARNING)), HudPosition.LEFT, 5, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     
     # --------------------------------------------------------------------------------------------------------------------------------
     # New Stats Panel (4.0)
     # --------------------------------------------------------------------------------------------------------------------------------
     # 边框 Top
-    hudSubheader(localPlayer, STR_HUD_PANEL_TOP, HudPosition.LEFT, 5, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(localPlayer, STR_HUD_PANEL_TOP, HudPosition.LEFT, 6, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     
-    # 统计内容 (合并)
+        # 统计内容 (合并)
     hudSubheader(localPlayer, STR_HUD_STATS_PANEL.format(
         # 1. 阵亡/跳过
         STR_HUD_STATS_DEATH_SKIP.format(localPlayer.runDeathCount, localPlayer.skipCount),
@@ -39,15 +39,24 @@ rule "initialize effects":
         STR_HUD_STATS_GRENADE.format(STR_HUD_STATS_GRENADE_VAL.format(localPlayer.A36TGrenadeHit, localPlayer.A36TGrenade, ceil(localPlayer.A36TGrenadeDmg))),
         
         # 3. 事件统计 (仅在开启DLC时显示)
-        STR_HUD_STATS_EVENT.format(localPlayer.eventCount[0], localPlayer.eventCount[1], localPlayer.eventCount[0] + localPlayer.eventCount[1] + localPlayer.eventCount[2]) if evalOnce(dlcVishkarEvent) else ""
-    ), HudPosition.LEFT, 5, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        STR_HUD_STATS_EVENT.format(localPlayer.eventCount[0], localPlayer.eventCount[1], localPlayer.eventCount[0] + localPlayer.eventCount[1] + localPlayer.eventCount[2]) if evalOnce(dlcVishkarEvent) else "",
+
+        # 4. 总耗时 (仅在通关后显示)
+        STR_HUD_TOTAL_TIME.format("{0}{1}{2}".format(
+            STR_TIME_UNIT_HOUR.format(floor(localPlayer.winnerTime / 3600)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 3600 else "", 
+            STR_TIME_UNIT_MIN.format(floor(localPlayer.winnerTime % 3600 / 60)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 60 else "", 
+            STR_TIME_UNIT_SEC.format(floor(localPlayer.winnerTime % 60)) if localPlayer.winnerTime != null else STR_TIME_UNIT_ZERO_SEC
+        )) if localPlayer.isWinner else ""
+
+    ), HudPosition.LEFT, 7, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+
     
     # 特殊状态 (大难不死 / 赌王)
     hudSubheader(localPlayer if localPlayer.A36TGrenadeAlive == true else null, STR_HUD_SURVIVOR.format(iconString(Icon.CHECKMARK) if localPlayer.A36TGrenadeAlive == true else null), HudPosition.LEFT, 100, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     hudSubheader(localPlayer if localPlayer.dlcTimeChallenge == 5 else null, STR_HUD_GAMBLER_KING.format(iconString(Icon.CHECKMARK) if localPlayer.dlcTimeChallenge == 5 else null), HudPosition.LEFT, 101, heroColor[2], HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     
     # 边框 Bottom
-    hudSubheader(localPlayer, STR_HUD_PANEL_BOTTOM, HudPosition.LEFT, 6, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(localPlayer, STR_HUD_PANEL_BOTTOM, HudPosition.LEFT, 8, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     
     # --------------------------------------------------------------------------------------------------------------------------------
     # Random Events 4.0 HUD
@@ -69,17 +78,17 @@ rule "initialize effects":
                 STR_TIME_UNIT_SEC.format(ceil(localPlayer.eventDurationHud)) if localPlayer.eventDuration > 0 else STR_MSG_DURATION_INSTANT, 
                 localPlayer.eventDesc
             ), 
-            null, HudPosition.LEFT, 70, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER
+            null, HudPosition.LEFT, 70, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.DEFAULT
         )
     
     # --------------------------------------------------------------------------------------------------------------------------------
     # Misc Info
     # --------------------------------------------------------------------------------------------------------------------------------
     # 总耗时
-    hudSubheader(localPlayer if localPlayer.isWinner else null, STR_HUD_TOTAL_TIME.format("{0}{1}{2}".format(STR_TIME_UNIT_HOUR.format(floor(localPlayer.winnerTime / 3600)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 3600 else "", STR_TIME_UNIT_MIN.format(floor(localPlayer.winnerTime % 3600 / 60)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 60 else "", STR_TIME_UNIT_SEC.format(floor(localPlayer.winnerTime % 60)) if localPlayer.winnerTime != null else STR_TIME_UNIT_ZERO_SEC)), HudPosition.LEFT, 51, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    # hudSubheader(localPlayer if localPlayer.isWinner else null, STR_HUD_TOTAL_TIME.format("{0}{1}{2}".format(STR_TIME_UNIT_HOUR.format(floor(localPlayer.winnerTime / 3600)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 3600 else "", STR_TIME_UNIT_MIN.format(floor(localPlayer.winnerTime % 3600 / 60)) if localPlayer.winnerTime != null and localPlayer.winnerTime >= 60 else "", STR_TIME_UNIT_SEC.format(floor(localPlayer.winnerTime % 60)) if localPlayer.winnerTime != null else STR_TIME_UNIT_ZERO_SEC)), HudPosition.LEFT, 7, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     
     # 跳过提示
-    hudSubheader(localPlayer if difficulty != 5 and localPlayer.progressionDeathCount == maxDeath else null, STR_HUD_SKIP_HINT.format(inputBindingString(Button.ULTIMATE)), HudPosition.LEFT, 6, Color.BLUE, HudReeval.VISIBILITY_AND_STRING)
+    hudSubheader(localPlayer if difficulty != 5 and localPlayer.progressionDeathCount == maxDeath else null, STR_HUD_SKIP_HINT.format(inputBindingString(Button.ULTIMATE)), HudPosition.LEFT, 5, Color.BLUE, HudReeval.VISIBILITY_AND_STRING)
     
     # --------------------------------------------------------------------------------------------------------------------------------
     # Goal Effects
