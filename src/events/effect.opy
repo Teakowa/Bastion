@@ -37,10 +37,10 @@ rule "[VishkarEvent]: 钢铁防线":
         goto lbl_0
     removeHealthPool(eventPlayer.healthId[1])
     lbl_0:
-    eventPlayer.addHealthPool(Health.ARMOR, 1500, false, false)
+    eventPlayer.addHealthPool(Health.ARMOR, EVT_2_ARMOR_AMOUNT, false, false)
     eventPlayer.healthId[1] = getLastCreatedHealthPool()
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
-    eventPlayer.mod_dmg_taken = -25
+    eventPlayer.mod_dmg_taken = EVT_2_DMG_TAKEN
     updatePlayerStats()
     waitUntil(eventPlayer.eventId == null, eventPlayer.eventDuration)
     removeHealthPool(eventPlayer.healthId[1])
