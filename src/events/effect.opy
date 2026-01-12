@@ -1501,7 +1501,9 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
     
     stopCombatRegen()
     eventPlayer.target = (sorted(getLivingPlayers(Team.1).exclude(eventPlayer), lambda i: i.getHealth() / i.getMaxHealth()))[0]
+
     if eventPlayer.target != null:
+        if eventPlayer.getHealth() / eventPlayer.getMaxHealth() > eventPlayer.target.getHealth() / eventPlayer.target.getMaxHealth():
         eventPlayer.setHealth(eventPlayer.getMaxHealth() * (eventPlayer.target.getHealth() / eventPlayer.target.getMaxHealth()))
     wait(1)
     if ruleCondition:
