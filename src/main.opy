@@ -120,6 +120,9 @@ settings {
                 "ability2Duration%": 40,
                 "enableAbility1": false
             },
+            "venture": {
+                "ability1Duration%": 25
+            },
             "doomfist": {
                 "ability1Cooldown%": 50,
                 "secondaryFireCooldown%": 80,
