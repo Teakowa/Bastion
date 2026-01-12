@@ -101,7 +101,7 @@ rule "[VishkarEvent]: 足力健":
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     lbl_0:
-    eventPlayer.mod_speed_event += 3
+    eventPlayer.mod_speed_event += EVT_6_SPEED_INC_PER_SEC
     updatePlayerStats()
     if ruleCondition:
         loop()
