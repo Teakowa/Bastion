@@ -74,7 +74,7 @@ rule "[VishkarEvent]: 生命源泉":
     wait(0.032)
     createEffect(getAllPlayers(), Effect.HEAL_TARGET_ACTIVE, Color.YELLOW, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    eventPlayer.startHealingOverTime(eventPlayer, 20, eventPlayer.getMaxHealth() * 0.15)
+    eventPlayer.startHealingOverTime(eventPlayer, 20, eventPlayer.getMaxHealth() * EVT_4_HEAL_PERCENT)
     wait(eventPlayer.eventDuration)
     clearEventEffect()
 

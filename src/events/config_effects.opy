@@ -17,7 +17,8 @@
 
 # --- ID 4: 生命源泉 ---
 #!define EVT_4_HEAL_INTERVAL 20
-#!define EVT_4_HEAL_PERCENT 0.15  # 15% Max HP
+# 15% Max HP
+#!define EVT_4_HEAL_PERCENT 0.15
 #!define EVT_4_EFFECT Effect.HEAL_TARGET_ACTIVE
 
 # --- ID 6: 足力健 ---
