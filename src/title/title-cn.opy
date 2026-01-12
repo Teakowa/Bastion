@@ -61,14 +61,15 @@ enum Title:
 # 2. 定义玩家数据 (Database)
 # 注意：Key (name, titles) 必须不加引号，否则 splitDictArray 会报错
 # ------------------------------
+#!define TP_ALL [Title.PIONEER, Title.TEST_LONG, Title.NOT_MY_MAP, Title.WILD_DEV, Title.ARCHITECT, Title.MAINTAINER, Title.THREE_IN_ONE, Title.BLACK_SHEEP, Title.PURE_HARM, Title.CONQUEROR, Title.DOMINATOR, Title.SURVIVOR_EXPERT, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.DODGE_ULTIMATE, Title.LIGHT_PACK, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.PERSEVERANCE, Title.SPEEDRUN, Title.DODGE_GOD, Title.ZENYATTA, Title.HARD_TO_KILL, Title.WIN_HEAVEN, Title.IDOL, Title.EGG_FIRST, Title.EAT_MORE, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.FLAME, Title.PASS_EGGS, Title.CHOSEN, Title.LUCKY_STAR, Title.GAMBLE_KING, Title.LUCKY_SHINE, Title.UNLUCKY, Title.MANBA, Title.MY_FATE, Title.GOD_GAMBLER, Title.LAO_DA, Title.V_50, Title.STEEL, Title.HACKING, Title.SUAN_BU_LA, Title.RED_PACKET, Title.GOOD_LUCK, Title.LONE_WALKER, Title.GREEN_MOUNTAIN ]
 #!define player_database [ \
     { \
         name: "他又", \
-        titles: [Title.PIONEER, Title.TEST_LONG, Title.NOT_MY_MAP, Title.WILD_DEV, Title.ARCHITECT, Title.MAINTAINER, Title.THREE_IN_ONE, Title.BLACK_SHEEP, Title.PURE_HARM, Title.CONQUEROR, Title.DOMINATOR, Title.SURVIVOR_EXPERT, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.DODGE_ULTIMATE, Title.LIGHT_PACK, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.PERSEVERANCE, Title.SPEEDRUN, Title.DODGE_GOD, Title.ZENYATTA, Title.HARD_TO_KILL, Title.WIN_HEAVEN, Title.IDOL, Title.EGG_FIRST, Title.EAT_MORE, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.FLAME, Title.PASS_EGGS, Title.CHOSEN, Title.LUCKY_STAR, Title.GAMBLE_KING, Title.LUCKY_SHINE, Title.UNLUCKY, Title.MANBA, Title.MY_FATE, Title.GOD_GAMBLER, Title.LAO_DA, Title.V_50, Title.STEEL, Title.HACKING] \
+        titles: TP_ALL \
     }, \
     { \
         name: "别感冒", \
-        titles: [Title.PIONEER, Title.TEST_LONG, Title.NOT_MY_MAP, Title.WILD_DEV, Title.ARCHITECT, Title.MAINTAINER, Title.THREE_IN_ONE, Title.BLACK_SHEEP, Title.PURE_HARM, Title.CONQUEROR, Title.DOMINATOR, Title.SURVIVOR_EXPERT, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.DODGE_ULTIMATE, Title.LIGHT_PACK, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.PERSEVERANCE, Title.SPEEDRUN, Title.DODGE_GOD, Title.ZENYATTA, Title.HARD_TO_KILL, Title.WIN_HEAVEN, Title.IDOL, Title.EGG_FIRST, Title.EAT_MORE, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.FLAME, Title.PASS_EGGS, Title.CHOSEN, Title.LUCKY_STAR, Title.GAMBLE_KING, Title.LUCKY_SHINE, Title.UNLUCKY, Title.MANBA, Title.MY_FATE, Title.GOD_GAMBLER, Title.LAO_DA, Title.V_50, Title.STEEL, Title.HACKING] \
+        titles: TP_ALL \
     }, \
     { \
         name: "草艮", \
