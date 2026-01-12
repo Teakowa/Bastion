@@ -162,11 +162,11 @@ rule "[VishkarEvent]: 危险感知":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 9]) == true
     @Condition len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) > 0
     
-    eventPlayer.mod_speed_event = 60
-    eventPlayer.mod_dmg_taken = -25
+    eventPlayer.mod_speed_event = EVT_9_SPEED_BOOST
+    eventPlayer.mod_dmg_taken = EVT_9_DMG_TAKEN
     updatePlayerStats()
     waitUntil(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) == 0, eventPlayer.eventDuration)
-    wait(1)
+    wait(EVT_9_LINGER_TIME)
     if ruleCondition:
         loop()
     eventPlayer.mod_speed_event = 0
