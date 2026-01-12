@@ -184,7 +184,7 @@ rule "[VishkarEvent]: 反应装甲":
         goto lbl_0
     removeHealthPool(eventPlayer.healthId[1])
     lbl_0:
-    eventPlayer.addHealthPool(Health.ARMOR, 150, true, false)
+    eventPlayer.addHealthPool(Health.ARMOR, EVT_10_ARMOR_AMOUNT, true, false)
     eventPlayer.healthId[1] = getLastCreatedHealthPool()
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
     wait(eventPlayer.eventDuration)
@@ -203,9 +203,9 @@ rule "[VishkarEvent]: 反应装甲":
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     if attacker.hasStatus(Status.STUNNED):
         goto lbl_0
-    attacker.setStatusEffect(victim, Status.STUNNED, 1)
+    attacker.setStatusEffect(victim, Status.STUNNED, EVT_10_STUN_DURATION)
     lbl_0:
-    wait(1)
+    wait(EVT_10_STUN_COOLDOWN)
 
 
 rule "[VishkarEvent]: 死亡延迟":
