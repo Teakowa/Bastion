@@ -588,7 +588,7 @@ rule "[VishkarEvent]: 电磁脉冲":
     chaseAtRate(eventPlayer.hack_timer, 0, 1, ChaseRateReeval.NONE)
 
 
-rule "[VishkarEvent]: 吸血鬼":
+rule "[VishkarEvent]: 献祭":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 2]) == true
@@ -1516,7 +1516,7 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
     eventPlayer.target = null
 
 
-rule "[VishkarEvent]: 吸血鬼 ProMax (按需吸血)":
+rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 20, eventPlayer.getNormalizedHealth() != 1]) == true
