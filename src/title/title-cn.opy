@@ -213,6 +213,7 @@ enum Title:
 #!define TP_9_10 [Title.CONQUEROR, Title.DOMINATOR]
 #!define TP_9_10_0 [Title.CONQUEROR, Title.DOMINATOR, Title.PIONEER]
 # 地图数据块 (Data Blocks)
+# 暴雪世界
 #!define DATA_BLIZZARD_WORLD [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -221,8 +222,10 @@ enum Title:
     { name: "糯米进脑子", titles: TP_9_10 }, \
     { name: "Augenstern", titles: TP_9_10 }, \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
+# 多拉多
 #!define DATA_DORADO [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -256,6 +259,7 @@ enum Title:
     { name: "锦木千束", titles: TP_9_10_0 }, \
 ]
 
+# 直布罗陀
 #!define DATA_WATCHPOINT_GIBRALTAR [ \
     { name: "尘风歌者", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -266,6 +270,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10 }, \
     { name: "初一吖", titles: TP_9_10 }, \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
 #!define DATA_HAVANA [ \
@@ -347,6 +352,7 @@ enum Title:
     { name: "雨鸢", titles: TP_9_10 }, \
     { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "眼镜小宅", titles: TP_9_10 }, \
+    { name: "糯米进脑子", titles: TP_9_10}, \
 ]
 
 #!define DATA_NUMBANI [ \
@@ -475,6 +481,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10 }, \
     { name: "初一吖", titles: TP_9_10 }, \
     { name: "雨鸢", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "豆本豆豆奶", titles: [Title.DOMINATOR, Title.PIONEER] }, \
 ]
 
@@ -506,6 +513,7 @@ enum Title:
     { name: "寒霜冰湮", titles: TP_9_10 }, \
     { name: "豆本豆豆奶", titles: TP_9_10 }, \
     { name: "眼镜小宅", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "他又", titles: [Title.PIONEER] }, \
     { name: "别感冒", titles: [Title.PIONEER] }, \
 ]
@@ -537,6 +545,7 @@ enum Title:
     { name: "别打老顾我啊", titles: TP_CONQUEROR }, \
     { name: "雨鸢", titles: TP_9_10 }, \
     { name: "蝎子莱莱", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
 #!define DATA_LIJIANG_TOWER [ \
