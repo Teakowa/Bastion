@@ -275,6 +275,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
         eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
+        playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.WHITE, eventPlayer, 200)
         playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
