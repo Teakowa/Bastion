@@ -731,7 +731,7 @@ rule "[VishkarEvent]: 能量泄漏":
         loop()
 
 
-rule "[VishkarEvent]: 生命在于运动":
+rule "[VishkarEvent]: 生命在于静止":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 9]) == true
