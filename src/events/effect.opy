@@ -1718,32 +1718,19 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
     clearPlayerEvent()
 
 
-rule "[VishkarEvent]: 命运共同体 (事件复制)":
+rule "[VishkarEvent]: 命运共同体 (概率同步)":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 17]) == true
     
-    eventPlayer.target = [player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.eventId != -1 and player.eventId != 17]
+    eventPlayer.target = [player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.eventId == -1]
     if len(eventPlayer.target) > 0:
-        eventPlayer.target = random.choice(eventPlayer.target)
-        eventPlayer.eventType = eventPlayer.target.eventType
-        eventPlayer.eventId = eventPlayer.target.eventId
-        if eventPlayer.eventType == 0:
-            eventPlayer.eventDuration = buffEvent[eventPlayer.eventId].last()
-            eventPlayer.eventName = buffEvent[eventPlayer.eventId][0]
-            eventPlayer.eventDesc = buffEvent[eventPlayer.eventId][1]
-        elif eventPlayer.eventType == 1:
-            eventPlayer.eventDuration = debuffEvent[eventPlayer.eventId].last()
-            eventPlayer.eventName = debuffEvent[eventPlayer.eventId][0]
-            eventPlayer.eventDesc = debuffEvent[eventPlayer.eventId][1]
-        else:
-            eventPlayer.eventDuration = mechEvent[eventPlayer.eventId].last()
-            eventPlayer.eventName = mechEvent[eventPlayer.eventId][0]
-            eventPlayer.eventDesc = mechEvent[eventPlayer.eventId][1]
-        smallMessage(getAllPlayers(), "  {0} 与 {1} 命运相连！共同承担：{2}".format(eventPlayer, eventPlayer.target, eventPlayer.eventName))
-    else:
-        eventPlayer.eventDuration = 0
-        clearPlayerEvent()
+        eventPlayer.eventForceRoll = random.randint(0, 80)
+        eventPlayer.target.eventForceRoll = eventPlayer.eventForceRoll
+        smallMessage(getAllPlayers(), "  {0}  {1} 与 {2} 命运相连！下一次事件类别相同".format(abilityIconString(Hero.MAUGA, Button.ULTIMATE), eventPlayer, eventPlayer.target, eventPlayer.eventName))
+    wait(0.032) 
+    eventPlayer.eventDuration = 0
+    clearPlayerEvent()
 
 
 rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
