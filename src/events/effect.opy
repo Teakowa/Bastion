@@ -232,39 +232,109 @@ rule "[VishkarEvent]: 死亡延迟":
     lbl_0:
 
 
-rule "[VishkarEvent]: 有我有你":
+# ==============================================================================
+# Rule 1: 主动方 - 寻找目标、发起连接与控制
+# ==============================================================================
+rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 12]) == true
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     
+    # 1. 寻找目标 (排除自己、已获胜、已从属于他人、已被附身的玩家)
     wait(0.032, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.possess = sorted([player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.isWinner != true and player.possessed != true and distance(eventPlayer, player) < 40], lambda i: distance(eventPlayer, i))
+    # 这里把 possessed 视为数组判断，len(p.possessed) == 0 代表未被附身
+    eventPlayer.possess = sorted([player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.isWinner != true and len(player.possessed) == 0 and distance(eventPlayer, player) < 40], lambda i: distance(eventPlayer, i))
+    
     wait(0.032)
     smallMessage(eventPlayer, "  {0}".format("附近未找到可附身目标" if len(eventPlayer.possess) == 0 else "附身目标：{0}".format(eventPlayer.possess[0])))
-    wait(0.032)
+    
     if len(eventPlayer.possess) == 0:
         goto lbl_0
-    eventPlayer.mod_heal_event += 25
-    updatePlayerStats()
+
+    # 2. 发起附身 (写入数据)
+    # 目标变量 possessed 结构: [0:来源玩家, 1:治疗增益, 2:减伤, 3:移速, 4:血池ID(预留), 5:最大生命值]
+    # 先写入除 ID 外的数据，ID 由目标生成后填入
+    eventPlayer.possess[0].possessed[0] = eventPlayer
+    eventPlayer.possess[0].possessed[1] = eventPlayer.mod_heal_event
+    eventPlayer.possess[0].possessed[2] = eventPlayer.mod_dmg_taken
+    eventPlayer.possess[0].possessed[3] = eventPlayer.mod_speed_event
+    eventPlayer.possess[0].possessed[5] = eventPlayer.getMaxHealth()
+    
+    # 3. 附身连接
     eventPlayer.teleport(eventPlayer.possess[0].getPosition())
     eventPlayer.attachTo(eventPlayer.possess[0], vect(0, 1, -1))
-    eventPlayer.possess[0].possessed = true
-    smallMessage(eventPlayer.possess[0], "  你已被 {0} 附身".format(eventPlayer))
+    
+    smallMessage(eventPlayer.possess[0], "  {0}  你已被 {1}（{2}） 附身".format(abilityIconString(Hero.MERCY, Button.ULTIMATE), eventPlayer, eventPlayer.getHero()))
+    
+    # 自身状态：消散 (不可选取/受到伤害)
     eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 9999)
-    lbl_0:
+     # 自身状态：无敌 (双重保险)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 9999)
-    waitUntil(eventPlayer.possess[0].isDead() or eventPlayer.isHoldingButton(Button.CROUCH) or not entityExists(eventPlayer.possess[0]) or eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
+
+    lbl_0:
+    # 4. 维持阶段
+    # 等待直到：目标死亡、自身按蹲、目标掉线、时间结束、或者目标被意外清除了附身状态
+    waitUntil(eventPlayer.possess[0].isDead() or eventPlayer.isHoldingButton(Button.CROUCH) or not entityExists(eventPlayer.possess[0]) or len(eventPlayer.possess[0].possessed) == 0 or eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
+    
+    # 5. 清理阶段
     eventPlayer.detach()
-    if eventPlayer.possess[0].getPosition() == null or len(eventPlayer.possess) == 0:
-        goto lbl_1
-    eventPlayer.teleport(nearestWalkablePosition(eventPlayer.possess[0].getPosition() + vect(random.randint(-1, 1), 0.5, random.randint(-1, 1))))
-    lbl_1:
-    eventPlayer.possess[0].possessed = false
+    
+    # 清除目标状态
+    if entityExists(eventPlayer.possess[0]):
+        eventPlayer.possess[0].possessed = []
+    
+    # 寻找安全落脚点
+    if eventPlayer.possess[0].getPosition() != null:
+        eventPlayer.teleport(nearestWalkablePosition(eventPlayer.possess[0].getPosition() + vect(random.randint(-1, 1), 0.5, random.randint(-1, 1))))
+    
+    # 自身重置
     eventPlayer.clearStatusEffect(Status.PHASED_OUT)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
     eventPlayer.possess = null
 
+
+# ==============================================================================
+# Rule 2: 被动方 - 属性同步与加成 (Receiver Logic)
+# ==============================================================================
+rule "[VishkarEvent]: 有我有你 (Receiver - Stats Sync)":
+    @Event eachPlayer
+    @Team 1
+    # 触发条件：possessed 数组非空 (有人附身)
+    @Condition len(eventPlayer.possessed) > 0
+    @Condition eventPlayer.possessed[0] != null
+    
+    # 1. 应用属性叠加 (读取数据)
+    eventPlayer.mod_heal_event += eventPlayer.possessed[1]
+    eventPlayer.mod_dmg_taken += eventPlayer.possessed[2]
+    eventPlayer.mod_speed_event += eventPlayer.possessed[3]
+    
+    # 刷新自身属性
+    updatePlayerStats()
+    
+    # 2. 添加额外生命值 (数值来自 possessed[5])
+    # 将生成的 Health Pool ID 存回 possessed[4] 以便后续删除
+    eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.possessed[5], true, false)
+    eventPlayer.possessed[4] = getLastCreatedHealthPool()
+    
+    # 3. 等待附身结束 (监听数组是否被置空)
+    # 同时监控来源玩家状态，如果来源玩家中途退游戏，也需要自动清理
+    waitUntil(len(eventPlayer.possessed) == 0 or not entityExists(eventPlayer.possessed[0]), 9999)
+    
+    # 4. 移除属性 (减去快照数据)
+    eventPlayer.mod_heal_event -= eventPlayer.possessed[1]
+    eventPlayer.mod_dmg_taken -= eventPlayer.possessed[2]
+    eventPlayer.mod_speed_event -= eventPlayer.possessed[3]
+    
+    # 移除额外生命值
+    if eventPlayer.possessed[4] != null:
+        removeHealthPool(eventPlayer.possessed[4])
+    
+    # 刷新并清理
+    updatePlayerStats()
+    
+    # 最终确保置空 (如果是因来源玩家掉线触发的，需要自己清空数组)
+    eventPlayer.possessed = []
 
 rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     @Event eachPlayer
