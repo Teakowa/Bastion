@@ -58,9 +58,6 @@ settings {
     },
     "heroes": {
         "team1": {
-            "bastion": {
-                "health%": 150
-            },
             "general": {
                 "abilityCooldown%": 40
             }
@@ -94,7 +91,8 @@ settings {
                 "ability1Cooldown%": 33
             },
             "mercy": {
-                "ability1Cooldown%": 67
+                "ability1Cooldown%": 67,
+                "ability2Cooldown%": 27
             },
             "orisa": {
                 "ability1Cooldown%": 50,
@@ -129,7 +127,8 @@ settings {
                 "ability2Cooldown%": 80
             },
             "juno": {
-                "ability1Cooldown%": 67
+                "ability1Cooldown%": 67,
+                "ability1Duration%": 150
             },
             "zarya": {
                 "jumpVerticalSpeed%": 140,
@@ -202,6 +201,7 @@ settings {
                 "ability2Cooldown%": 43
             },
             "hazard": {
+                "ability1Cooldown%": 55,
                 "ability2Cooldown%": 92
             },
             "sombra": {
