@@ -1,3 +1,4 @@
+
 # ==============================================================================
 # 事件效果参数配置 (Event Effect Configuration)
 # ==============================================================================
@@ -7,7 +8,7 @@
 #!define EVT_1_EFFECT Effect.SOLDIER_SPRINTING
 
 # --- ID 2: 钢铁防线 ---
-#!define EVT_2_ARMOR_AMOUNT 1500
+#!define EVT_2_ARMOR_AMOUNT 1200
 #!define EVT_2_DMG_TAKEN -25
 #!define EVT_2_EFFECT DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR
 
@@ -69,7 +70,7 @@
 # 给予最大生命值 20% 的护盾
 #!define EVT_14_SHIELD_PERCENT 0.2
 # 最小护盾值
-#!define EVT_14_MIN_SHIELD 50
+#!define EVT_14_MIN_SHIELD 75
 # 护盾池 ID 索引
 #!define EVT_14_HEALTH_ID 2
 
@@ -136,7 +137,7 @@
 # --- ID 20: 菲迪皮德斯之力 ---
 #!define EVT_20_DISTANCE_GOAL 42.195
 #!define EVT_20_DISTANCE_INC 0.5
-#!define EVT_20_REWARD_SPEED 5
+#!define EVT_20_REWARD_SPEED 7.5
 
 # --- ID 21: 心之钢 Pro ---
 #!define EVT_21_HP_GAIN_FLAT 6
@@ -162,7 +163,7 @@
 #!define EVT_DEBUFF_2_DMG_PERCENT 0.1
 
 # --- ID 3 (Debuff): 易损 ---
-#!define EVT_DEBUFF_3_DMG_TAKEN 25
+#!define EVT_DEBUFF_3_DMG_TAKEN 30
 
 # --- ID 4 (Debuff): 限速40 ---
 # 燃烧状态持续时间
@@ -224,10 +225,10 @@
 
 # --- ID 9 (Debuff): 生命在于运动 ---
 # 移动时的伤害系数 (最大生命值百分比)
-#!define EVT_DEBUFF_9_DMG_MOVING 0.03
+#!define EVT_DEBUFF_9_DMG_MOVING 0.05
 
 # 静止时的伤害系数 (最大生命值百分比)
-#!define EVT_DEBUFF_9_DMG_STILL 0.015
+#!define EVT_DEBUFF_9_DMG_STILL 0.02
 
 # 燃烧状态时长
 #!define EVT_DEBUFF_9_BURN_DURATION 1
@@ -237,7 +238,7 @@
 
 # --- ID 10 (Debuff): 有难同当 (伤害分摊) ---
 # 伤害扩散半径 (米)
-#!define EVT_DEBUFF_10_RADIUS 15
+#!define EVT_DEBUFF_10_RADIUS 20
 
 # 扩散伤害系数 (承受原始伤害的百分比)
 #!define EVT_DEBUFF_10_DMG_FACTOR 0.75
@@ -261,10 +262,10 @@
 
 # --- ID 13 (Debuff): 重伤 ---
 # 治疗输出减少量 (%)
-#!define EVT_DEBUFF_13_HEAL_DEALT_RED -85
+#!define EVT_DEBUFF_13_HEAL_DEALT_RED -90
 
 # 治疗接收减少量 (%)
-#!define EVT_DEBUFF_13_HEAL_RECV_RED -85
+#!define EVT_DEBUFF_13_HEAL_RECV_RED -90
 
 # 视觉特效
 #!define EVT_DEBUFF_13_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
@@ -278,7 +279,7 @@
 #!define EVT_DEBUFF_14_DAMAGE_PERCENT 0.5
 
 # 触发间隔 (秒)
-#!define EVT_DEBUFF_14_INTERVAL 5
+#!define EVT_DEBUFF_14_INTERVAL 3
 
 # 斩杀特效
 #!define EVT_DEBUFF_14_EXECUTE_EFFECT DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION
@@ -302,7 +303,7 @@
 
 # --- ID 0 (Mech/Special): 极限挑战 ---
 # 锁定的生命值比例 (30%)
-#!define EVT_MECH_0_HP_PERCENT 0.3
+#!define EVT_MECH_0_HP_PERCENT 0.2
 
 # 获得的伤害减免 (%) -99% 几乎无敌
 #!define EVT_MECH_0_DMG_TAKEN -99
@@ -316,10 +317,10 @@
 
 # --- ID 1 (Mech): 纳米战甲 ---
 # 额外生命值倍率 (8倍)
-#!define EVT_MECH_1_HP_MULTIPLIER 8
+#!define EVT_MECH_1_HP_MULTIPLIER 5
 
 # 速度惩罚 (%)
-#!define EVT_MECH_1_SPEED_PENALTY -25
+#!define EVT_MECH_1_SPEED_PENALTY -20
 
 # 生命池索引
 #!define EVT_MECH_1_POOL_IDX 0
@@ -415,7 +416,7 @@
 #!define EVT_MECH_10_MISSION_INC 100
 
 # 触发间隔 (秒) - 原代码 wait(5)
-#!define EVT_MECH_10_CHECK_INTERVAL 5
+#!define EVT_MECH_10_CHECK_INTERVAL 2
 
 # 奖励护甲数值
 #!define EVT_MECH_10_ARMOR_REWARD 300
@@ -438,7 +439,7 @@
 
 # --- ID 12 (Mech): 屁动力 ---
 # 喷射造成的减伤 (%)
-#!define EVT_MECH_12_DMG_TAKEN -50
+#!define EVT_MECH_12_DMG_TAKEN -40
 
 # 喷射力度
 #!define EVT_MECH_12_IMPULSE 15

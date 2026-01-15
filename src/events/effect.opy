@@ -1351,7 +1351,7 @@ rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 30]) == true
     
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_WHIP_SHOT_HEAL_AREA, Color.TEAM_1, eventPlayer, 200)
-    getPlayersInRadius(eventPlayer, 5, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, 1, 50 + eventPlayer.getMaxHealth() * 0.5)
+    getPlayersInRadius(eventPlayer, 5, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, 1, 75 + eventPlayer.getMaxHealth() * 0.5)
     wait(1)
     if ruleCondition:
         loop()
@@ -1417,7 +1417,7 @@ rule "[VishkarEvent]: 治疗光塔 ProMax (全图奶)":
         goto lbl_0
         smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
     lbl_0:
-    getPlayers(Team.1).startHealingOverTime(eventPlayer, 2, round(25 + eventPlayer.getMaxHealth() * 1.25))
+    getPlayers(Team.1).startHealingOverTime(eventPlayer, 2, round(50 + eventPlayer.getMaxHealth() * 0.75))
     wait(2)
     if ruleCondition:
         loop()
