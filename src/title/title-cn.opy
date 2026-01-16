@@ -202,6 +202,14 @@ enum Title:
     { \
         name: "明月有时", \
         titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+    }, \
+    { \
+        name: "旅店老板", \
+        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+    }, \
+    { \
+        name: "谁能体谅我的雨天", \
+        titles: [Title.CHALLENGER_LEGEND, Title.HARD_TO_KILL] \
     } \
 ]
 
@@ -372,6 +380,7 @@ enum Title:
     { name: "初一吖", titles: TP_9_10 }, \
     { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "雨鸢", titles: TP_9_10 }, \
+    { name: "旅店老板", titles: TP_9_10 }, \
 ]
 
 # 帕拉伊苏
@@ -636,6 +645,7 @@ enum Title:
     { name: "初一吖", titles: TP_9_10 }, \
     { name: "雨鸢", titles: TP_9_10 }, \
     { name: "眼镜小宅", titles: TP_9_10 }, \
+    { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
 # 新渣客城
