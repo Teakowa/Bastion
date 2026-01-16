@@ -241,6 +241,7 @@ enum Title:
     { name: "尘风歌者", titles: TP_9_10 }, \
 ]
 
+# 艾兴瓦尔德
 #!define DATA_EICHENWALDE [ \
     { name: "尘风歌者", titles: TP_9_10_0 }, \
     { name: "顾北酒笙", titles: TP_9_10 }, \
@@ -273,6 +274,7 @@ enum Title:
     { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
+#哈瓦那
 #!define DATA_HAVANA [ \
     { name: "他又", titles: TP_9_10 }, \
     { name: "别感冒", titles: TP_9_10 }, \
@@ -289,6 +291,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 好莱坞
 #!define DATA_HOLLYWOOD [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -300,6 +303,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 月球基地
 #!define DATA_HORIZON_LUNAR_COLONY [ \
     { name: "烛台与南九", titles: TP_9_10 }, \
     { name: "尘风歌者", titles: TP_9_10 }, \
@@ -315,6 +319,7 @@ enum Title:
     { name: "寒霜冰湮", titles: TP_9_10 }, \
 ]
 
+# 渣客镇
 #!define DATA_JUNKERTOWN [ \
     { name: "WildRage", titles: TP_9_10 }, \
     { name: "尘风歌者", titles: TP_9_10 }, \
@@ -329,6 +334,7 @@ enum Title:
     { name: "看啊情", titles: TP_9_10 }, \
 ]
 
+# 国王大道
 #!define DATA_KINGS_ROW [ \
     { name: "尘风歌者", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -344,6 +350,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 中城
 #!define DATA_MIDTOWN [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -355,6 +362,7 @@ enum Title:
     { name: "糯米进脑子", titles: TP_9_10}, \
 ]
 
+# 努巴尼
 #!define DATA_NUMBANI [ \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -366,6 +374,7 @@ enum Title:
     { name: "雨鸢", titles: TP_9_10 }, \
 ]
 
+# 帕拉伊苏
 #!define DATA_PARAISO [ \
     { name: "豆本豆豆奶", titles: TP_9_10 }, \
     { name: "Cold", titles: TP_9_10 }, \
@@ -378,8 +387,10 @@ enum Title:
     { name: "雨鸢", titles: TP_9_10 }, \
     { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
+    { name: "谁能体谅我的雨天", titles: TP_9 }, \
 ]
 
+# 巴黎
 #!define DATA_PARIS [ \
     { name: "豆本豆豆奶", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -392,6 +403,7 @@ enum Title:
     { name: "她说话有股孩子气", titles: TP_9_10 }, \
 ]
 
+# 里阿尔托
 #!define DATA_RIALTO [ \
     { name: "尘风歌者", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -408,6 +420,7 @@ enum Title:
     { name: "Cold", titles: TP_9_10_0 }, \
 ]
 
+# 66号公路
 #!define DATA_ROUTE66 [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "尘风歌者", titles: TP_9_10 }, \
@@ -421,6 +434,7 @@ enum Title:
     { name: "寒霜冰湮", titles: TP_9_10 }, \
 ]
 
+# 香巴里寺院
 #!define DATA_SHAMBALI_MONASTERY [ \
     { name: "他又", titles: [Title.PIONEER] }, \
     { name: "别感冒", titles: [Title.PIONEER] }, \
@@ -434,6 +448,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10 }, \
 ]
 
+# 阿努比斯神殿
 #!define DATA_TEMPLE_OF_ANUBIS [ \
     { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -449,6 +464,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 沃斯卡娅工业区
 #!define DATA_VOLSKAYA [ \
     { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -458,6 +474,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10_0 }, \
 ]
 
+# 埃斯佩兰萨
 #!define DATA_ESPERANCA [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -472,6 +489,7 @@ enum Title:
     { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
 ]
 
+# 斗兽场
 #!define DATA_COLOSSEO [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "尘风歌者", titles: TP_9_10 }, \
@@ -485,6 +503,7 @@ enum Title:
     { name: "豆本豆豆奶", titles: [Title.DOMINATOR, Title.PIONEER] }, \
 ]
 
+# 鲁纳塞彼
 #!define DATA_RUNASAPI [ \
     { name: "尘风歌者", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -497,6 +516,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10 }, \
 ]
 
+# 新皇后街
 #!define DATA_NEW_QUEEN_STREET [ \
     { name: "Cold", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -508,6 +528,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10_0 }, \
 ]
 
+# 皇家赛道
 #!define DATA_CIRCUIT_ROYAL [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -518,6 +539,7 @@ enum Title:
     { name: "别感冒", titles: [Title.PIONEER] }, \
 ]
 
+# 花村
 #!define DATA_HANAMURA [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
@@ -532,6 +554,7 @@ enum Title:
     { name: "看啊情", titles: TP_9_10_0 }, \
 ]
 
+# 伊利奥斯
 #!define DATA_ILIOS [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "溪云初起日沉阁", titles: TP_9_10 }, \
@@ -548,6 +571,7 @@ enum Title:
     { name: "EruIluvatar", titles: TP_9_10 }, \
 ]
 
+# 漓江塔
 #!define DATA_LIJIANG_TOWER [ \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
     { name: "水濑祈", titles: TP_9_10 }, \
@@ -565,6 +589,7 @@ enum Title:
     { name: "我心飞扬", titles: TP_9_10 }, \
 ]
 
+# 萨摩亚
 #!define DATA_SAMOA [ \
     { name: "尘风歌者", titles: TP_9_10 }, \
     { name: "溪云初起日沉阁", titles: TP_9_10 }, \
@@ -578,6 +603,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 釜山
 #!define DATA_BUSAN [ \
     { name: "草艮", titles: [Title.PIONEER, Title.CONQUEROR] }, \
     { name: "顾北酒笙", titles: [Title.PIONEER, Title.CONQUEROR] }, \
@@ -597,6 +623,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
 ]
 
+# 绿洲城
 #!define DATA_OASIS [ \
     { name: "WildRage", titles: TP_9_10 }, \
     { name: "尘风歌者", titles: TP_9_10_0 }, \
@@ -611,6 +638,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10 }, \
 ]
 
+# 新渣客城
 #!define DATA_NEW_JUNK_CITY [ \
     { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -624,6 +652,7 @@ enum Title:
     { name: "眼镜小宅", titles: TP_9_10_0 }, \
 ]
 
+# 尼泊尔
 #!define DATA_NEPAL [ \
     { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -634,6 +663,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
 ]
 
+# 阿努比斯王座
 #!define DATA_THRONE_OF_ANUBIS [ \
     { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
     { name: "寒霜冰湮", titles: TP_9_10_0 }, \
@@ -646,6 +676,7 @@ enum Title:
     { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
 ]
 
+# 花冈
 #!define DATA_HANAOKA [ \
     { name: "吾携秋水揽星河", titles: TP_9_10 }, \
     { name: "寒霜冰湮", titles: TP_9_10 }, \
@@ -657,6 +688,7 @@ enum Title:
     { name: "初一吖", titles: TP_9_10 }, \
 ]
 
+# 苏拉瓦萨
 #!define DATA_SURAVASA [ \
     { name: "他又", titles: [Title.PIONEER] }, \
     { name: "别感冒", titles: [Title.PIONEER] }, \
@@ -670,6 +702,7 @@ enum Title:
     { name: "绿里奇迹", titles: TP_9_10_0 }, \
 ]
 
+# 阿育陀耶
 #!define DATA_AYUTTHAYA [ \
     { name: "他又", titles: [Title.PIONEER] }, \
     { name: "别感冒", titles: [Title.PIONEER] }, \
@@ -681,6 +714,7 @@ enum Title:
     { name: "寒霜冰湮", titles: TP_9_10 }, \
 ]
 
+# 阿特利斯
 #!define DATA_AATLIS [ \
     { name: "他又", titles: [Title.PIONEER] }, \
     { name: "别感冒", titles: [Title.PIONEER] }, \
