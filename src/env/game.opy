@@ -68,8 +68,11 @@ rule "initialize color array":
 rule "initialize phase hero arrays":
     @Condition vishkarEventActivated == true
     
-    phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG]
-    phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER]
+    # 技能 1
+    phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG, Hero.FREJA]
+
+    # 技能 2
+    phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER, Hero.FREJA]
     phaseHero[2] = [Hero.DOOMFIST, Hero.TRACER]
     phaseHero[3] = [Hero.HANZO]
 
