@@ -351,9 +351,9 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
-        eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
-        playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.WHITE, eventPlayer, 200)
-        playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
+    eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
+    playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.WHITE, eventPlayer, 200)
+    playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         eventPlayer.eventEffect = getLastCreatedEntity()
@@ -1300,7 +1300,7 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     eventPlayer.mod_dmg_taken = min(85, eventPlayer.getMaxHealth() / 40) * -1
     eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -2
     updatePlayerStats()
-    eventPlayer.heart_steel += 0.5
+    eventPlayer.heart_steel += 0.25
     setPlayerHP()
     smallMessage(eventPlayer, "  {0}  {1}".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))))
     wait(1)
@@ -1317,10 +1317,10 @@ rule "[VishkarEvent]: 相位猛冲 (智能检测版)":
     
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    eventPlayer.mod_speed_event += 300
+    eventPlayer.mod_speed_event += 200
     updatePlayerStats()
     wait(2)
-    eventPlayer.mod_speed_event -= 300
+    eventPlayer.mod_speed_event = 0
     updatePlayerStats()
     clearEventEffect()
     wait(0.5)

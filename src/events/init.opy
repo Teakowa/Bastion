@@ -8,6 +8,8 @@
 
 rule "initialize event array":
     @Condition vishkarEventActivated == true
+
+    eventWeight = 2.5
     
     # ================================================
     # 全局事件 (Global Events)
