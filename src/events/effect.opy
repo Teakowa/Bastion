@@ -275,13 +275,17 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     lbl_0:
     # 4. 维持阶段
     # 等待直到：目标死亡、自身按蹲、目标掉线、时间结束、或者目标被意外清除了附身状态
-    waitUntil(eventPlayer.possess[0].isDead() or eventPlayer.isHoldingButton(Button.CROUCH) or not entityExists(eventPlayer.possess[0]) or len(eventPlayer.possess[0].possessed) == 0 or eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
+    waitUntil(eventPlayer.possess[0].isDead() or eventPlayer.isHoldingButton(Button.CROUCH) or not entityExists(eventPlayer.possess[0]) or eventPlayer.isDead() or len(eventPlayer.possess[0].possessed) == 0 or eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
+
+    removeHealthPool(eventPlayer.possess[0].healthId[4])
     
     # 5. 清理阶段
     eventPlayer.detach()
     
     # 清除目标状态
     if entityExists(eventPlayer.possess[0]):
+        # removeHealthPool(eventPlayer.possess[0].possessed[4])
+        
         eventPlayer.possess[0].possessed = []
     
     # 寻找安全落脚点
@@ -292,6 +296,7 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     eventPlayer.clearStatusEffect(Status.PHASED_OUT)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
     eventPlayer.possess = null
+    wait(2)
 
 
 # ==============================================================================
@@ -314,12 +319,14 @@ rule "[VishkarEvent]: 有我有你 (Receiver - Stats Sync)":
     
     # 2. 添加额外生命值 (数值来自 possessed[5])
     # 将生成的 Health Pool ID 存回 possessed[4] 以便后续删除
+    removeHealthPool(eventPlayer.healthId[4])
     eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.possessed[5], true, false)
-    eventPlayer.possessed[4] = getLastCreatedHealthPool()
+    eventPlayer.healthId[4] = getLastCreatedHealthPool()
+    
     
     # 3. 等待附身结束 (监听数组是否被置空)
     # 同时监控来源玩家状态，如果来源玩家中途退游戏，也需要自动清理
-    waitUntil(len(eventPlayer.possessed) == 0 or not entityExists(eventPlayer.possessed[0]), 9999)
+    waitUntil(eventPlayer.possessed[0].eventDuration <= 2 or len(eventPlayer.possessed) == 0 or not entityExists(eventPlayer.possessed[0]), 9999)
     
     # 4. 移除属性 (减去快照数据)
     eventPlayer.mod_heal_event -= eventPlayer.possessed[1]
@@ -327,8 +334,8 @@ rule "[VishkarEvent]: 有我有你 (Receiver - Stats Sync)":
     eventPlayer.mod_speed_event -= eventPlayer.possessed[3]
     
     # 移除额外生命值
-    if eventPlayer.possessed[4] != null:
-        removeHealthPool(eventPlayer.possessed[4])
+    # if eventPlayer.possessed[4] != null:
+    removeHealthPool(eventPlayer.healthId[4])
     
     # 刷新并清理
     updatePlayerStats()
