@@ -113,7 +113,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_BUFF, STR_EVT_BUFF_12_TITLE, true, 12):
         goto lbl_11
-    buffEvent[12] = [STR_EVT_BUFF_12_TITLE, STR_EVT_BUFF_12_DESC.format(EVT_DEBUFF_3_DMG_TAKEN), 120, 1.2]
+    buffEvent[12] = [STR_EVT_BUFF_12_TITLE, STR_EVT_BUFF_12_DESC.format(Button.INTERACT), 120, 1.2]
     buffEventId.append(12)
     lbl_11:
     
@@ -278,7 +278,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_3_TITLE, true, 3):
         goto lbl_36
-    debuffEvent[3] = [STR_EVT_DEBUFF_3_TITLE, STR_EVT_DEBUFF_3_DESC.format(Button.INTERACT), 25, 1.2]
+    debuffEvent[3] = [STR_EVT_DEBUFF_3_TITLE, STR_EVT_DEBUFF_3_DESC.format(EVT_DEBUFF_3_DMG_TAKEN), 25, 1.2]
     debuffEventId.append(3)
     lbl_36:
     
@@ -524,7 +524,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_17_TITLE, true, 17):
         goto lbl_72
-    mechEvent[17] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC, 90, 0.8]
+    mechEvent[17] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC, 5, 0.8]
     mechEventId.append(17)
     lbl_72:
     

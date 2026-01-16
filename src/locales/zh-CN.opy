@@ -88,7 +88,7 @@
 #!define STR_EVT_BUFF_11_TITLE "死亡延迟"
 #!define STR_EVT_BUFF_11_DESC "受到致命伤害时\n阵亡将被延迟到事件结束后"
 #!define STR_EVT_BUFF_12_TITLE "有我有你"
-#!define STR_EVT_BUFF_12_DESC "长按{0}附身一名队友\n该队友获得你最大生命值5%伤害减免\n你获得25%治疗增益并且会治疗队友"
+#!define STR_EVT_BUFF_12_DESC "长按{0}附身一名队友\n队友获得你100%最大生命值\n与所有加成效果"
 #!define STR_EVT_BUFF_13_TITLE "↑↑↓↓←→←→BABA"
 #!define STR_EVT_BUFF_13_DESC "阵亡后在5秒前的位置复活"
 #!define STR_EVT_BUFF_14_TITLE "费斯卡光子护盾"
@@ -144,7 +144,7 @@
 #!define STR_EVT_DEBUFF_13_TITLE "重伤"
 #!define STR_EVT_DEBUFF_13_DESC "造成治疗与受到的治疗降低{0}%"
 #!define STR_EVT_DEBUFF_14_TITLE "减半"
-#!define STR_EVT_DEBUFF_14_DESC "每{0}秒损失{1}%生命值，当生命值低于5%时立即阵亡"
+#!define STR_EVT_DEBUFF_14_DESC "每{0}秒损失{1}%生命值\n当生命值低于5%时立即阵亡"
 #!define STR_EVT_DEBUFF_15_TITLE "舍己为人"
 #!define STR_EVT_DEBUFF_15_DESC "基于玩家数量降低你的最大生命值\n每名玩家降低1%，由其他玩家均分"
 
@@ -184,7 +184,7 @@
 # 随机事件包 4：增益 (Buff Events Pack 4)
 # ------------------------------------------------
 #!define STR_EVT_BUFF_24_TITLE "相位猛冲"
-#!define STR_EVT_BUFF_24_DESC "位移技能获得300%移速加成"
+#!define STR_EVT_BUFF_24_DESC "位移技能获得200%移速加成"
 #!define STR_EVT_BUFF_25_TITLE "操盘手"
 #!define STR_EVT_BUFF_25_DESC "控制技能命中返还50%冷却"
 #!define STR_EVT_BUFF_26_TITLE "保镖"
@@ -225,7 +225,7 @@
 # 随机事件包 4：机制 (Mech Events Pack 4)
 # ------------------------------------------------
 #!define STR_EVT_MECH_14_TITLE "作弊：我要验牌"
-#!define STR_EVT_MECH_14_DESC "长按{0}永久损失10%生命值\n下个事件必为增益"
+#!define STR_EVT_MECH_14_DESC "长按{0}永久损失6%生命值\n下个事件必为增益"
 #!define STR_EVT_MECH_15_TITLE "作弊：回溯"
 #!define STR_EVT_MECH_15_DESC "按下{0}回到3秒前的位置\n每次消耗10%生命值"
 #!define STR_EVT_MECH_16_TITLE "赌徒：短期投资"

@@ -1656,7 +1656,7 @@ rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
     setPlayerHP()
     playEffect(getAllPlayers(), DynamicEffect.BAD_PICKUP_EFFECT, Color.TEAM_1, eventPlayer, 100)
     eventPlayer.eventForceRoll = 20
-    smallMessage(eventPlayer, "  {0}  已扣除 10% 最大生命值".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)))
+    smallMessage(eventPlayer, "  {0}  已扣除 6% 最大生命值".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)))
     wait(0.2)
     smallMessage(eventPlayer, "  {0}  下一个事件必然是增益，祝你好运".format(iconString(Icon.CLUB)))
     eventPlayer.eventDuration = 0
@@ -1716,7 +1716,7 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 99) < 33:
         eventPlayer.heart_steel += 20
-        smallMessage(eventPlayer, "  {0}  赢！获得 5% 最大生命值".format(iconString(Icon.CLUB)))
+        smallMessage(eventPlayer, "  {0}  赢！获得 20（{1}） 层心之钢".format(iconString(Icon.CLUB), 20 * EVT_DEBUFF_10_DMG_FACTOR))
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
     eventPlayer.eventForceRoll = 50
