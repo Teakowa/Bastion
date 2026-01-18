@@ -396,7 +396,7 @@ enum Title:
     { name: "雨鸢", titles: TP_9_10 }, \
     { name: "EruIluvatar", titles: TP_9_10 }, \
     { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "谁能体谅我的雨天", titles: TP_9 }, \
+    { name: "谁能体谅我的雨天", titles: TP_CONQUEROR }, \
 ]
 
 # 巴黎
