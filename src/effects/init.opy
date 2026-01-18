@@ -86,7 +86,7 @@ rule "3rd person":
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
     @Condition eventPlayer.isAlive() == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     setThirdPerson()
 
 
@@ -98,7 +98,7 @@ rule "springboard":
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
     @Condition eventPlayer.isAlive() == true
     
-    wait(getServerLoad() / 100 * 0.032, Wait.ABORT_WHEN_FALSE)
+    wait(getAverageServerLoad() / 100 * 0.032, Wait.ABORT_WHEN_FALSE)
     playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION_SOUND, Color.WHITE, eventPlayer, 200)
     eventPlayer.applyImpulse(Vector.UP, 14, Relativity.TO_PLAYER)
     wait(0.032)
@@ -114,7 +114,7 @@ rule "portalPosition":
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
     @Condition eventPlayer.isAlive() == true
     
-    wait(getServerLoad() / 100 * 0.032, Wait.ABORT_WHEN_FALSE)
+    wait(getAverageServerLoad() / 100 * 0.032, Wait.ABORT_WHEN_FALSE)
     playEffect(getAllPlayers(), DynamicEffect.RING_EXPLOSION_SOUND, Color.WHITE, eventPlayer, 200)
     eventPlayer.teleport(nearestWalkablePosition(portalPosition.last()))
     wait(5)

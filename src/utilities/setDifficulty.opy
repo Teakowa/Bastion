@@ -6,7 +6,7 @@
 def setDifficulty():
     @Name "initialize difficulty effects text"
     
-    wait(getServerLoad() / 100)
+    wait(getAverageServerLoad() / 100)
     if true:
         goto loc+[18, 0, 3, 6, 9, 12, 15][1 + [0, 1, 2, 3, 4, 5].index(difficulty)]
         difficultyText[0] = "简单"

@@ -6,7 +6,7 @@
 
 rule "anti crash":
     @Condition antiCrashActivated == false
-    @Condition getServerLoad() > 235
+    @Condition getAverageServerLoad() > 235
     
     wait(1, Wait.ABORT_WHEN_FALSE)
     smallMessage(getAllPlayers(), STR_MSG_ANTI_CRASH_WORKING)
@@ -16,7 +16,7 @@ rule "anti crash":
 
 rule "disable anti crash":
     @Condition antiCrashActivated != false
-    @Condition getServerLoad() < 200
+    @Condition getAverageServerLoad() < 200
     
     setSlowMotion(90)
     antiCrashActivated = false

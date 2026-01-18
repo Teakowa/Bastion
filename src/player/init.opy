@@ -14,24 +14,18 @@ rule "when a player joins, load player data if they have it and initialize them"
     eventPlayer.eventId = -1
     eventPlayer.sizeHealth = 1
     lbl_0:
-    wait(getServerLoad() / 200 * random.uniform(1, 3))
+    wait(getAverageServerLoad() / 200 * random.uniform(1, 3))
     if "{0}".format(eventPlayer) in savedIndex:
         eventPlayer.heroNumber = savedHero[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
+        wait(eventPlayer.getSlot() * 0.032 + random.uniform(1, 3) * 0.05)
         eventPlayer.runDeathCount = savedDeaths[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.isWinner = savedIsWinner[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.skipCount = savedSkipCount[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.winnerTime = savedWinnerTime[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
+        wait(eventPlayer.getSlot() * 0.032)
         eventPlayer.A36TGrenade = savedA36TGrenade[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.A36TGrenadeHit = savedA36TGrenadeHit[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.A36TGrenadeDmg = savedA36TGrenadeDmg[savedIndex.index("{0}".format(eventPlayer))]
-        wait(getServerLoad() / 100 * 0.032)
         eventPlayer.A36TGrenadeAlive = savedA36TGrenadeAlive[savedIndex.index("{0}".format(eventPlayer))]
         if eventPlayer.joinTime == null or eventPlayer.joinTime == 0:
             eventPlayer.joinTime = savedJoinTime[savedIndex.index("{0}".format(eventPlayer))]

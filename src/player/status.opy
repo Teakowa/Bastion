@@ -38,7 +38,7 @@ rule "display message if hero available":
     @Condition (eventPlayer.getHero() == Hero.DVA and eventPlayer.isInAlternateForm()) == false
     @Condition eventPlayer.isAlive() == true
     
-    wait(getServerLoad() / 100)
+    wait(getAverageServerLoad() / 100)
     if eventPlayer.getUltCharge() == 100:
         eventPlayer.setUltCharge(0)
         wait(0.2)
@@ -79,7 +79,7 @@ rule "display instructions when a player enters the reset ring":
     bigMessage(eventPlayer, STR_MSG_HOLD_RELOAD_RESET)
 
 
-rule "holding rel\ufeffoad while in the reset ring resets your progress":
+rule "holding reload while in the reset ring resets your progress":
     @Event eachPlayer
     @Team 1
     @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true

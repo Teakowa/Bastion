@@ -128,7 +128,7 @@ rule "3rd camera toggle":
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
     @Condition eventPlayer.menu == 1
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     setThirdPerson()
 
 
@@ -139,7 +139,7 @@ rule "dev debug mode toggle":
     @Condition eventPlayer.menu == 2
     
     debugInfo = not debugInfo
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     devPlayer.debugInfo = debugInfo
 
 
@@ -153,7 +153,7 @@ rule "dev set difficulty":
     
     difficulty++
     setDifficulty()
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     smallMessage(devPlayer, "  {0}  开发者模式： 已将难度设置为 {1}({2})".format(iconString(Icon.BOLT), difficultyText[0], difficulty))
 
 
@@ -166,7 +166,7 @@ rule "dev set difficulty":
     
     difficulty--
     setDifficulty()
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     smallMessage(devPlayer, "  {0}  开发者模式： 已将难度设置为 {1}({2})".format(iconString(Icon.BOLT), difficultyText[0], difficulty))
 
 
@@ -211,9 +211,9 @@ rule "player title menu - next":
     #wait(0.16, Wait.ABORT_WHEN_FALSE)
     if eventPlayer.playerTitleIndex == null:
         eventPlayer.playerTitleIndex = 0
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.playerTitleIndex = (eventPlayer.playerTitleIndex + 1) % len(eventPlayer.playerTitles)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.playerTitleAndColor = [eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0], eventPlayer.playerTitles[eventPlayer.playerTitleIndex].last()]
     wait()
     if eventPlayer.playerTitleAndColor[1] == null and len(eventPlayer.playerTitleAndColor[1]) == 0:
@@ -230,7 +230,7 @@ rule "player title menu - next":
         eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1]
         eventPlayer.rgb_activated = false
     smallMessage(eventPlayer, "  {0}  已将称号更改为 {1}".format(iconString(Icon.BOLT), eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0]))
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
 
 
 rule "player title menu - previous":
@@ -243,9 +243,9 @@ rule "player title menu - previous":
     #wait(0.16, Wait.ABORT_WHEN_FALSE)
     if eventPlayer.playerTitleIndex == null or eventPlayer.playerTitleIndex <= 0:
         eventPlayer.playerTitleIndex = len(eventPlayer.playerTitles)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.playerTitleIndex--
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.playerTitleAndColor = [eventPlayer.playerTitles[eventPlayer.playerTitleIndex][0], eventPlayer.playerTitles[eventPlayer.playerTitleIndex].last()]
     wait()
     if eventPlayer.playerTitleAndColor[1] == null and len(eventPlayer.playerTitleAndColor[1]) == 0:
@@ -262,7 +262,7 @@ rule "player title menu - previous":
         eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1]
         eventPlayer.rgb_activated = false
     smallMessage(eventPlayer, "  {0}  已将称号更改为 {1}".format(iconString(Icon.BOLT), eventPlayer.playerTitleAndColor[0]))
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
 
 
 rule "dev reboot":
@@ -286,11 +286,11 @@ rule "host set target player":
     
     if targetPlayerIndex == null or targetPlayerIndex >= len(sorted(getPlayers(Team.1))):
         targetPlayerIndex = 0
-        wait(getServerLoad() / 100 * 0.032)
-    wait(getServerLoad() / 100 * 0.032)
+        wait(getAverageServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[targetPlayerIndex]
     targetPlayerIndex++
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     smallMessage(devPlayer.concat(hostPlayer), STR_MSG_ADMIN_NO_TARGET.format(iconString(Icon.BOLT)) if targetPlayer == null else STR_MSG_ADMIN_MARKED.format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
 
 
@@ -324,11 +324,11 @@ rule "dev set target player":
     
     if targetPlayerIndex == null or targetPlayerIndex >= len(sorted(getPlayers(Team.1))):
         targetPlayerIndex = 0
-        wait(getServerLoad() / 100 * 0.032)
-    wait(getServerLoad() / 100 * 0.032)
+        wait(getAverageServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[targetPlayerIndex]
     targetPlayerIndex++
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     smallMessage(devPlayer, "  {0}  没有可标记的玩家".format(iconString(Icon.BOLT)) if targetPlayer == null else "  {0}  开发者模式： 已标记 {1}（{2}）".format(iconString(Icon.BOLT), targetPlayer, targetPlayer.getHero()))
 
 
@@ -361,7 +361,7 @@ rule "dev set dmg reduction":
     @Condition eventPlayer.isHoldingButton(Button.MELEE) == true
     
     eventPlayer.dmgReduc = not eventPlayer.dmgReduc
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     if eventPlayer.dmgReduc:
         eventPlayer.setDamageReceived(1)
         createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -380,7 +380,7 @@ rule "dev set invincible":
     @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
     
     eventPlayer.invincible = not eventPlayer.invincible
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     if eventPlayer.invincible:
         eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 999999986991104)
         createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -514,14 +514,14 @@ rule "Dev to release heros":
     
     if eventPlayer.heroNumber < len(heroList) - 1:
         eventPlayer.heroNumber = len(heroList) - 1
-        wait(getServerLoad() / 100 * 0.5)
+        wait(getAverageServerLoad() / 100 * 0.5)
         eventPlayer.setAllowedHeroes(heroList.slice(0, eventPlayer.heroNumber + 1))
-        wait(getServerLoad() / 100 * 0.5)
+        wait(getAverageServerLoad() / 100 * 0.5)
         smallMessage(eventPlayer, "  {0} 开发者模式：已解锁全英雄".format(iconString(Icon.BOLT)))
         #savePlayerData()
     elif eventPlayer.isWinner == false:
         eventPlayer.isWinner = true
-        wait(getServerLoad() / 100 * 0.5)
+        wait(getAverageServerLoad() / 100 * 0.5)
         smallMessage(eventPlayer, "  {0} 开发者模式：已通关".format(iconString(Icon.BOLT)))
 
 

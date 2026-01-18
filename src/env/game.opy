@@ -51,13 +51,13 @@ rule "Update targetPlayer when player left":
     @Event playerLeft
     @Team 1
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     targetPlayerIndex = 0
     targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[0]
 
 rule "initialize color array":
     rgbList = [vect(255, 0, 0), vect(255, 165, 0), vect(255, 255, 0), vect(0, 255, 0), vect(0, 0, 255), vect(75, 0, 130), vect(238, 130, 238)]
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     breathRed = [vect(238, 75, 43), vect(233, 116, 81), vect(210, 43, 43), vect(220, 20, 60), vect(255, 36, 0), vect(255, 50, 50), vect(255, 0, 0)]
     breathPurple = [vect(161, 73, 197), vect(93, 63, 211), vect(218, 112, 214), vect(112, 41, 99), vect(191, 64, 191), vect(204, 204, 255), vect(128, 0, 128)]
     breathBlue = [vect(85, 178, 204), vect(120, 200, 225), vect(160, 220, 240), vect(25, 80, 120), vect(45, 125, 165), vect(200, 235, 245), vect(230, 245, 250)]

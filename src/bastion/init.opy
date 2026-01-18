@@ -240,7 +240,7 @@ rule "bastion secondary fires if he has nano":
         goto lbl_0
     eventPlayer.target.A36TGrenade++
     lbl_0:
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     if ruleCondition:
         loop()
     eventPlayer.stopForcingButton(Button.SECONDARY_FIRE)
@@ -274,7 +274,7 @@ rule "bastion places his crosshair near the closest potential target if he doesn
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target == false
     
-    wait(getServerLoad() / 100, Wait.ABORT_WHEN_FALSE)
+    wait(getAverageServerLoad() / 100, Wait.ABORT_WHEN_FALSE)
     #eventPlayer.nearestTargetOutOfLoS = (sorted([player for player in getLivingPlayers(Team.1) if player.hasSpawned() and not eventPlayer.isWinner and (not (player.getHero() == Hero.SOMBRA and player.isUsingAbility1()))], lambda i: distance(eventPlayer.getEyePosition(), i.getEyePosition())))[0]
     eventPlayer.nearestTargetOutOfLoS = (sorted([player for player in getLivingPlayers(Team.1) if player.hasSpawned() and not eventPlayer.isWinner], lambda i: distance(eventPlayer.getEyePosition(), i.getEyePosition())))[0]
     if eventPlayer.nearestTargetOutOfLoS == null:

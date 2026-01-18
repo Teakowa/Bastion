@@ -12,12 +12,12 @@ rule "[VishkarEvent]: get player event":
     @Condition (any([eventPlayer.playerTitles[0][1] == vect(149, 239, 66) and eventPlayer.heroNumber >= 1, eventPlayer.heroNumber > 2])) == true
     
     wait(10 if evalOnce(debugMode) else random.randint(25, 30) if not eventPlayer.isWinner else 30, Wait.ABORT_WHEN_FALSE)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     setPlayerEvent()
     waitUntil(eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     clearPlayerEvent()
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     if ruleCondition:
         loop()
 

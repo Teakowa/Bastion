@@ -34,7 +34,7 @@ def setPlayerEvent():
         eventPlayer.eventDesc = mechEvent[eventPlayer.eventId][1]
         eventPlayer.eventDuration = mechEvent[eventPlayer.eventId].last()
         eventPlayer.eventCount[2]++
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.eventLastId = eventPlayer.eventId
     if eventPlayer.eventDesc == null:
         goto lbl_1

@@ -15,7 +15,7 @@ rule "[VishkarEvent]: 疾风祝福":
     @Event eachPlayer
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 1]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     eventPlayer.mod_speed_event = 50
@@ -44,7 +44,7 @@ rule "[VishkarEvent]: 钢铁防线":
     removeHealthPool(eventPlayer.healthId[1])
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.healthId[1] = null
 
 
@@ -57,7 +57,7 @@ rule "[VishkarEvent]: 肾上腺素":
     createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
     eventPlayer.mod_dmg_taken = -50
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0
@@ -81,11 +81,11 @@ rule "[VishkarEvent]: 黑粉来袭":
     @Event eachPlayer
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 5]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]), len(bastionPosition)), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
     eventPlayer.hudTextId = getLastCreatedText()
     waitUntil(eventPlayer.eventId != 5, eventPlayer.eventDuration)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     destroyHudText(eventPlayer.hudTextId)
 
 
@@ -187,7 +187,7 @@ rule "[VishkarEvent]: 反应装甲":
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
     wait(eventPlayer.eventDuration)
     removeHealthPool(eventPlayer.healthId[1])
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.healthId[1] = null
 
 
@@ -559,7 +559,7 @@ rule "[VishkarEvent]: 重力异常":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 0]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.mod_speed_event = -40
     updatePlayerStats()
     eventPlayer.setGravity(100 + 70)
@@ -595,7 +595,7 @@ rule "[VishkarEvent]: 吸血鬼":
     stopCombatRegen()
     playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.TEAM_2, eventPlayer, 200)
     damage(eventPlayer, (sorted([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()], lambda i: distance(eventPlayer, i)))[0], eventPlayer.getMaxHealth() * 0.1)
-    wait(max(0.5, getServerLoad() / 100 * 0.032))
+    wait(max(0.5, getAverageServerLoad() / 100 * 0.032))
     if ruleCondition:
         loop()
 
@@ -610,7 +610,7 @@ rule "[VishkarEvent]: 易损":
     createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
     eventPlayer.mod_dmg_taken = 25
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0
@@ -743,7 +743,7 @@ rule "[VishkarEvent]: 有难同当":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     createEffect(getAllPlayers(), Effect.TORBJORN_OVERLOADING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     wait(eventPlayer.eventDuration)
@@ -970,7 +970,7 @@ rule "[VishkarEvent]: 体积膨胀":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 4]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.sizeHealth = 4
     eventPlayer.startScalingSize(1.75, false)
     eventPlayer.startScalingBarriers(1.75, false)
@@ -993,7 +993,7 @@ rule "[VishkarEvent]: 迷你形态":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 5]) == true
     
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.sizeHealth = 0.5
     eventPlayer.startScalingSize(0.4, false)
     eventPlayer.startScalingBarriers(0.4, false)

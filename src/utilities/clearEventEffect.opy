@@ -12,5 +12,5 @@ def clearEventEffect():
             eventPlayer.eventEffect.remove(eventPlayer.eventEffect[0])
     else:
         destroyEffect(eventPlayer.eventEffect)
-    wait(getServerLoad() / 100 * 0.032)
+    wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.eventEffect = null
