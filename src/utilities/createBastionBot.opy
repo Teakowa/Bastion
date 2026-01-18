@@ -8,7 +8,7 @@ def createBastionBot():
     @Name "create bastion bots"
     
     while getNumberOfPlayers(Team.2) < len(bastionPosition):
-        createDummy(Hero.BASTION, Team.2, -1, random.choice(getSpawnPoints(Team.2)))
+        createDummy(Hero.BASTION, Team.2, getNumberOfPlayers(Team.2), random.choice(getSpawnPoints(Team.2)))
         wait(0.25)
         if getNumberOfPlayers(Team.2) >= len(bastionPosition) or getTotalTimeElapsed() > 120:
             return
