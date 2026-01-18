@@ -417,6 +417,7 @@ playervar eventSize 104
 playervar eventTargetHP 105
 playervar overhealthDecay 106
 playervar storedOverhealth 107
+playervar lastThreatTime 108
 
 
 #Subroutine names
