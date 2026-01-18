@@ -23,7 +23,7 @@ rule "create bastion bots when the game starts and there are not enough":
     wait(1)
     if getNumberOfPlayers(Team.2) < len(bastionPosition):
         createBastionBot()
-    wait(5)
+    wait(2)
     wait(max(0.5, getAverageServerLoad() / 100 * 0.8))
     if ruleCondition:
         loop()
