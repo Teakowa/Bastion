@@ -150,7 +150,16 @@ rule "bastion constantly searches for targets in line of sight":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition getPlayersInRadius(eventPlayer.getEyePosition(), 105, Team.1, LosCheck.SURFACES)[0] != false
+    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isAlive() == true
+
+    wait(random.uniform(0.1, 0.25), Wait.IGNORE_CONDITION)
+
+    if getPlayersInRadius(eventPlayer.getEyePosition(), 105, Team.1, LosCheck.SURFACES)[0] == false:
+        eventPlayer.target = null
+        wait(random.uniform(0.256, 0.512), Wait.ABORT_WHEN_FALSE)
+        loop()
     
     eventPlayer.temp = [player for player in getLivingPlayers(Team.1) if isInLoS(eventPlayer.getEyePosition(), player.getEyePosition()) or isInLoS(eventPlayer.getEyePosition(), player.getPosition())]
     wait()
@@ -160,9 +169,11 @@ rule "bastion constantly searches for targets in line of sight":
     #eventPlayer.temp.remove([player for player in eventPlayer.temp if not player.hasSpawned() or player.isWinner or player.hasStatus(Status.PHASED_OUT) or player.getHero() == Hero.SOMBRA and player.isUsingAbility1()])
     eventPlayer.temp.remove([player for player in eventPlayer.temp if not player.hasSpawned() or player.isWinner or player.hasStatus(Status.PHASED_OUT) or player.targetSilence or distance(eventPlayer, player) >= 100])
     wait()
+
     if len(eventPlayer.temp) > 1:
         eventPlayer.temp = sorted(eventPlayer.temp, lambda player: player.getHealth() * distance(eventPlayer, player) if bastionBotTargetPrefer == 0 else distance(eventPlayer, player) if bastionBotTargetPrefer == 1 else player.getHealth())
         wait()
+    
     lbl_0:
     if not evalOnce(dlcVishkarEvent):
         eventPlayer.target = eventPlayer.temp[0]
