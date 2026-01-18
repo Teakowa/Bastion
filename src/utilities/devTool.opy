@@ -312,6 +312,7 @@ rule "host remove target player":
     blackList.append("{0}".format(targetPlayer))
     lbl_0:
     targetPlayer.removeFromGame()
+    smallMessage(getAllPlayers(), STR_MSG_ADMIN_BLACKLIST_SUCCESS.format(iconString(Icon.BOLT), targetPlayer))
     targetPlayerIndex = 0
     targetPlayer = null
 
