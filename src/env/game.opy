@@ -54,6 +54,8 @@ rule "Update targetPlayer when player left":
     wait(getAverageServerLoad() / 100 * 0.032)
     targetPlayerIndex = 0
     targetPlayer = sorted(getPlayers(Team.1), lambda player: player.joinTime)[0]
+    if eventPlayer.hudTextId != null:
+        destroyHudText(eventPlayer.hudTextId)
 
 rule "initialize color array":
     rgbList = [vect(255, 0, 0), vect(255, 165, 0), vect(255, 255, 0), vect(0, 255, 0), vect(0, 0, 255), vect(75, 0, 130), vect(238, 130, 238)]

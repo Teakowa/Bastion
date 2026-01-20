@@ -10,6 +10,7 @@ def clearEventEffect():
         while len(eventPlayer.eventEffect) > 0:
             destroyEffect(eventPlayer.eventEffect[0])
             eventPlayer.eventEffect.remove(eventPlayer.eventEffect[0])
+            wait()
     else:
         destroyEffect(eventPlayer.eventEffect)
     wait(getAverageServerLoad() / 100 * 0.032)

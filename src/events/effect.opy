@@ -83,12 +83,12 @@ rule "[VishkarEvent]: 黑粉来袭":
     @Event eachPlayer
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 5]) == true
     
+   
+    eventPlayer.hudText = "{0}/{1}".format(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]), len(bastionPosition))
     wait(getAverageServerLoad() / 100 * 0.032)
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]), len(bastionPosition)), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
-    eventPlayer.hudTextId = getLastCreatedText()
-    waitUntil(eventPlayer.eventId != 5, eventPlayer.eventDuration)
-    wait(getAverageServerLoad() / 100 * 0.032)
-    destroyHudText(eventPlayer.hudTextId)
+    if ruleCondition:
+        loop()
+    eventPlayer.hudText = ""
 
 
 rule "[VishkarEvent]: 足力健":
@@ -102,11 +102,13 @@ rule "[VishkarEvent]: 足力健":
     eventPlayer.eventEffect = getLastCreatedEntity()
     lbl_0:
     eventPlayer.mod_speed_event += EVT_6_SPEED_INC_PER_SEC
+    eventPlayer.hudText = "移速+{0}%".format(eventPlayer.mod_speed_event)
     updatePlayerStats()
     if ruleCondition:
         loop()
     wait(0.032)
     eventPlayer.mod_speed_event = 0
+    eventPlayer.hudText = ""
     updatePlayerStats()
     clearEventEffect()
 
@@ -149,7 +151,7 @@ rule "[VishkarEvent]: 心之钢":
     @Condition attacker.getHero() == Hero.BASTION
     
     eventPlayer.heart_steel += EVT_8_HP_LAYER_PER_DEATH
-    smallMessage(eventPlayer, "  {0}  已获得 0.75% 额外最大生命值".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)))
+    smallMessage(eventPlayer, "  {0}  已获得 {1} 层（{2}%）心之钢".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), EVT_8_HP_LAYER_PER_DEATH, EVT_8_HP_LAYER_PER_DEATH * EVT_8_HP_PERCENT_PER_STACK))
     wait(0.032)
     waitUntil(eventPlayer.isAlive(), 0.5)
     setPlayerHP()
@@ -504,6 +506,7 @@ rule "[VishkarEvent]: 坚定":
     if eventPlayer.mod_dmg_taken == EVT_18_MAX_DMG_REDUCE:
         goto lbl_0
     eventPlayer.mod_dmg_taken -= EVT_18_DMG_REDUCE_PER_STACK
+    eventPlayer.hudText = "受到伤害{0}%".format(eventPlayer.mod_dmg_taken)
     updatePlayerStats()
     lbl_0:
     heal(eventPlayer, eventPlayer, eventPlayer.getMaxHealth() * EVT_18_HEAL_PERCENT)
@@ -543,13 +546,9 @@ rule "[VishkarEvent]: 任务：菲迪皮德斯之力":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 20, eventPlayer.getSpeed() != 0, eventPlayer.eventMission <= EVT_20_DISTANCE_GOAL]) == true
     
-    if eventPlayer.hudTextId != null:
-        goto lbl_0
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(eventPlayer.eventMission, EVT_20_DISTANCE_GOAL), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
-    eventPlayer.hudTextId = getLastCreatedText()
-    lbl_0:
     wait(EVT_20_DISTANCE_INC, Wait.ABORT_WHEN_FALSE)
     eventPlayer.eventMission += 0.5
+    eventPlayer.hudText = "{0}/{1}".format(eventPlayer.eventMission, EVT_20_DISTANCE_GOAL)
     if ruleCondition:
         loop()
 
@@ -569,8 +568,6 @@ rule "[VishkarEvent]: 任务：菲迪皮德斯之力":
     else:
         bigMessage(eventPlayer, "任务：菲迪皮德斯之力 失败")
     eventPlayer.eventMission = 0
-    destroyHudText(eventPlayer.hudTextId)
-    eventPlayer.hudTextId = null
     eventPlayer.eventDuration = 0
 
 
@@ -580,6 +577,7 @@ rule "[VishkarEvent]: 心之钢 Pro":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 21]) == true
     
     eventPlayer.heart_steel += EVT_21_HP_GAIN_FLAT
+    smallMessage(eventPlayer, "  {0}  已获得 {1} 层（{2}%）心之钢".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), EVT_21_HP_GAIN_FLAT, EVT_21_HP_GAIN_FLAT * EVT_8_HP_PERCENT_PER_STACK))
     if eventPlayer.heart_steel > 0:
         eventPlayer.setMaxHealth(100 + eventPlayer.heart_steel * EVT_21_HP_MULTIPLIER)
         wait(eventPlayer.eventDuration)
@@ -627,6 +625,12 @@ rule "[VishkarEvent]: 我按Q辣":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 23, eventPlayer.isUsingUltimate()]) == true
     
     resetPlayerCD()
+    if eventPlayer.nanoEffect != null:
+        goto lbl_0
+
+    createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.nanoEffect = getLastCreatedEntity()
+    lbl_0:
     eventPlayer.mod_dmg_taken = EVT_23_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
@@ -751,6 +755,7 @@ rule "[VishkarEvent]: 骨质疏松 Effect":
     eventPlayer.eventEffect = getLastCreatedEntity()
     wait(eventPlayer.eventDuration, Wait.IGNORE_CONDITION)
     clearEventEffect()
+    eventPlayer.hudText = ""
 
 
 rule "[VishkarEvent]: 骨质疏松":
@@ -760,6 +765,7 @@ rule "[VishkarEvent]: 骨质疏松":
     
     while eventPlayer.mod_speed_event != EVT_DEBUFF_6_MAX_SPEED_DEC:
         eventPlayer.mod_speed_event -= EVT_DEBUFF_6_SPEED_DEC_PER_SEC
+        eventPlayer.hudText = "移速{0}%".format(eventPlayer.mod_speed_event)
         updatePlayerStats()
         wait(1)
     updatePlayerStats()
@@ -1160,6 +1166,7 @@ rule "[VishkarEvent]: 刹车失灵":
     eventPlayer.startThrottleInDirection(Vector.FORWARD, 1, Relativity.TO_PLAYER, Throttle.REPLACE_EXISTING, ThrottleReeval.NONE)
     wait(eventPlayer.eventDuration)
     eventPlayer.stopThrottleInDirection()
+    eventPlayer.hudText = ""
 
 
 rule "[VishkarEvent]: 刹车失灵":
@@ -1173,6 +1180,7 @@ rule "[VishkarEvent]: 刹车失灵":
             goto lbl_0
         eventPlayer.mod_dmg_taken -= EVT_MECH_9_DMG_TAKEN_INC
         lbl_0:
+        eventPlayer.hudText = "移速+{0}% / 受到伤害{1}%".format(eventPlayer.mod_speed_event, eventPlayer.mod_dmg_taken)
         updatePlayerStats()
         wait(EVT_MECH_9_INTERVAL)
 
@@ -1182,15 +1190,13 @@ rule "[VishkarEvent]: 冲锋激励":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0, eventPlayer.healthId[1] == null]) == true
     
-    if eventPlayer.hudTextId != null:
-        goto lbl_0
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(eventPlayer.eventMission, EVT_MECH_10_MISSION_GOAL), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
-    eventPlayer.hudTextId = getLastCreatedText()
-    lbl_0:
+    eventPlayer.hudText = "{0}/{1}".format(eventPlayer.eventMission, EVT_MECH_10_MISSION_GOAL)
     wait(EVT_MECH_10_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if eventPlayer.eventMission >= EVT_MECH_10_MISSION_GOAL:
+        eventPlayer.hudText = "{0}/{1}".format(EVT_MECH_10_MISSION_GOAL, EVT_MECH_10_MISSION_GOAL)
         goto lbl_1
     eventPlayer.eventMission += EVT_MECH_10_MISSION_INC
+    eventPlayer.hudText = "{0}/{1}".format(eventPlayer.eventMission, EVT_MECH_10_MISSION_GOAL)
     wait()
     lbl_1:
     if ruleCondition:
@@ -1356,18 +1362,32 @@ rule "[VishkarEvent]: 保镖 (Bodyguard)":
         eventPlayer.target[0].hp_data.append([[getTotalTimeElapsed() + 5, getLastCreatedHealthPool()]])
     wait(3)
 
+#!define MARTYR_GOAL_MIN 6
+
+#!define MARTYR_GOAL_MAX max(MARTYR_GOAL_MIN, round(len(bastionPosition) * 0.75))
+
 rule "[VishkarEvent]: 任务：殉道者 (初始化)":
     @Event eachPlayer
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27]) == true
     
-    if eventPlayer.hudTextId != null:
-        goto lbl_0
-    hudText(eventPlayer, null, "\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r", "{0}/{1}".format(len(eventPlayer.eventMission), len(getPlayers(Team.2))), HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
-    eventPlayer.hudTextId = getLastCreatedText()
-    lbl_0:
-    wait(eventPlayer.eventDuration)
+    eventPlayer.eventMissionGoal = max(
+        MARTYR_GOAL_MIN,
+        min(
+            round(
+                MARTYR_GOAL_MIN
+                + ((random.uniform(0, 1) + random.uniform(0, 1)) / 2)
+                * (MARTYR_GOAL_MAX - MARTYR_GOAL_MIN)
+            ),
+            MARTYR_GOAL_MAX
+        )
+    )
 
+    eventPlayer.hudText = "{0}/{1}".format(
+        len(eventPlayer.eventMission),
+        eventPlayer.eventMissionGoal
+    )
+    wait(eventPlayer.eventDuration)
 
 rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
     @Event playerDied
@@ -1377,7 +1397,11 @@ rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
     @Condition (not attacker in eventPlayer.eventMission) == true
     
     eventPlayer.eventMission.append(attacker)
-    if len(eventPlayer.eventMission) == len(getPlayers(Team.2)):
+    eventPlayer.hudText = "{0}/{1}".format(
+        len(eventPlayer.eventMission),
+        eventPlayer.eventMissionGoal
+    )
+    if len(eventPlayer.eventMission) == eventPlayer.eventMissionGoal:
         waitUntil(eventPlayer.isAlive(), 3)
         bigMessage(eventPlayer, "任务：殉道者 完成！")
         smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 伤害减免".format(abilityIconString(Hero.HAZARD, Button.SECONDARY_FIRE), 5))

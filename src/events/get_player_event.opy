@@ -10,7 +10,15 @@ rule "[VishkarEvent]: get player event":
     @Condition getNumberOfPlayers(Team.2) == len(bastionPosition)
     @Condition all([vishkarEventActivated, eventPlayer.hasSpawned(), eventPlayer.eventId == -1]) == true
     @Condition (any([eventPlayer.playerTitles[0][1] == vect(149, 239, 66) and eventPlayer.heroNumber >= 1, eventPlayer.heroNumber > 2])) == true
+
+    if eventPlayer.hudTextId != null:
+        goto lbl_0
+    eventPlayer.hudText = ""
+    hudText(eventPlayer, null, "{0}".format(HUD_PAD_BOTTOM), eventPlayer.hudText, HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    eventPlayer.hudTextId = getLastCreatedText()
+        
     
+    lbl_0:
     wait(10 if evalOnce(debugMode) else random.randint(25, 30) if not eventPlayer.isWinner else 30, Wait.ABORT_WHEN_FALSE)
     wait(getAverageServerLoad() / 100 * 0.032)
     setPlayerEvent()
@@ -20,5 +28,3 @@ rule "[VishkarEvent]: get player event":
     wait(getAverageServerLoad() / 100 * 0.032)
     if ruleCondition:
         loop()
-
-

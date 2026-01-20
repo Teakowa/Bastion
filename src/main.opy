@@ -418,7 +418,8 @@ playervar eventTargetHP 105
 playervar overhealthDecay 106
 playervar storedOverhealth 107
 playervar lastThreatTime 108
-
+playervar hudText 109
+playervar eventMissionGoal 110
 
 #Subroutine names
 

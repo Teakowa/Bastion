@@ -30,8 +30,7 @@ def clearPlayerEvent():
     destroyEffect(eventPlayer.invincibleEffect)
     lbl_0:
     eventPlayer.eventMission = 0
-    destroyHudText(eventPlayer.hudTextId)
-    eventPlayer.hudTextId = null
+    eventPlayer.hudText = ""
     eventPlayer.target = null
     eventPlayer.possess = null
     eventPlayer.stopScalingSize()
