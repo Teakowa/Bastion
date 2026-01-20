@@ -267,7 +267,7 @@ globalvar controlJumpPosition 37
 globalvar controlRespawnPosition 38
 globalvar controlRespawnAxis 39
 globalvar controlRespawnAxisThreshold 40
-globalvar mapTitleRelation 43
+globalvar mapTitlePlayersByKey 43
 globalvar allTitle 44
 globalvar titlePlayer 45
 globalvar playerTitleRelation 47
@@ -309,7 +309,6 @@ globalvar breathOrange 94
 globalvar breathGold 95
 globalvar springBoardPosition 100
 globalvar portalPosition 101
-globalvar heroGender 102
 globalvar phaseHero 103
 globalvar __currentMapText___ 105
 globalvar __currentPioneerText___ 106
@@ -363,7 +362,6 @@ playervar winnerTime 42
 playervar playerTitles 43
 playervar playerTitleIndex 44
 playervar playerTitleRelationIndex 45
-playervar playerTitleWhileIndex 46
 playervar A36TGrenade 50
 playervar A36TGrenadeHit 51
 playervar A36TGrenadeDmg 52
@@ -415,8 +413,8 @@ playervar eventForceRoll 102
 playervar eventForceCount 103
 playervar eventSize 104
 playervar eventTargetHP 105
-playervar overhealthDecay 106
-playervar storedOverhealth 107
+# playervar overhealthDecay 106
+# playervar storedOverhealth 107
 playervar lastThreatTime 108
 playervar hudText 109
 playervar eventMissionGoal 110
@@ -498,7 +496,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerHP.opy"
 
-#!include "utilities/overhealthDecay.opy"
+# !include "utilities/overhealthDecay.opy"
 
 #!include "utilities/setEventDuration.opy"
 

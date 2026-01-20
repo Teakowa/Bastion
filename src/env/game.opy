@@ -35,7 +35,6 @@ rule "Initialize global variables":
     savedJoinTime = []
     devList = ["他又", "别感冒"]
     devPlayer = []
-    mapTitleRelation = []
     obstrucVis = []
 
 rule "Update devPlayer from devList":
