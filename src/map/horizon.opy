@@ -20,3 +20,5 @@ rule "map - horizon lunar colony":
     startForcingSpawn(Team.1, 0)
     __currentMapText___ = "月球基地"
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_HORIZON_LUNAR_COLONY

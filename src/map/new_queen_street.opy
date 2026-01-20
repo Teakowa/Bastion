@@ -13,3 +13,5 @@ rule "map - 新皇后街":
     resetPosition = vect(-111.17, 11, -17)
     creditsPosition = vect(-102.08, 17.29, -24.46)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_NEW_QUEEN_STREET

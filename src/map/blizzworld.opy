@@ -14,3 +14,5 @@ rule "map - blizzworld":
     startForcingSpawn(Team.1, 2)
     __currentMapText___ = "暴雪世界"
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_BLIZZARD_WORLD

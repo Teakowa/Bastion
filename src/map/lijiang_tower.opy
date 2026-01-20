@@ -45,3 +45,5 @@ rule "map - 漓江塔":
     #控制中心重生点
     controlRespawnPosition.append(vect(62.93, 267.64, 349.53))
     endPosition = vect(-44.02, 271.64, 349.77)
+
+    mapTitlePlayersByKey = DATA_LIJIANG_TOWER

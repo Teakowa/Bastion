@@ -18,3 +18,5 @@ rule "map - junkertown":
     resetPosition = vect(-103.91, 11.69, -86.6)
     creditsPosition = vect(-92.71, 14.04, -73.79)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_JUNKERTOWN

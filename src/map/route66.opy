@@ -18,3 +18,5 @@ rule "map - route 66":
     resetPosition = vect(-115.01, 4.5, -46.01)
     creditsPosition = vect(-113.27, 7.5, -63.14)
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_ROUTE66

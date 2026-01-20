@@ -18,3 +18,5 @@ rule "map - paris":
     resetPosition = vect(-115.03, 15.97, -122.82)
     creditsPosition = vect(-119.74, 19, -132.45)
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_PARIS

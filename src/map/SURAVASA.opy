@@ -20,3 +20,5 @@ rule "map - 苏拉瓦萨":
     thirdPersonPosition = vect(5.54, 4, 124.39)
     creditsPosition = vect(0.68, 11.77, 120.02)
     endPosition = vect(-2.43, 4.13, 0.75)
+
+    mapTitlePlayersByKey = DATA_SURAVASA

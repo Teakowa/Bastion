@@ -19,3 +19,5 @@ rule "map - dorado":
     resetPosition = vect(183.3, 7.04, 37.96)
     creditsPosition = vect(197.72, 10.01, 44.63)
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_DORADO

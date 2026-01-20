@@ -13,3 +13,5 @@ rule "map - numbani":
     resetPosition = vect(224.54, 0.2, 0.39)
     creditsPosition = vect(254.54, 3.2, 22.87)
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_NUMBANI

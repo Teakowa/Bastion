@@ -19,3 +19,5 @@ rule "map - havana":
     resetPosition = vect(158.3, 11, -44.35)
     creditsPosition = vect(193.45, 13.25, -46.49)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_HAVANA

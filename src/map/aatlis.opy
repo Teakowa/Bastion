@@ -19,3 +19,5 @@ rule "map - 阿特利斯":
     thirdPersonPosition = vect(-6.21, 15, 104.33)
     creditsPosition = vect(5.1, 19.5, 105.79)
     endPosition = vect(-78.02, 9.19, -39.93)
+
+    mapTitlePlayersByKey = DATA_AATLIS

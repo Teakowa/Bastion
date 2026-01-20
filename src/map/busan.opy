@@ -44,3 +44,5 @@ rule "map - 釜山":
     bastionPosition.append(vect(177.1, 9.69, 253.19))
     bastionPosition.append(vect(173.93, 12.87, 267.78))
     controlCenterPosition = [vect(-328.53, 8.17, 153.32), vect(51.89, 14.5, -114.7), vect(222.72, 9.24, 241.77)]
+
+    mapTitlePlayersByKey = DATA_BUSAN

@@ -19,3 +19,5 @@ rule "map - paraiso":
     resetPosition = vect(-78.3, 5.03, -170.8)
     creditsPosition = vect(-70.2, 7.75, -183.14)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_PARAISO

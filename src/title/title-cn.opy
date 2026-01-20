@@ -57,6 +57,11 @@ enum Title:
     GREEN_MOUNTAIN,     # 47 踏遍青山
     SUAN_BU_LA          # 48 我不会放过你的酸不辣
 
+enum MapTitleKey:
+  PIONEER = 0
+  CONQUEROR = 1
+  DOMINATOR = 2
+
 # ------------------------------
 # 2. 定义玩家数据 (Database)
 # 注意：Key (name, titles) 必须不加引号，否则 splitDictArray 会报错
@@ -222,528 +227,146 @@ enum Title:
 #!define TP_9_10_0 [Title.CONQUEROR, Title.DOMINATOR, Title.PIONEER]
 # 地图数据块 (Data Blocks)
 # 暴雪世界
-#!define DATA_BLIZZARD_WORLD [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10 }, \
-    { name: "Augenstern", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-]
+#!define DATA_BLIZZARD_WORLD [ [], [0,7,8,10,13, 24,28, 29,33], [0,7,8,10,13, 24,28, 29,33]]
 
 # 多拉多
-#!define DATA_DORADO [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "看啊情", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10 }, \
-    { name: "明月有时", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-]
+#!define DATA_DORADO [[], [6, 7, 8, 9, 10, 13, 17, 18, 19, 28, 29, 34], [6, 7, 8, 9, 10, 13, 17, 18, 19, 28, 29, 34]]
+
 
 # 艾兴瓦尔德
-#!define DATA_EICHENWALDE [ \
-    { name: "尘风歌者", titles: TP_9_10_0 }, \
-    { name: "顾北酒笙", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "挽风", titles: TP_CONQUEROR }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "看啊情", titles: TP_CONQUEROR }, \
-    { name: "她说话有股孩子气", titles: TP_CONQUEROR }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10_0 }, \
-    { name: "锦木千束", titles: TP_9_10_0 }, \
-]
+#!define DATA_EICHENWALDE [[6, 7, 8, 9, 10, 12, 18, 19, 20], [4, 6, 7, 8, 9, 10, 12, 13, 14, 17, 18, 19, 20, 21, 28], [4, 6, 7, 8, 9, 10, 12, 13, 18, 19, 20, 28]]
 
 # 直布罗陀
-#!define DATA_WATCHPOINT_GIBRALTAR [ \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-]
+#!define DATA_WATCHPOINT_GIBRALTAR [[], [6, 7, 8, 9, 10, 12, 13, 18, 19, 28], [6, 7, 8, 9, 10, 12, 13, 18, 19, 28]]
 
 #哈瓦那
-#!define DATA_HAVANA [ \
-    { name: "他又", titles: TP_9_10 }, \
-    { name: "别感冒", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "顾北酒笙", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_HAVANA [[], [0, 1, 4, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24], [0, 1, 4, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24]]
 
 # 好莱坞
-#!define DATA_HOLLYWOOD [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_HOLLYWOOD [[], [7, 8, 10, 13, 18, 19, 24, 29], [7, 8, 10, 13, 18, 19, 24, 29]]
+
 
 # 月球基地
-#!define DATA_HORIZON_LUNAR_COLONY [ \
-    { name: "烛台与南九", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "顾北酒笙", titles: TP_CONQUEROR }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-]
+#!define DATA_HORIZON_LUNAR_COLONY [[], [3, 4, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24], [3, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24]]
+
 
 # 渣客镇
-#!define DATA_JUNKERTOWN [ \
-    { name: "WildRage", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "看啊情", titles: TP_9_10 }, \
-]
+#!define DATA_JUNKERTOWN [[], [5, 6, 7, 8, 9, 10, 12, 13, 17, 18, 19], [5, 6, 7, 8, 9, 10, 12, 13, 17, 18, 19]]
 
 # 国王大道
-#!define DATA_KINGS_ROW [ \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "一痕沙", titles: TP_CONQUEROR }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_KINGS_ROW [[], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28, 32], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28]]
+
 
 # 中城
-#!define DATA_MIDTOWN [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10}, \
-]
+#!define DATA_MIDTOWN [[], [7, 8, 10, 13, 18, 24, 28, 29], [7, 8, 10, 13, 18, 24, 28, 29]]
+
 
 # 努巴尼
-#!define DATA_NUMBANI [ \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "旅店老板", titles: TP_9_10 }, \
-]
+#!define DATA_NUMBANI [[], [7, 8, 10, 13, 18, 19, 24, 28, 35], [7, 8, 10, 13, 18, 19, 24, 28, 35]]
+
 
 # 帕拉伊苏
-#!define DATA_PARAISO [ \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "谁能体谅我的雨天", titles: TP_CONQUEROR }, \
-]
+#!define DATA_PARAISO [[], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28, 36], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28]]
 
 # 巴黎
-#!define DATA_PARIS [ \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "她说话有股孩子气", titles: TP_9_10 }, \
-]
+#!define DATA_PARIS [[], [6, 7, 8, 9, 10, 13, 18, 19, 21], [6, 7, 8, 9, 10, 13, 18, 19, 21]]
+
 
 # 里阿尔托
-#!define DATA_RIALTO [ \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "草艮", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-]
+#!define DATA_RIALTO [[2, 8, 9, 10], [2, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28, 29], [2, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28, 29]]
+
 
 # 66号公路
-#!define DATA_ROUTE66 [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-]
+#!define DATA_ROUTE66 [[], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24]]
+
 
 # 香巴里寺院
-#!define DATA_SHAMBALI_MONASTERY [ \
-    { name: "他又", titles: [Title.PIONEER] }, \
-    { name: "别感冒", titles: [Title.PIONEER] }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-]
+#!define DATA_SHAMBALI_MONASTERY [[0, 1], [7, 8, 10, 13, 18, 19, 24, 28], [7, 8, 10, 13, 18, 19, 24, 28]]
+
 
 # 阿努比斯神殿
-#!define DATA_TEMPLE_OF_ANUBIS [ \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-    { name: "看啊情", titles: [Title.CONQUEROR, Title.PIONEER] }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_TEMPLE_OF_ANUBIS [[7, 9, 10, 12, 17], [6, 7, 8, 9, 10, 12, 13, 17, 18, 19, 24, 28], [6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28]]
+
 
 # 沃斯卡娅工业区
-#!define DATA_VOLSKAYA [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-]
+#!define DATA_VOLSKAYA [[7, 8, 13, 18], [7, 8, 10, 13, 18, 19], [7, 8, 10, 13, 18, 19]]
+
 
 # 埃斯佩兰萨
-#!define DATA_ESPERANCA [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-    { name: "WildRage", titles: TP_9_10_0 }, \
-    { name: "尘风歌者", titles: TP_9_10_0 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-]
+#!define DATA_ESPERANCA [[5, 6, 8, 9, 10, 12, 18], [5, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24], [5, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24]]
+
 
 # 斗兽场
-#!define DATA_COLOSSEO [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: [Title.DOMINATOR, Title.PIONEER] }, \
-]
+#!define DATA_COLOSSEO [[9, 10], [6, 7, 8, 9, 13, 18, 19, 24, 28], [0, 6, 7, 8, 9, 10, 13, 18, 19, 24, 28]]
+
 
 # 鲁纳塞彼
-#!define DATA_RUNASAPI [ \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-]
+#!define DATA_RUNASAPI [[], [6, 7, 8, 9, 10, 12, 13, 18, 19], [6, 7, 8, 9, 10, 12, 13, 18, 19]]
+
 
 # 新皇后街
-#!define DATA_NEW_QUEEN_STREET [ \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-]
+#!define DATA_NEW_QUEEN_STREET [[7, 8, 12, 18], [7, 8, 9, 12, 13, 18, 19, 24], [7, 8, 9, 12, 13, 18, 19, 24]]
+
 
 # 皇家赛道
-#!define DATA_CIRCUIT_ROYAL [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "他又", titles: [Title.PIONEER] }, \
-    { name: "别感冒", titles: [Title.PIONEER] }, \
-]
+#!define DATA_CIRCUIT_ROYAL [[0, 1], [7, 8, 10, 18, 28], [7, 8, 10, 18, 28]]
+
 
 # 花村
-#!define DATA_HANAMURA [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10_0 }, \
-    { name: "溪云初起日沉阁", titles: [Title.CONQUEROR, Title.PIONEER] }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "尘风歌者", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "看啊情", titles: TP_9_10_0 }, \
-]
+#!define DATA_HANAMURA [[6, 8, 9, 10, 12, 17], [6, 7, 8, 9, 10, 12, 13, 17, 18, 19, 24], [6, 7, 8, 9, 10, 13, 17, 18, 19, 24]]
+
 
 # 伊利奥斯
-#!define DATA_ILIOS [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "别打老顾我啊", titles: TP_CONQUEROR }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "蝎子莱莱", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-]
+#!define DATA_ILIOS [[], [6, 7, 8, 9, 10, 12, 13, 16, 18, 19, 23, 24, 28], [6, 7, 8, 9, 10, 12, 13, 18, 19, 23, 24, 28]]
+
 
 # 漓江塔
-#!define DATA_LIJIANG_TOWER [ \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "水濑祈", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "草艮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "烛台与南九", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "看啊情", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "我心飞扬", titles: TP_9_10 }, \
-]
+#!define DATA_LIJIANG_TOWER [[], [2, 3, 6, 7, 8, 9, 10, 13, 15, 17, 18, 19, 26, 28], [2, 3, 6, 7, 8, 9, 10, 13, 15, 17, 18, 19, 26, 28]]
+
 
 # 萨摩亚
-#!define DATA_SAMOA [ \
-    { name: "尘风歌者", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "草艮", titles: TP_9_10 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_SAMOA [[], [2, 6, 7, 8, 9, 10, 12, 13, 18, 19], [2, 6, 7, 8, 9, 10, 12, 13, 18, 19]]
+
 
 # 釜山
-#!define DATA_BUSAN [ \
-    { name: "草艮", titles: [Title.PIONEER, Title.CONQUEROR] }, \
-    { name: "顾北酒笙", titles: [Title.PIONEER, Title.CONQUEROR] }, \
-    { name: "WildRage", titles: [Title.PIONEER, Title.CONQUEROR] }, \
-    { name: "尘风歌者", titles: TP_9_10_0 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "糯米进脑子", titles: TP_9_10 }, \
-    { name: "半夜汽笛", titles: TP_9_10 }, \
-    { name: "雷个大憨憨", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-]
+#!define DATA_BUSAN [[2, 4, 5, 6, 7], [2, 4, 5, 6, 7, 8, 9, 10, 12, 13, 18, 19, 28, 29, 30, 31], [6, 7, 8, 9, 10, 12, 13, 18, 19, 28, 29, 30, 31]]
+
 
 # 绿洲城
-#!define DATA_OASIS [ \
-    { name: "WildRage", titles: TP_9_10 }, \
-    { name: "尘风歌者", titles: TP_9_10_0 }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-]
+#!define DATA_OASIS [[6, 10], [5, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28], [5, 6, 7, 8, 9, 10, 12, 13, 18, 19, 24, 28]]
+
 
 # 新渣客城
-#!define DATA_NEW_JUNK_CITY [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "Cold", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-]
+#!define DATA_NEW_JUNK_CITY [[7, 8, 12, 18], [7, 8, 9, 10, 12, 13, 18, 19, 24, 28], [7, 8, 9, 10, 12, 13, 18, 19, 24, 28]]
+
 
 # 尼泊尔
-#!define DATA_NEPAL [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "溪云初起日沉阁", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
-]
+#!define DATA_NEPAL [[7, 8, 10, 12, 13], [7, 8, 10, 12, 13, 18, 19], [7, 8, 10, 12, 13, 18, 19]]
+
 
 # 阿努比斯王座
-#!define DATA_THRONE_OF_ANUBIS [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10_0 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "Jargon", titles: TP_9_10_0 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
-]
+#!define DATA_THRONE_OF_ANUBIS [[7, 8, 10, 13, 19, 25], [7, 8, 10, 13, 18, 19, 24, 25, 28], [7, 8, 10, 13, 18, 19, 24, 25, 28]]
+
 
 # 花冈
-#!define DATA_HANAOKA [ \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "雨鸢", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "初一吖", titles: TP_9_10 }, \
-]
+#!define DATA_HANAOKA [[], [7, 8, 10, 13, 18, 19, 24, 28], [7, 8, 10, 13, 18, 19, 24, 28]]
+
 
 # 苏拉瓦萨
-#!define DATA_SURAVASA [ \
-    { name: "他又", titles: [Title.PIONEER] }, \
-    { name: "别感冒", titles: [Title.PIONEER] }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10_0 }, \
-    { name: "寒霜冰湮", titles: TP_9_10_0 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10_0 }, \
-    { name: "眼镜小宅", titles: TP_9_10_0 }, \
-    { name: "雨鸢", titles: TP_9_10_0 }, \
-    { name: "Augenstern", titles: TP_9_10 }, \
-    { name: "绿里奇迹", titles: TP_9_10_0 }, \
-]
+#!define DATA_SURAVASA [[0, 1, 7, 8, 13, 18, 24, 27], [7, 8, 10, 13, 18, 24, 27, 33], [7, 8, 10, 13, 18, 24, 27, 33]]
+
 
 # 阿育陀耶
-#!define DATA_AYUTTHAYA [ \
-    { name: "他又", titles: [Title.PIONEER] }, \
-    { name: "别感冒", titles: [Title.PIONEER] }, \
-    { name: "吾携秋水揽星河", titles: TP_9_10 }, \
-    { name: "豆本豆豆奶", titles: TP_9_10 }, \
-    { name: "卖核弹的小女孩", titles: TP_9_10 }, \
-    { name: "眼镜小宅", titles: TP_9_10 }, \
-    { name: "EruIluvatar", titles: TP_9_10 }, \
-    { name: "寒霜冰湮", titles: TP_9_10 }, \
-]
+#!define DATA_AYUTTHAYA [[0, 1], [7, 8, 10, 13, 18, 28], [7, 8, 10, 13, 18, 28]]
+
 
 # 阿特利斯
-#!define DATA_AATLIS [ \
-    { name: "他又", titles: [Title.PIONEER] }, \
-    { name: "别感冒", titles: [Title.PIONEER] }, \
-]
+#!define DATA_AATLIS [[0, 1], [], []]
 
 
 # ------------------------------
 # 4. 初始化变量
 # ------------------------------
-# 通用称号变量
-# globalvar titlePlayer
-# globalvar playerTitleRelation
-# globalvar allTitle
-
-# 地图专属变量 (只存当前地图数据)
-globalvar mtName
-globalvar mtTitles
-
-
 rule "initialize title array":
     wait(getAverageServerLoad() / 100 * 0.5)
     waitUntil(__currentMap___ != null, 999999986991104.000)
@@ -850,188 +473,3 @@ rule "initialize title array":
         name: titlePlayer,
         titles: playerTitleRelation
     }, player_database)
-
-rule "initialize map title array":
-    wait(getAverageServerLoad() / 100 * 0.5)
-    waitUntil(__currentMap___ != null, 999999986991104.000)
-    # 5.3 动态加载当前地图专属数据
-    # 使用 switch 只加载对应地图的数据到 mtName 和 mtTitles
-    switch getCurrentMap():
-        case Map.BLIZZ_WORLD:
-        case 1228:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_BLIZZARD_WORLD)
-            break
-        case Map.DORADO:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_DORADO)
-            break
-        case Map.EICHENWALDE:
-        case 565:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_EICHENWALDE)
-            break
-        case Map.WATCHPOINT_GIBRALTAR:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_WATCHPOINT_GIBRALTAR)
-            break
-        case Map.HAVANA:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_HAVANA)
-            break
-        case Map.HOLLYWOOD:
-        case 1505:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_HOLLYWOOD)
-            break
-        case Map.HORIZON_LUNAR_COLONY:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_HORIZON_LUNAR_COLONY)
-            break  
-        # 渣客镇
-        case Map.JUNKERTOWN:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_JUNKERTOWN)
-            break
-            
-        # 国王大道 (普通版 + 节日版 ID 742)
-        case Map.KINGS_ROW:
-        case 742:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_KINGS_ROW)
-            break
-        # 中城
-        case Map.MIDTOWN:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_MIDTOWN)
-            break
-            
-        # 努巴尼
-        case Map.NUMBANI:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_NUMBANI)
-            break
-            
-        # 帕拉伊苏
-        case Map.PARAISO:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_PARAISO)
-            break
-        # 巴黎
-        case Map.PARIS:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_PARIS)
-            break
-            
-        # 里阿尔托
-        case Map.RIALTO:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_RIALTO)
-            break
-            
-        # 66号公路
-        case Map.ROUTE66:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_ROUTE66)
-            break
-        # 香巴里寺院
-        case Map.SHAMBALI_MONASTERY:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_SHAMBALI_MONASTERY)
-            break
-        # 阿努比斯神殿
-        case Map.TEMPLE_OF_ANUBIS:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_TEMPLE_OF_ANUBIS)
-            break
-            
-        # 沃斯卡娅
-        case Map.VOLSKAYA:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_VOLSKAYA)
-            break
-
-        # 埃斯佩兰萨 (包含节日版 ID 276)
-        case Map.ESPERANCA:
-        case 276:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_ESPERANCA)
-            break
-            
-        # 斗兽场 (包含节日版 ID 2147)
-        case Map.COLOSSEO:
-        case 2147:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_COLOSSEO)
-            break
-            
-        # 鲁纳塞彼 (包含节日版 ID 8048)
-        case Map.RUNASAPI:
-        case 8048:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_RUNASAPI)
-            break
-            
-        # 新皇后街
-        case Map.NEW_QUEEN_STREET:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_NEW_QUEEN_STREET)
-            break
-            
-        # 皇家赛道
-        case Map.CIRCUIT_ROYAL:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_CIRCUIT_ROYAL)
-            break
-            
-        # 花村 (包含 ID 1848 和 冬季版)
-        case Map.HANAMURA:
-        case 1848:
-        case Map.HANAMURA_WINTER:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_HANAMURA)
-            break
-        # 伊利奥斯
-        case Map.ILIOS:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_ILIOS)
-            break
-            
-        # 漓江塔 (包含节日版 ID 3676)
-        case Map.LIJIANG_TOWER:
-        case 3676:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_LIJIANG_TOWER)
-            break
-            
-        # 萨摩亚 (包含节日版 ID 13628)
-        case Map.SAMOA:
-        case 13628:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_SAMOA)
-            break
-            
-        # 釜山
-        case Map.BUSAN:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_BUSAN)
-            break
-            
-        # 绿洲城
-        case Map.OASIS:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_OASIS)
-            break
-            
-        # 新渣客城 (包含节日版 ID 3099)
-        case Map.NEW_JUNK_CITY:
-        case 3099:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_NEW_JUNK_CITY)
-            break
-            
-        # 尼泊尔
-        case Map.NEPAL:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_NEPAL)
-            break
-            
-        # 阿努比斯王座 (包含 ID 886)
-        case Map.THRONE_OF_ANUBIS:
-        case 886:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_THRONE_OF_ANUBIS)
-            break
-            
-        # 花冈 (ID 2601)
-        case Map.HANAOKA:
-        case 2601:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_HANAOKA)
-            break
-            
-        # 苏拉瓦萨
-        case Map.SURAVASA:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_SURAVASA)
-            break
-            
-        # 阿育陀耶 (包含 ID 1826)
-        case Map.AYUTTHAYA:
-        case 1826:
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_AYUTTHAYA)
-            break
-        case Map.AATLIS: 
-            splitDictArray({ name: mtName, titles: mtTitles }, DATA_AATLIS)
-            break
-        default:
-            # 如果是其他地图，或者没有配置称号，保持数组为空
-            mtName = []
-            mtTitles = []
-            break

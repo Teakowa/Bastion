@@ -23,3 +23,5 @@ rule "map - 花村":
     creditsPosition = vect(-48.1, 2.5, -116.08)
     __currentMapText___ = "花村"
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_HANAMURA

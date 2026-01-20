@@ -14,3 +14,5 @@ rule "map - 中城":
     resetPosition = vect(119.51, 1.84, -104.94)
     creditsPosition = vect(126.5, 3, -125.37)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_MIDTOWN

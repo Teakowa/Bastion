@@ -24,3 +24,5 @@ rule "map - eichenwalde":
     startForcingSpawn(Team.1, 2)
     __currentMapText___ = "阿德勒斯布鲁恩" if __currentMap___ == 565 else getCurrentMap()
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_EICHENWALDE

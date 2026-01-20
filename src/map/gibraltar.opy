@@ -20,3 +20,5 @@ rule "map - watchpoint gibraltar":
     resetPosition = vect(97.55, 1.06, 60.38)
     creditsPosition = vect(112.23, 0, 73.59)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_WATCHPOINT_GIBRALTAR

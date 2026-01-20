@@ -14,3 +14,5 @@ rule "map - volskaya industries":
     startForcingSpawn(Team.1, 0)
     __currentMapText___ = "沃斯卡娅"
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_VOLSKAYA

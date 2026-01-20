@@ -20,3 +20,5 @@ rule "map - king's row":
     __currentMapText___ = "国王大道"
     __currentMapPioneerText___ = __currentMapText___
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_KINGS_ROW
