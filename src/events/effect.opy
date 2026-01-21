@@ -42,7 +42,7 @@ rule "[VishkarEvent]: 钢铁防线":
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
     eventPlayer.mod_dmg_taken = EVT_2_DMG_TAKEN
     updatePlayerStats()
-    waitUntil(eventPlayer.eventId == null, eventPlayer.eventDuration)
+    waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     removeHealthPool(eventPlayer.healthId[1])
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
@@ -140,7 +140,7 @@ rule "[VishkarEvent]: 心之钢 Effect":
     createEffect(getAllPlayers(), Effect.WINSTON_PRIMAL_RAGE, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     lbl_0:
-    waitUntil(eventPlayer.eventId == null, eventPlayer.eventDuration)
+    waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     clearEventEffect()
 
 
@@ -223,7 +223,7 @@ rule "[VishkarEvent]: 死亡延迟":
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     smallMessage(eventPlayer, "  {0}  已触发死亡延迟".format(abilityIconString(Hero.BAPTISTE, Button.ABILITY_2)))
-    waitUntil(eventPlayer.eventId == null, eventPlayer.eventDuration)
+    waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     eventPlayer.clearStatusEffect(Status.UNKILLABLE)
     destroyEffect(eventPlayer.invincibleEffect)
     clearEventEffect()
