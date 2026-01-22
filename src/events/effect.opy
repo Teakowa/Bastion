@@ -1548,12 +1548,11 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
     
-    if eventPlayer.getHero() == Hero.LIFEWEAVER:
-        eventPlayer.eventMission = 1
-    elif eventPlayer.getHero() == Hero.TORBJORN or eventPlayer.getHero() == Hero.SYMMETRA:
-        eventPlayer.eventMission = 2
+    if eventPlayer.getHero() == Hero.LIFEWEAVER or eventPlayer.getHero() == Hero.TORBJORN or eventPlayer.getHero() == Hero.SYMMETRA:
+        eventPlayer.eventDuration = 0
     else:
         eventPlayer.eventMission = random.randint(1, 3)
+
     if eventPlayer.eventMission == 1:
         eventPlayer.disableAbility(Button.ABILITY_1)
         smallMessage(eventPlayer, "  {0}  你的技能 1 已被禁用".format(iconString(Icon.WARNING)))
