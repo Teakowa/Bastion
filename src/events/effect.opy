@@ -1661,7 +1661,7 @@ rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
     setPlayerHP()
     playEffect(getAllPlayers(), DynamicEffect.BAD_PICKUP_EFFECT, Color.TEAM_1, eventPlayer, 100)
     eventPlayer.eventForceRoll = EVT_MECH_14_FORCE_ROLL
-    smallMessage(eventPlayer, "  {0}  已扣除 {1} 层心之钢（{2}% 最大生命值）".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2)), EVT_MECH_14_HEART_STEEL_COST, EVT_MECH_14_HEART_STEEL_COST * EVT_8_HP_PERCENT_PER_STACK)
+    smallMessage(eventPlayer, "  {0}  已扣除 {1} 层心之钢（{2}% 最大生命值）".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), EVT_MECH_14_HEART_STEEL_COST, EVT_MECH_14_HEART_STEEL_COST * EVT_8_HP_PERCENT_PER_STACK))
     wait(0.2)
     smallMessage(eventPlayer, "  {0}  下一个事件必然是增益，祝你好运".format(iconString(Icon.CLUB)))
     eventPlayer.eventDuration = 0
@@ -1704,7 +1704,7 @@ rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 99) < EVT_MECH_16_WIN_CHANCE:
         eventPlayer.heart_steel += EVT_MECH_16_REWARD_STACKS
-        smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB)), EVT_MECH_16_REWARD_STACKS, EVT_MECH_16_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK)
+        smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_16_REWARD_STACKS, EVT_MECH_16_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
     eventPlayer.eventForceRoll = EVT_MECH_16_FORCE_ROLL

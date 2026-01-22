@@ -489,7 +489,7 @@ enum MapTitleKey:
 # ------------------------------
 rule "initialize title array":
     wait(getAverageServerLoad() / 100 * 0.5)
-    waitUntil(__currentMap___ != null, 999999986991104.000)
+    waitUntil(__currentMap___ != null, MAX_TIME)
     allTitle = [
         # 0: PIONEER
         ["{0}{1}".format(__currentMapPioneerText___ if __currentMapPioneerText___ != null else getCurrentMap(), __currentPioneerText___ if __currentPioneerText___ != null else "开拓者"), heroColor[12]],

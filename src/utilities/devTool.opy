@@ -383,7 +383,7 @@ rule "dev set invincible":
     eventPlayer.invincible = not eventPlayer.invincible
     wait(getAverageServerLoad() / 100 * 0.032)
     if eventPlayer.invincible:
-        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 999999986991104)
+        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, MAX_TIME)
         createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
         eventPlayer.invincibleEffect = getLastCreatedEntity()
         smallMessage(eventPlayer, "  {0}  开发者模式： 已设置为无敌状态".format(iconString(Icon.BOLT)))

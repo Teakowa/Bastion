@@ -58,7 +58,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_3_TITLE, true, 3):
         goto lbl_2
-    buffEvent[3] = [STR_EVT_BUFF_3_TITLE, STR_EVT_BUFF_3_DESC.format(EVT_3_DMG_TAKEN), 20, 1.2]
+    buffEvent[3] = [STR_EVT_BUFF_3_TITLE, STR_EVT_BUFF_3_DESC.format(EVT_3_DMG_TAKEN * -1), 20, 1.2]
     buffEventId.append(3)
     lbl_2:
     
@@ -82,7 +82,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_7_TITLE, true, 7):
         goto lbl_6
-    buffEvent[7] = [STR_EVT_BUFF_7_TITLE, STR_EVT_BUFF_7_DESC, 90, 1.1]
+    buffEvent[7] = [STR_EVT_BUFF_7_TITLE, STR_EVT_BUFF_7_DESC.format(EVT_7_BASE_HEALTH, EVT_7_HEALTH_PERCENT * 100, EVT_7_REGEN_INTERVAL), 90, 1.1]
     buffEventId.append(7)
     lbl_6:
     
@@ -97,7 +97,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_BUFF, STR_EVT_BUFF_9_TITLE, true, 9):
         goto lbl_8
-    buffEvent[9] = [STR_EVT_BUFF_9_TITLE, STR_EVT_BUFF_9_DESC, 20, 1.2]
+    buffEvent[9] = [STR_EVT_BUFF_9_TITLE, STR_EVT_BUFF_9_DESC.format(EVT_9_SPEED_BOOST, EVT_9_DMG_TAKEN * -1), 20, 1.2]
     buffEventId.append(9)
     lbl_8:
     
@@ -121,13 +121,13 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_BUFF, STR_EVT_BUFF_13_TITLE, true, 13):
         goto lbl_12
-    buffEvent[13] = [STR_EVT_BUFF_13_TITLE, STR_EVT_BUFF_13_DESC, 120, 0.6]
+    buffEvent[13] = [STR_EVT_BUFF_13_TITLE, STR_EVT_BUFF_13_DESC.format(EVT_13_CHECKPOINT_INTERVAL), 120, 0.6]
     buffEventId.append(13)
     lbl_12:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_BUFF, STR_EVT_BUFF_14_TITLE, true, 14):
         goto lbl_13
-    buffEvent[14] = [STR_EVT_BUFF_14_TITLE, STR_EVT_BUFF_14_DESC, 120, 0.9]
+    buffEvent[14] = [STR_EVT_BUFF_14_TITLE, STR_EVT_BUFF_14_DESC.format(EVT_14_SHIELD_PERCENT * 100), 120, 0.9]
     buffEventId.append(14)
     lbl_13:
     
@@ -142,7 +142,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_16_TITLE, true, 16):
         goto lbl_15
-    buffEvent[16] = [STR_EVT_BUFF_16_TITLE, STR_EVT_BUFF_16_DESC, 30, 0.4]
+    buffEvent[16] = [STR_EVT_BUFF_16_TITLE, STR_EVT_BUFF_16_DESC.format(EVT_16_CHECK_INTERVAL, EVT_16_INVINCIBLE_DURATION), 30, 0.4]
     buffEventId.append(16)
     lbl_15:
     
@@ -154,37 +154,37 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_18_TITLE, true, 18):
         goto lbl_17
-    buffEvent[18] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC, 120, 0.5]
+    buffEvent[18] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC.format(EVT_18_KNOCKBACK_RESISTANCE * -1, EVT_18_DMG_REDUCE_PER_STACK, EVT_18_HEAL_PERCENT * 100), 120, 0.5]
     buffEventId.append(18)
     lbl_17:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_19_TITLE, true, 19):
         goto lbl_18
-    buffEvent[19] = [STR_EVT_BUFF_19_TITLE, STR_EVT_BUFF_19_DESC, 30, 1.2]
+    buffEvent[19] = [STR_EVT_BUFF_19_TITLE, STR_EVT_BUFF_19_DESC.format(EVT_19_TRIGGER_HP_PERCENT * 100, EVT_19_INVINCIBLE_DURATION), 30, 1.2]
     buffEventId.append(19)
     lbl_18:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_20_TITLE, true, 20):
         goto lbl_19
-    buffEvent[20] = [STR_EVT_BUFF_20_TITLE, STR_EVT_BUFF_20_DESC, 45, 0.8]
+    buffEvent[20] = [STR_EVT_BUFF_20_TITLE, STR_EVT_BUFF_20_DESC.format(EVT_20_DISTANCE_GOAL, EVT_20_REWARD_SPEED), 45, 0.8]
     buffEventId.append(20)
     lbl_19:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_21_TITLE, true, 21):
         goto lbl_20
-    buffEvent[21] = [STR_EVT_BUFF_21_TITLE, STR_EVT_BUFF_21_DESC, 90, 0.9]
+    buffEvent[21] = [STR_EVT_BUFF_21_TITLE, STR_EVT_BUFF_21_DESC.format(EVT_21_HP_GAIN_FLAT, EVT_21_HP_MULTIPLIER), 90, 0.9]
     buffEventId.append(21)
     lbl_20:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_22_TITLE, true, 22):
         goto lbl_21
-    buffEvent[22] = [STR_EVT_BUFF_22_TITLE, STR_EVT_BUFF_22_DESC, 90, 0.5]
+    buffEvent[22] = [STR_EVT_BUFF_22_TITLE, STR_EVT_BUFF_22_DESC.format(EVT_22_HEAL_BOOST), 90, 0.5]
     buffEventId.append(22)
     lbl_21:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_23_TITLE, true, 23):
         goto lbl_22
-    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC, 120, 1.2]
+    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(EVT_23_DMG_REDUCTION_DURING_ULT * -1), 120, 1.2]
     buffEventId.append(23)
     lbl_22:
     

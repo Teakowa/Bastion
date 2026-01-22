@@ -24,7 +24,7 @@ rule "Hashtag":
     @Condition vishkarEventActivated == true
     @Condition getTotalTimeElapsed() > 125
     
-    waitUntil(any([len(buffEventId) != 24, len(debuffEventId) != 16, len(mechEventId != 14)]), 999999986991104)
+    waitUntil(any([len(buffEventId) != 24, len(debuffEventId) != 16, len(mechEventId != 14)]), MAX_TIME)
     hashTag = false
     wait(60)
 
