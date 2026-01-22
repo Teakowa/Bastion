@@ -1011,11 +1011,13 @@ rule "[VishkarEvent]: 赌徒":
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 100) <= EVT_MECH_2_WIN_RATE:
         eventPlayer.heart_steel -= EVT_MECH_2_STAKE
-        eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
+        eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！失去 {1} 层心之钢层数（{2}%）".format(iconString(Icon.DIAMOND), EVT_MECH_2_STAKE, EVT_MECH_2_STAKE * EVT_8_HP_PERCENT_PER_STACK))
+        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
+            eventPlayer.dlcTimeChallenge[2]++
     else:
         eventPlayer.heart_steel += EVT_MECH_2_STAKE
-        eventPlayer.dlcTimeChallenge++
+        eventPlayer.dlcTimeChallenge[0]++
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢层数（{2}%）".format(iconString(Icon.CLUB), EVT_MECH_2_STAKE, EVT_MECH_2_STAKE * EVT_8_HP_PERCENT_PER_STACK))
     wait()
     setPlayerHP()
@@ -1275,20 +1277,24 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
     eventPlayer.categoryRoll = random.uniform(0, 100)
     if eventPlayer.categoryRoll <= EVT_MECH_13_PROB_WIN_NORMAL:
         eventPlayer.mod_speed_perma += EVT_MECH_13_VAL_NORMAL
-        eventPlayer.dlcTimeChallenge++
+        eventPlayer.dlcTimeChallenge[0]++
         smallMessage(eventPlayer, "  {0}  赢！永久获得 {1}% 移动速度加成".format(iconString(Icon.CLUB), EVT_MECH_13_VAL_NORMAL))
     elif eventPlayer.categoryRoll <= EVT_MECH_13_PROB_LOSE_NORMAL:
         eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_NORMAL
-        eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
+        eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_NORMAL))
+        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
+            eventPlayer.dlcTimeChallenge[2]++
     elif eventPlayer.categoryRoll <= EVT_MECH_13_PROB_WIN_RARE:
         eventPlayer.mod_speed_perma += EVT_MECH_13_VAL_RARE
-        eventPlayer.dlcTimeChallenge++
+        eventPlayer.dlcTimeChallenge[0]++
         smallMessage(eventPlayer, "  {0}  赢！永久获得 {1}% 移动速度加成".format(iconString(Icon.CLUB), EVT_MECH_13_VAL_RARE))
     else:
         eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_RARE
-        eventPlayer.dlcTimeChallenge = 0 if eventPlayer.dlcTimeChallenge > 0 else eventPlayer.dlcTimeChallenge - 1
+        eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_RARE))
+        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
+            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.categoryRoll = 0
     updatePlayerStats()
     eventPlayer.eventDuration = 0
@@ -1609,6 +1615,7 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     if len(eventPlayer.target) > 0:
         damage(eventPlayer.target, eventPlayer, EVT_DEBUFF_20_DAMAGE_PER_TARGET)
         heal(eventPlayer, eventPlayer.target, len(eventPlayer.target) * EVT_DEBUFF_20_HEAL_PER_TARGET)
+        eventPlayer.dlcTimeChallenge[4] += len(eventPlayer.target) * EVT_DEBUFF_20_DAMAGE_PER_TARGET
         playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.RED, eventPlayer.target, 200)
     wait(EVT_DEBUFF_20_INTERVAL)
     if ruleCondition:
@@ -1665,7 +1672,8 @@ rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
     wait(0.2)
     smallMessage(eventPlayer, "  {0}  下一个事件必然是增益，祝你好运".format(iconString(Icon.CLUB)))
     eventPlayer.eventDuration = 0
-
+    if eventPlayer.eventId not in eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
+        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
 
 rule "[VishkarEvent]: 作弊：回溯 (记录位置 - 3秒心跳)":
     @Event eachPlayer
@@ -1675,6 +1683,9 @@ rule "[VishkarEvent]: 作弊：回溯 (记录位置 - 3秒心跳)":
     
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
+        return
+    if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
+        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
     eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
     wait(EVT_MECH_15_RECORD_INTERVAL)
     if ruleCondition:
@@ -1705,11 +1716,15 @@ rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
     if random.randint(0, 99) < EVT_MECH_16_WIN_CHANCE:
         eventPlayer.heart_steel += EVT_MECH_16_REWARD_STACKS
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_16_REWARD_STACKS, EVT_MECH_16_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
+        if all([33 in eventPlayer.earnedAchievements, 41 in eventPlayer.earnedAchievements, 39 not in eventPlayer.earnedAchievements]):
+            eventPlayer.dlcTimeChallenge[1]++
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
+        if all([36 in eventPlayer.earnedAchievements, 37 in eventPlayer.earnedAchievements, 40 not in eventPlayer.earnedAchievements]):
+            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.eventForceRoll = EVT_MECH_16_FORCE_ROLL
     eventPlayer.eventForceCount = EVT_MECH_16_FORCE_COUNT
-    smallMessage(eventPlayer, "  {0}  合约已生效：未来 3 个事件为 减益".format(iconString(Icon.DIAMOND)))
+    smallMessage(eventPlayer, "  {0}  合约已生效：未来 3 个事件为 减益".format(iconString(Icon.DIAMOND)))   
     clearPlayerEvent()
 
 
@@ -1724,6 +1739,8 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_22_REWARD_STACKS, EVT_MECH_22_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
+        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
+            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.eventForceRoll = EVT_MECH_22_FORCE_ROLL
     eventPlayer.eventForceCount = EVT_MECH_22_FORCE_COUNT
     smallMessage(eventPlayer, "  {0}  合约已生效：未来 5 个事件为 减益".format(iconString(Icon.DIAMOND)))
@@ -1753,6 +1770,8 @@ rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     # todo：传送回重生室
     progressHero()
+    if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
+        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
     eventPlayer.eventDuration = 0
     clearPlayerEvent()
 
@@ -1795,6 +1814,8 @@ rule "[VishkarEvent]: 作弊：0CD (血量换CD)":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 21]) == true
     @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == true
     
+    if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
+        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
     waitUntil(any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == false, EVT_MECH_21_WAITUNTIL_TIMEOUT)
     damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_MECH_21_HP_COST_PERCENT)
     resetPlayerCD()

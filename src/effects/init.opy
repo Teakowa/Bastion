@@ -36,7 +36,7 @@ rule "initialize effects":
         STR_HUD_STATS_DEATH_SKIP.format(localPlayer.runDeathCount, localPlayer.skipCount),
         
         # 2. 榴弹数据
-        STR_HUD_STATS_GRENADE.format(STR_HUD_STATS_GRENADE_VAL.format(localPlayer.A36TGrenadeHit, localPlayer.A36TGrenade, ceil(localPlayer.A36TGrenadeDmg))),
+        STR_HUD_STATS_GRENADE.format(STR_HUD_STATS_GRENADE_VAL.format(localPlayer.A36TGrenadeHit, localPlayer.A36TGrenade, ceil(localPlayer.A36TGrenadeDmg))) if difficulty == 5 else "",
         
         # 3. 事件统计 (仅在开启DLC时显示)
         STR_HUD_STATS_EVENT.format(localPlayer.eventCount[0], localPlayer.eventCount[1], localPlayer.eventCount[0] + localPlayer.eventCount[1] + localPlayer.eventCount[2]) if evalOnce(dlcVishkarEvent) else "",
@@ -51,9 +51,75 @@ rule "initialize effects":
     ), HudPosition.LEFT, 7, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
 
     
-    # 特殊状态 (大难不死 / 赌王)
-    hudSubheader(localPlayer if localPlayer.A36TGrenadeAlive == true else null, STR_HUD_SURVIVOR.format(iconString(Icon.CHECKMARK) if localPlayer.A36TGrenadeAlive == true else null), HudPosition.LEFT, 100, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
-    hudSubheader(localPlayer if localPlayer.dlcTimeChallenge == 5 else null, STR_HUD_GAMBLER_KING.format(iconString(Icon.CHECKMARK) if localPlayer.dlcTimeChallenge == 5 else null), HudPosition.LEFT, 101, heroColor[2], HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    # 成就挑战
+    hudSubheader(
+    localPlayer if (len(localPlayer.earnedAchievements) > 0 and len(allTitle) > 43) else null,
+        "\r\n{0}".format(
+            "{0}{1}{2}".format(
+                # 第1行
+                "{0} {1}".format(
+                    allTitle[localPlayer.earnedAchievements[0]][0],
+                    iconString(Icon.CHECKMARK)
+                ),
+
+                # 第2行
+                ("\r\n{0} {1}".format(
+                    allTitle[localPlayer.earnedAchievements[1]][0],
+                    iconString(Icon.CHECKMARK)
+                ) if len(localPlayer.earnedAchievements) > 1 else ""),
+
+                # 第3~8行：用嵌套拼接来突破参数限制
+                (
+                    "\r\n{0} {1}{2}".format(
+                        allTitle[localPlayer.earnedAchievements[2]][0],
+                        iconString(Icon.CHECKMARK),
+
+                        "{0}{1}".format(
+                            # 第4行
+                            ("\r\n{0} {1}".format(
+                                allTitle[localPlayer.earnedAchievements[3]][0],
+                                iconString(Icon.CHECKMARK)
+                            ) if len(localPlayer.earnedAchievements) > 3 else ""),
+
+                            "{0}{1}".format(
+                                # 第5行
+                                ("\r\n{0} {1}".format(
+                                    allTitle[localPlayer.earnedAchievements[4]][0],
+                                    iconString(Icon.CHECKMARK)
+                                ) if len(localPlayer.earnedAchievements) > 4 else ""),
+
+                                "{0}{1}".format(
+                                    # 第6行
+                                    ("\r\n{0} {1}".format(
+                                        allTitle[localPlayer.earnedAchievements[5]][0],
+                                        iconString(Icon.CHECKMARK)
+                                    ) if len(localPlayer.earnedAchievements) > 5 else ""),
+
+                                    "{0}{1}".format(
+                                        # 第7行
+                                        ("\r\n{0} {1}".format(
+                                            allTitle[localPlayer.earnedAchievements[6]][0],
+                                            iconString(Icon.CHECKMARK)
+                                        ) if len(localPlayer.earnedAchievements) > 6 else ""),
+
+                                        # 第8行
+                                        ("\r\n{0} {1}".format(
+                                            allTitle[localPlayer.earnedAchievements[7]][0],
+                                            iconString(Icon.CHECKMARK)
+                                        ) if len(localPlayer.earnedAchievements) > 7 else "")
+                                    )
+                                )
+                            )
+                        )
+                    ) if len(localPlayer.earnedAchievements) > 2 else ""
+                )
+            )
+        ),
+        HudPosition.LEFT,
+        100,
+        rgb(heroColor[5].x, heroColor[5].y, heroColor[5].z),
+        HudReeval.VISIBILITY_AND_STRING
+    )
     
     # 边框 Bottom
     hudSubheader(localPlayer, STR_HUD_PANEL_BOTTOM, HudPosition.LEFT, 8, rgb(160, 169, 186), HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)

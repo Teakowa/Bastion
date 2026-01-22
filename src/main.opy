@@ -315,8 +315,8 @@ globalvar __currentPioneerText___ 106
 globalvar __currentMapPioneerText___ 107
 globalvar devEventCategory
 globalvar devEventIndex
+globalvar challengeTitleIds
 globalvar antiCrashActivated 127
-
 
 #Player variables
 
@@ -413,11 +413,11 @@ playervar eventForceRoll 102
 playervar eventForceCount 103
 playervar eventSize 104
 playervar eventTargetHP 105
-# playervar overhealthDecay 106
-# playervar storedOverhealth 107
 playervar lastThreatTime 108
 playervar hudText 109
 playervar eventMissionGoal 110
+playervar tempUnlockId
+playervar earnedAchievements
 
 #Subroutine names
 
@@ -434,11 +434,10 @@ subroutine setPlayerHP 9
 subroutine setEventDuration 10
 subroutine rejecSampling 11
 subroutine resetPlayerCD 12
-subroutine StoreOverhealth 13
 subroutine clearEventEffect 14
 subroutine setPlayerSize 16
 subroutine createBastionBot 17
-
+subroutine unlockAchievement
 
 #Activated extensions
 
@@ -450,7 +449,6 @@ subroutine createBastionBot 17
 
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
-
 
 rule STR_LICENSE_TITLE:
     @Disabled
@@ -496,7 +494,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerHP.opy"
 
-# !include "utilities/overhealthDecay.opy"
+#!include "utilities/unlockAchievement.opy"
 
 #!include "utilities/setEventDuration.opy"
 
@@ -682,3 +680,5 @@ rule "auto reboot":
 #!include "utilities/devTool.opy"
 
 #!include "events/effect.opy"
+
+#!include "player/achievement.opy"
