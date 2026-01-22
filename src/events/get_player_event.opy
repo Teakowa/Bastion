@@ -19,7 +19,7 @@ rule "[VishkarEvent]: get player event":
         
     
     lbl_0:
-    wait(10 if evalOnce(debugMode) else random.randint(25, 30) if not eventPlayer.isWinner else 30, Wait.ABORT_WHEN_FALSE)
+    wait(10 if evalOnce(debugMode) else random.randint(30, 35) if not eventPlayer.isWinner else 40, Wait.ABORT_WHEN_FALSE)
     wait(getAverageServerLoad() / 100 * 0.032)
     setPlayerEvent()
     waitUntil(eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
