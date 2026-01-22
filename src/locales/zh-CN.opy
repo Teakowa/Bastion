@@ -116,7 +116,7 @@
 # 减益事件 (Debuff Events)
 # ------------------------------------------------
 #!define STR_EVT_DEBUFF_0_TITLE "重力异常"
-#!define STR_EVT_DEBUFF_0_DESC "移动速度降低50%，跳跃高度降低70%"
+#!define STR_EVT_DEBUFF_0_DESC "移动速度降低50%\n跳跃高度降低70%"
 #!define STR_EVT_DEBUFF_1_TITLE "电磁脉冲"
 #!define STR_EVT_DEBUFF_1_DESC "被侵入，无法使用技能"
 #!define STR_EVT_DEBUFF_2_TITLE "献祭"
@@ -364,15 +364,15 @@
 
 # 统计面板内容 (多行格式)
 # {0}=阵亡/跳过数值, {1}=榴弹数据, {2}=事件统计(可选)
-#!define STR_HUD_STATS_PANEL "{0}\n{1}\n{2}{3}"
+#!define STR_HUD_STATS_PANEL "{0}\n{1}{2}{3}"
 
 # 阵亡/跳过
 # {0}=阵亡数, {1}=跳过数
-#!define STR_HUD_STATS_DEATH_SKIP "阵亡/跳过 \n{0}/{1}"
+#!define STR_HUD_STATS_DEATH_SKIP "总计阵亡/跳过 \n{0}/{1}"
 
 # 榴弹数据
 # {0}=命中/锁定/伤害
-#!define STR_HUD_STATS_GRENADE "榴弹命中/锁定/伤害\r\n{0}"
+#!define STR_HUD_STATS_GRENADE "榴弹命中/锁定/伤害\r\n{0}\n"
 #!define STR_HUD_STATS_GRENADE_VAL "{0}/{1}/{2}"
 
 # 事件统计
