@@ -1883,7 +1883,7 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     updatePlayerStats()
     eventPlayer.heart_steel += EVT_MECH_24_HEART_STEEL_PER_TICK
     setPlayerHP()
-    smallMessage(eventPlayer, "  {0}  {1}".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))))
+    eventPlayer.hudText = "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
     wait(EVT_MECH_24_INTERVAL)
     if ruleCondition:
         loop()
