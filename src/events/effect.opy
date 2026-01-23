@@ -1585,7 +1585,7 @@ rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
         eventPlayer.setAbilityCooldown(Button.PRIMARY_FIRE, max(eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE), random.randint(15, 30)))
         eventPlayer.setAbilityCooldown(Button.RELOAD, max(eventPlayer.getAbilityCooldown(Button.RELOAD), random.randint(15, 30)))
         eventPlayer.setAbilityCooldown(Button.JUMP, max(eventPlayer.getAbilityCooldown(Button.JUMP), random.randint(15, 30)))
-    wait(2)
+    wait(eventPlayer.eventDuration)
     if ruleCondition:
         loop()
     clearEventEffect()
