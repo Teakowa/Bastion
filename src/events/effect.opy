@@ -305,10 +305,10 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     # 自身重置
     eventPlayer.clearStatusEffect(Status.PHASED_OUT)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
-    if eventPlayer.getHero() in phaseHero[0]:
+    if eventPlayer.getHero() in phaseHero[0] and eventPlayer.getHero() not in [Hero.TORBJORN, Hero.SYMMETRA]:
         eventPlayer.allowAbility(Button.ABILITY_1)
 
-    if eventPlayer.getHero() in phaseHero[1]:
+    if eventPlayer.getHero() in phaseHero[1] and eventPlayer.getHero() not Hero.LIFEWEAVER:
         eventPlayer.allowAbility(Button.ABILITY_2)
     eventPlayer.possess = null
     wait(2)
