@@ -9,9 +9,11 @@ rule "Lifeweaver disable Life Grip if no winners":
     @Condition eventPlayer.getHero() == Hero.LIFEWEAVER
     @Condition eventPlayer.isWinner != true
     
-    eventPlayer.disableAbility(Button.ABILITY_2)
+    eventPlayer.disallowButton(Button.ABILITY_2)
+    eventPlayer.setAbility2Enabled(false)
     waitUntil(eventPlayer.isWinner == true or eventPlayer.getHero() != Hero.LIFEWEAVER, MAX_TIME)
-    eventPlayer.allowAbility(Button.ABILITY_2)
+    eventPlayer.allowButton(Button.ABILITY_2)
+    eventPlayer.setAbility2Enabled(false)
 
 
 rule "Lifeweaver auto-breaks Petal Platform after time limit":

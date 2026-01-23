@@ -9,6 +9,8 @@ rule "Juno disable Ability 1 if possess":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.getHero() == Hero.JUNO, eventPlayer.eventType == 0, eventPlayer.eventId == 12, eventPlayer.possess[0].possessed == true]) == true
     
-    eventPlayer.disableAbility(Button.ABILITY_1)
+    eventPlayer.disallowButton(Button.ABILITY_1)
+    eventPlayer.setAbility1Enabled(false)
     waitUntil(eventPlayer.eventId != 12 or eventPlayer.possess[0].possessed != true or eventPlayer.getHero() != Hero.JUNO, MAX_TIME)
-    eventPlayer.allowAbility(Button.ABILITY_1)
+    eventPlayer.allowButton(Button.ABILITY_1)
+    eventPlayer.setAbility1Enabled(true)

@@ -270,10 +270,12 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     eventPlayer.attachTo(eventPlayer.possess[0], vect(0, 1, -1))
 
     if eventPlayer.getHero() in phaseHero[0]:
-        eventPlayer.disableAbility(Button.ABILITY_1)
+        eventPlayer.disallowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(false)
 
     if eventPlayer.getHero() in phaseHero[1]:
-        eventPlayer.disableAbility(Button.ABILITY_2)
+        eventPlayer.disallowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(false)
     
     smallMessage(eventPlayer.possess[0], "  {0}  你已被 {1}（{2}） 附身".format(abilityIconString(Hero.MERCY, Button.ULTIMATE), eventPlayer, eventPlayer.getHero()))
     
@@ -306,10 +308,12 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     eventPlayer.clearStatusEffect(Status.PHASED_OUT)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
     if eventPlayer.getHero() in phaseHero[0] and eventPlayer.getHero() not in [Hero.TORBJORN, Hero.SYMMETRA]:
-        eventPlayer.allowAbility(Button.ABILITY_1)
+        eventPlayer.allowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(true)
 
     if eventPlayer.getHero() in phaseHero[1] and eventPlayer.getHero() not Hero.LIFEWEAVER:
-        eventPlayer.allowAbility(Button.ABILITY_2)
+        eventPlayer.allowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(true)
     eventPlayer.possess = null
     wait(2)
 
@@ -1497,21 +1501,27 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
         eventPlayer.eventMission = random.randint(1, 3)
 
     if eventPlayer.eventMission == 1:
-        eventPlayer.disableAbility(Button.ABILITY_1)
+        eventPlayer.disallowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(false)
         smallMessage(eventPlayer, "  {0}  你的技能 1 已被禁用".format(iconString(Icon.WARNING)))
     elif eventPlayer.eventMission == 2:
-        eventPlayer.disableAbility(Button.ABILITY_2)
+        eventPlayer.disallowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(false)
         smallMessage(eventPlayer, "  {0}  你的技能 2 已被禁用".format(iconString(Icon.WARNING)))
     else:
-        eventPlayer.disableAbility(Button.SECONDARY_FIRE)
+        eventPlayer.disallowButton(Button.SECONDARY_FIRE)
+        eventPlayer.setSecondaryFireEnabled(false)
         smallMessage(eventPlayer, "  {0}  你的辅助攻击 已被禁用".format(iconString(Icon.WARNING)))
     wait(eventPlayer.eventDuration)
     if eventPlayer.eventMission == 1:
-        eventPlayer.allowAbility(Button.ABILITY_1)
+        eventPlayer.allowButton(Button.ABILITY_1)
+        eventPlayer.setAbility1Enabled(true)
     elif eventPlayer.eventMission == 2:
-        eventPlayer.allowAbility(Button.ABILITY_2)
+        eventPlayer.allowButton(Button.ABILITY_2)
+        eventPlayer.setAbility2Enabled(true)
     else:
-        eventPlayer.allowAbility(Button.SECONDARY_FIRE)
+        eventPlayer.allowButton(Button.SECONDARY_FIRE)
+        eventPlayer.setSecondaryFireEnabled(true)
     eventPlayer.eventMission = 0
     clearEventEffect()
 
