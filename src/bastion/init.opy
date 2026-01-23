@@ -340,7 +340,7 @@ rule "determine bastion's aim speed, to improve smooth tracking":
     
     eventPlayer.turnSpeed = angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.target.getEyePosition())) * turnSpeedMultiplier
     eventPlayer.turnSpeed += eventPlayer.target.getSpeed() * turnSpeedMultiplier
-    wait(getAverageServerLoad() / 1000)
+    wait(max(0.016, getAverageServerLoad() / 1000))
     if ruleCondition:
         loop()
 
