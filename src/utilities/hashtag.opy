@@ -14,9 +14,9 @@ rule "Hashtag":
     @Condition eventPlayer.hasStatus(Status.INVINCIBLE) != true
     @Condition eventPlayer.isUsingAbility2() == true
     
-    waitUntil(not eventPlayer.isUsingAbility2(), 0.16)
-    hashTag = evalOnce(false if eventPlayer.getAbilityCooldown(Button.ABILITY_2) < 3 else true)
-    wait(60)
+    waitUntil(not eventPlayer.isUsingAbility2(), 3)
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) < 3:
+        hashTag = false
 
 
 rule "Hashtag":
@@ -24,9 +24,14 @@ rule "Hashtag":
     @Condition vishkarEventActivated == true
     @Condition getTotalTimeElapsed() > 125
     
-    waitUntil(any([len(buffEventId) != 34, len(debuffEventId) != 22, len(mechEventId != 25)]), MAX_TIME)
+    waitUntil(
+        any([
+            len(buffEventId) != 34, 
+            len(debuffEventId) != 22, 
+            len(mechEventId) != 25
+        ]), 
+    MAX_TIME)
     hashTag = false
-    wait(60)
 
 rule "Hashtag":
     @Event eachPlayer
@@ -37,8 +42,8 @@ rule "Hashtag":
     @Condition eventPlayer.eventId == -1
     
     waitUntil(not eventPlayer.isUsingAbility1(), 3)
-    hashTag = evalOnce(false if eventPlayer.getAbilityCooldown(Button.ABILITY_1) < 3.8 else true)
-    wait(60)
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) < 3.8:
+        hashTag = false
 
 
 rule "Hashtag":
@@ -50,7 +55,5 @@ rule "Hashtag":
     @Condition eventPlayer.eventId == -1
     
     waitUntil(not eventPlayer.isUsingAbility1(), 4)
-    hashTag = evalOnce(false if eventPlayer.getAbilityCooldown(Button.ABILITY_1) < 3.8 else true)
-    wait(60)
-
-
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) < 3.8:
+        hashTag = false
