@@ -161,6 +161,8 @@ rule "menu hero apply (spawn only)":
         ) + 1
     )
     eventPlayer.startForcingHero(heroList[eventPlayer.menuHeroIndex])
+    waitUntil(eventPlayer.getHero() == heroList[eventPlayer.heroNumber], 0.5)
+    eventPlayer.stopForcingCurrentHero()
     wait(getServerLoad() / 100 * 0.5)
     eventPlayer.setAllowedHeroes(heroList.slice(0, eventPlayer.heroNumber + 1))
     waitUntil(eventPlayer.isHoldingButton(Button.RELOAD) == false, 99999)
