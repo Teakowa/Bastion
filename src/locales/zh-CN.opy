@@ -191,7 +191,7 @@
 #!define STR_EVT_BUFF_26_DESC "位移技能为周围友方提供临时护甲"
 #!define STR_EVT_BUFF_27_TITLE "任务：殉道者"
 # {0}=堡垒数量
-#!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀{0}次\n奖励：5% 永久伤害减免"
+#!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀\n奖励：{0}% 永久伤害减免"
 #!define STR_EVT_BUFF_28_TITLE "多动症"
 #!define STR_EVT_BUFF_28_DESC "位移技能冷却减半释放时获得治疗"
 #!define STR_EVT_BUFF_29_TITLE "操盘手 ProMax"
