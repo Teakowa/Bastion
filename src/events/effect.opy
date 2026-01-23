@@ -1580,17 +1580,17 @@ rule "[VishkarEvent]: 成吨的减益 (全属性削弱)":
     eventPlayer.mod_dmg_taken += 50
     eventPlayer.mod_heal_event -= 50
     eventPlayer.heal_recv -= 50
-    createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect.append(getLastCreatedEntity())
-    createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect.append(getLastCreatedEntity())
-    createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect.append(getLastCreatedEntity())
+    # createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    # eventPlayer.eventEffect.append(getLastCreatedEntity())
+    # createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    # eventPlayer.eventEffect.append(getLastCreatedEntity())
+    # createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    # eventPlayer.eventEffect.append(getLastCreatedEntity())
     playEffect(eventPlayer, DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND, Color.WHITE, eventPlayer, 200)
-    createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect.append(getLastCreatedEntity())
-    createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect.append(getLastCreatedEntity())
+    # createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    # eventPlayer.eventEffect.append(getLastCreatedEntity())
+    # createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
+    # eventPlayer.eventEffect.append(getLastCreatedEntity())
     updatePlayerStats()
     eventPlayer.sizeHealth = 0.5
     setPlayerHP()
