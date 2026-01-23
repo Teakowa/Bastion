@@ -1331,21 +1331,6 @@ rule "[VishkarEvent]: 相位猛冲 (智能检测版)":
     clearEventEffect()
     wait(0.5)
 
-
-rule "[VishkarEvent]: 操盘手 (伤害+状态检测)":
-    @Event playerTookDamage
-    @Team 2
-    @Condition all([evalOnce(dlcVishkarEvent), attacker.hasSpawned(), attacker.eventType == 0, attacker.eventId == 25]) == true
-    @Condition any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == true
-    
-    if eventAbility == Button.ABILITY_1 and attacker.getAbilityCooldown(Button.ABILITY_1) > 0:
-        attacker.setAbilityCooldown(Button.ABILITY_1, attacker.getAbilityCooldown(Button.ABILITY_1) * EVT_25_COOLDOWN_FACTOR)
-    if eventAbility == Button.ABILITY_2 and attacker.getAbilityCooldown(Button.ABILITY_2) > 0:
-        attacker.setAbilityCooldown(Button.ABILITY_2, attacker.getAbilityCooldown(Button.ABILITY_2) * EVT_25_COOLDOWN_FACTOR)
-    if eventAbility == Button.SECONDARY_FIRE and attacker.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
-        attacker.setAbilityCooldown(Button.SECONDARY_FIRE, attacker.getAbilityCooldown(Button.SECONDARY_FIRE) * EVT_25_COOLDOWN_FACTOR)
-    wait(EVT_25_POST_WAIT)
-
 rule "[VishkarEvent]: 保镖 (Bodyguard)":
     @Event eachPlayer
     @Team 1
@@ -1418,32 +1403,6 @@ rule "[VishkarEvent]: 多动症 (触发回血)":
         eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
     eventPlayer.startHealingOverTime(eventPlayer, 2, (round(50 + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)) / EVT_28_HOT_DIVISOR)
     wait(EVT_28_POST_WAIT)
-
-
-rule "[VishkarEvent]: 操盘手 (伤害+状态检测)":
-    @Event playerTookDamage
-    @Team 2
-    @Condition all([evalOnce(dlcVishkarEvent), attacker.hasSpawned(), attacker.eventType == 0, attacker.eventId == 29]) == true
-    @Condition any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == true
-    
-    if eventAbility == Button.ABILITY_1 and attacker.getAbilityCooldown(Button.ABILITY_1) > 0:
-        attacker.setAbilityCooldown(Button.ABILITY_1, attacker.getAbilityCooldown(Button.ABILITY_1) * 0.25)
-    if eventAbility == Button.ABILITY_2 and attacker.getAbilityCooldown(Button.ABILITY_2) > 0:
-        attacker.setAbilityCooldown(Button.ABILITY_2, attacker.getAbilityCooldown(Button.ABILITY_2) * 0.25)
-    if eventAbility == Button.SECONDARY_FIRE and attacker.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
-        attacker.setAbilityCooldown(Button.SECONDARY_FIRE, attacker.getAbilityCooldown(Button.SECONDARY_FIRE) * 0.25)
-    if victim.hasStatus(Status.STUNNED):
-        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.STUNNED, 5)
-    elif victim.hasStatus(Status.ASLEEP):
-        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.ASLEEP, 5)
-    elif victim.hasStatus(Status.KNOCKED_DOWN):
-        sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).setStatusEffect(null, Status.KNOCKED_DOWN, 5)
-    waitUntil(any([victim.hasStatus(Status.STUNNED), victim.hasStatus(Status.ASLEEP), victim.hasStatus(Status.KNOCKED_DOWN)]) == false, 10)
-    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.STUNNED)
-    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.ASLEEP)
-    sorted(getPlayers(Team.2), lambda player: distance(attacker, player)).clearStatusEffect(Status.KNOCKED_DOWN)
-    wait(2)
-
 
 rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
     @Event eachPlayer
