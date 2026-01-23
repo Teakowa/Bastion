@@ -1480,23 +1480,6 @@ rule "[VishkarEvent]: 成吨的增益 (初始化与属性)":
     setPlayerHP()
     clearEventEffect()
 
-
-rule "[VishkarEvent]: 成吨的增益 (冷却缩减循环)":
-    @Event eachPlayer
-    @Team 1
-    @Condition eventPlayer.eventType == 0
-    @Condition eventPlayer.eventId == 31
-    @Condition any([eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0, eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0]) == true
-    
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0:
-        eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0:
-        eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
-    if eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0:
-        eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) * 0.5)
-    wait(1)
-
-
 rule "[VishkarEvent]: F5 (循环刷新)":
     @Event eachPlayer
     @Team 1
