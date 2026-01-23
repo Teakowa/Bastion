@@ -418,6 +418,7 @@ playervar hudText 109
 playervar eventMissionGoal 110
 playervar tempUnlockId
 playervar earnedAchievements
+playervar menuHeroIndex
 
 #Subroutine names
 

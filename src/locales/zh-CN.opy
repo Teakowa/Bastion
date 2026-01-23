@@ -156,7 +156,7 @@
 #!define STR_EVT_MECH_1_TITLE "纳米战甲"
 #!define STR_EVT_MECH_1_DESC "获得最大生命值{0}%的临时生命值\n减速{1}%"
 #!define STR_EVT_MECH_2_TITLE "赌徒"
-#!define STR_EVT_MECH_2_DESC "长按{0}触发：50%概率永久损失/获得8层心之钢"
+#!define STR_EVT_MECH_2_DESC "长按{0}触发\n50%概率永久损失/获得8层心之钢"
 #!define STR_EVT_MECH_3_TITLE "有点松弛"
 #!define STR_EVT_MECH_3_DESC "移动时产生阻挡友方视线的迷雾"
 #!define STR_EVT_MECH_4_TITLE "体积膨胀"
@@ -467,6 +467,10 @@
 #!define STR_MENU_OPT_NOCLIP "{0}    穿墙    {1}\n{2}"
 #!define STR_MENU_OPT_SELECT_INDEX "{0}    选择目标点索引    {1}\n{2}"
 #!define STR_MENU_OPT_TP_TO_INDEX "{0}    传送到目标点    \n{1}"
+#!define STR_MENU_OPT_HERO_PAGE_TITLE "英雄选择/切换"
+#!define STR_MENU_OPT_HERO_NEXT "{0}    选择英雄：{1}    \n{2}"
+#!define STR_MENU_OPT_HERO_PREV "{0}    上一个英雄：{1}    \n{2}"
+#!define STR_MENU_OPT_HERO_APPLY "{0}    应用切换（重生室）    \n{1}"
 
 # ------------------------------------------------
 # Host/Dev Administration Messages
