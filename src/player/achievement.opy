@@ -33,8 +33,7 @@ rule "[VishkarEvent]: Challenge 1 Track":
     @Team 1
     @Condition len(challengeTitleIds) != 0
     @Condition dlcVishkarEvent == true
-    @Condition all([eventPlayer.eventCount[0] + eventPlayer.eventCount[1] >= 10
-    , eventPlayer.eventCount[0] >= 1
+    @Condition all([eventPlayer.eventCount[0] + eventPlayer.eventCount[1] >= 50
     , eventPlayer.eventCount[1] * 2 >= eventPlayer.eventCount[0] * 3])
     @Condition 36 not in eventPlayer.earnedAchievements
 
