@@ -647,6 +647,7 @@ rule "[VishkarEvent]: 我按Q辣":
     eventPlayer.mod_dmg_taken = EVT_23_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
+    destroyEffect(eventPlayer.nanoEffect)
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
 
