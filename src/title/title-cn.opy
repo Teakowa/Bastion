@@ -361,8 +361,8 @@ enum MapTitleKey:
 # 埃斯佩兰萨
 #!define DATA_ESPERANCA [ \
     playerNameToIndex(["WildRage","尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","眼镜小宅"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"])\
+    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"]), \
+    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"])\
 ]
 
 # 斗兽场
@@ -417,8 +417,8 @@ enum MapTitleKey:
 # 萨摩亚
 #!define DATA_SAMOA [ \
     [], \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"]), \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"])\
+    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"]), \
+    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"])\
 ]
 
 # 釜山
@@ -479,9 +479,9 @@ enum MapTitleKey:
 
 # 阿特利斯
 #!define DATA_AATLIS [\
-    playerNameToIndex(["他又", "别感冒"]), \
-    [], \
-    [], \
+    playerNameToIndex(["他又", "别感冒","卖核弹的小女孩"]), \
+    ["卖核弹的小女孩"], \
+    ["卖核弹的小女孩"], \
 ]
 
 # ------------------------------
