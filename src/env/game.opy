@@ -8,7 +8,7 @@ rule "Initialize global variables":
 
     rebootTime = createWorkshopSettingFloat(STR_SETTING_CAT_GAME, STR_SETTING_REBOOT_TIME, 3.5, 1, 4) * 3600
 
-    debugMode = createWorkshopSettingBool(STR_SETTING_CAT_GAME, STR_SETTING_DEBUG, false, 5)
+    debugMode = createWorkshopSettingBool(STR_SETTING_CAT_GAME, STR_SETTING_DEBUG, true if DEBUG else false, 5)
 
     hashTag = false if evalOnce(debugMode) else true
     bastionBotTargetPrefer = createWorkshopSettingEnum(
