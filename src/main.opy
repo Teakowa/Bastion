@@ -49,7 +49,7 @@ settings {
             "enablePerks": true,
             "perkGeneration%": 500,
             "respawnTime%": 10,
-            "healthPackRespawnTime%": 20,
+            "healthPackRespawnTime%": 75,
             "enableEnemyHealthBars": false,
             "gamemodeStartTrigger": "manual",
             "heroLimit": "off",
@@ -58,9 +58,6 @@ settings {
     },
     "heroes": {
         "team1": {
-            "bastion": {
-                "health%": 150
-            },
             "general": {
                 "abilityCooldown%": 40
             }
@@ -94,7 +91,8 @@ settings {
                 "ability1Cooldown%": 33
             },
             "mercy": {
-                "ability1Cooldown%": 67
+                "ability1Cooldown%": 67,
+                "ability2Cooldown%": 27
             },
             "orisa": {
                 "ability1Cooldown%": 50,
@@ -114,11 +112,18 @@ settings {
                 "secondaryFireRechargeRate%": 500,
                 "shieldBashCooldown%": 80
             },
+            "freja": {
+                "ability1Cooldown%": 67,
+                "ability1Distance%": 130
+            },
             "torbjorn": {
                 "weaponsEnabled": "hammer",
                 "ability2Cooldown%": 20,
                 "ability2Duration%": 40,
                 "enableAbility1": false
+            },
+            "venture": {
+                "ability1Duration%": 25
             },
             "doomfist": {
                 "ability1Cooldown%": 50,
@@ -126,7 +131,8 @@ settings {
                 "ability2Cooldown%": 80
             },
             "juno": {
-                "ability1Cooldown%": 67
+                "ability1Cooldown%": 67,
+                "ability1Duration%": 150
             },
             "zarya": {
                 "jumpVerticalSpeed%": 140,
@@ -199,6 +205,7 @@ settings {
                 "ability2Cooldown%": 43
             },
             "hazard": {
+                "ability1Cooldown%": 55,
                 "ability2Cooldown%": 92
             },
             "sombra": {
@@ -225,6 +232,7 @@ settings {
 #Global variables
 
 globalvar bastionPosition 0
+globalvar heroRingPosition 1
 globalvar resetPosition 2
 globalvar creditsPosition 3
 globalvar endPosition 4
@@ -263,7 +271,7 @@ globalvar controlJumpPosition 37
 globalvar controlRespawnPosition 38
 globalvar controlRespawnAxis 39
 globalvar controlRespawnAxisThreshold 40
-globalvar mapTitleRelation 43
+globalvar mapTitlePlayersByKey 43
 globalvar allTitle 44
 globalvar titlePlayer 45
 globalvar playerTitleRelation 47
@@ -280,9 +288,12 @@ globalvar eventDuration 58
 globalvar eventName 59
 globalvar eventDesc 60
 globalvar eventCount 61
+globalvar eventRoll 62
 globalvar eventType 63
 globalvar eventDurationHud 64
+globalvar eventWeight 65
 globalvar hashTag 69
+globalvar dlcBerserker 70
 globalvar dlcVishkarEvent 71
 globalvar vishkarEventActivated 72
 globalvar globalEvent 79
@@ -302,12 +313,14 @@ globalvar breathOrange 94
 globalvar breathGold 95
 globalvar springBoardPosition 100
 globalvar portalPosition 101
-globalvar heroGender 102
+globalvar phaseHero 103
 globalvar __currentMapText___ 105
 globalvar __currentPioneerText___ 106
 globalvar __currentMapPioneerText___ 107
+globalvar devEventCategory
+globalvar devEventIndex
+globalvar challengeTitleIds
 globalvar antiCrashActivated 127
-
 
 #Player variables
 
@@ -369,33 +382,47 @@ playervar eventDesc 65
 playervar eventCount 66
 playervar eventLucky 67
 playervar eventEffect 68
-playervar categoryRoll 69
-playervar combatRegen 70
-playervar mod_speed_event 71
-playervar mod_speed_perma 72
-playervar mod_heal_event 74
-playervar heal_recv 75
-playervar mod_dmg_taken 80
-playervar mod_dmg_perma 81
-playervar healthId 84
-playervar hack_timer 85
-playervar targetWeight 86
-playervar targetSilence 87
-playervar hudTextId 88
-playervar heart_steel 89
-playervar obstrucVis 90
-playervar sizeHealth 91
-playervar eventDurationHud 92
+playervar eventDurationHud 69
+playervar eventLoopCount 70
+playervar eventIsSelected 71
+playervar eventTempId 72
+playervar eventTempWeight 73
+playervar categoryRoll 74
+playervar combatRegen 75
+playervar mod_speed_event 76
+playervar mod_speed_perma 77
+playervar mod_heal_event 78
+playervar heal_recv 79
+playervar healing_global 80
+playervar mod_dmg_taken 81
+playervar mod_dmg_perma 82
+playervar healthId 85
+playervar hack_timer 86
+playervar targetWeight 87
+playervar targetSilence 88
+playervar hudTextId 89
+playervar heart_steel 90
+playervar obstrucVis 91
+playervar sizeHealth 92
 playervar possess 93
 playervar possessed 94
 playervar empProMax 95
 playervar setPlayerHP 96
 playervar dlcTimeChallenge 97
+playervar toggleSpectate 98
 playervar knockback 99
-playervar tempIndices 110
-playervar tempMapIndices 111
-playervar tempMapMatches 112
-
+playervar phase_trigger 100
+playervar hp_data 101
+playervar eventForceRoll 102
+playervar eventForceCount 103
+playervar eventSize 104
+playervar eventTargetHP 105
+playervar lastThreatTime 108
+playervar hudText 109
+playervar eventMissionGoal 110
+playervar tempUnlockId
+playervar earnedAchievements
+playervar menuHeroIndex
 
 #Subroutine names
 
@@ -410,10 +437,12 @@ subroutine updatePlayerStats 7
 subroutine stopCombatRegen 8
 subroutine setPlayerHP 9
 subroutine setEventDuration 10
+subroutine rejecSampling 11
 subroutine resetPlayerCD 12
 subroutine clearEventEffect 14
+subroutine setPlayerSize 16
 subroutine createBastionBot 17
-
+subroutine unlockAchievement
 
 #Activated extensions
 
@@ -426,6 +455,7 @@ subroutine createBastionBot 17
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+#!include "utilities/macros.opy"
 
 rule STR_LICENSE_TITLE:
     @Disabled
@@ -449,6 +479,14 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/init.opy"
 
+#!include "events/rejecSampling.opy"
+
+#!include "utilities/healthPool.opy"
+
+#!include "utilities/dashDetector.opy"
+
+#!include "utilities/setPlayerSize.opy"
+
 #!include "utilities/savePlayerData.opy"
 
 #!include "utilities/progressHero.opy"
@@ -462,6 +500,8 @@ rule STR_LICENSE_PERMIT:
 #!include "utilities/clearPlayerEvent.opy"
 
 #!include "utilities/setPlayerHP.opy"
+
+#!include "utilities/unlockAchievement.opy"
 
 #!include "utilities/setEventDuration.opy"
 
@@ -647,3 +687,5 @@ rule "auto reboot":
 #!include "utilities/devTool.opy"
 
 #!include "events/effect.opy"
+
+#!include "player/achievement.opy"

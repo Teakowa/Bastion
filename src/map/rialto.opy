@@ -27,3 +27,5 @@ rule "map - rialto":
     thirdPersonPosition = vect(-54.92, 3.75, -158.32)
     resetPosition = vect(-59.05, 3.75, -158.41)
     creditsPosition = vect(-57.06, 5.25, -181.51)
+
+    mapTitlePlayersByKey = DATA_RIALTO

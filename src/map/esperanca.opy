@@ -14,3 +14,5 @@ rule "map - 埃斯佩兰萨":
     resetPosition = vect(126.7, -1.64, -81.42)
     creditsPosition = vect(116.67, -0.29, -82.29)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_ESPERANCA

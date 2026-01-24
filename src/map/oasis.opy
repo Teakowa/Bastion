@@ -43,3 +43,5 @@ rule "map - 绿洲城":
     bastionPosition.append(vect(150.98, 3.85, 223.89))
     bastionPosition.append(vect(173.51, 2, 217.63))
     controlCenterPosition = [vect(129.5, 15.28, -235.74), vect(-192.08, 15, 0.26), vect(143.44, 2.15, 247.95)]
+
+    mapTitlePlayersByKey = DATA_OASIS

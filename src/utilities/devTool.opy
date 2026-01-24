@@ -61,19 +61,24 @@ rule "dev menu disable":
     eventPlayer.allowButton(Button.CROUCH)
 
 
-rule "page down in dev menu":
+rule "page down in menu":
     @Event eachPlayer
-    @Condition eventPlayer.isDev == true
-    @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
     @Condition eventPlayer.menu != 0
-    
-    if eventPlayer.menu >= 3:
-        goto lbl_0
-    eventPlayer.menu++
-    return
-    lbl_0:
-    eventPlayer.menu = 1
+    @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
 
+    if eventPlayer.isDev == true:
+        if eventPlayer.menu >= 5:
+            eventPlayer.menu = 1
+        else:
+            eventPlayer.menu += 1
+    else:
+        if eventPlayer.menu >= 2:
+            eventPlayer.menu = 1
+        else:
+            eventPlayer.menu += 1
+
+    # 防止按住连跳（不新增变量）
+    waitUntil(eventPlayer.isHoldingButton(Button.CROUCH) == false, 99999)
 
 rule "menu mode settings display":
     @Event eachPlayer
@@ -83,16 +88,84 @@ rule "menu mode settings display":
     destroyHudText(eventPlayer.menuTextID[0])
     destroyHudText(eventPlayer.menuTextID[1])
     destroyHudText(eventPlayer.menuTextID[2])
-    hudHeader(eventPlayer, "{0}".format(STR_MENU_TITLE_DEV if eventPlayer.isDev else STR_MENU_TITLE_INGAME), HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    hudHeader(eventPlayer, "{0}".format(STR_MENU_TITLE_INGAME), HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
     eventPlayer.menuTextID[0] = getLastCreatedText()
     if eventPlayer.isDev:
-        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_DIFF_INC.format(inputBindingString(Button.ABILITY_1), STR_MENU_OPT_DIFF_DEC.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
-    elif hostPlayer == eventPlayer:
-        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_MARK_PLAYER.format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else STR_MENU_STATE_NULL, STR_MENU_OPT_UNMARK_BLOCK.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, ""))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE), STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_MARK_PLAYER.format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else STR_MENU_STATE_NULL, STR_MENU_OPT_UNMARK_BLOCK.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH))))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    elif eventPlayer == hostPlayer:
+        hudSubheader(eventPlayer, STR_MENU_OPT_RESTART_EXTEND.format(inputBindingString(Button.PRIMARY_FIRE), STR_MENU_OPT_RESTART_REDUCE.format(inputBindingString(Button.SECONDARY_FIRE),  STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_MARK_PLAYER.format(inputBindingString(Button.ABILITY_1), "{0}（{1}）".format(targetPlayer, targetPlayer.getHero()) if targetPlayer != null else STR_MENU_STATE_NULL, STR_MENU_OPT_UNMARK_BLOCK.format(inputBindingString(Button.RELOAD), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH)))))))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     else:
-        hudSubheader(eventPlayer, STR_MENU_OPT_TITLE_PREV.format(inputBindingString(Button.ULTIMATE), STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, ""))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+        hudSubheader(eventPlayer, STR_MENU_OPT_TITLE_NEXT.format(inputBindingString(Button.ABILITY_2), STR_MENU_OPT_THIRD_PERSON.format(inputBindingString(Button.JUMP), STR_MENU_STATE_ON if eventPlayer.third == true else STR_MENU_STATE_OFF, STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH)))), HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     eventPlayer.menuTextID[1] = getLastCreatedText()
 
+rule "menu hero display (player/host)":
+    @Event eachPlayer
+    # @Condition any([
+    #     eventPlayer.menu == 2 and eventPlayer.isDev == false,
+    #     eventPlayer.menu == 5 and eventPlayer.isDev
+    # ]) == true
+    @Condition (eventPlayer.menu == 2 and eventPlayer.isDev == false) or (eventPlayer.menu == 5 and eventPlayer.isDev == true)
+
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+
+    hudHeader(eventPlayer, STR_MENU_OPT_HERO_PAGE_TITLE, HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+
+    eventPlayer.menuHeroIndex = eventPlayer.menuHeroIndex % (
+        (
+            (len(heroList) - 1) if (eventPlayer.heroNumber) > (len(heroList) - 1)
+            else (eventPlayer.heroNumber)
+        ) + 1
+    )
+
+    hudSubheader(
+        eventPlayer,
+        STR_MENU_OPT_HERO_NEXT.format(
+            inputBindingString(Button.PRIMARY_FIRE),
+            heroList[eventPlayer.menuHeroIndex],
+            STR_MENU_OPT_HERO_APPLY.format(
+                    inputBindingString(Button.RELOAD),
+                    ""
+                )
+        ),
+        HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER
+    )
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+rule "menu hero next":
+    @Event eachPlayer
+    @Condition (eventPlayer.menu == 2 and eventPlayer.isDev == false) or (eventPlayer.menu == 5 and eventPlayer.isDev == true)
+    @Condition eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true
+
+    eventPlayer.menuHeroIndex += 1
+    eventPlayer.menuHeroIndex = eventPlayer.menuHeroIndex % (
+        (
+            (len(heroList) - 1) if (eventPlayer.heroNumber) > (len(heroList) - 1)
+            else (eventPlayer.heroNumber)
+        ) + 1
+    )
+    waitUntil(eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == false, 99999)
+
+rule "menu hero apply (spawn only)":
+    @Event eachPlayer
+    @Condition (eventPlayer.menu == 2 and eventPlayer.isDev == false) or (eventPlayer.menu == 5 and eventPlayer.isDev == true)
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    @Condition eventPlayer.isInSpawnRoom() == true
+
+    eventPlayer.menuHeroIndex = eventPlayer.menuHeroIndex % (
+        (
+            (len(heroList) - 1) if (eventPlayer.heroNumber) > (len(heroList) - 1)
+            else (eventPlayer.heroNumber)
+        ) + 1
+    )
+    eventPlayer.startForcingHero(heroList[eventPlayer.menuHeroIndex])
+    waitUntil(eventPlayer.getHero() == heroList[eventPlayer.heroNumber], 0.5)
+    eventPlayer.stopForcingCurrentHero()
+    wait(getServerLoad() / 100 * 0.5)
+    eventPlayer.setAllowedHeroes(heroList.slice(0, eventPlayer.heroNumber + 1))
+    waitUntil(eventPlayer.isHoldingButton(Button.RELOAD) == false, 99999)
 
 rule "menu dev control display":
     @Event eachPlayer
@@ -150,6 +223,7 @@ rule "dev set difficulty":
     @Condition eventPlayer.menu == 1
     @Condition eventPlayer.isDev == true
     @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    @Disabled
     
     difficulty++
     setDifficulty()
@@ -163,6 +237,7 @@ rule "dev set difficulty":
     @Condition eventPlayer.menu == 1
     @Condition eventPlayer.isDev == true
     @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    @Disabled
     
     difficulty--
     setDifficulty()
@@ -201,6 +276,7 @@ rule "dev remove auto reboot time":
             smallMessage(getAllPlayers(), "  {0}  模式调整： 房主已将自动重开时间缩短 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
 
 
+            
 rule "player title menu - next":
     @Event eachPlayer
     @Condition eventPlayer.menu == 1
@@ -312,6 +388,7 @@ rule "host remove target player":
     blackList.append("{0}".format(targetPlayer))
     lbl_0:
     targetPlayer.removeFromGame()
+    smallMessage(getAllPlayers(), STR_MSG_ADMIN_BLACKLIST_SUCCESS.format(iconString(Icon.BOLT), targetPlayer))
     targetPlayerIndex = 0
     targetPlayer = null
 
@@ -382,7 +459,7 @@ rule "dev set invincible":
     eventPlayer.invincible = not eventPlayer.invincible
     wait(getAverageServerLoad() / 100 * 0.032)
     if eventPlayer.invincible:
-        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 999999986991104)
+        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, MAX_TIME)
         createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
         eventPlayer.invincibleEffect = getLastCreatedEntity()
         smallMessage(eventPlayer, "  {0}  开发者模式： 已设置为无敌状态".format(iconString(Icon.BOLT)))
@@ -523,6 +600,136 @@ rule "Dev to release heros":
         eventPlayer.isWinner = true
         wait(getAverageServerLoad() / 100 * 0.5)
         smallMessage(eventPlayer, "  {0} 开发者模式：已通关".format(iconString(Icon.BOLT)))
+
+#!define getCurrentEventArray() (buffEvent if devEventCategory == 0 else (debuffEvent if devEventCategory == 1 else mechEvent))
+#!define getCurrentEventIdArray() (buffEventId if devEventCategory == 0 else (debuffEventId if devEventCategory == 1 else mechEventId))
+
+rule "menu dev event weight display":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    
+    destroyHudText(eventPlayer.menuTextID[0])
+    destroyHudText(eventPlayer.menuTextID[1])
+    destroyHudText(eventPlayer.menuTextID[2])
+    
+    # 标题
+    hudHeader(eventPlayer, STR_MENU_TITLE_WEIGHT_MANAGE, HudPosition.TOP, 2, Color.WHITE, HudReeval.VISIBILITY_STRING_AND_COLOR, SpecVisibility.NEVER)
+    eventPlayer.menuTextID[0] = getLastCreatedText()
+    
+    # 内容显示
+    # 格式：
+    # [Q] 切换分类：当前分类
+    # [E] 切换事件：事件名 (索引)
+    # [Shift/R] 调整权重：当前权重
+    # [Ctrl] 下一页
+    hudSubheader(eventPlayer, 
+        "{0} 切换分类：{1}\n{2} 切换事件：{3}\n{4} 调整权重：{5}\n{6}".format(
+            inputBindingString(Button.ULTIMATE),
+            STR_CAT_BUFF if devEventCategory == 0 else (STR_CAT_DEBUFF if devEventCategory == 1 else STR_CAT_MECH),
+            
+            inputBindingString(Button.ABILITY_2),
+            "{0} (Idx: {1})".format(
+                getCurrentEventArray()[devEventIndex][0], 
+                devEventIndex
+            ) if len(getCurrentEventArray()) > 0 else "无事件",
+            
+            "{0}/{1}".format(inputBindingString(Button.ABILITY_1), inputBindingString(Button.RELOAD)),
+            # 获取权重：如果数组长度>=4则取第4个元素，否则默认为 1.0
+            (getCurrentEventArray()[devEventIndex][3] if len(getCurrentEventArray()[devEventIndex]) >= 4 else 1.0) 
+            if len(getCurrentEventArray()) > 0 else "N/A",
+            
+            STR_MENU_OPT_NEXT_PAGE.format(inputBindingString(Button.CROUCH))
+        ), 
+        HudPosition.TOP, 3, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER
+    )
+    eventPlayer.menuTextID[1] = getLastCreatedText()
+
+rule "dev event category switch (Q)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ULTIMATE) == true
+    
+    devEventCategory = (devEventCategory + 1) % 3
+    devEventIndex = 0 # 切换分类重置索引
+    wait(0.2)
+
+rule "dev event select next (E)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_2) == true
+    
+    # 循环切换索引
+    if len(getCurrentEventArray()) > 0:
+        devEventIndex = (devEventIndex + 1) % len(getCurrentEventArray())
+    wait(0.1)
+
+rule "dev event weight increase (Shift)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.ABILITY_1) == true
+    
+    # 必须显式区分变量来修改
+    if devEventCategory == 0:
+        if len(buffEvent) > 0:
+            # 检查并初始化权重
+            if len(buffEvent[devEventIndex]) < 4:
+                buffEvent[devEventIndex][3] = 1.0
+            # 增加权重
+            buffEvent[devEventIndex][3] += 0.1
+            
+    elif devEventCategory == 1:
+        if len(debuffEvent) > 0:
+            if len(debuffEvent[devEventIndex]) < 4:
+                debuffEvent[devEventIndex][3] = 1.0
+            debuffEvent[devEventIndex][3] += 0.1
+            
+    elif devEventCategory == 2:
+        if len(mechEvent) > 0:
+            if len(mechEvent[devEventIndex]) < 4:
+                mechEvent[devEventIndex][3] = 1.0
+            mechEvent[devEventIndex][3] += 0.1
+            
+    wait(0.1)
+
+rule "dev event weight decrease (R)":
+    @Event eachPlayer
+    @Condition eventPlayer.isDev == true
+    @Condition eventPlayer.menu == 4
+    @Condition eventPlayer.isHoldingButton(Button.RELOAD) == true
+    
+    if devEventCategory == 0:
+        if len(buffEvent) > 0:
+            if len(buffEvent[devEventIndex]) < 4:
+                buffEvent[devEventIndex][3] = 1.0
+            # 减少权重
+            if buffEvent[devEventIndex][3] >= 0.1:
+                buffEvent[devEventIndex][3] -= 0.1
+            else:
+                buffEvent[devEventIndex][3] = 0
+                
+    elif devEventCategory == 1:
+        if len(debuffEvent) > 0:
+            if len(debuffEvent[devEventIndex]) < 4:
+                debuffEvent[devEventIndex][3] = 1.0
+            if debuffEvent[devEventIndex][3] >= 0.1:
+                debuffEvent[devEventIndex][3] -= 0.1
+            else:
+                debuffEvent[devEventIndex][3] = 0
+
+    elif devEventCategory == 2:
+        if len(mechEvent) > 0:
+            if len(mechEvent[devEventIndex]) < 4:
+                mechEvent[devEventIndex][3] = 1.0
+            if mechEvent[devEventIndex][3] >= 0.1:
+                mechEvent[devEventIndex][3] -= 0.1
+            else:
+                mechEvent[devEventIndex][3] = 0
+                
+    wait(0.1)
 
 
 rule "[debug.opy]: player debug (Top Right)":

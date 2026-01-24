@@ -20,3 +20,5 @@ rule "map - 鲁纳塞彼":
     resetPosition = vect(111.34, 7.09, -5.6)
     creditsPosition = vect(124.6, 8.77, -15.99)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_RUNASAPI

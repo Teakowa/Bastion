@@ -14,3 +14,5 @@ rule "map - hollywood":
     startForcingSpawn(Team.1, 2)
     __currentMapText___ = "好莱坞"
     __currentMapPioneerText___ = __currentMapText___
+
+    mapTitlePlayersByKey = DATA_HOLLYWOOD

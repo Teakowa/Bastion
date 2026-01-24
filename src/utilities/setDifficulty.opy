@@ -25,5 +25,5 @@ def setDifficulty():
         difficultyText[1] = Color.RED
     else:
         difficultyText[0] = "地狱"
-        difficultyText[1] = Color.VIOLET
+        difficultyText[1] = rgb(118, 93, 189)
     else:

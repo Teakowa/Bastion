@@ -14,3 +14,5 @@ rule "map - shambali monastery":
     resetPosition = vect(-1.97, 31.07, 221.85)
     creditsPosition = vect(1.75, 35, 232.5)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_SHAMBALI_MONASTERY

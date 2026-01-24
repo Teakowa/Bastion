@@ -115,18 +115,42 @@ rule "disable gamemode hud and player collision for all players":
     eventPlayer.disablePlayerCollision()
 
 
+# 可调参数
+## 威胁态心跳间隔
+#!define FORM_FIX_DT_THREAT 0.064
+## 安全态心跳间隔
+#!define FORM_FIX_DT_SAFE 0.25
+## 关键：威胁态保持时间 防止 target 瞬断导致窗口期
+#!define THREAT_HOLD_SEC 1.0
+## 快速纠正次数上限
+#!define BURST_MAX 2
+## 快速纠正间隔
+#!define BURST_DT 0.032
+
+## 当前循环内的“是否威胁态”
+macro isThreat(target):
+    (target != null) or (getTotalTimeElapsed() - eventPlayer.lastThreatTime <= THREAT_HOLD_SEC)
+
 rule "enemy bastions must stay in configuration: assault (AKA machine gun/sentry/alternate form)":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition eventPlayer.isInAlternateForm() == false
     @Condition getTotalTimeElapsed() > 10
+    # 必须技能冷却完成才会触发本规则
+    @Condition eventPlayer.getAbilityCooldown(Button.ABILITY_1) == 0
+    # @Condition eventPlayer.isInAlternateForm() == false
+
+    if eventPlayer.target != null:
+        eventPlayer.lastThreatTime = getTotalTimeElapsed()
     
     #this cancels bastion's "standing up" animation so he can sit back down faster
-    eventPlayer.cancelPrimaryAction()
-    eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
-    eventPlayer.forceButtonPress(Button.ABILITY_1)
-    wait(0.032)
+    if eventPlayer.isInAlternateForm() == false:
+        eventPlayer.cancelPrimaryAction()
+        eventPlayer.setAbilityCooldown(Button.ABILITY_1, 0)
+        eventPlayer.forceButtonPress(Button.ABILITY_1)
+    
+    
+    wait(FORM_FIX_DT_THREAT if isThreat(eventPlayer.target) else FORM_FIX_DT_SAFE, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
 
@@ -136,6 +160,7 @@ rule "bastions periodically refresh their configuration when there are enemies n
     @Team 2
     @Hero bastion
     @Condition getTotalTimeElapsed() > 10
+    @Condition eventPlayer.isInAlternateForm() == false
     @Condition eventPlayer.target == false
     @Condition getPlayersInRadius(eventPlayer.getPosition(), 110, Team.1)[0] != false
     
@@ -146,6 +171,11 @@ rule "bastions periodically refresh their configuration when there are enemies n
         loop()
 
 
+#!define SCAN_DT_NO_TARGET_MIN 0.06
+#!define SCAN_DT_NO_TARGET_MAX 0.12
+#!define SCAN_DT_HAS_TARGET_MIN 0.20
+#!define SCAN_DT_HAS_TARGET_MAX 0.35
+
 rule "bastion constantly searches for targets in line of sight":
     @Event eachPlayer
     @Team 2
@@ -154,11 +184,14 @@ rule "bastion constantly searches for targets in line of sight":
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isAlive() == true
 
-    wait(random.uniform(0.1, 0.25), Wait.IGNORE_CONDITION)
+    wait(random.uniform(
+        SCAN_DT_HAS_TARGET_MIN if eventPlayer.target != null else SCAN_DT_NO_TARGET_MIN,
+        SCAN_DT_HAS_TARGET_MAX if eventPlayer.target != null else SCAN_DT_NO_TARGET_MAX
+    ), Wait.IGNORE_CONDITION)
 
     if getPlayersInRadius(eventPlayer.getEyePosition(), 105, Team.1, LosCheck.SURFACES)[0] == false:
         eventPlayer.target = null
-        wait(random.uniform(0.256, 0.512), Wait.ABORT_WHEN_FALSE)
+        wait(random.uniform(SCAN_DT_NO_TARGET_MIN, SCAN_DT_NO_TARGET_MAX), Wait.ABORT_WHEN_FALSE)
         loop()
     
     eventPlayer.temp = [player for player in getLivingPlayers(Team.1) if isInLoS(eventPlayer.getEyePosition(), player.getEyePosition()) or isInLoS(eventPlayer.getEyePosition(), player.getPosition())]
@@ -179,7 +212,7 @@ rule "bastion constantly searches for targets in line of sight":
         eventPlayer.target = eventPlayer.temp[0]
     else:
         eventPlayer.target = (sorted(eventPlayer.temp, lambda player: player.targetWeight * -1))[0]
-    wait(random.uniform(0.256, 0.512))
+    wait(0.2)
     if ruleCondition:
         loop()
     eventPlayer.target = null
@@ -307,7 +340,7 @@ rule "determine bastion's aim speed, to improve smooth tracking":
     
     eventPlayer.turnSpeed = angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.target.getEyePosition())) * turnSpeedMultiplier
     eventPlayer.turnSpeed += eventPlayer.target.getSpeed() * turnSpeedMultiplier
-    wait(getAverageServerLoad() / 1000)
+    wait(max(0.016, getAverageServerLoad() / 1000))
     if ruleCondition:
         loop()
 

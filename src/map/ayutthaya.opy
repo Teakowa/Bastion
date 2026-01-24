@@ -16,5 +16,5 @@ rule "map - 阿育陀耶":
     thirdPersonPosition = vect(15.45, 1, -103.8)
     creditsPosition = vect(17.69, 9.22, -111.87)
     endPosition = vect(16.12, 1, 66.52)
-    mapTitleRelation = [[0, 0], [1, 0], [7, 9], [7, 10], [10, 9], [10, 10], [13, 9], [13, 10], [18, 9], [18, 10], [28, 9], [28, 10], [8, 9], [8, 10]]
-
+    
+    mapTitlePlayersByKey = DATA_AYUTTHAYA

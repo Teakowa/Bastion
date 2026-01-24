@@ -11,7 +11,7 @@ rule "Lifeweaver disable Life Grip if no winners":
     
     eventPlayer.disallowButton(Button.ABILITY_2)
     eventPlayer.setAbility2Enabled(false)
-    waitUntil(eventPlayer.isWinner == true or eventPlayer.getHero() != Hero.LIFEWEAVER, 999999986991104)
+    waitUntil(eventPlayer.isWinner == true or eventPlayer.getHero() != Hero.LIFEWEAVER, MAX_TIME)
     eventPlayer.allowButton(Button.ABILITY_2)
     eventPlayer.setAbility2Enabled(true)
 

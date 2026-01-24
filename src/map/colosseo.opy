@@ -21,3 +21,5 @@ rule "map - 斗兽场":
     resetPosition = vect(111.17, 9, -50.91)
     creditsPosition = vect(117.64, 13, -48.66)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_COLOSSEO

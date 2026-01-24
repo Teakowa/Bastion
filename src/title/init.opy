@@ -26,7 +26,7 @@ rule "update title color":
     wait(0.016, Wait.ABORT_WHEN_FALSE)
     eventPlayer.info_pvar = (eventPlayer.info_pvar + 1) % len(rgbList)
     chaseOverTime(eventPlayer.rgb_vect, rgbList[eventPlayer.info_pvar], 1.5, ChaseTimeReeval.NONE)
-    waitUntil(eventPlayer.rgb_vect == rgbList[eventPlayer.info_pvar], 999999986991104)
+    waitUntil(eventPlayer.rgb_vect == rgbList[eventPlayer.info_pvar], MAX_TIME)
     if ruleCondition:
         loop()
     stopChasingVariable(eventPlayer.rgb_vect)
@@ -43,7 +43,7 @@ rule "update title color":
     wait(0.016, Wait.ABORT_WHEN_FALSE)
     eventPlayer.info_pvar = (eventPlayer.info_pvar + 1) % len(eventPlayer.playerTitleAndColor[1])
     chaseOverTime(eventPlayer.rgb_vect, eventPlayer.playerTitleAndColor[1][eventPlayer.info_pvar], 2.5, ChaseTimeReeval.NONE)
-    waitUntil(eventPlayer.rgb_vect == eventPlayer.playerTitleAndColor[1][eventPlayer.info_pvar] or not eventPlayer.rgb_activated, 999999986991104)
+    waitUntil(eventPlayer.rgb_vect == eventPlayer.playerTitleAndColor[1][eventPlayer.info_pvar] or not eventPlayer.rgb_activated, MAX_TIME)
     if ruleCondition:
         loop()
     wait()

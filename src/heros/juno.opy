@@ -11,6 +11,6 @@ rule "Juno disable Ability 1 if possess":
     
     eventPlayer.disallowButton(Button.ABILITY_1)
     eventPlayer.setAbility1Enabled(false)
-    waitUntil(eventPlayer.eventId != 12 or eventPlayer.possess[0].possessed != true or eventPlayer.getHero() != Hero.JUNO, 999999986991104)
+    waitUntil(eventPlayer.eventId != 12 or eventPlayer.possess[0].possessed != true or eventPlayer.getHero() != Hero.JUNO, MAX_TIME)
     eventPlayer.allowButton(Button.ABILITY_1)
     eventPlayer.setAbility1Enabled(true)

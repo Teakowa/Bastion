@@ -13,3 +13,5 @@ rule "map - 皇家赛道":
     resetPosition = vect(129.68, 10, 0.04)
     creditsPosition = vect(147.52, 11.5, -10.9)
     startForcingSpawn(Team.1, 2)
+
+    mapTitlePlayersByKey = DATA_CIRCUIT_ROYAL

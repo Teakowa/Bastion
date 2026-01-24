@@ -50,3 +50,5 @@ rule "map - 伊利奥斯":
         resetPosition = vect(331.08, -21.52, 41.121)
         #Base coordinates for world game settings HUD
         creditsPosition = vect(321.8, -20, 46)
+
+        mapTitlePlayersByKey = DATA_ILIOS

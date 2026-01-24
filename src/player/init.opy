@@ -13,6 +13,7 @@ rule "when a player joins, load player data if they have it and initialize them"
         goto lbl_0
     eventPlayer.eventId = -1
     eventPlayer.sizeHealth = 1
+    eventPlayer.earnedAchievements = []
     lbl_0:
     wait(getAverageServerLoad() / 200 * random.uniform(1, 3))
     if "{0}".format(eventPlayer) in savedIndex:

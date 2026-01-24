@@ -19,3 +19,5 @@ rule "map - temple of anubis":
     resetPosition = vect(-17.16, 4.46, 137.76)
     creditsPosition = vect(-11.3, 7.35, 149.11)
     startForcingSpawn(Team.1, 1)
+
+    mapTitlePlayersByKey = DATA_TEMPLE_OF_ANUBIS

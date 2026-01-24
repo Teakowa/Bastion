@@ -21,7 +21,7 @@ rule "SYSTEM: Core Regen Logic (Signal Based)":
             abilityIconString(Hero.BAPTISTE, Button.ABILITY_1)
         )
     )
-    eventPlayer.startHealingOverTime(eventPlayer, 999999986991104.000, 50 + eventPlayer.getMaxHealth() * 0.08)
+    eventPlayer.startHealingOverTime(eventPlayer, MAX_TIME, 50 + eventPlayer.getMaxHealth() * 0.08)
     eventPlayer.healID = getLastHealingOverTimeId()
 
 
