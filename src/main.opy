@@ -112,6 +112,10 @@ settings {
                 "secondaryFireRechargeRate%": 500,
                 "shieldBashCooldown%": 80
             },
+            "freja": {
+                "ability1Cooldown%": 67,
+                "ability1Distance%": 130
+            },
             "torbjorn": {
                 "weaponsEnabled": "hammer",
                 "ability2Cooldown%": 20,
