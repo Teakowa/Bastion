@@ -191,65 +191,35 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Buffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_24_TITLE, true, 24):
-        goto lbl_23
     buffEvent[24] = [STR_EVT_BUFF_24_TITLE, STR_EVT_BUFF_24_DESC, 45, 1.2]
     buffEventId.append(24)
-    lbl_23:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_25_TITLE, true, 25):
-        goto lbl_24
-    buffEvent[25] = [STR_EVT_BUFF_25_TITLE, STR_EVT_BUFF_25_DESC, 60, 1.1]
+
+    buffEvent[25] = [STR_EVT_BUFF_25_TITLE, STR_EVT_BUFF_25_DESC, 60, 0]
     buffEventId.append(25)
-    lbl_24:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_26_TITLE, true, 26):
-        goto lbl_25
+
     buffEvent[26] = [STR_EVT_BUFF_26_TITLE, STR_EVT_BUFF_26_DESC, 60, 1]
     buffEventId.append(26)
-    lbl_25:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_27_TITLE, true, 27):
-        goto lbl_26
-    buffEvent[27] = [STR_EVT_BUFF_27_TITLE, STR_EVT_BUFF_27_DESC.format(len(getPlayers(Team.2))), 120, 0.8]
+
+    buffEvent[27] = [STR_EVT_BUFF_27_TITLE, STR_EVT_BUFF_27_DESC.format(EVT_27_REWARD_DMG_PERMA), 120, 0.8]
     buffEventId.append(27)
-    lbl_26:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_28_TITLE, true, 28):
-        goto lbl_27
+
     buffEvent[28] = [STR_EVT_BUFF_28_TITLE, STR_EVT_BUFF_28_DESC, 90, 0.7]
     buffEventId.append(28)
-    lbl_27:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_29_TITLE, true, 29):
-        goto lbl_28
-    buffEvent[29] = [STR_EVT_BUFF_29_TITLE, STR_EVT_BUFF_29_DESC, 30, 0.5]
+
+    buffEvent[29] = [STR_EVT_BUFF_29_TITLE, STR_EVT_BUFF_29_DESC, 30, 0]
     buffEventId.append(29)
-    lbl_28:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_30_TITLE, true, 30):
-        goto lbl_29
-    buffEvent[30] = [STR_EVT_BUFF_30_TITLE, STR_EVT_BUFF_30_DESC, 90, 0.4]
+
+    buffEvent[30] = [STR_EVT_BUFF_30_TITLE, STR_EVT_BUFF_30_DESC, 60, 0.4]
     buffEventId.append(30)
-    lbl_29:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_31_TITLE, true, 31):
-        goto lbl_30
+
     buffEvent[31] = [STR_EVT_BUFF_31_TITLE, STR_EVT_BUFF_31_DESC, 30, 0.3]
     buffEventId.append(31)
-    lbl_30:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_32_TITLE, true, 32):
-        goto lbl_31
+
     buffEvent[32] = [STR_EVT_BUFF_32_TITLE, STR_EVT_BUFF_32_DESC, 60, 0.25]
     buffEventId.append(32)
-    lbl_31:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_33_TITLE, true, 33):
-        goto lbl_32
+
     buffEvent[33] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC, 90, 0.1]
     buffEventId.append(33)
-    lbl_32:
     
     # ================================================
     # 减益事件 (Debuff Events)
@@ -365,41 +335,23 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Debuffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_16_TITLE, true, 16):
-        goto lbl_49
-    debuffEvent[16] = [STR_EVT_DEBUFF_16_TITLE, STR_EVT_DEBUFF_16_DESC, 75, 1.1]
+    debuffEvent[16] = [STR_EVT_DEBUFF_16_TITLE, STR_EVT_DEBUFF_16_DESC, 45, 1.1]
     debuffEventId.append(16)
-    lbl_49:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_17_TITLE, true, 17):
-        goto lbl_50
+
     debuffEvent[17] = [STR_EVT_DEBUFF_17_TITLE, STR_EVT_DEBUFF_17_DESC, 25, 1.1]
     debuffEventId.append(17)
-    lbl_50:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_18_TITLE, true, 18):
-        goto lbl_51
+
     debuffEvent[18] = [STR_EVT_DEBUFF_18_TITLE, STR_EVT_DEBUFF_18_DESC, 25, 0.85]
     debuffEventId.append(18)
-    lbl_51:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_19_TITLE, true, 19):
-        goto lbl_52
-    debuffEvent[19] = [STR_EVT_DEBUFF_19_TITLE, STR_EVT_DEBUFF_19_DESC, 90, 0.7]
+
+    debuffEvent[19] = [STR_EVT_DEBUFF_19_TITLE, STR_EVT_DEBUFF_19_DESC, 45, 0.7]
     debuffEventId.append(19)
-    lbl_52:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_20_TITLE, true, 20):
-        goto lbl_53
+
     debuffEvent[20] = [STR_EVT_DEBUFF_20_TITLE, STR_EVT_DEBUFF_20_DESC, 60, 0.6]
     debuffEventId.append(20)
-    lbl_53:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_21_TITLE, true, 21):
-        goto lbl_54
+
     debuffEvent[21] = [STR_EVT_DEBUFF_21_TITLE, STR_EVT_DEBUFF_21_DESC, 30, 0.2]
     debuffEventId.append(21)
-    lbl_54:
     
     # ================================================
     # 机制事件 (Mech Events)
@@ -506,68 +458,35 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Mechanics
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_14_TITLE, true, 14):
-        goto lbl_69
     mechEvent[14] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(Button.RELOAD), 15, 1.2]
     mechEventId.append(14)
-    lbl_69:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_15_TITLE, true, 15):
-        goto lbl_70
     mechEvent[15] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(Button.RELOAD), 30, 1]
     mechEventId.append(15)
-    lbl_70:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_16_TITLE, true, 16):
-        goto lbl_71
     mechEvent[16] = [STR_EVT_MECH_16_TITLE, STR_EVT_MECH_16_DESC.format(Button.RELOAD), 15, 1.1]
     mechEventId.append(16)
-    lbl_71:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_17_TITLE, true, 17):
-        goto lbl_72
     mechEvent[17] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC, 5, 0.8]
     mechEventId.append(17)
-    lbl_72:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_18_TITLE, true, 18):
-        goto lbl_73
+
     mechEvent[18] = [STR_EVT_MECH_18_TITLE, STR_EVT_MECH_18_DESC.format(Button.RELOAD), 30, 0.8]
     mechEventId.append(18)
-    lbl_73:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_19_TITLE, true, 19):
-        goto lbl_74
     mechEvent[19] = [STR_EVT_MECH_19_TITLE, STR_EVT_MECH_19_DESC, 90, 0.6]
     mechEventId.append(19)
-    lbl_74:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_20_TITLE, true, 20):
-        goto lbl_75
+
     mechEvent[20] = [STR_EVT_MECH_20_TITLE, STR_EVT_MECH_20_DESC, 90, 0.6]
     mechEventId.append(20)
-    lbl_75:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_21_TITLE, true, 21):
-        goto lbl_76
+  
     mechEvent[21] = [STR_EVT_MECH_21_TITLE, STR_EVT_MECH_21_DESC, 15, 0.8]
     mechEventId.append(21)
-    lbl_76:
-    
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_22_TITLE, true, 22):
-        goto lbl_77
+
     mechEvent[22] = [STR_EVT_MECH_22_TITLE, STR_EVT_MECH_22_DESC.format(Button.RELOAD), 15, 0.4]
     mechEventId.append(22)
-    lbl_77:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_23_TITLE, true, 23):
-        goto lbl_78
     mechEvent[23] = [STR_EVT_MECH_23_TITLE, STR_EVT_MECH_23_DESC, 120, 0.4]
     mechEventId.append(23)
-    lbl_78:
     
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_24_TITLE, true, 24):
-        goto lbl_79
     mechEvent[24] = [STR_EVT_MECH_24_TITLE, STR_EVT_MECH_24_DESC, 120, 0.2]
     mechEventId.append(24)
-    lbl_79:
