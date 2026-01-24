@@ -230,7 +230,7 @@ rule "[VishkarEvent]: 死亡延迟":
     wait()
     if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE), eventPlayer.hasStatus(Status.UNKILLABLE)]):
         goto lbl_0
-    smallMessage(eventPlayer, "{0} 死亡延迟：致命伤害已施加".format(
+    smallMessage(eventPlayer, "  {0} 死亡延迟：致命伤害已施加".format(
     iconString(Icon.SKULL)))
     damage(eventPlayer, attacker, EVT_11_EXECUTE_DAMAGE)
     lbl_0:
@@ -1479,13 +1479,16 @@ rule "[VishkarEvent]: 保持距离 (易伤光环)":
     eventPlayer.target = sorted(getPlayersInRadius(eventPlayer, EVT_DEBUFF_16_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer), lambda i: distance(eventPlayer, i))[0]
     if eventPlayer.target != null:
         eventPlayer.mod_dmg_taken = min(EVT_DEBUFF_16_MAX, max(0, (EVT_DEBUFF_16_RADIUS - distance(eventPlayer, eventPlayer.target)) * EVT_DEBUFF_16_FACTOR))
+        eventPlayer.hudText = "受到伤害 +{0}%".format(eventPlayer.mod_dmg_taken)
     else:
         eventPlayer.mod_dmg_taken = 0
+        eventPlayer.hudText = ""
     updatePlayerStats()
     wait(1)
     if ruleCondition:
         loop()
     eventPlayer.mod_dmg_taken = 0
+    eventPlayer.hudText = ""
     updatePlayerStats()
     clearEventEffect()
 
