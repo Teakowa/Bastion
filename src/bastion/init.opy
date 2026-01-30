@@ -38,7 +38,7 @@ rule "set hero list":
 rule "infinite match time":
     @Condition isInSetup() == false
     
-    if not evalOnce(debugMode):
+    if not debugMode:
         disableInspector()
     disableGamemodeCompletion()
     disableAnnouncer()
@@ -100,7 +100,7 @@ rule "bastions are numbered and list their kills (by changing their names when t
 
 rule "damage modifier: players can't hurt bastions":
     @Condition difficulty != 5
-    @Condition evalOnce(dmgReduction) == false
+    @Condition dmgReduction == false
     
     startDamageModification(getPlayers(Team.2), [player for player in getPlayers(Team.1) if not "{0}".format(player) in devList], 0.1, DamageReeval.RECEIVERS_AND_DAMAGERS)
 
@@ -208,7 +208,7 @@ rule "bastion constantly searches for targets in line of sight":
         wait()
     
     lbl_0:
-    if not evalOnce(dlcVishkarEvent):
+    if not dlcVishkarEvent:
         eventPlayer.target = eventPlayer.temp[0]
     else:
         eventPlayer.target = (sorted(eventPlayer.temp, lambda player: player.targetWeight * -1))[0]
@@ -480,7 +480,7 @@ rule "bastion A-36 Tactical Grenade hit player":
 rule "bastion A-36 Tactical Grenade hit player":
     @Event playerTookDamage
     @Team 1
-    @Condition any([difficulty == 5, bastionBotSeconFire, evalOnce(dlcVishkarEvent)]) == true
+    @Condition any([difficulty == 5, bastionBotSeconFire, dlcVishkarEvent]) == true
     @Condition attacker.getHero() == Hero.BASTION
     @Condition attacker != eventPlayer
     @Condition eventAbility == Button.SECONDARY_FIRE
