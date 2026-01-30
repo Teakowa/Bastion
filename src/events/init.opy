@@ -12,26 +12,6 @@ rule "initialize event array":
     eventWeight = 2.5
     
     # ================================================
-    # 全局事件 (Global Events)
-    # ================================================
-    globalEvent = []
-    globalEventId = []
-    
-    globalEvent[0] = [STR_EVT_GLOBAL_0_TITLE, STR_EVT_GLOBAL_0_DESC, 120, 1.0]
-    globalEventId.append(0)
-    
-    globalEvent[1] = [STR_EVT_GLOBAL_1_TITLE, STR_EVT_GLOBAL_1_DESC, 60, 1.0]
-    globalEventId.append(1)
-    
-    globalEvent[2] = [STR_EVT_GLOBAL_2_TITLE, STR_EVT_GLOBAL_2_DESC, 120, 1.0]
-    globalEventId.append(2)
-    
-    globalEvent[3] = [STR_EVT_GLOBAL_3_TITLE, STR_EVT_GLOBAL_3_DESC, 120, 1.0]
-    
-    globalEvent[4] = [STR_EVT_GLOBAL_4_TITLE, STR_EVT_GLOBAL_4_DESC, 600, 1.0]
-    globalEventId.append(4)
-    
-    # ================================================
     # 增益事件 (Buff Events)
     # ================================================
     buffEvent = []
