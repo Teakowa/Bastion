@@ -371,7 +371,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
     eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
-    playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.WHITE, eventPlayer, 200)
+    playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.TEAM_1, eventPlayer, 200)
     playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
@@ -1498,10 +1498,15 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
     
-    if eventPlayer.getHero() == Hero.LIFEWEAVER or eventPlayer.getHero() == Hero.TORBJORN or eventPlayer.getHero() == Hero.SYMMETRA:
-        eventPlayer.eventDuration = 0
-    else:
-        eventPlayer.eventMission = random.randint(1, 3)
+    if eventPlayer.getHero() != Hero.LIFEWEAVER or eventPlayer.getHero() != Hero.TORBJORN or eventPlayer.getHero() != Hero.SYMMETRA:
+        goto lbl_0
+    eventPlayer.eventMission = 0
+    eventPlayer.eventDuration = 0
+    clearEventEffect()
+        
+    lbl_0:
+    eventPlayer.eventMission = random.randint(1, 3)
+    wait()
 
     if eventPlayer.eventMission == 1:
         eventPlayer.disallowButton(Button.ABILITY_1)
@@ -1515,7 +1520,7 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
         eventPlayer.disallowButton(Button.SECONDARY_FIRE)
         eventPlayer.setSecondaryFireEnabled(false)
         smallMessage(eventPlayer, "  {0}  你的辅助攻击 已被禁用".format(iconString(Icon.WARNING)))
-    wait(eventPlayer.eventDuration)
+    waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     if eventPlayer.eventMission == 1:
         eventPlayer.allowButton(Button.ABILITY_1)
         eventPlayer.setAbility1Enabled(true)
