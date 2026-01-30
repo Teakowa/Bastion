@@ -12,7 +12,7 @@ rule "initialize player title":
     
     wait(eventPlayer.getSlot() * 0.08)
     eventPlayer.info_pvar = 0
-    createInWorldText([player for player in getAllPlayers() if isInLoS(eventPlayer, player)], "{0}{1}".format(abilityIconString(Hero.TORBJORN, Button.ABILITY_2) if eventPlayer.isDev else "", eventPlayer.playerTitleAndColor[0]), eventPlayer, 1 if eventPlayer.isDev else 0.8, Clip.NONE, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, rgb(eventPlayer.rgb_vect.x, eventPlayer.rgb_vect.y, eventPlayer.rgb_vect.z))
+    createInWorldText([player for player in getAllPlayers() if isInLoS(eventPlayer, player)], "{0} {1}".format(abilityIconString(Hero.TORBJORN, Button.ABILITY_2) if eventPlayer.isDev else "", eventPlayer.playerTitleAndColor[0]), eventPlayer, 1 if eventPlayer.isDev else 0.8, Clip.NONE, WorldTextReeval.VISIBILITY_POSITION_STRING_AND_COLOR, rgb(eventPlayer.rgb_vect.x, eventPlayer.rgb_vect.y, eventPlayer.rgb_vect.z))
     eventPlayer.titleTextID = getLastCreatedText()
 
 
