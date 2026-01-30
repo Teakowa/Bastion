@@ -73,7 +73,14 @@ rule "initialize phase hero arrays":
     phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG, Hero.FREJA]
 
     # 技能 2
-    phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER, Hero.FREJA]
+    phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER, Hero.FREJA, Hero.REAPER, Hero.WIDOWMAKER]
+
+    # 辅助攻击
     phaseHero[2] = [Hero.DOOMFIST, Hero.TRACER]
+
+    # 跳跃
     phaseHero[3] = [Hero.HANZO]
+
+    # 近战
+    phaseHero[3] = [Hero.ZENYATTA]
 
