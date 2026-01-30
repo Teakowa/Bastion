@@ -496,7 +496,7 @@ rule "dev air lock":
     @Condition eventPlayer.isHoldingButton(Button.CROUCH) == false
     
     eventPlayer.applyImpulse(Vector.UP, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
-    eventPlayer.applyImpulse(eventPlayer.getVelocity() * -1, 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    eventPlayer.applyImpulse(negToPos(eventPlayer.getVelocity()), 0.001, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
 
 
 rule "dev portal toggle":

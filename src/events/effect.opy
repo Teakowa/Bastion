@@ -477,7 +477,7 @@ rule "[VishkarEvent]: 我独自闯关":
         eventPlayer.mod_heal_event = EVT_17_MODE1_HEAL_BOOST
         eventPlayer.mod_speed_event = EVT_17_MODE1_SPEED
         eventPlayer.setKnockbackReceived(EVT_17_MODE1_KNOCKBACK)
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), EVT_17_MODE1_DMG_TAKEN * -1))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), negToPos(EVT_17_MODE1_DMG_TAKEN)))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE1_HEAL_BOOST))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE1_SPEED))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE1_KNOCKBACK))
@@ -487,7 +487,7 @@ rule "[VishkarEvent]: 我独自闯关":
         eventPlayer.mod_heal_event = EVT_17_MODE2_HEAL_BOOST
         eventPlayer.mod_speed_event = EVT_17_MODE2_SPEED
         eventPlayer.setKnockbackReceived(EVT_17_MODE2_KNOCKBACK)
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), EVT_17_MODE2_DMG_TAKEN * -1))
+        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), negToPos(EVT_17_MODE2_DMG_TAKEN)))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE2_HEAL_BOOST))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE2_SPEED))
         smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE2_KNOCKBACK))
@@ -520,7 +520,7 @@ rule "[VishkarEvent]: 坚定":
     if eventPlayer.mod_dmg_taken == EVT_18_MAX_DMG_REDUCE:
         goto lbl_0
     eventPlayer.mod_dmg_taken -= EVT_18_DMG_REDUCE_PER_STACK
-    eventPlayer.hudText = "伤害减免：{0}%".format(eventPlayer.mod_dmg_taken * -1)
+    eventPlayer.hudText = "伤害减免：{0}%".format(negToPos(eventPlayer.mod_dmg_taken))
     updatePlayerStats()
     lbl_0:
     heal(eventPlayer, eventPlayer, eventPlayer.getMaxHealth() * EVT_18_HEAL_PERCENT)
@@ -1197,7 +1197,7 @@ rule "[VishkarEvent]: 刹车失灵":
             goto lbl_0
         eventPlayer.mod_dmg_taken -= EVT_MECH_9_DMG_TAKEN_INC
         lbl_0:
-        eventPlayer.hudText = "移速+{0}% / 伤害减免 {1}%".format(eventPlayer.mod_speed_event, eventPlayer.mod_dmg_taken * -1)
+        eventPlayer.hudText = "移速+{0}% / 伤害减免 {1}%".format(eventPlayer.mod_speed_event, negToPos(eventPlayer.mod_dmg_taken))
         updatePlayerStats()
         wait(EVT_MECH_9_INTERVAL)
 
@@ -1838,12 +1838,12 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 24]) == true
     
-    eventPlayer.mod_dmg_taken = min(EVT_MECH_24_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_24_DMG_REDUCE_DIVISOR) * -1
+    eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_24_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_24_DMG_REDUCE_DIVISOR))
     eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_24_SPEED_FACTOR
     updatePlayerStats()
     eventPlayer.heart_steel += EVT_MECH_24_HEART_STEEL_PER_TICK
     setPlayerHP()
-    eventPlayer.hudText = "伤害减免：{0}% / 移速加成：{1}% / 心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
+    eventPlayer.hudText = "伤害减免：{0}% / 移速加成：{1}% / 心之钢：{2}层".format(negToPos(eventPlayer.mod_dmg_taken), eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
     wait(EVT_MECH_24_INTERVAL)
     if ruleCondition:
         loop()

@@ -29,13 +29,13 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_2_TITLE, true, 2):
         goto lbl_1
-    buffEvent[2] = [STR_EVT_BUFF_2_TITLE, STR_EVT_BUFF_2_DESC.format(EVT_2_ARMOR_AMOUNT, EVT_2_DMG_TAKEN * -1), 25, 1.1]
+    buffEvent[2] = [STR_EVT_BUFF_2_TITLE, STR_EVT_BUFF_2_DESC.format(EVT_2_ARMOR_AMOUNT, negToPos(EVT_2_DMG_TAKEN)), 25, 1.1]
     buffEventId.append(2)
     lbl_1:
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_3_TITLE, true, 3):
         goto lbl_2
-    buffEvent[3] = [STR_EVT_BUFF_3_TITLE, STR_EVT_BUFF_3_DESC.format(EVT_3_DMG_TAKEN * -1), 20, 1.2]
+    buffEvent[3] = [STR_EVT_BUFF_3_TITLE, STR_EVT_BUFF_3_DESC.format(negToPos(EVT_3_DMG_TAKEN)), 20, 1.2]
     buffEventId.append(3)
     lbl_2:
     
@@ -74,7 +74,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_BUFF, STR_EVT_BUFF_9_TITLE, true, 9):
         goto lbl_8
-    buffEvent[9] = [STR_EVT_BUFF_9_TITLE, STR_EVT_BUFF_9_DESC.format(EVT_9_SPEED_BOOST, EVT_9_DMG_TAKEN * -1), 20, 1.2]
+    buffEvent[9] = [STR_EVT_BUFF_9_TITLE, STR_EVT_BUFF_9_DESC.format(EVT_9_SPEED_BOOST, negToPos(EVT_9_DMG_TAKEN)), 20, 1.2]
     buffEventId.append(9)
     lbl_8:
     
@@ -131,7 +131,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_18_TITLE, true, 18):
         goto lbl_17
-    buffEvent[18] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC.format(EVT_18_KNOCKBACK_RESISTANCE * -1, EVT_18_DMG_REDUCE_PER_STACK, EVT_18_HEAL_PERCENT * 100), 120, 0.5]
+    buffEvent[18] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC.format(negToPos(EVT_18_KNOCKBACK_RESISTANCE), EVT_18_DMG_REDUCE_PER_STACK, EVT_18_HEAL_PERCENT * 100), 120, 0.5]
     buffEventId.append(18)
     lbl_17:
     
@@ -161,7 +161,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_23_TITLE, true, 23):
         goto lbl_22
-    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(EVT_23_DMG_REDUCTION_DURING_ULT * -1), 120, 1.2]
+    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(negToPos(EVT_23_DMG_REDUCTION_DURING_ULT)), 120, 1.2]
     buffEventId.append(23)
     lbl_22:
     
@@ -209,7 +209,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_0_TITLE, true):
         goto lbl_33
-    debuffEvent[0] = [STR_EVT_DEBUFF_0_TITLE, STR_EVT_DEBUFF_0_DESC.format(EVT_DEBUFF_0_SPEED * -1, EVT_DEBUFF_0_GRAVITY), 20, 1.4]
+    debuffEvent[0] = [STR_EVT_DEBUFF_0_TITLE, STR_EVT_DEBUFF_0_DESC.format(negToPos(EVT_DEBUFF_0_SPEED), EVT_DEBUFF_0_GRAVITY), 20, 1.4]
     debuffEventId.append(0)
     lbl_33:
     
@@ -248,7 +248,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_6_TITLE, true, 5):
         goto lbl_39
-    debuffEvent[6] = [STR_EVT_DEBUFF_6_TITLE, STR_EVT_DEBUFF_6_DESC.format(EVT_DEBUFF_6_MAX_SPEED_DEC * -1), 30, 1.3]
+    debuffEvent[6] = [STR_EVT_DEBUFF_6_TITLE, STR_EVT_DEBUFF_6_DESC.format(negToPos(EVT_DEBUFF_6_MAX_SPEED_DEC)), 30, 1.3]
     debuffEventId.append(6)
     lbl_39:
     
@@ -293,7 +293,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_DEBUFF, STR_EVT_DEBUFF_13_TITLE, true, 13):
         goto lbl_46
-    debuffEvent[13] = [STR_EVT_DEBUFF_13_TITLE, STR_EVT_DEBUFF_13_DESC.format(EVT_DEBUFF_13_HEAL_DEALT_RED * -1), 45, 1.5]
+    debuffEvent[13] = [STR_EVT_DEBUFF_13_TITLE, STR_EVT_DEBUFF_13_DESC.format(negToPos(EVT_DEBUFF_13_HEAL_DEALT_RED)), 45, 1.5]
     debuffEventId.append(13)
     lbl_46:
     
@@ -341,7 +341,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_0_TITLE, true):
         goto lbl_55
-    mechEvent[0] = [STR_EVT_MECH_0_TITLE, STR_EVT_MECH_0_DESC.format(EVT_MECH_0_DMG_TAKEN * -1, EVT_MECH_0_HP_PERCENT * 100), 60, 0.8]
+    mechEvent[0] = [STR_EVT_MECH_0_TITLE, STR_EVT_MECH_0_DESC.format(negToPos(EVT_MECH_0_DMG_TAKEN), EVT_MECH_0_HP_PERCENT * 100), 60, 0.8]
     mechEventId.append(0)
     lbl_55:
     
@@ -350,7 +350,7 @@ rule "initialize event array":
     # ================================================
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_1_TITLE, true, 1):
         goto lbl_56
-    mechEvent[1] = [STR_EVT_MECH_1_TITLE, STR_EVT_MECH_1_DESC.format(EVT_MECH_1_HP_MULTIPLIER * 100, EVT_MECH_1_SPEED_PENALTY * -1), 15, 1.2]
+    mechEvent[1] = [STR_EVT_MECH_1_TITLE, STR_EVT_MECH_1_DESC.format(EVT_MECH_1_HP_MULTIPLIER * 100, negToPos(EVT_MECH_1_SPEED_PENALTY)), 15, 1.2]
     mechEventId.append(1)
     lbl_56:
     
@@ -422,7 +422,7 @@ rule "initialize event array":
     
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_12_TITLE, true, 12):
         goto lbl_67
-    mechEvent[12] = [STR_EVT_MECH_12_TITLE, STR_EVT_MECH_12_DESC.format(Button.JUMP, EVT_MECH_12_DMG_TAKEN * -1), 30, 1.0]
+    mechEvent[12] = [STR_EVT_MECH_12_TITLE, STR_EVT_MECH_12_DESC.format(Button.JUMP, negToPos(EVT_MECH_12_DMG_TAKEN)), 30, 1.0]
     mechEventId.append(12)
     lbl_67:
     

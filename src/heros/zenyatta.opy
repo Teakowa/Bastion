@@ -11,8 +11,9 @@ rule "[Zenyatta] Snap Kick (Self Ground)  - created by 他又 from 77QS1":
     @Condition eventPlayer.getVerticalFacingAngle() >= 45
     
     if distance(raycast(eventPlayer.getEyePosition(), eventPlayer.getEyePosition() + eventPlayer.getFacingDirection() * 2.51, getAllPlayers(), eventPlayer, true).getHitPosition(), eventPlayer.getEyePosition()) <= 2.5:
+        eventPlayer.zenSnapKick = true
         wait()
-        eventPlayer.applyImpulse(eventPlayer.getFacingDirection() * -1, 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+        eventPlayer.applyImpulse(negToPos(eventPlayer.getFacingDirection()), 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
         eventPlayer.applyImpulse(Vector.UP, 15.5 * 0.3, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
 
 
@@ -38,7 +39,7 @@ rule "zenyatta's melee knocks him back":
     
     if distance(raycast(eventPlayer.getEyePosition(), eventPlayer.getEyePosition() + eventPlayer.getFacingDirection() * 2.51, getAllPlayers(), eventPlayer, true).getHitPosition(), eventPlayer.getEyePosition()) <= 2.5:
         wait()
-        eventPlayer.applyImpulse(eventPlayer.getFacingDirection() * -1, 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+        eventPlayer.applyImpulse(negToPos(eventPlayer.getFacingDirection()), 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
         eventPlayer.applyImpulse(Vector.UP, 15.5 * 0.3, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
 
 
