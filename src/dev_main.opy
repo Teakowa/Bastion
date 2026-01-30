@@ -1,4 +1,4 @@
-#!include "env/env.opy"
+#!include "env/env_dev.opy"
 #!include "locales/zh-CN.opy"
 # Useful constants and macros
 #!include "constants/player_constants.opy"
