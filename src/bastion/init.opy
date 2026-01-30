@@ -180,7 +180,7 @@ rule "bastion constantly searches for targets in line of sight":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isAlive() == true
 
@@ -222,7 +222,7 @@ rule "bastion fires if he has a target":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.hasNano != true
     @Condition eventPlayer.isFiringPrimaryFire() == false
@@ -238,7 +238,7 @@ rule "bastion stops firing when there aren't targets":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.target == false
     @Condition eventPlayer.isAlive() == true
     
@@ -254,7 +254,7 @@ rule "bastion secondary fires if he has a target":
     @Hero bastion
     @Condition any([difficulty == 5, bastionBotSeconFire]) == true
     @Condition eventPlayer.hasNano == false
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.isFiringPrimaryFire() == true
     @Condition eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) == 0
@@ -272,7 +272,7 @@ rule "bastion secondary fires if he has nano":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.hasNano == true
     @Condition getPlayersInRadius(eventPlayer.getEyePosition(), 150, Team.1)[0] != false
     @Condition eventPlayer.isAlive() == true
@@ -294,7 +294,7 @@ rule "bastion aims at whichever part of his target is most exposed":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target != null
     
@@ -314,7 +314,7 @@ rule "bastion places his crosshair near the closest potential target if he doesn
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target == false
     
@@ -334,7 +334,7 @@ rule "determine bastion's aim speed, to improve smooth tracking":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target != false
     
@@ -349,7 +349,7 @@ rule "increase bastion's aim speed to prep for flicking to a target entering ran
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target == false
     @Condition angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.aimPosition.getPosition())) >= 1
@@ -364,7 +364,7 @@ rule "start facing bastion bots":
     @Event eachPlayer
     @Team 2
     @Hero bastion
-    @Condition evalOnce(eventPlayer.isDummy()) != false
+    @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.hasSpawned() == true
     @Condition getTotalTimeElapsed() > 10
