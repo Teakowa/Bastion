@@ -14,6 +14,10 @@ macro isHero(player, hero):
 macro percent(p):
     100*(p)
 
+# Macro function for converting negative number to number
+macro negToPos(n):
+    n * -1
+
 # Macro function for converting percent to decimal 
 macro unpercent(p):
     (p)/100
