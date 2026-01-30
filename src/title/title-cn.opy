@@ -124,7 +124,7 @@ enum MapTitleKey:
     }, \
     { \
         name: "卖核弹的小女孩", \
-        titles: [Title.SPEEDRUN, Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.LUCKY_STAR, Title.MANBA] \
+        titles: [Title.SPEEDRUN, Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.LUCKY_STAR, Title.MANBA,Title.HACKING, Title.UNLUCKY,] \
     }, \
     { \
         name: "挽风", \
@@ -220,7 +220,7 @@ enum MapTitleKey:
     }, \
     { \
         name: "锄禾日当午", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.HACKING, Title.LUCKY_STAR] \
     } \
 ]
 
@@ -480,8 +480,8 @@ enum MapTitleKey:
 # 阿特利斯
 #!define DATA_AATLIS [\
     playerNameToIndex(["他又", "别感冒","卖核弹的小女孩"]), \
-    ["卖核弹的小女孩"], \
-    ["卖核弹的小女孩"], \
+    ["卖核弹的小女孩","EruIluvatar"], \
+    ["卖核弹的小女孩","EruIluvatar"], \
 ]
 
 # ------------------------------
