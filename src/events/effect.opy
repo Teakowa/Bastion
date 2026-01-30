@@ -523,7 +523,7 @@ rule "[VishkarEvent]: 坚定":
     if eventPlayer.mod_dmg_taken == EVT_18_MAX_DMG_REDUCE:
         goto lbl_0
     eventPlayer.mod_dmg_taken -= EVT_18_DMG_REDUCE_PER_STACK
-    eventPlayer.hudText = "受到伤害{0}%".format(eventPlayer.mod_dmg_taken)
+    eventPlayer.hudText = "伤害减免：{0}%".format(eventPlayer.mod_dmg_taken * -1)
     updatePlayerStats()
     lbl_0:
     heal(eventPlayer, eventPlayer, eventPlayer.getMaxHealth() * EVT_18_HEAL_PERCENT)
@@ -1200,7 +1200,7 @@ rule "[VishkarEvent]: 刹车失灵":
             goto lbl_0
         eventPlayer.mod_dmg_taken -= EVT_MECH_9_DMG_TAKEN_INC
         lbl_0:
-        eventPlayer.hudText = "移速+{0}% / 受到伤害{1}%".format(eventPlayer.mod_speed_event, eventPlayer.mod_dmg_taken)
+        eventPlayer.hudText = "移速+{0}% / 伤害减免 {1}%".format(eventPlayer.mod_speed_event, eventPlayer.mod_dmg_taken * -1)
         updatePlayerStats()
         wait(EVT_MECH_9_INTERVAL)
 
@@ -1839,7 +1839,7 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     updatePlayerStats()
     eventPlayer.heart_steel += EVT_MECH_24_HEART_STEEL_PER_TICK
     setPlayerHP()
-    eventPlayer.hudText = "当前减伤：{0}% ，移速加成：{1}%，心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
+    eventPlayer.hudText = "伤害减免：{0}% / 移速加成：{1}% / 心之钢：{2}层".format(eventPlayer.mod_dmg_taken * -1, eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
     wait(EVT_MECH_24_INTERVAL)
     if ruleCondition:
         loop()
