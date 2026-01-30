@@ -193,13 +193,13 @@
 # {0}=堡垒数量
 #!define STR_EVT_BUFF_27_DESC "被不同的堡垒击杀\n奖励：{0}% 永久伤害减免"
 #!define STR_EVT_BUFF_28_TITLE "多动症"
-#!define STR_EVT_BUFF_28_DESC "位移后回复{0}+{1}% 最大生命值"
+#!define STR_EVT_BUFF_28_DESC "位移回复{0}+{1}% 最大生命值"
 #!define STR_EVT_BUFF_29_TITLE "操盘手 ProMax"
 #!define STR_EVT_BUFF_29_DESC "控制技能命中返还75%冷却\n并将控制效果扩散给其他堡垒"
 #!define STR_EVT_BUFF_30_TITLE "鼓舞士气 ProMax"
 #!define STR_EVT_BUFF_30_DESC "每秒治疗{0}米内的友方{1}+{2}%最大生命值"
 #!define STR_EVT_BUFF_31_TITLE "成吨的增益"
-#!define STR_EVT_BUFF_31_DESC "+50%生命/移速/减伤/治疗,-50%冷却"
+#!define STR_EVT_BUFF_31_DESC "+50%生命/移速/减伤/治疗增益"
 #!define STR_EVT_BUFF_32_TITLE "F5"
 #!define STR_EVT_BUFF_32_DESC "每5秒重置所有技能冷却"
 #!define STR_EVT_BUFF_33_TITLE "治疗光塔 ProMax"
@@ -219,7 +219,7 @@
 #!define STR_EVT_DEBUFF_20_TITLE "吸血鬼"
 #!define STR_EVT_DEBUFF_20_DESC "吸取队友生命值来治疗自己"
 #!define STR_EVT_DEBUFF_21_TITLE "成吨的减益"
-#!define STR_EVT_DEBUFF_21_DESC "全属性大幅降低\n祝你好运"
+#!define STR_EVT_DEBUFF_21_DESC "-50%生命/移速/减伤/治疗增益\n祝你好运"
 
 # ------------------------------------------------
 # 随机事件包 4：机制 (Mech Events Pack 4)

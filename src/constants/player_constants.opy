@@ -63,7 +63,7 @@
 #!define EVT_1_EFFECT Effect.SOLDIER_SPRINTING
 
 # --- ID 2: 钢铁防线 ---
-#!define EVT_2_ARMOR_AMOUNT 1200
+#!define EVT_2_ARMOR_AMOUNT 800
 #!define EVT_2_DMG_TAKEN -25
 #!define EVT_2_EFFECT DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR
 
@@ -84,7 +84,7 @@
 # --- ID 7: 血肉再生 ---
 #!define EVT_7_HEALTH_PERCENT 0.25
 #!define EVT_7_BASE_HEALTH 75
-#!define EVT_7_REGEN_INTERVAL 4
+#!define EVT_7_REGEN_INTERVAL 5
 
 # --- ID 8: 心之钢 ---
 #!define EVT_8_HP_PERCENT_PER_STACK 0.75
@@ -226,10 +226,10 @@
 # 护甲池数值 = round( flat + MaxHP * factor )
 #!define EVT_26_HEALTH_TYPE Health.ARMOR
 #!define EVT_26_ARMOR_FLAT 25
-#!define EVT_26_ARMOR_MAXHP_FACTOR 0.5
+#!define EVT_26_ARMOR_MAXHP_FACTOR 0.2
 
 # 护甲持续时间 (秒)：写入 hp_data 的到期偏移
-#!define EVT_26_ARMOR_DURATION 5
+#!define EVT_26_ARMOR_DURATION 4
 
 # 动态特效播放半径 (米) - 仅视觉表现
 #!define EVT_26_VFX_RADIUS 200
@@ -261,7 +261,7 @@
 # HOT 每秒治疗量 = round(flat + MaxHP * factor) / divisor
 #!define EVT_28_HOT_FLAT 50
 #!define EVT_28_HOT_MAXHP_FACTOR 0.25
-#!define EVT_28_HOT_DIVISOR 2
+#!define EVT_28_HOT_DIVISOR 1
 
 # 触发后等待 (秒)
 #!define EVT_28_POST_WAIT 2.5
@@ -543,7 +543,7 @@
 #!define EVT_MECH_7_SPEED_BOOST 30
 
 # 加速持续时间 (秒)
-#!define EVT_MECH_7_DURATION 3
+#!define EVT_MECH_7_SPEED_DURATION 3
 
 # --- ID 8 (Mech): 逆风而行 ---
 # 移速加成 (%)

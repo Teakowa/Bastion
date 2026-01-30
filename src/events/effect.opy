@@ -1148,7 +1148,7 @@ rule "[VishkarEvent]: 紧急避障":
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(EVT_MECH_7_DURATION)
+    wait(EVT_MECH_7_SPEED_DURATION)
     eventPlayer.mod_speed_event = 0
     updatePlayerStats()
     clearEventEffect()
@@ -1403,7 +1403,7 @@ rule "[VishkarEvent]: 多动症 (触发回血)":
         eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
     if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > EVT_28_CD_THRESHOLD:
         eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
-    eventPlayer.startHealingOverTime(eventPlayer, 2, (round(50 + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)) / EVT_28_HOT_DIVISOR)
+    eventPlayer.startHealingOverTime(eventPlayer, EVT_28_HOT_DIVISOR, (round(50 + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)) / EVT_28_HOT_DIVISOR)
     wait(EVT_28_POST_WAIT)
 
 rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
