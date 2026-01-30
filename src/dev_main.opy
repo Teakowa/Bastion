@@ -1,7 +1,5 @@
 #!include "env/env.opy"
 #!include "locales/zh-CN.opy"
-#!include "events/config_effects.opy"
-
 # Useful constants and macros
 #!include "constants/player_constants.opy"
 #!include "utilities/macros.opy"

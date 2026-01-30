@@ -1,3 +1,58 @@
+#!mainFile "../dev_main.opy"
+
+#!define FULL_DESCRIPTION \
+    STR_DESC_EVENT_STATUS "\n" \
+    STR_DESC_GAMEPLAY_TAG "\n" \
+    "————————————————\n" \
+    STR_MODE_CODE "  |  " STR_DESC_LAST_UPDATE_PREFIX VERSION "\n\n" \
+    "owmod.net/2650\n\n" \
+    STR_DESC_CONTACT_INFO "\n\n" \
+    STR_DESC_ORIGINAL_CREDIT
+
+# ========= lobby（房间容量/常改项）=========
+#!define LOBBY_TEAM1_SLOTS 8
+#!define LOBBY_TEAM2_SLOTS 0
+#!define LOBBY_SPECTATOR_SLOTS 2
+
+# =========================
+# CTF 参数（易调）
+# =========================
+#!define CTF_FLAG_SCORE_RESPAWN_TIME 15
+#!define CTF_FLAG_RETURN_TIME 4
+#!define CTF_FLAG_DROPPED_LOCK_TIME 5
+
+# =========================
+# General（百分比类最适合常量化）
+# =========================
+#!define PERK_GENERATION_PCT 500
+#!define RESPAWN_TIME_PCT 10
+#!define HEALTHPACK_RESPAWN_TIME_PCT 75
+
+# =========================
+# Team 1（通用英雄参数）
+# =========================
+#!define TEAM1_ABILITY_COOLDOWN_PCT 40
+
+# =========================
+# Team 2 - General（阵营基调，常会调）
+# =========================
+#!define TEAM2_DAMAGE_RECEIVED_PCT 25
+#!define TEAM2_ABILITY_COOLDOWN_PCT 0
+#!define TEAM2_HEALTH_PCT 500
+
+# Team 2 - Bastion（核心Boss向配置，建议抽）
+#!define BOSS_BASTION_SEC_FIRE_COOLDOWN_PCT 0
+#!define BOSS_BASTION_SEC_FIRE_KB_PCT 150
+#!define BOSS_BASTION_PROJECTILE_SPEED_PCT 175
+#!define BOSS_BASTION_INFINITE_AMMO true
+#!define BOSS_BASTION_HEALTH_PCT 500
+
+# =========================
+# Workshop Settings（UI/逻辑会复用）
+# =========================
+#!define SETTING_AUTOREBOOT_HOURS 2
+#!define SETTING_DIFFICULTY_DEFAULT 4
+
 
 # ==============================================================================
 # 事件效果参数配置 (Event Effect Configuration)
