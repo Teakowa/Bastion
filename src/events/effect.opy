@@ -1681,6 +1681,7 @@ rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
     if random.randint(0, 99) < EVT_MECH_16_WIN_CHANCE:
         eventPlayer.heart_steel += EVT_MECH_16_REWARD_STACKS
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_16_REWARD_STACKS, EVT_MECH_16_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
+        setPlayerHP()
         if all([33 in eventPlayer.earnedAchievements, 41 in eventPlayer.earnedAchievements, 39 not in eventPlayer.earnedAchievements]):
             eventPlayer.dlcTimeChallenge[1]++
     else:
@@ -1702,6 +1703,7 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
     if random.randint(0, 99) < EVT_MECH_22_WIN_CHANCE:
         eventPlayer.heart_steel += 20
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_22_REWARD_STACKS, EVT_MECH_22_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
+        setPlayerHP()
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
         if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
