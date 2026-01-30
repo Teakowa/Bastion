@@ -213,7 +213,7 @@ rule "[VishkarEvent]: 反应装甲":
 rule "[VishkarEvent]: 死亡延迟":
     @Event playerTookDamage
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 11]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 11, attacker.getHero() != eventPlayer.getHero()]) == true
     @Condition (any([eventDamage >= eventPlayer.getHealth(), eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_11_TRIGGER_HP_PERCENT, eventAbility == Button.SECONDARY_FIRE and attacker.getHero() == Hero.BASTION and eventPlayer.getMaxHealth() <= EVT_11_BASTION_EXECUTE_HP])) == true
     
     wait(0.016, Wait.ABORT_WHEN_FALSE)
