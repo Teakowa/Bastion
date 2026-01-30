@@ -3,6 +3,8 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+playervar zenSnapKick
+
 rule "[Zenyatta] Snap Kick (Self Ground)  - created by 他又 from 77QS1":
     @Event eachPlayer
     @Team 1
@@ -25,7 +27,9 @@ rule "[Zenyatta] Snap Kick (Self Wall)  - created by 他又 from 77QS1":
     
     if distance(raycast(eventPlayer.getEyePosition(), eventPlayer.getEyePosition() + eventPlayer.getFacingDirection() * 2.51, getAllPlayers(), eventPlayer, true).getHitPosition(), eventPlayer.getEyePosition()) <= 2.5:
         if raycast(eventPlayer.getEyePosition(), eventPlayer.getEyePosition() + eventPlayer.getFacingDirection() * 5, getAllPlayers(), eventPlayer, true).getPlayerHit() == null:
-            eventPlayer.applyImpulse(eventPlayer.getFacingDirection() * -1, 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+            eventPlayer.zenSnapKick = true
+            wait()
+            eventPlayer.applyImpulse(negToPos(eventPlayer.getFacingDirection()), 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
             eventPlayer.applyImpulse(Vector.UP, 15.5 * 0.3, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
 
 
@@ -38,10 +42,21 @@ rule "zenyatta's melee knocks him back":
     @Disabled
     
     if distance(raycast(eventPlayer.getEyePosition(), eventPlayer.getEyePosition() + eventPlayer.getFacingDirection() * 2.51, getAllPlayers(), eventPlayer, true).getHitPosition(), eventPlayer.getEyePosition()) <= 2.5:
+        eventPlayer.zenSnapKick = true
         wait()
         eventPlayer.applyImpulse(negToPos(eventPlayer.getFacingDirection()), 15.5, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
         eventPlayer.applyImpulse(Vector.UP, 15.5 * 0.3, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
 
+rule "zenyatta's melee knocks him back":
+    @Event eachPlayer
+    @Team 1
+    @Hero zenyatta
+    @Condition eventPlayer.zenSnapKick == true
+    @Condition eventPlayer.phase_trigger == true
+
+    wait()
+    eventPlayer.zenSnapKick = false
+    eventPlayer.phase_trigger = false
 
 rule "zenyatta's jump can levitate if held":
     @Event eachPlayer

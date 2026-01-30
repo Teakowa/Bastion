@@ -96,5 +96,5 @@ rule "initialize phase hero arrays":
     phaseHero[3] = [Hero.HANZO]
 
     # 近战
-    phaseHero[3] = [Hero.ZENYATTA]
+    phaseHero[4] = [Hero.ZENYATTA]
 
