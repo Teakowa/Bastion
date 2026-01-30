@@ -439,6 +439,8 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/check-flag.opy"
 
+#!include "heros/all_hero.opy"
+
 #!include "./settings/dev.opy"
 
 #!include "events/rejecSampling.opy"
@@ -499,9 +501,6 @@ rule "players pick up speed while not targeted for 3 seconds":
     eventPlayer.setMoveSpeed(160)
     waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
     eventPlayer.setMoveSpeed(100)
-
-
-#!include "heros/all_hero.opy"
 
 #!include "utilities/hashtag.opy"
 

@@ -439,6 +439,8 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/check-flag.opy"
 
+#!include "heros/all_hero.opy"
+
 #!include "./settings/player.opy"
 
 #!include "events/rejecSampling.opy"
@@ -514,7 +516,6 @@ rule "player deaths are counted manually rather than relying on in-game statisti
     eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
 
 
-#!include "heros/all_hero.opy"
 
 #!include "utilities/hashtag.opy"
 
