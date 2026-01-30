@@ -8,7 +8,7 @@ macro heroID(h):
 
 # Check if player is playing hero
 macro isHero(player, hero):
-    (player.getCurrentHero() == hero) or (player.getHeroOfDuplication() == hero)
+    (player.getCurrentHero() == hero)
 
 # Macro function for converting decimal to percent
 macro percent(p):
