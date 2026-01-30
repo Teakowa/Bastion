@@ -1,6 +1,6 @@
 # Bastion Escape
 
-This is a subsequent development version based on (OW2 Bastion Escape)[https://workshop.codes/QF8RN].
+This is a subsequent development version based on [OW2 Bastion Escape](https://workshop.codes/QF8RN).
 
 The classic Bastion Escape 2 experience, but revamped for Overwatch 2.
 
