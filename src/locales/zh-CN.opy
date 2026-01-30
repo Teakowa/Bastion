@@ -249,6 +249,11 @@
 
 
 # 设置菜单分类 (Pack)
+#!define STR_CAT_RANDOM_PACK "随机事件包"
+#!define STR_CAT_RANDOM_PACK_1 "随机事件包 1"
+#!define STR_CAT_RANDOM_PACK_2 "随机事件包 2"
+#!define STR_CAT_RANDOM_PACK_3 "随机事件包 3"
+#!define STR_CAT_RANDOM_PACK_4 "随机事件包 4"
 #!define STR_CAT_RANDOM_PACK_1_BUFF "随机事件包 1：增益"
 #!define STR_CAT_RANDOM_PACK_2_BUFF "随机事件包 2：增益"
 #!define STR_CAT_RANDOM_PACK_3_BUFF "随机事件包 3：增益"

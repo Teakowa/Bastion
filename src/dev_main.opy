@@ -2,14 +2,9 @@
 #!include "locales/zh-CN.opy"
 #!include "events/config_effects.opy"
 
-#!define FULL_DESCRIPTION \
-    STR_DESC_EVENT_STATUS "\n" \
-    STR_DESC_GAMEPLAY_TAG "\n" \
-    "————————————————\n" \
-    STR_MODE_CODE "  |  " STR_DESC_LAST_UPDATE_PREFIX VERSION "\n\n" \
-    "owmod.net/2650\n\n" \
-    STR_DESC_CONTACT_INFO "\n\n" \
-    STR_DESC_ORIGINAL_CREDIT
+# Useful constants and macros
+#!include "constants/player_constants.opy"
+#!include "utilities/macros.opy"
 
 settings {
     "main": {
@@ -19,9 +14,9 @@ settings {
     "lobby": {
         "mapRotation": "afterGame",
         "enableMatchVoiceChat": true,
-        "team1Slots": 8,
-        "team2Slots": 0,
-        "spectatorSlots": 12,
+        "team1Slots": LOBBY_TEAM1_SLOTS,
+        "team2Slots": LOBBY_TEAM2_SLOTS,
+        "spectatorSlots": LOBBY_SPECTATOR_SLOTS,
         "returnToLobby": "never",
         "allowPlayersInQueue": true
     },
@@ -48,9 +43,9 @@ settings {
         },
         "general": {
             "enablePerks": true,
-            "perkGeneration%": 500,
-            "respawnTime%": 10,
-            "healthPackRespawnTime%": 75,
+            "perkGeneration%": PERK_GENERATION_PCT,
+            "respawnTime%": RESPAWN_TIME_PCT,
+            "healthPackRespawnTime%": HEALTHPACK_RESPAWN_TIME_PCT,
             "enableEnemyHealthBars": false,
             "gamemodeStartTrigger": "manual",
             "heroLimit": "off",
@@ -60,21 +55,21 @@ settings {
     "heroes": {
         "team1": {
             "general": {
-                "abilityCooldown%": 40
+                "abilityCooldown%": TEAM1_ABILITY_COOLDOWN_PCT
             }
         },
         "team2": {
             "bastion": {
-                "secondaryFireCooldown%": 0,
-                "secondaryFireKb%": 150,
-                "projectileSpeed%": 175,
-                "enableInfiniteAmmo": true,
-                "health%": 500
+                "secondaryFireCooldown%": BOSS_BASTION_SEC_FIRE_COOLDOWN_PCT,
+                "secondaryFireKb%": BOSS_BASTION_SEC_FIRE_KB_PCT,
+                "projectileSpeed%": BOSS_BASTION_PROJECTILE_SPEED_PCT,
+                "enableInfiniteAmmo": BOSS_BASTION_INFINITE_AMMO,
+                "health%": BOSS_BASTION_HEALTH_PCT
             },
             "general": {
-                "damageReceived%": 25,
-                "abilityCooldown%": 0,
-                "health%": 500
+                "damageReceived%": TEAM2_DAMAGE_RECEIVED_PCT,
+                "abilityCooldown%": TEAM2_ABILITY_COOLDOWN_PCT,
+                "health%": TEAM2_HEALTH_PCT
             }
         },
         "allTeams": {
@@ -223,9 +218,9 @@ settings {
         }
     },
     "workshop": {
-        "自动重开时间间隔（小时）": 2,
+        "自动重开时间间隔（小时）": SETTING_AUTOREBOOT_HOURS,
         "难度": [
-            4
+            SETTING_DIFFICULTY_DEFAULT
         ]
     }
 }
@@ -446,7 +441,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/check-flag.opy"
 
-#!include "./settings/player.opy"
+#!include "./settings/dev.opy"
 
 #!include "events/rejecSampling.opy"
 
@@ -506,19 +501,6 @@ rule "players pick up speed while not targeted for 3 seconds":
     eventPlayer.setMoveSpeed(160)
     waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
     eventPlayer.setMoveSpeed(100)
-
-
-rule "player deaths are counted manually rather than relying on in-game statistics":
-    @Event playerDied
-    @Team 1
-    @Condition eventPlayer.isWinner == false
-    
-    wait(0.5 * getServerLoad() / 100)
-    eventPlayer.runDeathCount++
-    if eventPlayer in savedIndex:
-        wait(0.032)
-        savedDeaths[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.runDeathCount
-    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
 
 
 #!include "heros/all_hero.opy"

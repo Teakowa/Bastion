@@ -3,6 +3,8 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+subroutine progressHero
+
 def progressHero():
     @Name "add 1 to heroNumber, switch player to the newly unlocked hero, and set hero availability to that hero and all preceding"
     

@@ -3,6 +3,20 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+globalvar savedIndex 17
+globalvar savedHero 18
+globalvar savedDeaths 19
+globalvar savedIsWinner 20
+globalvar savedSkipCount 21
+globalvar savedJoinTime 22
+globalvar savedWinnerTime 49
+globalvar savedA36TGrenade 51
+globalvar savedA36TGrenadeHit 52
+globalvar savedA36TGrenadeDmg 53
+globalvar savedA36TGrenadeAlive 54
+globalvar difficulty
+globalvar difficultyText
+
 rule "Initialize global variables":
     dlcVishkarEvent = createWorkshopSettingBool(STR_SETTING_CAT_DLC, STR_SETTING_DLC_VISHKAR, true, 5)
 
