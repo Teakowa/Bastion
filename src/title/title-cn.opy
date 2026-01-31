@@ -4,6 +4,7 @@
 #!optimizeStrict
 
 #!define playerNameToIndex(names) __script__("../tools/playerNameToIndex.js")
+#!define playerNameToIndexDelimited(names, sep) __script__("../tools/playerNameToIndexDelimited.js")
 
 # ------------------------------
 # 1. 定义称号枚举 (Enums)
@@ -234,254 +235,254 @@ enum MapTitleKey:
 # 地图数据块 (Data Blocks)
 # 暴雪世界
 #!define DATA_BLIZZARD_WORLD [\
-    [], \
-    playerNameToIndex(["他又","吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","雨鸢","EruIluvatar","糯米进脑子","Augenstern"]), \
-    playerNameToIndex(["他又","吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","雨鸢","EruIluvatar","糯米进脑子","Augenstern"])\
+   [], \
+   playerNameToIndexDelimited(["他又","吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","雨鸢","EruIluvatar","糯米进脑子","Augenstern"], "-"), \
+   playerNameToIndexDelimited(["他又","吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","雨鸢","EruIluvatar","糯米进脑子","Augenstern"], "-")\
 ]
 
 # 多拉多
 #!define DATA_DORADO [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","明月有时"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","明月有时"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","明月有时"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","明月有时"], "-")\
 ]
 
 # 艾兴瓦尔德
 #!define DATA_EICHENWALDE [ \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","眼镜小宅","初一吖","锦木千束"]), \
-    playerNameToIndex(["顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","挽风","看啊情","眼镜小宅","初一吖","锦木千束","她说话有股孩子气","EruIluvatar"]), \
-    playerNameToIndex(["顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","锦木千束","EruIluvatar"])\
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","眼镜小宅","初一吖","锦木千束"], "-"), \
+   playerNameToIndexDelimited(["顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","挽风","看啊情","眼镜小宅","初一吖","锦木千束","她说话有股孩子气","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","锦木千束","EruIluvatar"], "-")\
 ]
 
 # 直布罗陀
 #!define DATA_WATCHPOINT_GIBRALTAR [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-")\
 ]
 
 #哈瓦那
 #!define DATA_HAVANA [ \
-    [], \
-    playerNameToIndex(["他又","别感冒","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["他又","别感冒","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["他又","别感冒","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["他又","别感冒","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 好莱坞
 #!define DATA_HOLLYWOOD [ \
-    [], \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","糯米进脑子","EruIluvatar","锄禾日当午"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","糯米进脑子","EruIluvatar","锄禾日当午"])\
+   [], \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","糯米进脑子","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","糯米进脑子","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 月球基地
 #!define DATA_HORIZON_LUNAR_COLONY [ \
-    [], \
-    playerNameToIndex(["烛台与南九","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"]), \
-    playerNameToIndex(["烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"])\
+   [], \
+   playerNameToIndexDelimited(["烛台与南九","顾北酒笙","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"], "-"), \
+   playerNameToIndexDelimited(["烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"], "-")\
 ]
 
 # 渣客镇
 #!define DATA_JUNKERTOWN [ \
-    [], \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"], "-")\
 ]
 
 # 国王大道
 #!define DATA_KINGS_ROW [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","一痕沙"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","一痕沙"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 中城
 #!define DATA_MIDTOWN [ \
-    [], \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","EruIluvatar","糯米进脑子"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","EruIluvatar","糯米进脑子"])\
+   [], \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","EruIluvatar","糯米进脑子"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","EruIluvatar","糯米进脑子"], "-")\
 ]
 
 # 努巴尼
 #!define DATA_NUMBANI [ \
-    [], \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","旅店老板"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","旅店老板"])\
+   [], \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","旅店老板"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","旅店老板"], "-")\
 ]
 
 # 帕拉伊苏
 #!define DATA_PARAISO [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","谁能体谅我的雨天"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","谁能体谅我的雨天"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 巴黎
 #!define DATA_PARIS [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","她说话有股孩子气","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","她说话有股孩子气","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","她说话有股孩子气","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","她说话有股孩子气","EruIluvatar"], "-")\
 ]
 
 # 里阿尔托
 #!define DATA_RIALTO [ \
-    playerNameToIndex(["草艮","寒霜冰湮","Cold","豆本豆豆奶"]), \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","糯米进脑子"]), \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","糯米进脑子"])\
+   playerNameToIndexDelimited(["草艮","寒霜冰湮","Cold","豆本豆豆奶"], "-"), \
+   playerNameToIndexDelimited(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","糯米进脑子"], "-"), \
+   playerNameToIndexDelimited(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","糯米进脑子"], "-")\
 ]
 
 # 66号公路
 #!define DATA_ROUTE66 [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","锄禾日当午"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","锄禾日当午"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","锄禾日当午"], "-")\
 ]
 
 # 香巴里寺院
 #!define DATA_SHAMBALI_MONASTERY [ \
-    playerNameToIndex(["他又","别感冒"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["他又","别感冒"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 阿努比斯神殿
 #!define DATA_TEMPLE_OF_ANUBIS [ \
-    playerNameToIndex(["吾携秋水揽星河","Cold","豆本豆豆奶","溪云初起日沉阁","看啊情"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","Cold","豆本豆豆奶","溪云初起日沉阁","看啊情"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 沃斯卡娅工业区
 #!define DATA_VOLSKAYA [ \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","卖核弹的小女孩","眼镜小宅"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","卖核弹的小女孩","眼镜小宅"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"], "-")\
 ]
 
 # 埃斯佩兰萨
 #!define DATA_ESPERANCA [ \
-    playerNameToIndex(["WildRage","尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","眼镜小宅"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"])\
+   playerNameToIndexDelimited(["WildRage","尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","眼镜小宅"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 斗兽场
 #!define DATA_COLOSSEO [ \
-    playerNameToIndex(["Cold","豆本豆豆奶"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["他又","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["Cold","豆本豆豆奶"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["他又","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 鲁纳塞彼
 #!define DATA_RUNASAPI [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-")\
 ]
 
 # 新皇后街
 #!define DATA_NEW_QUEEN_STREET [ \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","溪云初起日沉阁","眼镜小宅"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","Cold","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","Cold","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","溪云初起日沉阁","眼镜小宅"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","Cold","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","Cold","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢"], "-")\
 ]
 
 # 皇家赛道
 #!define DATA_CIRCUIT_ROYAL [ \
-    playerNameToIndex(["他又","别感冒"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","眼镜小宅","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","眼镜小宅","EruIluvatar"])\
+   playerNameToIndexDelimited(["他又","别感冒"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","眼镜小宅","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","眼镜小宅","EruIluvatar"], "-")\
 ]
 
 # 花村
 #!define DATA_HANAMURA [ \
-    playerNameToIndex(["尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","看啊情"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","看啊情"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 伊利奥斯
 #!define DATA_ILIOS [ \
-    [], \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 漓江塔
 #!define DATA_LIJIANG_TOWER [ \
-    [], \
-    playerNameToIndex(["草艮","烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","水濑祈","看啊情","眼镜小宅","初一吖","我心飞扬","EruIluvatar","雨鸢","锄禾日当午"]), \
-    playerNameToIndex(["草艮","烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","水濑祈","看啊情","眼镜小宅","初一吖","我心飞扬","EruIluvatar","雨鸢","锄禾日当午"])\
+   [], \
+   playerNameToIndexDelimited(["草艮","烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","水濑祈","看啊情","眼镜小宅","初一吖","我心飞扬","EruIluvatar","雨鸢","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["草艮","烛台与南九","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","水濑祈","看啊情","眼镜小宅","初一吖","我心飞扬","EruIluvatar","雨鸢","锄禾日当午"], "-")\
 ]
 
 # 萨摩亚
 #!define DATA_SAMOA [ \
-    [], \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"]), \
-    playerNameToIndex(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"])\
+   [], \
+   playerNameToIndexDelimited(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["草艮","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 釜山
 #!define DATA_BUSAN [ \
-    playerNameToIndex(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河"]), \
-    playerNameToIndex(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"]), \
-    playerNameToIndex(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"])\
+   playerNameToIndexDelimited(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河"], "-"), \
+   playerNameToIndexDelimited(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"], "-")\
 ]
 
 # 绿洲城
 #!define DATA_OASIS [ \
-    playerNameToIndex(["尘风歌者","豆本豆豆奶"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["尘风歌者","豆本豆豆奶"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 新渣客城
 #!define DATA_NEW_JUNK_CITY [ \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","溪云初起日沉阁","眼镜小宅"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","溪云初起日沉阁","眼镜小宅"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 尼泊尔
 #!define DATA_NEPAL [ \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar"], "-")\
 ]
 
 # 阿努比斯王座
 #!define DATA_THRONE_OF_ANUBIS [ \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","初一吖","Jargon"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","Jargon","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","Jargon","EruIluvatar"])\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","初一吖","Jargon"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","Jargon","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","Jargon","EruIluvatar"], "-")\
 ]
 
 # 花冈
 #!define DATA_HANAOKA [ \
-    [], \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"])\
+   [], \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
 ]
 
 # 苏拉瓦萨
 #!define DATA_SURAVASA [ \
-    playerNameToIndex(["他又","别感冒","吾携秋水揽星河","寒霜冰湮","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜","Augenstern","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜","Augenstern","EruIluvatar"])\
+   playerNameToIndexDelimited(["他又","别感冒","吾携秋水揽星河","寒霜冰湮","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜","Augenstern","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","雨鸢","我想吃烤地瓜","Augenstern","EruIluvatar"], "-")\
 ]
 
 # 阿育陀耶
 #!define DATA_AYUTTHAYA [ \
-    playerNameToIndex(["他又","别感冒"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","EruIluvatar"]), \
-    playerNameToIndex(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","EruIluvatar"])\
+   playerNameToIndexDelimited(["他又","别感冒"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","EruIluvatar"], "-")\
 ]
 
 # 阿特利斯
 #!define DATA_AATLIS [\
-    playerNameToIndex(["他又", "别感冒","卖核弹的小女孩"]), \
-    ["卖核弹的小女孩","EruIluvatar"], \
-    ["卖核弹的小女孩","EruIluvatar"], \
+   playerNameToIndexDelimited(["他又", "别感冒","卖核弹的小女孩"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
 ]
 
 # ------------------------------

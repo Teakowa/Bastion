@@ -21,4 +21,6 @@ rule "map - 苏拉瓦萨":
     creditsPosition = vect(0.68, 11.77, 120.02)
     endPosition = vect(-2.43, 4.13, 0.75)
 
-    mapTitlePlayersByKey = DATA_SURAVASA
+    mapTitlePlayersByKey.append(DATA_SURAVASA[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_SURAVASA[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_SURAVASA[2].split("-"))

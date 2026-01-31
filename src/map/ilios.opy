@@ -51,4 +51,6 @@ rule "map - 伊利奥斯":
         #Base coordinates for world game settings HUD
         creditsPosition = vect(321.8, -20, 46)
 
-        mapTitlePlayersByKey = DATA_ILIOS
+    mapTitlePlayersByKey.append(DATA_ILIOS[0])
+    mapTitlePlayersByKey.append(DATA_ILIOS[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_ILIOS[2].split("-"))

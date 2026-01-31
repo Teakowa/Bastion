@@ -46,4 +46,6 @@ rule "map - 漓江塔":
     controlRespawnPosition.append(vect(62.93, 267.64, 349.53))
     endPosition = vect(-44.02, 271.64, 349.77)
 
-    mapTitlePlayersByKey = DATA_LIJIANG_TOWER
+    mapTitlePlayersByKey.append(DATA_LIJIANG_TOWER[0])
+    mapTitlePlayersByKey.append(DATA_LIJIANG_TOWER[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_LIJIANG_TOWER[2].split("-"))

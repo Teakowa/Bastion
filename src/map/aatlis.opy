@@ -22,4 +22,6 @@ rule "map - 阿特利斯":
     creditsPosition = vect(5.1, 19.5, 105.79)
     endPosition = vect(-78.02, 9.19, -39.93)
 
-    mapTitlePlayersByKey = DATA_AATLIS
+    mapTitlePlayersByKey.append(DATA_AATLIS[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_AATLIS[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_AATLIS[2].split("-"))

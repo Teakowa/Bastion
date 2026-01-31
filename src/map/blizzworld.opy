@@ -15,4 +15,6 @@ rule "map - blizzworld":
     __currentMapText___ = "暴雪世界"
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey = DATA_BLIZZARD_WORLD
+    mapTitlePlayersByKey.append(DATA_BLIZZARD_WORLD[0])
+    mapTitlePlayersByKey.append(DATA_BLIZZARD_WORLD[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_BLIZZARD_WORLD[2].split("-"))

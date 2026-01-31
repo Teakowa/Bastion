@@ -15,4 +15,6 @@ rule "map - 埃斯佩兰萨":
     creditsPosition = vect(116.67, -0.29, -82.29)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_ESPERANCA
+    mapTitlePlayersByKey.append(DATA_ESPERANCA[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_ESPERANCA[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_ESPERANCA[2].split("-"))

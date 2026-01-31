@@ -15,4 +15,6 @@ rule "map - volskaya industries":
     __currentMapText___ = "沃斯卡娅"
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey = DATA_VOLSKAYA
+    mapTitlePlayersByKey.append(DATA_VOLSKAYA[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_VOLSKAYA[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_VOLSKAYA[2].split("-"))

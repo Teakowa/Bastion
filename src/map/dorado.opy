@@ -20,4 +20,6 @@ rule "map - dorado":
     creditsPosition = vect(197.72, 10.01, 44.63)
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey = DATA_DORADO
+    mapTitlePlayersByKey.append(DATA_DORADO[0])
+    mapTitlePlayersByKey.append(DATA_DORADO[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_DORADO[2].split("-"))

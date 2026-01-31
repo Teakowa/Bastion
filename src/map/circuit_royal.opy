@@ -14,4 +14,6 @@ rule "map - 皇家赛道":
     creditsPosition = vect(147.52, 11.5, -10.9)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_CIRCUIT_ROYAL
+    mapTitlePlayersByKey.append(DATA_CIRCUIT_ROYAL[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_CIRCUIT_ROYAL[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_CIRCUIT_ROYAL[2].split("-"))

@@ -15,4 +15,6 @@ rule "map - shambali monastery":
     creditsPosition = vect(1.75, 35, 232.5)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_SHAMBALI_MONASTERY
+    mapTitlePlayersByKey.append(DATA_SHAMBALI_MONASTERY[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_SHAMBALI_MONASTERY[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_SHAMBALI_MONASTERY[2].split("-"))

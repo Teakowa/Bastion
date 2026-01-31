@@ -25,4 +25,6 @@ rule "map - eichenwalde":
     __currentMapText___ = "阿德勒斯布鲁恩" if __currentMap___ == 565 else getCurrentMap()
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey = DATA_EICHENWALDE
+    mapTitlePlayersByKey.append(DATA_EICHENWALDE[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_EICHENWALDE[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_EICHENWALDE[2].split("-"))

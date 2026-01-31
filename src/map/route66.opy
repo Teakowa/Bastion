@@ -19,4 +19,6 @@ rule "map - route 66":
     creditsPosition = vect(-113.27, 7.5, -63.14)
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey = DATA_ROUTE66
+    mapTitlePlayersByKey.append(DATA_ROUTE66[0])
+    mapTitlePlayersByKey.append(DATA_ROUTE66[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_ROUTE66[2].split("-"))

@@ -19,4 +19,6 @@ rule "map - junkertown":
     creditsPosition = vect(-92.71, 14.04, -73.79)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_JUNKERTOWN
+    mapTitlePlayersByKey.append(DATA_JUNKERTOWN[0])
+    mapTitlePlayersByKey.append(DATA_JUNKERTOWN[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_JUNKERTOWN[2].split("-"))

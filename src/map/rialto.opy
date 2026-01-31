@@ -28,4 +28,6 @@ rule "map - rialto":
     resetPosition = vect(-59.05, 3.75, -158.41)
     creditsPosition = vect(-57.06, 5.25, -181.51)
 
-    mapTitlePlayersByKey = DATA_RIALTO
+    mapTitlePlayersByKey.append(DATA_RIALTO[0].split("-"))
+    mapTitlePlayersByKey.append(DATA_RIALTO[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_RIALTO[2].split("-"))

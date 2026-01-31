@@ -20,4 +20,6 @@ rule "map - paraiso":
     creditsPosition = vect(-70.2, 7.75, -183.14)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_PARAISO
+    mapTitlePlayersByKey.append(DATA_PARAISO[0])
+    mapTitlePlayersByKey.append(DATA_PARAISO[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_PARAISO[2].split("-"))

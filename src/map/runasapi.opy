@@ -21,4 +21,6 @@ rule "map - 鲁纳塞彼":
     creditsPosition = vect(124.6, 8.77, -15.99)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_RUNASAPI
+    mapTitlePlayersByKey.append(DATA_RUNASAPI[0])
+    mapTitlePlayersByKey.append(DATA_RUNASAPI[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_RUNASAPI[2].split("-"))

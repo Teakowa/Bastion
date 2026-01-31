@@ -15,4 +15,6 @@ rule "map - 中城":
     creditsPosition = vect(126.5, 3, -125.37)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey = DATA_MIDTOWN
+    mapTitlePlayersByKey.append(DATA_MIDTOWN[0])
+    mapTitlePlayersByKey.append(DATA_MIDTOWN[1].split("-"))
+    mapTitlePlayersByKey.append(DATA_MIDTOWN[2].split("-"))
