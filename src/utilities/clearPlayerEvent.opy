@@ -11,6 +11,7 @@ def clearPlayerEvent():
     eventPlayer.stopForcingThrottle()
     eventPlayer.stopThrottleInDirection()
     eventPlayer.combatRegen = false
+    eventPlayer.passiveRegenBlocked = false
     eventPlayer.categoryRoll = null
     eventPlayer.eventId = -1
     eventPlayer.eventType = null

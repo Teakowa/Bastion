@@ -370,7 +370,6 @@ playervar eventIsSelected 71
 playervar eventTempId 72
 playervar eventTempWeight 73
 playervar categoryRoll 74
-playervar combatRegen 75
 playervar mod_speed_event 76
 playervar mod_speed_perma 77
 playervar mod_heal_event 78
@@ -461,6 +460,8 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/progressHero.opy"
 
+#!include "utilities/playerRegen.opy"
+
 #!include "utilities/setDifficulty.opy"
 
 #!include "utilities/setThirdPerson.opy"
@@ -475,7 +476,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/unlockAchievement.opy"
 
-#!include "utilities/stopCombatRegen.opy"
+#!include "utilities/startCombatRegen.opy"
 
 #!include "utilities/createBastionBot.opy"
 

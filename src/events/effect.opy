@@ -691,12 +691,14 @@ rule "[VishkarEvent]: 献祭":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 2]) == true
     @Condition any([[player for player in getLivingPlayers(Team.1) if player.isUsingAbility1()] > 0, [player for player in getLivingPlayers(Team.1) if player.isUsingAbility2()] > 0]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+
     playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.TEAM_2, eventPlayer, 200)
     damage(eventPlayer, (sorted([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()], lambda i: distance(eventPlayer, i)))[0], eventPlayer.getMaxHealth() * EVT_DEBUFF_2_DMG_PERCENT)
     wait(max(0.5, getAverageServerLoad() / 100 * 0.032))
     if ruleCondition:
         loop()
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 易损":
@@ -722,7 +724,8 @@ rule "[VishkarEvent]: 限速40":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 4, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+    
     wait(EVT_DEBUFF_4_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if eventPlayer.hasStatus(Status.BURNING):
         goto lbl_0
@@ -733,6 +736,8 @@ rule "[VishkarEvent]: 限速40":
     if ruleCondition:
         loop()
     eventPlayer.clearStatusEffect(Status.BURNING)
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 引力异常":
@@ -821,13 +826,16 @@ rule "[VishkarEvent]: 能量泄漏":
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 8]) == true
     @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2()]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+    
     wait()
     playEffect(getAllPlayers(), DynamicEffect.ECHO_STICKY_BOMB_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
     damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_DEBUFF_8_DMG_PERCENT)
     wait(EVT_DEBUFF_8_COOLDOWN)
     if ruleCondition:
         loop()
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 生命在于静止":
@@ -835,13 +843,16 @@ rule "[VishkarEvent]: 生命在于静止":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 9]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+    
     wait()
     damage(eventPlayer, null, ceil(eventPlayer.getMaxHealth() * (EVT_DEBUFF_9_DMG_MOVING if eventPlayer.isMoving() else EVT_DEBUFF_9_DMG_STILL)))
     eventPlayer.setStatusEffect(null, Status.BURNING, EVT_DEBUFF_9_BURN_DURATION)
     wait(EVT_DEBUFF_9_TICK_RATE)
     if ruleCondition:
         loop()
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 有难同当 Effect":
@@ -923,7 +934,8 @@ rule "[VishkarEvent]: 减半":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.eventType == 1, eventPlayer.eventId == 14, eventPlayer.getHealth() != 0]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+    
     if eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_DEBUFF_14_EXECUTE_THRESHOLD:
         kill(eventPlayer, eventPlayer)
         playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
@@ -933,6 +945,8 @@ rule "[VishkarEvent]: 减半":
         playEffect(getAllPlayers(), DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION, Color.TEAM_2, eventPlayer, 3)
     if ruleCondition:
         loop()
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 舍己为人":
@@ -1554,7 +1568,8 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 19]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+
     eventPlayer.target = (sorted(getLivingPlayers(Team.1).exclude(eventPlayer), lambda i: i.getHealth() / i.getMaxHealth()))[0]
 
     if eventPlayer.target != null:
@@ -1565,6 +1580,8 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
         loop()
     clearEventEffect()
     eventPlayer.target = null
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
@@ -1572,7 +1589,8 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 20, eventPlayer.getNormalizedHealth() != 1]) == true
     
-    stopCombatRegen()
+    eventPlayer.passiveRegenBlocked = true
+    
     eventPlayer.target = [i for i in getPlayersInRadius(eventPlayer, EVT_DEBUFF_20_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer) if i.isAlive()]
     if len(eventPlayer.target) > 0:
         damage(eventPlayer.target, eventPlayer, EVT_DEBUFF_20_DAMAGE_PER_TARGET)
@@ -1584,6 +1602,8 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
         loop()
     clearEventEffect()
     eventPlayer.target = null
+    eventPlayer.passiveRegenBlocked = false
+    startCombatRegen()
 
 
 rule "[VishkarEvent]: 成吨的减益 (全属性削弱)":
