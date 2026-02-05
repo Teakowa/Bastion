@@ -40,7 +40,7 @@ rule "SAFE create bastion bots when the game start and there are no bastion bots
         destroyAllDummies()
         wait(0.5)
         createBastionBot()
-    wait(max(2, getAverageServerLoad() / 100 * 3.2))
+    wait(max(1, getAverageServerLoad() / 100 * 3.2))
     if ruleCondition:
         loop()
 
