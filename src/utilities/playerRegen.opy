@@ -40,7 +40,7 @@ rule "SYSTEM: Core Regen Logic (Signal Based)":
 rule "Trigger: Normal Damage":
     @Event playerTookDamage
     @Team 1
-    @Condition attacker.getHero() == Hero.BASTION and attacker != eventPlayer
+    # @Condition attacker.getHero() == Hero.BASTION and attacker != eventPlayer
     
     eventPlayer.combatRegen = true
     wait()
