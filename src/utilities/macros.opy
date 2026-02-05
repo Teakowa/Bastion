@@ -33,3 +33,6 @@ macro percentOf(p, n):
 # Convert angle in degrees to radians
 macro toRadians(deg):
     (Math.PI/180)*deg
+
+macro Array.frist():
+    self[0]
