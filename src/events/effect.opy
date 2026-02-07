@@ -1040,8 +1040,6 @@ rule "[VishkarEvent]: 赌徒":
         eventPlayer.heart_steel -= EVT_MECH_2_STAKE
         eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！失去 {1} 层心之钢层数（{2}%）".format(iconString(Icon.DIAMOND), EVT_MECH_2_STAKE, EVT_MECH_2_STAKE * EVT_8_HP_PERCENT_PER_STACK))
-        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
-            eventPlayer.dlcTimeChallenge[2]++
     else:
         eventPlayer.heart_steel += EVT_MECH_2_STAKE
         eventPlayer.dlcTimeChallenge[0]++
@@ -1310,8 +1308,6 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
         eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_NORMAL
         eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_NORMAL))
-        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
-            eventPlayer.dlcTimeChallenge[2]++
     elif eventPlayer.categoryRoll <= EVT_MECH_13_PROB_WIN_RARE:
         eventPlayer.mod_speed_perma += EVT_MECH_13_VAL_RARE
         eventPlayer.dlcTimeChallenge[0]++
@@ -1320,8 +1316,6 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
         eventPlayer.mod_speed_perma -= EVT_MECH_13_VAL_RARE
         eventPlayer.dlcTimeChallenge[0] = 0 if eventPlayer.dlcTimeChallenge[0] > 0 else eventPlayer.dlcTimeChallenge[0] - 1
         smallMessage(eventPlayer, "  {0}  输！永久失去 {1}% 移动速度加成".format(iconString(Icon.DIAMOND), EVT_MECH_13_VAL_RARE))
-        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
-            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.categoryRoll = 0
     updatePlayerStats()
     eventPlayer.eventDuration = 0
@@ -1699,12 +1693,8 @@ rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
         eventPlayer.heart_steel += EVT_MECH_16_REWARD_STACKS
         smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_16_REWARD_STACKS, EVT_MECH_16_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
         setPlayerHP()
-        if all([33 in eventPlayer.earnedAchievements, 41 in eventPlayer.earnedAchievements, 39 not in eventPlayer.earnedAchievements]):
-            eventPlayer.dlcTimeChallenge[1]++
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
-        if all([36 in eventPlayer.earnedAchievements, 37 in eventPlayer.earnedAchievements, 40 not in eventPlayer.earnedAchievements]):
-            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.eventForceRoll = EVT_MECH_16_FORCE_ROLL
     eventPlayer.eventForceCount = EVT_MECH_16_FORCE_COUNT
     smallMessage(eventPlayer, "  {0}  合约已生效：未来 3 个事件为 减益".format(iconString(Icon.DIAMOND)))   
@@ -1723,8 +1713,6 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
         setPlayerHP()
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
-        if [36, 37] in eventPlayer.earnedAchievements and 40 not in eventPlayer.earnedAchievements:
-            eventPlayer.dlcTimeChallenge[2]++
     eventPlayer.eventForceRoll = EVT_MECH_22_FORCE_ROLL
     eventPlayer.eventForceCount = EVT_MECH_22_FORCE_COUNT
     smallMessage(eventPlayer, "  {0}  合约已生效：未来 5 个事件为 减益".format(iconString(Icon.DIAMOND)))
