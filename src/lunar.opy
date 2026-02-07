@@ -424,13 +424,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "title/title-cn.opy"
 
-#!include "events/check-flag.opy"
+#!include "events/checkFlag.opy"
 
-#!include "heros/all_hero.opy"
+#!include "heroes/all_hero.opy"
 
 #!include "./settings/player.opy"
 
-#!include "events/rejecSampling.opy"
+#!include "events/rejectSampling.opy"
 
 
 
@@ -472,9 +472,9 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerTitle.opy"
 
-#!include "utilities/anticrash.opy"
+#!include "utilities/antiCrash.opy"
 
-# !include "events/get_player_event.opy"
+# !include "events/getPlayerEvent.opy"
 
 globalvar activePacket
 

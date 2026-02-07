@@ -436,7 +436,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "title/title-cn.opy"
 
-#!include "events/check-flag.opy"
+#!include "events/checkFlag.opy"
 
 #!include "heros/all_hero.opy"
 
@@ -484,7 +484,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/anticrash.opy"
 
-#!include "events/get_player_event.opy"
+#!include "events/getPlayerEvent.opy"
 
 # Maps
 #!include "map/setup_all_map.opy"
