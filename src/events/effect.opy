@@ -304,11 +304,12 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     # 自身重置
     eventPlayer.clearStatusEffect(Status.PHASED_OUT)
     eventPlayer.clearStatusEffect(Status.INVINCIBLE)
-    if eventPlayer.getHero() in phaseHero[0] and eventPlayer.getHero() not in [Hero.TORBJORN, Hero.SYMMETRA]:
+
+    if eventPlayer.getHero() in phaseHero[0]:
         eventPlayer.allowButton(Button.ABILITY_1)
         eventPlayer.setAbility1Enabled(true)
 
-    if eventPlayer.getHero() in phaseHero[1] and eventPlayer.getHero() not Hero.LIFEWEAVER:
+    if eventPlayer.getHero() in phaseHero[1]:
         eventPlayer.allowButton(Button.ABILITY_2)
         eventPlayer.setAbility2Enabled(true)
     eventPlayer.possess = null
@@ -1503,16 +1504,19 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
     
-    if eventPlayer.getHero() != Hero.LIFEWEAVER or eventPlayer.getHero() != Hero.TORBJORN or eventPlayer.getHero() != Hero.SYMMETRA:
-        goto lbl_0
-    eventPlayer.eventMission = 0
-    eventPlayer.eventDuration = 0
-    clearEventEffect()
+    if eventPlayer.getHero() == Hero.LIFEWEAVER:
+        eventPlayer.eventMission = 3
+        goto lbl_1
+
+    if eventPlayer.getHero() == Hero.TORBJORN or eventPlayer.getHero() == Hero.SYMMETRA:
+        eventPlayer.eventMission = 2
+        goto lbl_1
         
     lbl_0:
     eventPlayer.eventMission = random.randint(1, 3)
     wait()
 
+    lbl_1:
     if eventPlayer.eventMission == 1:
         eventPlayer.disallowButton(Button.ABILITY_1)
         eventPlayer.setAbility1Enabled(false)
