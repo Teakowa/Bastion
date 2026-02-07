@@ -95,6 +95,10 @@ settings {
             "ana": {
                 "ability1Cooldown%": 67
             },
+            "anran": {
+                "ability1Cooldown%": 75,
+                "ability2Cooldown%": 80
+            },
             "baptiste": {
                 "healingReceived%": 50,
                 "projectileSpeed%": 500,
