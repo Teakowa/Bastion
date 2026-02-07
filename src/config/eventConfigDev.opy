@@ -569,3 +569,4 @@ rule "initialize event array":
 
     mechEvent[24] = [STR_EVT_MECH_24_TITLE, STR_EVT_MECH_24_DESC, EVT_MECH_24_DURATION, EVT_MECH_24_WEIGHT]
     mechEventId.append(24)
+

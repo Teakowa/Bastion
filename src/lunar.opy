@@ -424,13 +424,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "title/title-cn.opy"
 
-#!include "events/checkFlag.opy"
+#!include "events/init/detectFlag.opy"
 
 #!include "heroes/all_hero.opy"
 
-#!include "./settings/player.opy"
+#!include "./config/eventConfig.opy"
 
-#!include "events/rejectSampling.opy"
+#!include "events/allocation/rejectSampling.opy"
 
 
 
@@ -474,7 +474,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/antiCrash.opy"
 
-# !include "events/getPlayerEvent.opy"
+#!include "events/allocation/assignPlayerEvent.opy"
+
+#!include "events/effects/buffEffects.opy"
+
+#!include "events/effects/debuffEffects.opy"
+
+#!include "events/effects/mechEffects.opy"
 
 globalvar activePacket
 
@@ -646,7 +652,5 @@ rule "auto reboot":
     restartMatch()
 
 #!include "utilities/devTool.opy"
-
-#!include "events/effect.opy"
 
 #!include "player/achievement.opy"

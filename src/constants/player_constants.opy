@@ -377,6 +377,8 @@
 # waitUntil 超时时间（秒）
 #!define EVT_27_WAITUNTIL_TIMEOUT 3
 
+#!define MARTYR_GOAL_MAX max(EVT_27_GOAL_MIN, round(len(bastionPosition) * EVT_27_GOAL_MAX_FACTOR))
+
 # --- ID 28: 多动症 (触发回血) ---
 # Duration（秒）
 #!define EVT_BUFF_28_DURATION 90
