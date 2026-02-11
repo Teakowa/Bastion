@@ -101,7 +101,7 @@ enum MapTitleKey:
     }, \
     { \
         name: "吾携秋水揽星河", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.FLAWLESS, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.CHOSEN, Title.LUCKY_STAR, Title.LUCKY_SHINE, Title.MANBA] \
+        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.FLAWLESS, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.CHOSEN, Title.LUCKY_STAR, Title.LUCKY_SHINE, Title.HACKING, Title.MANBA] \
     }, \
     { \
         name: "寒霜冰湮", \
@@ -404,8 +404,8 @@ enum MapTitleKey:
 # 伊利奥斯
 #!define DATA_ILIOS [ \
    [], \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 漓江塔
@@ -432,8 +432,8 @@ enum MapTitleKey:
 # 绿洲城
 #!define DATA_OASIS [ \
    playerNameToIndexDelimited(["尘风歌者","豆本豆豆奶"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 新渣客城
@@ -481,8 +481,8 @@ enum MapTitleKey:
 # 阿特利斯
 #!define DATA_AATLIS [\
    playerNameToIndexDelimited(["他又", "别感冒","卖核弹的小女孩"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河"], "-"), \
 ]
 
 # ------------------------------
@@ -581,7 +581,7 @@ rule "initialize title array":
         # 43: HACKING
         ["开了", heroColor[20]],
         # 44: 红包收藏家
-        ["红包收藏家", Color.ROSE],
+        ["红包收藏家", Color.RED],
         ["好运来", breathGold], 
         # 46: LONE_WALKER (千里独行 - 独行侠风格，推荐使用旅行家同款或冷色调)
         ["千里独行", heroColor[33]], 
