@@ -258,7 +258,7 @@ rule "[VishkarEvent]: 无能的丈夫/妻子":
     @Team 1
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 12]) == true
     
-    ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(null, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
+    ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(eventPlayer, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
     wait(2)
 
 
