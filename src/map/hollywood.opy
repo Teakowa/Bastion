@@ -15,6 +15,8 @@ rule "map - hollywood":
     __currentMapText___ = "好莱坞"
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey.append(DATA_HOLLYWOOD[0])
-    mapTitlePlayersByKey.append(DATA_HOLLYWOOD[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_HOLLYWOOD[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_HOLLYWOOD[0],
+        DATA_HOLLYWOOD[1].split("-"),
+        DATA_HOLLYWOOD[2].split("-")
+    ]

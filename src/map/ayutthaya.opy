@@ -17,6 +17,8 @@ rule "map - 阿育陀耶":
     creditsPosition = vect(17.69, 9.22, -111.87)
     endPosition = vect(16.12, 1, 66.52)
       
-    mapTitlePlayersByKey.append(DATA_AYUTTHAYA[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_AYUTTHAYA[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_AYUTTHAYA[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_AYUTTHAYA[0].split("-"),
+        DATA_AYUTTHAYA[1].split("-"),
+        DATA_AYUTTHAYA[2].split("-")
+    ]

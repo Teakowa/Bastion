@@ -22,6 +22,8 @@ rule "map - 斗兽场":
     creditsPosition = vect(117.64, 13, -48.66)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey.append(DATA_COLOSSEO[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_COLOSSEO[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_COLOSSEO[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_COLOSSEO[0].split("-"),
+        DATA_COLOSSEO[1].split("-"),
+        DATA_COLOSSEO[2].split("-")
+    ]

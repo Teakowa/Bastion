@@ -23,6 +23,8 @@ rule "map - 尼泊尔":
     controlJumpPosition.append(vect(-21.67, 21, 81.47))
     bastionPosition = [vect(-152.68, -92.115, -64.862), vect(-193.849, -89.578, -32.592), vect(-199.313, -94.457, 41.386), vect(-146.246, -88.751, 48.509), vect(-26.436, 22, -69.808), vect(-25.182, 13, 0.688), vect(-73.662, 19.545, 0.132), vect(-42.208, 20.025, 51.77), vect(-187.057, -87.686, 7.868), vect(73.112, 129.717, -67.245), vect(94.679, 140.26, -17.696), vect(92.445, 141.37, 49.176)]
 
-    mapTitlePlayersByKey.append(DATA_NEPAL[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_NEPAL[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_NEPAL[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_NEPAL[0].split("-"),
+        DATA_NEPAL[1].split("-"),
+        DATA_NEPAL[2].split("-")
+    ]

@@ -20,6 +20,8 @@ rule "map - temple of anubis":
     creditsPosition = vect(-11.3, 7.35, 149.11)
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey.append(DATA_TEMPLE_OF_ANUBIS[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_TEMPLE_OF_ANUBIS[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_TEMPLE_OF_ANUBIS[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_TEMPLE_OF_ANUBIS[0].split("-"),
+        DATA_TEMPLE_OF_ANUBIS[1].split("-"),
+        DATA_TEMPLE_OF_ANUBIS[2].split("-")
+    ]
