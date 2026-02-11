@@ -481,8 +481,8 @@ enum MapTitleKey:
 # 阿特利斯
 #!define DATA_AATLIS [\
    playerNameToIndexDelimited(["他又", "别感冒","卖核弹的小女孩"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河","初一吖"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河","初一吖"], "-"), \
 ]
 
 # ------------------------------
