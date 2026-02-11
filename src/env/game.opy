@@ -50,6 +50,7 @@ rule "Initialize global variables":
     devList = ["他又", "别感冒"]
     devPlayer = []
     obstrucVis = []
+    mapTitlePlayersByKey = []
 
 rule "Update devPlayer from devList":
     @Event playerJoined
@@ -84,7 +85,7 @@ rule "initialize phase hero arrays":
     @Condition vishkarEventActivated == true
     
     # 技能 1
-    phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG, Hero.FREJA, Hero.ANRAN]
+    phaseHero[0] = [Hero.DVA, Hero.REINHARDT, Hero.WINSTON, Hero.MAUGA, Hero.HAZARD, Hero.DOOMFIST, Hero.ASHE, Hero.PHARAH, Hero.ECHO, Hero.CASSIDY, Hero.SOLDIER, Hero.REAPER, Hero.SOJOURN, Hero.VENTURE, Hero.GENJI, Hero.TRACER, Hero.MOIRA, Hero.MERCY, Hero.KIRIKO, Hero.ILLARI, Hero.JUNO, Hero.WUYANG, Hero.FREJA, Hero.ANRAN, Hero.JETPACK_CAT, Hero.EMRE, Hero.MIZUKI]
 
     # 技能 2
     phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER, Hero.FREJA, Hero.REAPER, Hero.WIDOWMAKER]
@@ -100,7 +101,7 @@ rule "initialize phase hero arrays":
 
 rule "initialize hero list":
     #make default hero list, which includes all 36 heroes available in Season 2
-    heroList = [Hero.SOMBRA, Hero.REAPER, Hero.MOIRA, Hero.KIRIKO, Hero.SIGMA, Hero.WUYANG, Hero.GENJI, Hero.ORISA, Hero.SYMMETRA, Hero.WINSTON, Hero.DVA, Hero.TRACER, Hero.WIDOWMAKER, Hero.SOJOURN, Hero.BAPTISTE, Hero.MEI, Hero.ECHO, Hero.BRIGITTE, Hero.SOLDIER, Hero.JUNO, Hero.WRECKING_BALL, Hero.CASSIDY, Hero.ZARYA, Hero.LUCIO, Hero.PHARAH, Hero.MERCY, Hero.REINHARDT, Hero.HANZO, Hero.DOOMFIST, Hero.ROADHOG, Hero.JUNKER_QUEEN, Hero.ASHE, Hero.TORBJORN, Hero.ANA, Hero.ZENYATTA, Hero.JUNKRAT, Hero.BASTION]
+    heroList = [Hero.SOMBRA, Hero.REAPER, Hero.MOIRA, Hero.KIRIKO, Hero.SIGMA, Hero.WUYANG, Hero.MIZUKI, Hero.EMRE, Hero.GENJI, Hero.ORISA, Hero.SYMMETRA, Hero.WINSTON, Hero.DVA, Hero.TRACER, Hero.WIDOWMAKER, Hero.DOMINA, Hero.SOJOURN, Hero.BAPTISTE, Hero.MEI, Hero.ECHO, Hero.BRIGITTE, Hero.SOLDIER, Hero.JUNO, Hero.WRECKING_BALL, Hero.CASSIDY, Hero.ZARYA, Hero.LUCIO, Hero.PHARAH, Hero.JETPACK_CAT, Hero.MERCY, Hero.REINHARDT, Hero.HANZO, Hero.DOOMFIST, Hero.ROADHOG, Hero.JUNKER_QUEEN, Hero.ASHE, Hero.TORBJORN, Hero.ANA, Hero.ZENYATTA, Hero.JUNKRAT, Hero.BASTION]
     #remove all heroes that are not for some reason in Overwatch's list of all the heroes (at the time of making this, Mei is an example because she was removed to be patched)
     heroList.remove([player for player in heroList if not player in getAllHeroes()])
     #add any heroes that for some reason are on Overwatch's list but not the game's (eg if I don't update the mode after a hero release). they are added as the second hero in the list
