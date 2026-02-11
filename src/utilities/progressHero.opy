@@ -20,7 +20,6 @@ def progressHero():
     wait(getServerLoad() / 100 * 0.5)
     eventPlayer.setAllowedHeroes(heroList.slice(0, eventPlayer.heroNumber + 1))
     wait(getServerLoad() / 100 * 0.5)
-    eventPlayer.preloadHero([heroList[eventPlayer.heroNumber + 1], heroList[eventPlayer.heroNumber + 1]])
     wait(getServerLoad() / 100 * 0.5)
     wait(3)
     savePlayerData()
