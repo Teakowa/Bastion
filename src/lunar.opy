@@ -428,7 +428,7 @@ rule STR_LICENSE_PERMIT:
 
 #!include "heroes/all_hero.opy"
 
-#!include "./config/eventConfig.opy"
+#!include "special/eventConfig.opy"
 
 #!include "events/allocation/rejectSampling.opy"
 
@@ -481,6 +481,8 @@ rule STR_LICENSE_PERMIT:
 #!include "events/effects/debuffEffects.opy"
 
 #!include "events/effects/mechEffects.opy"
+
+#!include "special/event.opy"
 
 globalvar activePacket
 
@@ -653,4 +655,4 @@ rule "auto reboot":
 
 #!include "utilities/devTool.opy"
 
-#!include "player/achievement.opy"
+#!include "special/achievement.opy"
