@@ -79,13 +79,16 @@ rule "[VishkarEvent]: 生命源泉":
 rule "[VishkarEvent]: 黑粉来袭":
     @Event eachPlayer
     @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 5]) == true
-    
+    @Condition len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) > 0
    
-    eventPlayer.hudText = "{0}/{1}".format(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]), len(bastionPosition))
+    # eventPlayer.hudText = "{0}/{1}".format(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]), len(bastionPosition))
     wait(getAverageServerLoad() / 100 * 0.032)
+    eventPlayer.addHealthPool(EVT_5_HEALTH_TYPE, round(EVT_5_HEALTH_FLAT + eventPlayer.getMaxHealth() * EVT_5_HEALTH_MAXHP_FACTOR), false, false)
+    eventPlayer.hp_data.append([[getTotalTimeElapsed() + 2, getLastCreatedHealthPool()]])
+    wait(1.96)
     if ruleCondition:
         loop()
-    eventPlayer.hudText = ""
+    # eventPlayer.hudText = ""
 
 
 rule "[VishkarEvent]: 足力健":

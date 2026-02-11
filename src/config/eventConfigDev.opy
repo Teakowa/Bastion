@@ -47,7 +47,7 @@ rule "initialize event array":
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_5_TITLE, true, 5):
         goto lbl_4
-    buffEvent[5] = [STR_EVT_BUFF_5_TITLE, STR_EVT_BUFF_5_DESC, EVT_BUFF_5_DURATION, EVT_BUFF_5_WEIGHT]
+    buffEvent[5] = [STR_EVT_BUFF_5_TITLE, STR_EVT_BUFF_5_DESC.format(EVT_5_HEALTH_FLAT, percent(EVT_5_HEALTH_MAXHP_FACTOR)), EVT_BUFF_5_DURATION, EVT_BUFF_5_WEIGHT]
     buffEventId.append(5)
     lbl_4:
 
