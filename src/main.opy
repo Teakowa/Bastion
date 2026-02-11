@@ -195,6 +195,10 @@ settings {
                 "secondaryFireCooldown%": 50,
                 "ability2Cooldown%": 50
             },
+            "jetpackCat": {
+                "primaryFireRange%": 500,
+                "secondaryFireMaximumTime%": 300
+            },
             "roadhog": {
                 "secondaryFireCooldown%": 100
             },
