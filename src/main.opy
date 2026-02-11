@@ -79,7 +79,7 @@ settings {
                 "ability1Cooldown%": 0
             },
             "cassidy": {
-                "ability1Cooldown%": 50
+                "ability1Cooldown%": 67
             },
             "echo": {
                 "ability1Cooldown%": 33
@@ -128,6 +128,9 @@ settings {
                 "secondaryFireCooldown%": 80,
                 "ability2Cooldown%": 80
             },
+            "emre": {
+                 "damageReceived%": 95,
+            },
             "juno": {
                 "ability1Cooldown%": 67,
                 "ability1Duration%": 150
@@ -144,6 +147,9 @@ settings {
             },
             "mauga": {
                 "ability1Cooldown%": 80
+            },
+            "mizuki": {
+                "ability1Cooldown%": 50
             },
             "winston": {
                 "ability1Cooldown%": 80,
@@ -204,7 +210,7 @@ settings {
             },
             "kiriko": {
                 "ability1Distance%": 143,
-                "ability2Cooldown%": 43
+                "ability2Cooldown%": 29
             },
             "hazard": {
                 "ability1Cooldown%": 55,
