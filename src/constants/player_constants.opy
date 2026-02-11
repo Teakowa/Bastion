@@ -108,9 +108,12 @@
 
 # --- ID 5 ---
 # Duration（秒）
-#!define EVT_BUFF_5_DURATION 20
+#!define EVT_BUFF_5_DURATION 45
 # Weight（权重）
-#!define EVT_BUFF_5_WEIGHT 1.6
+#!define EVT_BUFF_5_WEIGHT 1.2
+#!define EVT_5_HEALTH_TYPE Health.NORMAL
+#!define EVT_5_HEALTH_FLAT 25
+#!define EVT_5_HEALTH_MAXHP_FACTOR 0.5
 
 # --- ID 6: 足力健 ---
 # Duration（秒）
