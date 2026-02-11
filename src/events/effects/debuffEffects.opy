@@ -250,6 +250,7 @@ rule "[VishkarEvent]: 狂欢盛宴计时器":
     if ruleCondition:
         loop()
     getPlayers(Team.2).hasNano = false
+    eventId = -1
 
 
 rule "[VishkarEvent]: 无能的丈夫/妻子":
