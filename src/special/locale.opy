@@ -258,16 +258,19 @@
 #!define STR_EVT_BUFF_35_DESC  "如果进度落后，则跳过落后的英雄\n如果已处于第1，则永久获得{0}%伤害减免/{1}%移速加成/{2}层心之钢"
 
 #!define STR_EVT_BUFF_36_TITLE "龙马精神"
-#!define STR_EVT_BUFF_36_DESC "生命值低于{0}%触发\n回复{1}生命值"
+#!define STR_EVT_BUFF_36_DESC "生命值低于{0}%触发\n回复{1}%生命值"
 
 #!define STR_EVT_BUFF_37_TITLE "爆竹声声"
 #!define STR_EVT_BUFF_37_DESC "击晕{0}米内的堡垒"
 
 #!define STR_EVT_BUFF_38_TITLE "我不需要治疗"
-#!define STR_EVT_BUFF_38_DESC "发送“需要治疗”信号回复5点生命值"
+#!define STR_EVT_BUFF_38_DESC "发送“需要治疗”信号回复{0}点生命值"
 
-#!define STR_EVT_BUFF_39_TITLE "我不需要治疗"
-#!define STR_EVT_BUFF_39_DESC "发送“需要治疗”信号回复5点生命值"
+#!define STR_EVT_BUFF_39_TITLE "礼貌金"
+#!define STR_EVT_BUFF_39_DESC "对堡垒发送“你好”信号有概率将其击晕"
+
+#!define STR_EVT_BUFF_40_TITLE "费斯卡时空信标"
+#!define STR_EVT_BUFF_40_DESC "按下装填设置一个信标\n再次按下回到信标位置"
 
 # 设置菜单分类 (Pack)
 #!define STR_CAT_RANDOM_PACK "随机事件包"
@@ -327,7 +330,7 @@
 
 # 统计详情
 # {0}=死亡数, {1}=跳过数
-#!define STR_MSG_WIN_STATS "{0} 次阵亡 & {1} 次跳过"
+#!define STR_MSG_WIN_STATS "{0} 次阵亡"
 
 # 时间单位
 #!define STR_TIME_UNIT_HOUR "{0} 小时"
@@ -357,7 +360,7 @@
 #!define STR_HUD_HEROES "英雄"
 #!define STR_HUD_HEROES_VAL "{0} / {1}"
 #!define STR_HUD_NEXT_HERO "下一个英雄"
-#!define STR_HUD_ESCAPED "逃脱成功"
+#!define STR_HUD_ESCAPED "挑战成功"
 #!define STR_HUD_UNLOCKED "{0} 已解锁！"
 #!define STR_HUD_CHALLENGE_COMPLETE "挑战完成"
 #!define STR_HUD_ACHIEVEMENT_DISABLED "成就挑战已禁用 {0}"

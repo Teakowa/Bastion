@@ -206,6 +206,18 @@ rule "initialize red effects":
         RED_PACK_EFFECT_COLOR, activePacket[7],
         RED_PACK_EFFECT_ROUND, EffectReeval.VISIBILITY_POSITION_AND_RADIUS
     )
+
+    createEffect(localPlayer if activePacket[8] != null else null, 
+        RED_PACK_EFFECT,
+        RED_PACK_EFFECT_COLOR, activePacket[8],
+        RED_PACK_EFFECT_ROUND, EffectReeval.VISIBILITY_POSITION_AND_RADIUS
+    )
+
+    createEffect(localPlayer if activePacket[9] != null else null, 
+        RED_PACK_EFFECT,
+        RED_PACK_EFFECT_COLOR, activePacket[9],
+        RED_PACK_EFFECT_ROUND, EffectReeval.VISIBILITY_POSITION_AND_RADIUS
+    )
     
     wait(getAverageServerLoad() / 100 * 0.032)
     # smallMessage(localPlayer, "  红包点位已创建")

@@ -11,7 +11,7 @@ def rollActivePacket():
     @Name "rollActivePacket"
     
     activePacket = []
-    for __i in range(0, 8):
+    for __i in range(0, 9):
         activePacket[__i] = random.choice(redPosition.exclude(activePacket))
         # if DEBUG
         # smallMessage(getAllPlayers(), "  {0}".format(activePacket[__i]))

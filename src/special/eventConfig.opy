@@ -425,3 +425,42 @@ rule "initialize event array":
 
 
     lbl_3:
+
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK, STR_CAT_RANDOM_PACK_LUNAR, true, 1):
+        goto lbl_4
+    buffEvent[34] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(EVT_34_SPEED_BOOST), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
+    buffEventId.append(34)
+
+    buffEvent[35] = [STR_EVT_BUFF_35_TITLE, STR_EVT_BUFF_35_DESC.format(EVT_35_DMG_TAKEN_DELTA, EVT_35_SPEED_DELTA, EVT_35_HP_LAYER), EVT_BUFF_35_DURATION, EVT_BUFF_35_WEIGHT]
+    buffEventId.append(35)
+
+    buffEvent[36] = [STR_EVT_BUFF_36_TITLE, STR_EVT_BUFF_36_DESC.format(percent(EVT_36_TRIGGER_HP_PERCENT), percent(EVT_36_HEAL_PERCENT)), EVT_BUFF_36_DURATION, EVT_BUFF_36_WEIGHT]
+    buffEventId.append(36)
+
+    buffEvent[37] = [STR_EVT_BUFF_37_TITLE, STR_EVT_BUFF_37_DESC.format(EVT_BUFF_37_RADIUS), EVT_BUFF_37_DURATION, EVT_BUFF_37_WEIGHT]
+    buffEventId.append(37)
+
+    buffEvent[38] = [STR_EVT_BUFF_38_TITLE, STR_EVT_BUFF_38_DESC.format(EVT_38_HEAL), EVT_BUFF_38_DURATION, EVT_BUFF_38_WEIGHT]
+    buffEventId.append(38)
+
+    buffEvent[39] = [STR_EVT_BUFF_39_TITLE, STR_EVT_BUFF_39_DESC, EVT_BUFF_39_DURATION, EVT_BUFF_39_WEIGHT]
+    buffEventId.append(39)
+
+    buffEvent[40] = [STR_EVT_BUFF_40_TITLE, STR_EVT_BUFF_40_DESC, EVT_BUFF_40_DURATION, EVT_BUFF_40_WEIGHT]
+    buffEventId.append(40)
+
+    debuffEvent[22] = ["红包刺客", "获得短暂无敌\n随后沉默8秒", EVT_DEBUFF_22_DURATION, EVT_DEBUFF_22_WEIGHT]
+    debuffEventId.append(22)
+
+    debuffEvent[23] = ["惊吓红包", "被恐惧\n不受控的朝堡垒的方向移动", EVT_DEBUFF_23_DURATION, EVT_DEBUFF_23_WEIGHT]
+    debuffEventId.append(23)
+
+    debuffEvent[24] = ["岁岁平安", "移动速度降低20\n伤害减免20%", EVT_DEBUFF_24_DURATION, EVT_DEBUFF_24_WEIGHT]
+    debuffEventId.append(24)
+
+    debuffEvent[25] = ["登月火箭", "被随机射向天空，无法控制方向", EVT_DEBUFF_25_DURATION, EVT_DEBUFF_25_WEIGHT]
+    debuffEventId.append(25)
+
+    debuffEvent[26] = ["凛冬盛宴", "阵亡将使堡垒进入狂暴状态\n榴弹附带冰冻特效", EVT_DEBUFF_26_DURATION, EVT_DEBUFF_26_WEIGHT]
+    debuffEventId.append(26)
+    lbl_4:
