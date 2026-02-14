@@ -1,7 +1,7 @@
 #!include "env/env_dev.opy"
 #!include "locales/zh-CN.opy"
 # Useful constants and macros
-#!include "constants/player_constants.opy"
+#!include "constants/"
 #!include "utilities/macros.opy"
 
 settings {
@@ -415,8 +415,6 @@ playervar menuHeroIndex
 
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
-
-#!include "utilities/macros.opy"
 
 rule STR_LICENSE_TITLE:
     @Disabled

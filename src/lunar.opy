@@ -1,7 +1,7 @@
-#!include "env/env_dev.opy"
+#!include "env/env.opy"
 #!include "special/locale.opy"
 # Useful constants and macros
-#!include "constants/player_constants.opy"
+#!include "constants/"
 #!include "utilities/macros.opy"
 
 settings {
@@ -393,6 +393,7 @@ playervar earnedAchievements
 playervar menuHeroIndex
 playervar packetFxId
 
+
 #Activated extensions
 
 #!extension buffStatusEffects
@@ -403,8 +404,6 @@ playervar packetFxId
 
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
-
-#!include "utilities/macros.opy"
 
 rule STR_LICENSE_TITLE:
     @Disabled
@@ -431,7 +430,6 @@ rule STR_LICENSE_PERMIT:
 #!include "special/eventConfig.opy"
 
 #!include "events/allocation/rejectSampling.opy"
-
 
 
 #!include "utilities/updatePlayerStats.opy"
@@ -474,8 +472,6 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/antiCrash.opy"
 
-#!include "events/allocation/assignPlayerEvent.opy"
-
 #!include "events/effects/buffEffects.opy"
 
 #!include "events/effects/debuffEffects.opy"
@@ -495,8 +491,6 @@ globalvar activePacket
 #!include "special/map/lijiang_tower.opy"
 
 #!include "bastion/init.opy"
-
-#!include "utilities/playerRegen.opy"
 
 rule "players pick up speed while not targeted for 3 seconds":
     @Event eachPlayer
