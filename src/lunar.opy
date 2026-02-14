@@ -64,7 +64,7 @@ settings {
                 "ability1Cooldown%": 0
             },
             "cassidy": {
-                "ability1Cooldown%": 50
+                "ability1Cooldown%": 67
             },
             "echo": {
                 "ability1Cooldown%": 33
@@ -79,6 +79,10 @@ settings {
             },
             "ana": {
                 "ability1Cooldown%": 67
+            },
+            "anran": {
+                "ability1Cooldown%": 75,
+                "ability2Cooldown%": 80
             },
             "baptiste": {
                 "healingReceived%": 50,
@@ -109,6 +113,9 @@ settings {
                 "secondaryFireCooldown%": 80,
                 "ability2Cooldown%": 80
             },
+            "emre": {
+                 "damageReceived%": 95,
+            },
             "juno": {
                 "ability1Cooldown%": 67,
                 "ability1Duration%": 150
@@ -125,6 +132,9 @@ settings {
             },
             "mauga": {
                 "ability1Cooldown%": 80
+            },
+            "mizuki": {
+                "ability1Cooldown%": 50
             },
             "winston": {
                 "ability1Cooldown%": 80,
@@ -176,12 +186,16 @@ settings {
                 "secondaryFireCooldown%": 50,
                 "ability2Cooldown%": 50
             },
+            "jetpackCat": {
+                "primaryFireRange%": 500,
+                "secondaryFireMaximumTime%": 300
+            },
             "roadhog": {
                 "secondaryFireCooldown%": 100
             },
             "kiriko": {
                 "ability1Distance%": 143,
-                "ability2Cooldown%": 43
+                "ability2Cooldown%": 29
             },
             "hazard": {
                 "ability1Cooldown%": 55,
