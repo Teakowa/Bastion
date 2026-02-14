@@ -512,7 +512,7 @@ rule STR_LICENSE_PERMIT:
 rule "players pick up speed while not targeted for 3 seconds":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent) == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
+    @Condition all([dlcVishkarEvent == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
     
     wait(3, Wait.ABORT_WHEN_FALSE)
     eventPlayer.setMoveSpeed(160)
@@ -525,7 +525,7 @@ rule "players pick up speed while not targeted for 3 seconds":
 rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
     @Event eachPlayer
     @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isInSpawnRoom() == true
     @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
@@ -538,7 +538,7 @@ rule "when players reaches the end and not respawn at first respawn point, they 
 rule "when a player reaches the control jump point, they move on to the next map":
     @Event eachPlayer
     @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isInSpawnRoom() != true
     @Condition eventPlayer.isMoving() == true
