@@ -738,7 +738,7 @@ rule "[debug.opy]: player debug (Top Right)":
     @Condition evalOnce("{0}".format(eventPlayer) in devList) != false
     
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "难度 = {0}".format(difficultyText[0]), HudPosition.RIGHT, 10, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
-    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前位置 = {0}".format(eventPlayer.getPosition()), HudPosition.RIGHT, 26, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
+    hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前位置 = {0}".format(eventPlayer.getEyePosition()), HudPosition.RIGHT, 26, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前速度 = {0}".format(eventPlayer.getSpeed()), HudPosition.RIGHT, 27, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前速率 = {0}".format(eventPlayer.getVelocity()), HudPosition.RIGHT, 28, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前地图 = {0}/{1}".format(__currentMap___, getCurrentMap()), HudPosition.RIGHT, 29, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
