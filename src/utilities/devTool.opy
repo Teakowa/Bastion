@@ -250,8 +250,9 @@ rule "dev add auto reboot time":
     @Condition eventPlayer.menu == 1
     @Condition (eventPlayer.isDev or hostPlayer == eventPlayer) == true
     @Condition eventPlayer.isHoldingButton(Button.PRIMARY_FIRE) == true
+
     
-    if rebootTime + 300 <= 15900:
+    if rebootTime + 300 <= 15900 and __currentMap___ != Map.AYUTTHAYA:
         rebootTime += 300
         if eventPlayer.isDev:
             smallMessage(devPlayer, "  {0}  开发者模式： 已将自动重开时间延长 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
@@ -268,7 +269,7 @@ rule "dev remove auto reboot time":
     @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true
     
     #wait(0.16, Wait.ABORT_WHEN_FALSE)
-    if rebootTime - 300 >= 300:
+    if rebootTime - 300 >= 300 and __currentMap___ != Map.AYUTTHAYA:
         rebootTime -= 300
         if eventPlayer.isDev:
             smallMessage(devPlayer, "  {0}  开发者模式： 已将自动重开时间缩短 {1} 分钟".format(iconString(Icon.BOLT), 300 / 60))
