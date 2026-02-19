@@ -55,19 +55,22 @@ rule "get red packet":
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     @Condition all([vishkarEventActivated, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventId == -1]) == true
 
+    eventPlayer.packetFxId = null
     wait(0.25, Wait.ABORT_WHEN_FALSE)
 
-    eventPlayer.packetFxId = sorted([player for player in activePacket if eventPlayer.isInViewAngle(player, 180)], lambda i: distance(eventPlayer.getEyePosition(), i))
+    eventPlayer.packetFxId = sorted([player for player in activePacket if distance(eventPlayer.getEyePosition(), player) <= 15], lambda i: distance(eventPlayer.getEyePosition(), i))
     if eventPlayer.packetFxId != null:
         eventPlayer.hudRedPackText = "  附近红包：{0} / 相距距离：{1}".format(len(eventPlayer.packetFxId) if DEBUG != true else eventPlayer.packetFxId, distance(eventPlayer.packetFxId.frist(), eventPlayer))
         # smallMessage(eventPlayer, "  附近红包：{0} / 相距距离：{1}".format(len(eventPlayer.packetFxId) if DEBUG != true else eventPlayer.packetFxId, distance(eventPlayer.packetFxId.frist(), eventPlayer)))
 
     wait()
-    if eventPlayer.packetFxId != null and distance(eventPlayer.packetFxId.frist(), eventPlayer.getEyePosition()) <= 2.5:
+    if len(eventPlayer.packetFxId) > 0 and distance(eventPlayer.packetFxId.frist(), eventPlayer.getEyePosition()) != 0 and distance(eventPlayer.packetFxId.frist(), eventPlayer.getEyePosition()) <= 5.5:
         getRedPacket()
         setPlayerEvent()
         wait()
+        
         waitUntil(eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
         wait(getAverageServerLoad() / 100 * 0.032)
         clearPlayerEvent()
         eventPlayer.packetFxId = null
+        wait(0.3) 

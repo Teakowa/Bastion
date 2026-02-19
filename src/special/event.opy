@@ -53,10 +53,11 @@ rule "[VishkarEvent]: 一马当先":
         eventPlayer.mod_speed_perma += EVT_35_SPEED_DELTA
         eventPlayer.heart_steel += EVT_35_HP_LAYER
         updatePlayerStats()
-    elif eventPlayer.heroNumber + 1 < len(heroList) and eventPlayer.getHero() == heroList[eventPlayer.heroNumber]:
+    elif eventPlayer.heroNumber < sorted(getPlayers(Team.1), lambda i: i.heroNumber).frist().heroNumber:
         eventPlayer.respawn()
-        eventPlayer.heroNumber = sorted(getPlayers(Team.1), lambda i: i.heroNumber)[0].heroNumber 
+        eventPlayer.heroNumber = sorted(getPlayers(Team.1), lambda i: i.heroNumber).frist().heroNumber + 1
         progressHero()
+        eventDuration = 0
     
 rule "[VishkarEvent]: 一马当先":
     @Condition dlcVishkarEvent == true
@@ -125,11 +126,12 @@ rule "[VishkarEvent]: 费斯卡时空信标":
     @Condition controlRespawnPosition == null
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition != null]) == true
 
-    wait(0.5, Wait.ABORT_WHEN_FALSE)
+    wait(0.032, Wait.ABORT_WHEN_FALSE)
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
     wait(0.032)
-    eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])
+    eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition.frist())
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_REAPPEAR, Color.TEAM_1, eventPlayer, 200)
+    eventPlayer.setFacing(eventPlayer.controlPlayerRespawnPosition.last(), Relativity.TO_WORLD)
     wait(0.032)
     eventPlayer.controlPlayerRespawnPosition = null
     clearEventEffect()
@@ -140,8 +142,6 @@ rule "[VishkarEvent]: 红包刺客":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 22]) == true
     
     eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, 0.5)
-    createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.invincibleEffect = getLastCreatedEntity()
     wait(0.5)
     stopChasingVariable(eventPlayer.hack_timer)
     eventPlayer.setStatusEffect(getPlayersOnHero(Hero.BASTION, Team.2)[0], Status.HACKED, 8)
