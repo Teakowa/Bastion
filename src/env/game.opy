@@ -91,7 +91,7 @@ rule "initialize phase hero arrays":
     phaseHero[1] = [Hero.ORISA, Hero.SOMBRA, Hero.TRACER, Hero.FREJA, Hero.REAPER, Hero.WIDOWMAKER]
 
     # 辅助攻击
-    phaseHero[2] = [Hero.DOOMFIST, Hero.TRACER]
+    phaseHero[2] = [Hero.DOOMFIST, Hero.TRACER, Hero.JETPACK_CAT]
 
     # 跳跃
     phaseHero[3] = [Hero.HANZO]
