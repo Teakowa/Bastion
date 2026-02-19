@@ -59,7 +59,7 @@ rule "[VishkarEvent]: 龙马精神":
 rule "[VishkarEvent]: 爆竹声声":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 37]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 37]) == true
     
     ([player for player in getPlayers(Team.2) if distance(eventPlayer, player) <= EVT_BUFF_37_RADIUS]).setStatusEffect(null, Status.KNOCKED_DOWN, EVT_BUFF_37_KNOCKDOWN_DURATION)
     playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
@@ -68,7 +68,7 @@ rule "[VishkarEvent]: 爆竹声声":
 rule "[VishkarEvent]: 我不需要治疗":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 38]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 38]) == true
     @Condition eventPlayer.isCommunicating(Comms.NEED_HELP) or eventPlayer.isCommunicating(Comms.NEED_HEALING) == true
     
     heal(eventPlayer, eventPlayer, EVT_38_HEAL)
@@ -79,7 +79,7 @@ rule "[VishkarEvent]: 我不需要治疗":
 rule "[VishkarEvent]: 礼貌金":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 39, eventPlayer.isCommunicating(Comms.HELLO)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 39, eventPlayer.isCommunicating(Comms.HELLO)]) == true
     
     if random.randint(0, 100) < 50:
         goto lbl_0
@@ -90,7 +90,7 @@ rule "[VishkarEvent]: 礼貌金":
 rule "[VishkarEvent]: 费斯卡时空信标":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition == null]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition == null]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection()]
@@ -104,8 +104,8 @@ rule "[VishkarEvent]: 费斯卡时空信标":
 rule "[VishkarEvent]: 费斯卡时空信标":
     @Event playerDied
     @Team 1
-    @Condition evalOnce(controlRespawnPosition) == null
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition != null]) == true
+    @Condition controlRespawnPosition == null
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition != null]) == true
 
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
@@ -119,7 +119,7 @@ rule "[VishkarEvent]: 费斯卡时空信标":
 rule "[VishkarEvent]: 红包刺客":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 22]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 22]) == true
     
     eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, 0.5)
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -134,7 +134,7 @@ rule "[VishkarEvent]: 红包刺客":
 rule "[VishkarEvent]: 惊吓红包":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 23]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 23]) == true
     
     eventPlayer.startFacing(directionTowards(evalOnce(Vector.BACKWARD), eventPlayer.getEyePosition()), 360)
     eventPlayer.mod_speed_event = -50
@@ -149,7 +149,7 @@ rule "[VishkarEvent]: 惊吓红包":
 rule "[VishkarEvent]: 岁岁平安":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 24]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 24]) == true
     
     wait()
     # waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
@@ -164,7 +164,7 @@ rule "[VishkarEvent]: 岁岁平安":
 rule "[VishkarEvent]: 登月火箭":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 25]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 25]) == true
 
     eventPlayer.startForcingThrottle(0, 0, 0, 0, 0, 0)
     eventPlayer.setGravity(5)
@@ -176,7 +176,7 @@ rule "[VishkarEvent]: 登月火箭":
 rule "[VishkarEvent]: 凛冬盛宴":
     @Event playerDied
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 26, attacker.getHero() == Hero.BASTION]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 26, attacker.getHero() == Hero.BASTION]) == true
     
     bigMessage(getAllPlayers(), "凛冬盛宴！")
     smallMessage(getPlayers(Team.1), "  {0} {1} 阵亡触发了凛冬盛宴".format(iconString(Icon.WARNING), eventPlayer))

@@ -39,7 +39,7 @@ rule "initialize effects":
         STR_HUD_STATS_GRENADE.format(STR_HUD_STATS_GRENADE_VAL.format(localPlayer.A36TGrenadeHit, localPlayer.A36TGrenade, ceil(localPlayer.A36TGrenadeDmg))) if difficulty == 5 else "",
         
         # 3. 事件统计 (仅在开启DLC时显示)
-        STR_HUD_STATS_EVENT.format(localPlayer.eventCount[0], localPlayer.eventCount[1], localPlayer.eventCount[0] + localPlayer.eventCount[1] + localPlayer.eventCount[2]) if evalOnce(dlcVishkarEvent) else "",
+        STR_HUD_STATS_EVENT.format(localPlayer.eventCount[0], localPlayer.eventCount[1], localPlayer.eventCount[0] + localPlayer.eventCount[1] + localPlayer.eventCount[2]) if dlcVishkarEvent else "",
 
         # 4. 总耗时 (仅在通关后显示)
         STR_HUD_TOTAL_TIME.format("{0}{1}{2}".format(
@@ -178,7 +178,7 @@ rule "initialize effects":
     # Mode Info (Top/Right HUD)
     # --------------------------------------------------------------------------------------------------------------------------------
     wait(0.5)
-    if controlJumpPosition != null and evalOnce(portalPosition) == null:
+    if controlJumpPosition != null and portalPosition == null:
         hudSubtext(getAllPlayers(), STR_HUD_WELCOME_MULTI.format(maxDeath) if difficulty != 5 else STR_HUD_WELCOME_MULTI_HARD, HudPosition.TOP, 0, rgb(255, 255, 255, 125), HudReeval.VISIBILITY_AND_STRING)
     else:
         hudSubtext(getAllPlayers(), STR_HUD_WELCOME_NORMAL.format(maxDeath) if difficulty != 5 else STR_HUD_WELCOME_NORMAL_HARD, HudPosition.TOP, 0, rgb(255, 255, 255, 125), HudReeval.VISIBILITY_AND_STRING)
@@ -235,7 +235,7 @@ rule "3rd person":
 
 rule "springboard":
     @Event eachPlayer
-    @Condition evalOnce(springBoardPosition) != null
+    @Condition springBoardPosition != null
     @Condition distance(eventPlayer * vect(1, 0, 1), springBoardPosition * vect(1, 0, 1)) <= 1.2
     @Condition eventPlayer.getPosition().y >= springBoardPosition.y
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true
@@ -251,7 +251,7 @@ rule "springboard":
 
 rule "portalPosition":
     @Event eachPlayer
-    @Condition evalOnce(portalPosition) != null
+    @Condition portalPosition != null
     @Condition distance(eventPlayer * vect(1, 0, 1), portalPosition[0] * vect(1, 0, 1)) <= 1.2
     @Condition eventPlayer.getPosition().y >= portalPosition[0].y
     @Condition eventPlayer.isHoldingButton(Button.JUMP) == true

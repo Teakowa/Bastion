@@ -7,7 +7,7 @@
 rule "[VishkarEvent]: 重力异常":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 0]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.mod_speed_event = EVT_DEBUFF_0_SPEED
@@ -27,7 +27,7 @@ rule "[VishkarEvent]: 重力异常":
 rule "[VishkarEvent]: 电磁脉冲":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 1]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 1]) == true
     
     stopChasingVariable(eventPlayer.hack_timer)
     eventPlayer.setStatusEffect(getPlayersOnHero(Hero.BASTION, Team.2)[0], Status.HACKED, EVT_DEBUFF_1_HACK_DURATION)
@@ -39,7 +39,7 @@ rule "[VishkarEvent]: 电磁脉冲":
 rule "[VishkarEvent]: 献祭":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 2]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 2]) == true
     @Condition any([[player for player in getLivingPlayers(Team.1) if player.isUsingAbility1()] > 0, [player for player in getLivingPlayers(Team.1) if player.isUsingAbility2()] > 0]) == true
     
     eventPlayer.passiveRegenBlocked = true
@@ -55,7 +55,7 @@ rule "[VishkarEvent]: 献祭":
 rule "[VishkarEvent]: 易损":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 3]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 3]) == true
     
     createEffect(getAllPlayers(), Effect.ZENYATTA_ORB_OF_DISCORD_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[0] = getLastCreatedEntity()
@@ -73,7 +73,7 @@ rule "[VishkarEvent]: 易损":
 rule "[VishkarEvent]: 限速40":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 4, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 4, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     eventPlayer.passiveRegenBlocked = true
     
@@ -94,7 +94,7 @@ rule "[VishkarEvent]: 限速40":
 rule "[VishkarEvent]: 引力异常":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 5]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 5]) == true
     
     if eventPlayer.mod_speed_event != 0:
         goto lbl_0
@@ -120,7 +120,7 @@ rule "[VishkarEvent]: 引力异常":
 rule "[VishkarEvent]: 骨质疏松 Effect":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6, eventPlayer.eventEffect == null]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6, eventPlayer.eventEffect == null]) == true
 
     createEffect(getAllPlayers(), Effect.MEI_FROZEN, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
@@ -132,7 +132,7 @@ rule "[VishkarEvent]: 骨质疏松 Effect":
 rule "[VishkarEvent]: 骨质疏松":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 6]) == true
     
     while eventPlayer.mod_speed_event != EVT_DEBUFF_6_MAX_SPEED_DEC:
         eventPlayer.mod_speed_event -= EVT_DEBUFF_6_SPEED_DEC_PER_SEC
@@ -145,7 +145,7 @@ rule "[VishkarEvent]: 骨质疏松":
 rule "[VishkarEvent]: 电磁脉冲 ProMax":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 7]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 7]) == true
     
     ([player for player in getPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_7_RADIUS]).empProMax = eventPlayer
     playEffect(getAllPlayers(), DynamicEffect.SOMBRA_EMP_EXPLOSION_EFFECT, Color.TEAM_2, eventPlayer, 200)
@@ -156,7 +156,7 @@ rule "[VishkarEvent]: 电磁脉冲 ProMax":
 rule "[VishkarEvent]: 电磁脉冲 ProMax":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.hasStatus(Status.HACKED) != true, eventPlayer.empProMax != null, eventPlayer.hack_timer == 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.hasStatus(Status.HACKED) != true, eventPlayer.empProMax != null, eventPlayer.hack_timer == 0]) == true
     
     stopChasingVariable(eventPlayer.hack_timer)
     eventPlayer.hack_timer = max(0, EVT_DEBUFF_7_HACK_BASE_DURATION if eventPlayer.empProMax == eventPlayer else EVT_DEBUFF_7_HACK_BASE_DURATION - distance(eventPlayer, eventPlayer.empProMax) * EVT_DEBUFF_7_DIST_FACTOR)
@@ -174,7 +174,7 @@ rule "[VishkarEvent]: 电磁脉冲 ProMax":
 rule "[VishkarEvent]: 能量泄漏":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 8]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 8]) == true
     @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2()]) == true
     
     eventPlayer.passiveRegenBlocked = true
@@ -192,7 +192,7 @@ rule "[VishkarEvent]: 能量泄漏":
 rule "[VishkarEvent]: 生命在于静止":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 9]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == 9]) == true
     
     eventPlayer.passiveRegenBlocked = true
     
@@ -209,7 +209,7 @@ rule "[VishkarEvent]: 生命在于静止":
 rule "[VishkarEvent]: 有难同当 Effect":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
     createEffect(getAllPlayers(), Effect.TORBJORN_OVERLOADING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -221,7 +221,7 @@ rule "[VishkarEvent]: 有难同当 Effect":
 rule "[VishkarEvent]: 有难同当":
     @Event playerTookDamage
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 10]) == true
     @Condition attacker.getHero() == Hero.BASTION
     @Condition eventAbility != null
     
@@ -233,7 +233,7 @@ rule "[VishkarEvent]: 有难同当":
 rule "[VishkarEvent]: 狂欢盛宴":
     @Event playerDied
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 11, attacker.getHero() == Hero.BASTION]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 11, attacker.getHero() == Hero.BASTION]) == true
     
     bigMessage(getAllPlayers(), "盛宴！")
     smallMessage(getPlayers(Team.1), "  {0} {1} 阵亡触发了狂欢盛宴".format(iconString(Icon.WARNING), eventPlayer))
@@ -256,7 +256,7 @@ rule "[VishkarEvent]: 狂欢盛宴计时器":
 rule "[VishkarEvent]: 无能的丈夫/妻子":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 12]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 12]) == true
     
     ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(eventPlayer, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
     wait(2)
@@ -265,7 +265,7 @@ rule "[VishkarEvent]: 无能的丈夫/妻子":
 rule "[VishkarEvent]: 重伤":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 13]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 13]) == true
     
     eventPlayer.mod_heal_event = EVT_DEBUFF_13_HEAL_DEALT_RED
     eventPlayer.heal_recv = EVT_DEBUFF_13_HEAL_RECV_RED
@@ -284,7 +284,7 @@ rule "[VishkarEvent]: 重伤":
 rule "[VishkarEvent]: 减半":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.eventType == 1, eventPlayer.eventId == 14, eventPlayer.getHealth() != 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.eventType == 1, eventPlayer.eventId == 14, eventPlayer.getHealth() != 0]) == true
     
     eventPlayer.passiveRegenBlocked = true
     
@@ -304,7 +304,7 @@ rule "[VishkarEvent]: 减半":
 rule "[VishkarEvent]: 舍己为人":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 15]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 15]) == true
     
     if eventPlayer.getMaxHealth() <= EVT_DEBUFF_15_MIN_MAX_HP:
         eventPlayer.eventDuration = 0
@@ -321,7 +321,7 @@ rule "[VishkarEvent]: 舍己为人":
 rule "[VishkarEvent]: 舍己为人":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.setPlayerHP]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.setPlayerHP]) == true
     
     setPlayerHP()
     eventPlayer.setPlayerHP = false
@@ -330,7 +330,7 @@ rule "[VishkarEvent]: 舍己为人":
 rule "[VishkarEvent]: 保持距离 (易伤光环)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 16]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 16]) == true
     
     eventPlayer.target = sorted(getPlayersInRadius(eventPlayer, EVT_DEBUFF_16_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer), lambda i: distance(eventPlayer, i))[0]
     if eventPlayer.target != null:
@@ -352,7 +352,7 @@ rule "[VishkarEvent]: 保持距离 (易伤光环)":
 rule "[VishkarEvent]: 404 (随机禁用技能)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 17]) == true
     
     if eventPlayer.getHero() == Hero.LIFEWEAVER:
         eventPlayer.eventMission = 3
@@ -396,7 +396,7 @@ rule "[VishkarEvent]: 404 (随机禁用技能)":
 rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 18]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 18]) == true
     
     if any([eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0, eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.RELOAD) > 0, eventPlayer.getAbilityCooldown(Button.JUMP) > 0]) == true:
         eventPlayer.setAbilityCooldown(Button.ABILITY_1, max(eventPlayer.getAbilityCooldown(Button.ABILITY_1), random.randint(15, 30)))
@@ -414,7 +414,7 @@ rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
 rule "[VishkarEvent]: 我和你 (生命同步)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 19]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 19]) == true
     
     eventPlayer.passiveRegenBlocked = true
 
@@ -435,7 +435,7 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
 rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 20, eventPlayer.getNormalizedHealth() != 1]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 20, eventPlayer.getNormalizedHealth() != 1]) == true
     
     eventPlayer.passiveRegenBlocked = true
     
@@ -457,7 +457,7 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
 rule "[VishkarEvent]: 成吨的减益 (全属性削弱)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 21]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == 21]) == true
     
     eventPlayer.mod_speed_event -= 50
     eventPlayer.mod_dmg_taken += 50

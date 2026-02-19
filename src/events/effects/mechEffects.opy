@@ -7,7 +7,7 @@
 rule "[VishkarEvent]: 极限挑战":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
     
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
     eventPlayer.mod_heal_event = EVT_MECH_0_HEAL_BAN
@@ -31,7 +31,7 @@ rule "[VishkarEvent]: 极限挑战":
 rule "[VishkarEvent]: 极限挑战":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 0]) == true
     @Condition eventPlayer.getHealth() > eventPlayer.getMaxHealth() * EVT_MECH_0_HP_PERCENT == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
@@ -44,7 +44,7 @@ rule "[VishkarEvent]: 极限挑战":
 rule "[VishkarEvent]: 纳米战甲":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 1]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 1]) == true
     
     wait()
     waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
@@ -62,7 +62,7 @@ rule "[VishkarEvent]: 纳米战甲":
 rule "[VishkarEvent]: 赌徒":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 2, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 2, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 100) <= EVT_MECH_2_WIN_RATE:
@@ -82,7 +82,7 @@ rule "[VishkarEvent]: 赌徒":
 rule "[VishkarEvent]: 有点松弛":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 3, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 3, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     wait()
     if eventPlayer.eventEffect != null:
@@ -102,7 +102,7 @@ rule "[VishkarEvent]: 有点松弛":
 rule "[VishkarEvent]: 有点松弛":
     @Event eachPlayer
     @Team 1
-    @Condition evalOnce(dlcVishkarEvent) == true
+    @Condition dlcVishkarEvent == true
     @Condition eventPlayer.obstrucVis != []
     @Condition len(eventPlayer.obstrucVis) > 0
     
@@ -117,7 +117,7 @@ rule "[VishkarEvent]: 有点松弛":
 rule "[VishkarEvent]: 体积膨胀":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 4]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 4]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.sizeHealth = EVT_MECH_4_HP_SCALE
@@ -140,7 +140,7 @@ rule "[VishkarEvent]: 体积膨胀":
 rule "[VishkarEvent]: 迷你形态":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 5]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 5]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.sizeHealth = EVT_MECH_5_HP_SCALE
@@ -163,7 +163,7 @@ rule "[VishkarEvent]: 迷你形态":
 rule "[VishkarEvent]: 悄悄地进村":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 6]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 6]) == true
     @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
     
     createEffect(getAllPlayers(), Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
@@ -182,7 +182,7 @@ rule "[VishkarEvent]: 悄悄地进村":
 rule "[VishkarEvent]: 紧急避障":
     @Event playerTookDamage
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 7]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 7]) == true
     
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     eventPlayer.mod_speed_event += EVT_MECH_7_SPEED_BOOST
@@ -198,7 +198,7 @@ rule "[VishkarEvent]: 紧急避障":
 rule "[VishkarEvent]: 逆风而行":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 8]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 8]) == true
     
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     eventPlayer.stopForcingThrottle()
@@ -219,7 +219,7 @@ rule "[VishkarEvent]: 逆风而行":
 rule "[VishkarEvent]: 刹车失灵":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 9]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 9]) == true
     
     eventPlayer.startThrottleInDirection(Vector.FORWARD, 1, Relativity.TO_PLAYER, Throttle.REPLACE_EXISTING, ThrottleReeval.NONE)
     wait(eventPlayer.eventDuration)
@@ -230,7 +230,7 @@ rule "[VishkarEvent]: 刹车失灵":
 rule "[VishkarEvent]: 刹车失灵":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 9]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 9]) == true
     
     while eventPlayer.mod_speed_event < EVT_MECH_9_MAX_SPEED:
         eventPlayer.mod_speed_event += 5
@@ -246,7 +246,7 @@ rule "[VishkarEvent]: 刹车失灵":
 rule "[VishkarEvent]: 冲锋激励":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0, eventPlayer.healthId[1] == null]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0, eventPlayer.healthId[1] == null]) == true
     
     eventPlayer.hudText = "{0}/{1}".format(eventPlayer.eventMission, EVT_MECH_10_MISSION_GOAL)
     wait(EVT_MECH_10_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
@@ -264,7 +264,7 @@ rule "[VishkarEvent]: 冲锋激励":
 rule "[VishkarEvent]: 冲锋激励":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.eventMission == EVT_MECH_10_MISSION_GOAL]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 10, eventPlayer.eventMission == EVT_MECH_10_MISSION_GOAL]) == true
     
     if eventPlayer.healthId[1] == null:
         goto lbl_0
@@ -281,7 +281,7 @@ rule "[VishkarEvent]: 冲锋激励":
 rule "[VishkarEvent]: 生命在于反击":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 11, eventPlayer.getNormalizedHealth() != 1]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 11, eventPlayer.getNormalizedHealth() != 1]) == true
     
     # 修复点 1: 速度计算 (保持 < 75 则原值，否则 75)
     eventPlayer.mod_speed_event = ((eventPlayer.getMaxHealth() - eventPlayer.getHealth()) / eventPlayer.getMaxHealth() * 100) if ((eventPlayer.getMaxHealth() - eventPlayer.getHealth()) / eventPlayer.getMaxHealth() * 100) < 75 else 75
@@ -302,7 +302,7 @@ rule "[VishkarEvent]: 生命在于反击":
 rule "[VishkarEvent]: 屁动力":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 12, eventPlayer.isHoldingButton(Button.JUMP)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 12, eventPlayer.isHoldingButton(Button.JUMP)]) == true
     
     if eventPlayer.nanoEffect != null:
         goto lbl_0
@@ -324,7 +324,7 @@ rule "[VishkarEvent]: 屁动力":
 rule "[VishkarEvent]: 赌徒：竞速挑战":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 13, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 13, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     eventPlayer.setHealth(eventPlayer.getMaxHealth() * EVT_MECH_13_HP_PENALTY)
@@ -353,7 +353,7 @@ rule "[VishkarEvent]: 赌徒：竞速挑战":
 rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 14, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 14, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     eventPlayer.heart_steel -= EVT_MECH_14_HEART_STEEL_COST
@@ -371,7 +371,7 @@ rule "[VishkarEvent]: 作弊：回溯 (记录位置 - 3秒心跳)":
     @Event eachPlayer
     @Team 1
     @Condition evalOnce(controlRespawnPosition) == null
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15]) == true
     
     if evalOnce(controlRespawnPosition) != null:
         eventPlayer.eventDuration = 0
@@ -389,11 +389,11 @@ rule "[VishkarEvent]: 作弊：回溯 (按键触发)":
     @Event eachPlayer
     @Team 1
     @Condition evalOnce(controlRespawnPosition) == null
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 15, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_MECH_15_TRIGGER_HP_COST)
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
-    wait(0.032)
+    wait(0.2)
     eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_REAPPEAR, Color.TEAM_1, eventPlayer, 200)
     wait(3)
@@ -402,7 +402,7 @@ rule "[VishkarEvent]: 作弊：回溯 (按键触发)":
 rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 16, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 16, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 99) < EVT_MECH_16_WIN_CHANCE:
@@ -420,7 +420,7 @@ rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
 rule "[VishkarEvent]: 命运共同体 (概率同步)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 17]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 17]) == true
     
     eventPlayer.target = [player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.eventId == -1]
     if len(eventPlayer.target) > 0:
@@ -435,7 +435,7 @@ rule "[VishkarEvent]: 命运共同体 (概率同步)":
 rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 18, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 18, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     # todo：传送回重生室
@@ -449,7 +449,7 @@ rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
 rule "[VishkarEvent]: 俄罗斯方块 (变大复活)":
     @Event playerDied
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 19]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 19]) == true
     
     eventPlayer.disableRespawn()
     wait(EVT_MECH_19_RESURRECT_DELAY)
@@ -465,7 +465,7 @@ rule "[VishkarEvent]: 俄罗斯方块 (变大复活)":
 rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
     @Event playerDied
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 20]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 20]) == true
     
     eventPlayer.disableRespawn()
     wait(EVT_MECH_20_RESURRECT_DELAY)
@@ -481,7 +481,7 @@ rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
 rule "[VishkarEvent]: 作弊：0CD (血量换CD)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 21]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 21]) == true
     @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == true
     
     if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
@@ -499,7 +499,7 @@ rule "[VishkarEvent]: 作弊：0CD (血量换CD)":
 rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 22, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 22, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
     if random.randint(0, 99) < EVT_MECH_22_WIN_CHANCE:
@@ -517,7 +517,7 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
 rule "[VishkarEvent]: 瓦尔基里降临":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
     
     eventPlayer.sizeHealth = EVT_MECH_23_SIZE_HEALTH
     setPlayerHP()
@@ -537,7 +537,7 @@ rule "[VishkarEvent]: 瓦尔基里降临":
 rule "[VishkarEvent]: 瓦尔基里降临 大招充能":
     @Event playerTookDamage
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23]) == true
     @Condition attacker != eventPlayer
     
     eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_MECH_23_ULT_CHARGE_GAIN)
@@ -547,7 +547,7 @@ rule "[VishkarEvent]: 瓦尔基里降临 大招充能":
 rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23, eventPlayer.isUsingUltimate()]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 23, eventPlayer.isUsingUltimate()]) == true
     
     if eventPlayer.eventTargetHP == 0:
         eventPlayer.eventTargetHP = eventPlayer.getMaxHealth()
@@ -560,7 +560,7 @@ rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
 rule "[VishkarEvent]: 三位一体 (SSR)":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 24]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 24]) == true
     
     eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_24_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_24_DMG_REDUCE_DIVISOR))
     eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_24_SPEED_FACTOR

@@ -8,8 +8,8 @@ rule "when a player joins, load player data if they have it and initialize them"
     @Event playerJoined
     @Team 1
     
-    eventPlayer.isDev = evalOnce("{0}".format(eventPlayer) in devList)
-    if not evalOnce(dlcVishkarEvent):
+    eventPlayer.isDev = "{0}".format(eventPlayer) in devList
+    if not dlcVishkarEvent:
         goto lbl_0
     eventPlayer.eventId = -1
     eventPlayer.sizeHealth = 1
