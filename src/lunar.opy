@@ -506,73 +506,7 @@ globalvar activePacket
 
 #!include "bastion/init.opy"
 
-rule "players pick up speed while not targeted for 3 seconds":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent) == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
-    
-    wait(3, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setMoveSpeed(160)
-    waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
-    eventPlayer.setMoveSpeed(100)
-
-
-rule "player deaths are counted manually rather than relying on in-game statistics":
-    @Event playerDied
-    @Team 1
-    @Condition eventPlayer.isWinner == false
-    
-    wait(0.5 * getServerLoad() / 100)
-    eventPlayer.runDeathCount++
-    if eventPlayer in savedIndex:
-        wait(0.032)
-        savedDeaths[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.runDeathCount
-    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
-
-
-
 #!include "utilities/hashtag.opy"
-
-rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
-    @Condition eventPlayer.hasSpawned() == true
-    @Condition eventPlayer.isInSpawnRoom() == true
-    @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
-    
-    eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
-    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
-    wait(0.032)
-
-
-rule "when a player reaches the control jump point, they move on to the next map":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
-    @Condition eventPlayer.hasSpawned() == true
-    @Condition eventPlayer.isInSpawnRoom() != true
-    @Condition eventPlayer.isMoving() == true
-    #@Condition eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y
-    #@Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4
-    
-    wait(0.032, Wait.ABORT_WHEN_FALSE)
-    wait(0.2)
-    if all([eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y, distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
-        if controlJumpPosition[eventPlayer.controlJumpIndex] == null:
-            goto lbl_0
-        eventPlayer.controlJumpIndex++
-        wait()
-        if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]):
-            goto lbl_1
-        eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 0.5)
-        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 0.5)
-        lbl_1:
-        eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
-        eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
-        wait(2.16)
-    lbl_0:
-    loop()
 
 rule "when a player reaches the end, they move on to the next hero or win if they're bastion":
     @Event eachPlayer
