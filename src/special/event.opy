@@ -3,6 +3,24 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+rule "disable events":
+    @Condition vishkarEventActivated == true
+
+    waitUntil(all([
+        len(buffEventId) >= 34, 
+        len(debuffEventId) >= 22, 
+        len(mechEventId) >= 25
+    ]), 360)
+
+    buffEvent[0][3] = 0
+    buffEvent[13][3] = 0
+    mechEvent[14][3] = 0
+    mechEvent[15][3] = 0
+    mechEvent[16][3] = 0
+    mechEvent[17][3] = 0
+    mechEvent[18][3] = 0
+    mechEvent[22][3] = 0
+
 
 rule "未经原作者许可，任何人不得将以下代码进行二次创作与发布":
     @Disabled

@@ -173,7 +173,7 @@ rule "initialize event array":
     buffEvent[12] = [STR_EVT_BUFF_12_TITLE, STR_EVT_BUFF_12_DESC.format(Button.INTERACT), EVT_BUFF_12_DURATION, EVT_BUFF_12_WEIGHT]
     buffEventId.append(12)
 
-    buffEvent[13] = [STR_EVT_BUFF_13_TITLE, STR_EVT_BUFF_13_DESC.format(EVT_13_CHECKPOINT_INTERVAL), EVT_BUFF_13_DURATION, 0 if controlRespawnPosition == null else EVT_BUFF_13_WEIGHT]
+    buffEvent[13] = [STR_EVT_BUFF_13_TITLE, STR_EVT_BUFF_13_DESC.format(EVT_13_CHECKPOINT_INTERVAL), EVT_BUFF_13_DURATION, EVT_BUFF_13_WEIGHT]
     buffEventId.append(13)
 
     buffEvent[14] = [STR_EVT_BUFF_14_TITLE, STR_EVT_BUFF_14_DESC.format(percent(EVT_14_SHIELD_PERCENT)), EVT_BUFF_14_DURATION, EVT_BUFF_14_WEIGHT]
@@ -402,7 +402,7 @@ rule "initialize event array":
     mechEvent[17] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC, EVT_MECH_17_DURATION, EVT_MECH_17_WEIGHT]
     mechEventId.append(17)
 
-    mechEvent[18] = [STR_EVT_MECH_18_TITLE, STR_EVT_MECH_18_DESC.format(Button.RELOAD), EVT_MECH_18_DURATION, 0 if controlRespawnPosition == null else EVT_MECH_18_WEIGHT]
+    mechEvent[18] = [STR_EVT_MECH_18_TITLE, STR_EVT_MECH_18_DESC.format(Button.RELOAD), EVT_MECH_18_DURATION, EVT_MECH_18_WEIGHT]
     mechEventId.append(18)
 
     mechEvent[19] = [STR_EVT_MECH_19_TITLE, STR_EVT_MECH_19_DESC, EVT_MECH_19_DURATION, EVT_MECH_19_WEIGHT]
