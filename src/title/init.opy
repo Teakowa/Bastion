@@ -19,7 +19,6 @@ rule "initialize player title":
 rule "update title color":
     @Event eachPlayer
     @Condition eventPlayer.isDev == true
-    @Condition antiCrashActivated == false
     @Condition eventPlayer.playerTitleAndColor[1] == null
     @Condition len(eventPlayer.playerTitleAndColor[1]) == 0
     
@@ -35,7 +34,6 @@ rule "update title color":
 
 rule "update title color":
     @Event eachPlayer
-    @Condition antiCrashActivated == false
     @Condition eventPlayer.playerTitleAndColor[1] != null
     @Condition len(eventPlayer.playerTitleAndColor[1]) > 1
     @Condition eventPlayer.rgb_activated == true

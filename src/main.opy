@@ -494,8 +494,6 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerTitle.opy"
 
-#!include "utilities/anticrash.opy"
-
 #!include "events/allocation/assignPlayerEvent.opy"
 
 #!include "events/effects/buffEffects.opy"
