@@ -6,10 +6,8 @@
 
 rule "dev menu in game":
     @Event eachPlayer
-    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     @Condition eventPlayer.isHoldingButton(Button.MELEE) == true
-    #@Condition (eventPlayer.getHero() == Hero.LIFEWEAVER or eventPlayer.getHero() == Hero.SYMMETRA) == false
     
     if (eventPlayer.isHoldingButton(Button.INTERACT) and eventPlayer.isHoldingButton(Button.CROUCH)) == true:
         return
@@ -44,7 +42,6 @@ rule "dev menu in game":
 
 rule "dev menu disable":
     @Event eachPlayer
-    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
     @Condition eventPlayer.menu == 0
     
     destroyHudText(eventPlayer.menuTextID[0])
@@ -83,7 +80,6 @@ rule "page down in menu":
 rule "menu mode settings display":
     @Event eachPlayer
     @Condition eventPlayer.menu == 1
-    #@Condition (evalOnce("{0}".format(eventPlayer) in devList) != false or hostPlayer == eventPlayer) == true
     
     destroyHudText(eventPlayer.menuTextID[0])
     destroyHudText(eventPlayer.menuTextID[1])
@@ -100,10 +96,6 @@ rule "menu mode settings display":
 
 rule "menu hero display (player/host)":
     @Event eachPlayer
-    # @Condition any([
-    #     eventPlayer.menu == 2 and eventPlayer.isDev == false,
-    #     eventPlayer.menu == 5 and eventPlayer.isDev
-    # ]) == true
     @Condition (eventPlayer.menu == 2 and eventPlayer.isDev == false) or (eventPlayer.menu == 5 and eventPlayer.isDev == true)
 
     destroyHudText(eventPlayer.menuTextID[0])
@@ -585,7 +577,7 @@ rule "dev to Target Player Position":
 
 rule "Dev to release heros":
     @Event eachPlayer
-    @Condition evalOnce("{0}".format(eventPlayer) in devList) != false
+    @Condition eventPlayer.isDev == true
     @Condition eventPlayer.menu == 2
     @Condition eventPlayer.isHoldingButton(Button.SECONDARY_FIRE) == true
     @Condition eventPlayer.isWinner == false
@@ -736,7 +728,7 @@ rule "dev event weight decrease (R)":
 rule "[debug.opy]: player debug (Top Right)":
     @Event eachPlayer
     @Condition evalOnce(eventPlayer.debugInfo) == true
-    @Condition evalOnce("{0}".format(eventPlayer) in devList) != false
+    @Condition eventPlayer.isDev == true
     
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "难度 = {0}".format(difficultyText[0]), HudPosition.RIGHT, 10, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
     hudSubheader(eventPlayer if eventPlayer.debugInfo == true else null, "当前位置 = {0}".format(eventPlayer.getEyePosition()), HudPosition.RIGHT, 26, Color.WHITE, HudReeval.VISIBILITY_AND_STRING, SpecVisibility.NEVER)
