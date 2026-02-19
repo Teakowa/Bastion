@@ -12,7 +12,7 @@ def rejecSampling():
     eventPlayer.eventIsSelected = false
     if eventPlayer.eventType == 0:
         while eventPlayer.eventIsSelected == false and eventPlayer.eventLoopCount < 8:
-            eventPlayer.eventTempId = random.choice( [id for id in buffEventId if (buffEvent[id] != 0 and buffEvent[id].last() > 0)]) if random.randint(0, 100) > 15 else random.choice(buffEventId.exclude(eventPlayer.eventLastId))
+            eventPlayer.eventTempId = random.choice( [id for id in buffEventId.exclude(eventPlayer.eventLastId) if (buffEvent[id] != 0 and buffEvent[id].last() > 0)])
             eventPlayer.eventTempWeight = buffEvent[eventPlayer.eventTempId][3]
             if random.uniform(0, eventWeight) < eventPlayer.eventTempWeight:
                 eventPlayer.eventId = eventPlayer.eventTempId
@@ -23,7 +23,7 @@ def rejecSampling():
             eventPlayer.eventId = eventPlayer.eventTempId
     elif eventPlayer.eventType == 1:
         while eventPlayer.eventIsSelected == false and eventPlayer.eventLoopCount < 8:
-            eventPlayer.eventTempId = random.choice([id for id in debuffEventId if (debuffEvent[id] != 0 and debuffEvent[id].last() > 0)]) if random.randint(0, 100) > 15 else random.choice(debuffEventId.exclude(eventPlayer.eventLastId))
+            eventPlayer.eventTempId = random.choice([id for id in debuffEventId.exclude(eventPlayer.eventLastId) if (debuffEvent[id] != 0 and debuffEvent[id].last() > 0)])
             eventPlayer.eventTempWeight = debuffEvent[eventPlayer.eventTempId][3]
             if random.uniform(0, eventWeight) < eventPlayer.eventTempWeight:
                 eventPlayer.eventId = eventPlayer.eventTempId
@@ -34,7 +34,7 @@ def rejecSampling():
             eventPlayer.eventId = eventPlayer.eventTempId
     else:
         while eventPlayer.eventIsSelected == false and eventPlayer.eventLoopCount < 8:
-            eventPlayer.eventTempId = random.choice([id for id in mechEventId if (mechEvent[id] != 0 and mechEvent[id].last() > 0)]) if random.randint(0, 100) > 15 else random.choice(mechEventId.exclude(eventPlayer.eventLastId))
+            eventPlayer.eventTempId = random.choice([id for id in mechEventId.exclude(eventPlayer.eventLastId) if (mechEvent[id] != 0 and mechEvent[id].last() > 0)])
             eventPlayer.eventTempWeight = mechEvent[eventPlayer.eventTempId][3]
             if random.uniform(0, eventWeight) < eventPlayer.eventTempWeight:
                 eventPlayer.eventId = eventPlayer.eventTempId
