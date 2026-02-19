@@ -113,7 +113,7 @@ enum MapTitleKey:
     }, \
     { \
         name: "豆本豆豆奶", \
-        titles: [Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.NEVER_GIVE_UP, Title.SPEEDRUN, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.DODGE_ULTIMATE, Title.EGG_FIRST, Title.UNLUCKY] \
+        titles: [Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.NEVER_GIVE_UP, Title.SPEEDRUN, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.DODGE_ULTIMATE, Title.EGG_FIRST, Title.GOOD_LUCK, Title.UNLUCKY] \
     }, \
     { \
         name: "神之岛風咲", \
@@ -185,7 +185,7 @@ enum MapTitleKey:
     }, \
     { \
         name: "EruIluvatar", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL] \
+        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.HACKING, Title.UNLUCKY] \
     }, \
     { \
         name: "糯米进脑子", \
