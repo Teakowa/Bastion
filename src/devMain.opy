@@ -608,18 +608,6 @@ rule "winners earn their ult once per minute":
     if ruleCondition:
         loop()
 
-rule "update scoreboard every few seconds":
-    @Condition getPlayers(Team.1)[0] != false
-    @Disabled
-    
-    scoreboardArray = sorted([player for player in getPlayers(Team.1) if not player.isWinner], lambda i: 0 - i.heroNumber)
-    firstPlace = scoreboardArray[0]
-    secondPlace = scoreboardArray[1]
-    thirdPlace = scoreboardArray[2]
-    wait(getAverageServerLoad() / 50)
-    if ruleCondition:
-        loop()
-
 #!include "effects/init.opy"
 #!include "effects/nano.opy"
 #!include "effects/player.opy"
