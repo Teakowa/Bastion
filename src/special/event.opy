@@ -121,7 +121,7 @@ rule "[VishkarEvent]: 费斯卡时空信标":
     wait(2)
 
 rule "[VishkarEvent]: 费斯卡时空信标":
-    @Event playerDied
+    @Event eachPlayer
     @Team 1
     @Condition controlRespawnPosition == null
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 40, eventPlayer.isHoldingButton(Button.RELOAD), eventPlayer.controlPlayerRespawnPosition != null]) == true
