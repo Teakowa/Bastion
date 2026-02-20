@@ -581,7 +581,7 @@ rule "initialize title array":
         # 43: HACKING
         ["开了", heroColor[20]],
         # 44: 红包收藏家
-        ["红包收藏家", Color.RED],
+        ["红包收藏家", heroColor[43]],
         ["好运来", breathGold], 
         # 46: LONE_WALKER (千里独行 - 独行侠风格，推荐使用旅行家同款或冷色调)
         ["千里独行", heroColor[33]], 
