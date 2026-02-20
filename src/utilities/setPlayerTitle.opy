@@ -22,6 +22,6 @@ def setPlayerTitle():
 
     if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[MapTitleKey.DOMINATOR]: 
         eventPlayer.playerTitles.append(Title.DOMINATOR)
-        
-    # 3. 实例化 (Map ID to Object)
-    eventPlayer.playerTitles = [allTitle[i] for i in eventPlayer.playerTitles]
+
+    if eventPlayer.playerTitleIndex == null:
+        eventPlayer.playerTitleIndex = len(eventPlayer.playerTitles) - 1
