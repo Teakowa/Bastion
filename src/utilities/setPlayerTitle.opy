@@ -14,14 +14,14 @@ def setPlayerTitle():
     eventPlayer.playerTitleRelationIndex = f"{eventPlayer.playerTitleRelationIndex}"
     
     # 2. 查找并合并地图称号
-    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[MapTitleKey.PIONEER]: 
-        eventPlayer.playerTitles.append(Title.PIONEER)
+    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[TITLE.PIONEER]: 
+        eventPlayer.playerTitles.append(TITLE.PIONEER)
 
-    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[MapTitleKey.CONQUEROR]: 
-        eventPlayer.playerTitles.append(Title.CONQUEROR)
+    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[TITLE.CONQUEROR]: 
+        eventPlayer.playerTitles.append(TITLE.CONQUEROR)
 
-    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[MapTitleKey.DOMINATOR]: 
-        eventPlayer.playerTitles.append(Title.DOMINATOR)
+    if eventPlayer.playerTitleRelationIndex in mapTitlePlayersByKey[TITLE.DOMINATOR]: 
+        eventPlayer.playerTitles.append(TITLE.DOMINATOR)
 
     if eventPlayer.playerTitleIndex == null:
         eventPlayer.playerTitleIndex = len(eventPlayer.playerTitles) - 1
