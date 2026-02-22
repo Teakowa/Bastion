@@ -9,7 +9,7 @@ rule "when a mercy might rez, respawn time is increased":
     @Condition isHeroBeingPlayed(Hero.MERCY, Team.1) == true
     @Condition eventPlayer.controlPlayerRespawnPosition == null
 
-    if dlcVishkarEvent and eventPlayer.eventType == 2 and (eventPlayer.eventId == 19 or eventPlayer.eventId == 20):
+    if dlcVishkarEvent and eventPlayer.eventType == 2 and (eventPlayer.eventId == 15 or eventPlayer.eventId == 16):
         return
     
     if dlcVishkarEvent and eventPlayer.eventType == 0 and eventPlayer.eventId == 8:
