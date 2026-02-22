@@ -216,12 +216,6 @@ rule "initialize event array":
     mechEvent[7] = [STR_EVT_MECH_7_TITLE, STR_EVT_MECH_7_DESC, EVT_MECH_7_DURATION, EVT_MECH_7_WEIGHT]
     mechEventId.append(7)
 
-    mechEvent[8] = [STR_EVT_MECH_8_TITLE, STR_EVT_MECH_8_DESC, EVT_MECH_8_DURATION, EVT_MECH_8_WEIGHT]
-    mechEventId.append(8)
-
-    mechEvent[9] = [STR_EVT_MECH_9_TITLE, STR_EVT_MECH_9_DESC, EVT_MECH_9_DURATION, EVT_MECH_9_WEIGHT]
-    mechEventId.append(9)
-
     
     lbl_1:
 
@@ -303,28 +297,21 @@ rule "initialize event array":
     # ================================================
     # Pack 3: Mechanics
     # ================================================
-
-    mechEvent[10] = [STR_EVT_MECH_10_TITLE, STR_EVT_MECH_10_DESC, EVT_MECH_10_DURATION, EVT_MECH_10_WEIGHT]
-    mechEventId.append(10)
-
-    mechEvent[11] = [STR_EVT_MECH_11_TITLE, STR_EVT_MECH_11_DESC, EVT_MECH_11_DURATION, EVT_MECH_11_WEIGHT]
-    mechEventId.append(11)
-
-    mechEvent[12] = [
-        STR_EVT_MECH_12_TITLE,
-        STR_EVT_MECH_12_DESC.format(Button.JUMP, negToPos(EVT_MECH_12_DMG_TAKEN)),
-        EVT_MECH_12_DURATION,
-        EVT_MECH_12_WEIGHT
+    mechEvent[8] = [
+        STR_EVT_MECH_8_TITLE,
+        STR_EVT_MECH_8_DESC.format(Button.JUMP, negToPos(EVT_MECH_8_DMG_TAKEN)),
+        EVT_MECH_8_DURATION,
+        EVT_MECH_8_WEIGHT
     ]
-    mechEventId.append(12)
+    mechEventId.append(8)
 
-    mechEvent[13] = [
-        STR_EVT_MECH_13_TITLE,
-        STR_EVT_MECH_13_DESC.format(Button.RELOAD),
-        EVT_MECH_13_DURATION,
-        EVT_MECH_13_WEIGHT
+    mechEvent[9] = [
+        STR_EVT_MECH_9_TITLE,
+        STR_EVT_MECH_9_DESC.format(Button.RELOAD),
+        EVT_MECH_9_DURATION,
+        EVT_MECH_9_WEIGHT
     ]
-    mechEventId.append(13)
+    mechEventId.append(9)
 
     
     lbl_2:
@@ -390,13 +377,25 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Mechanics
     # ================================================
+    mechEvent[10] = [STR_EVT_MECH_10_TITLE, STR_EVT_MECH_10_DESC.format(Button.RELOAD), EVT_MECH_10_DURATION, EVT_MECH_10_WEIGHT]
+    mechEventId.append(10)
+
+    mechEvent[11] = [STR_EVT_MECH_11_TITLE, STR_EVT_MECH_11_DESC.format(Button.RELOAD), EVT_MECH_11_DURATION, EVT_MECH_11_WEIGHT]
+    mechEventId.append(11)
+
+    mechEvent[12] = [STR_EVT_MECH_12_TITLE, STR_EVT_MECH_12_DESC.format(Button.RELOAD), EVT_MECH_12_DURATION, EVT_MECH_12_WEIGHT]
+    mechEventId.append(12)
+
+    mechEvent[13] = [STR_EVT_MECH_13_TITLE, STR_EVT_MECH_13_DESC, EVT_MECH_13_DURATION, EVT_MECH_13_WEIGHT]
+    mechEventId.append(13)
+
     mechEvent[14] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(Button.RELOAD), EVT_MECH_14_DURATION, EVT_MECH_14_WEIGHT]
     mechEventId.append(14)
 
-    mechEvent[15] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(Button.RELOAD), EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
+    mechEvent[15] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC, EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
     mechEventId.append(15)
 
-    mechEvent[16] = [STR_EVT_MECH_16_TITLE, STR_EVT_MECH_16_DESC.format(Button.RELOAD), EVT_MECH_16_DURATION, EVT_MECH_16_WEIGHT]
+    mechEvent[16] = [STR_EVT_MECH_16_TITLE, STR_EVT_MECH_16_DESC, EVT_MECH_16_DURATION, EVT_MECH_16_WEIGHT]
     mechEventId.append(16)
 
     mechEvent[17] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC, EVT_MECH_17_DURATION, EVT_MECH_17_WEIGHT]
@@ -410,18 +409,6 @@ rule "initialize event array":
 
     mechEvent[20] = [STR_EVT_MECH_20_TITLE, STR_EVT_MECH_20_DESC, EVT_MECH_20_DURATION, EVT_MECH_20_WEIGHT]
     mechEventId.append(20)
-
-    mechEvent[21] = [STR_EVT_MECH_21_TITLE, STR_EVT_MECH_21_DESC, EVT_MECH_21_DURATION, EVT_MECH_21_WEIGHT]
-    mechEventId.append(21)
-
-    mechEvent[22] = [STR_EVT_MECH_22_TITLE, STR_EVT_MECH_22_DESC.format(Button.RELOAD), EVT_MECH_22_DURATION, EVT_MECH_22_WEIGHT]
-    mechEventId.append(22)
-
-    mechEvent[23] = [STR_EVT_MECH_23_TITLE, STR_EVT_MECH_23_DESC, EVT_MECH_23_DURATION, EVT_MECH_23_WEIGHT]
-    mechEventId.append(23)
-
-    mechEvent[24] = [STR_EVT_MECH_24_TITLE, STR_EVT_MECH_24_DESC, EVT_MECH_24_DURATION, EVT_MECH_24_WEIGHT]
-    mechEventId.append(24)
 
 
     lbl_3:
