@@ -460,7 +460,7 @@ rule "[VishkarEvent]: 俄罗斯方块 (变大复活)":
     eventPlayer.disableRespawn()
     wait(EVT_MECH_19_RESURRECT_DELAY)
     eventPlayer.enableRespawn()
-    eventPlayer.respawn()
+    eventPlayer.resurrect()
     eventPlayer.eventSize++
     eventPlayer.startScalingSize(1 + EVT_MECH_19_SIZE_STEP * eventPlayer.eventSize, false)
     eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_19_PITCH_MIN, 1 - EVT_MECH_19_PITCH_STEP * eventPlayer.eventSize), false)
@@ -476,7 +476,7 @@ rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
     eventPlayer.disableRespawn()
     wait(EVT_MECH_20_RESURRECT_DELAY)
     eventPlayer.enableRespawn()
-    eventPlayer.respawn()
+    eventPlayer.resurrect()
     eventPlayer.eventSize++
     eventPlayer.startScalingSize(max(EVT_MECH_20_SIZE_MIN, 1 - EVT_MECH_20_SIZE_STEP * eventPlayer.eventSize), false)
     eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_20_PITCH_MIN, 1 + EVT_MECH_20_PITCH_STEP * eventPlayer.eventSize), false)
