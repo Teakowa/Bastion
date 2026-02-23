@@ -65,43 +65,17 @@ rule "hashTag | Sentinel Verify":
     destroyDummy(Team.1, HTAG_BOT_SLOT)
 
 rule "Hashtag":
-    @Event eachPlayer
-    @Hero freja
-    @Condition hashTag == true
-    @Condition eventPlayer.isUsingAbility2() == true
-    @Condition eventPlayer.eventId == -1
-    @Disabled
-    
-    waitUntil(not eventPlayer.isUsingAbility2(), 5)
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) < 3:
-        hashTag = false
-
-
-rule "Hashtag":
     @Condition hashTag == true
     @Condition vishkarEventActivated == true
     @Condition getTotalTimeElapsed() > 125
-    
-    waitUntil(
-        any([
+    @Condition any([
             len(buffEventId) < 34, 
             len(debuffEventId) < 22, 
             len(mechEventId) < 25
-        ]), 
-    MAX_TIME)
-    hashTag = false
-
-rule "Hashtag":
-    @Event eachPlayer
-    @Hero reaper
-    @Condition hashTag == true
-    @Condition eventPlayer.isUsingAbility2() == true
-    @Condition eventPlayer.eventId == -1
-    @Disabled
+        ]) == true
     
-    waitUntil(not eventPlayer.isUsingAbility2(), 30)
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) < 25:
-        hashTag = false
+    wait()
+    hashTag = false
 
 rule "Hashtag":
     @Event eachPlayer
