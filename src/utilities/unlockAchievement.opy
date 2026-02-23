@@ -18,5 +18,11 @@ def unlockAchievement():
     eventPlayer.earnedAchievements.append(eventPlayer.tempUnlockId)
 
     playEffect(eventPlayer, DynamicEffect.GOOD_EXPLOSION, Color.AQUA, eventPlayer, 10)
+
+    if "{0}".format(eventPlayer) not in titlePlayer:
+        goto lb_1
+    eventPlayer.playerTitles.append(eventPlayer.tempUnlockId)
+
+    lb_1:
     
-    smallMessage(eventPlayer, "  解锁成就：{0}".format(allTitle[eventPlayer.tempUnlockId]))
+    smallMessage(eventPlayer, "  {0}  已解锁成就：{1}".format(Icon.CHECKMARK, allTitle[eventPlayer.tempUnlockId]))
