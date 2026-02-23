@@ -298,27 +298,33 @@ rule "[VishkarEvent]: 生命在于反击":
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
 
+rule "[VishkarEvent]: 屁动力 eff":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 12, eventPlayer.nanoEffect == null]) == true
+    
+    createEffect(getAllPlayers() if eventPlayer.isHoldingButton(Button.JUMP) else null, Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.nanoEffect = getLastCreatedEntity()
+    
+    waitUntil(eventPlayer.eventDuration == 0, EVT_MECH_12_DURATION)
+    
+    destroyEffect(eventPlayer.nanoEffect)
+    eventPlayer.nanoEffect = null
 
 rule "[VishkarEvent]: 屁动力":
     @Event eachPlayer
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == 12, eventPlayer.isHoldingButton(Button.JUMP)]) == true
     
-    if eventPlayer.nanoEffect != null:
-        goto lbl_0
     eventPlayer.mod_dmg_taken = EVT_MECH_12_DMG_TAKEN
     updatePlayerStats()
-    createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
-    eventPlayer.nanoEffect = getLastCreatedEntity()
-    lbl_0:
+
     eventPlayer.applyImpulse(eventPlayer.getFacingDirection(), EVT_MECH_12_IMPULSE, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
     wait()
     if ruleCondition:
         loop()
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
-    destroyEffect(eventPlayer.nanoEffect)
-    eventPlayer.nanoEffect = null
 
 
 rule "[VishkarEvent]: 赌徒：竞速挑战":
