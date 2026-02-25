@@ -250,7 +250,7 @@ rule "initialize event array":
     buffEvent[22] = [STR_EVT_BUFF_22_TITLE, STR_EVT_BUFF_22_DESC.format(EVT_22_HEAL_BOOST), EVT_BUFF_22_DURATION, EVT_BUFF_22_WEIGHT]
     buffEventId.append(22)
     
-    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(negToPos(EVT_23_DMG_REDUCTION_DURING_ULT)), EVT_BUFF_23_DURATION, EVT_BUFF_23_WEIGHT]
+    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(EVT_23_DMG_REDUCTION_DURING_ULT), EVT_BUFF_23_DURATION, EVT_BUFF_23_WEIGHT]
     buffEventId.append(23)
  
     # ================================================

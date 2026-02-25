@@ -161,7 +161,7 @@ rule "initialize event array":
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_23_TITLE, true, 23):
         goto lbl_22
-    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(negToPos(EVT_23_DMG_REDUCTION_DURING_ULT)), EVT_BUFF_23_DURATION, EVT_BUFF_23_WEIGHT]
+    buffEvent[23] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(EVT_23_DMG_REDUCTION_DURING_ULT), EVT_BUFF_23_DURATION, EVT_BUFF_23_WEIGHT]
     buffEventId.append(23)
     lbl_22:
     

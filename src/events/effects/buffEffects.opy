@@ -649,7 +649,7 @@ rule "[VishkarEvent]: 我按Q辣":
     createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
     eventPlayer.nanoEffect = getLastCreatedEntity()
     lbl_0:
-    eventPlayer.mod_dmg_taken = EVT_23_DMG_REDUCTION_DURING_ULT
+    eventPlayer.mod_dmg_taken -= EVT_23_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
     destroyEffect(eventPlayer.nanoEffect)

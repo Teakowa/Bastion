@@ -265,7 +265,7 @@
 # Weight（权重）
 #!define EVT_BUFF_23_WEIGHT 1.2
 #!define EVT_23_ULT_CHARGE_PER_SEC 10
-#!define EVT_23_DMG_REDUCTION_DURING_ULT -75
+#!define EVT_23_DMG_REDUCTION_DURING_ULT 75
 
 # --- ID 24: 相位猛冲 (智能检测版) ---
 # Duration（秒）
