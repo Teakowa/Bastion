@@ -30,6 +30,24 @@ rule "set red packet postion loop":
     if ruleCondition:
         loop()
 
+playervar hudRedPackId
+playervar hudRedPackText
+
+rule "red packet HUD":
+    @Event eachPlayer
+    @Team 1
+    @Condition vishkarEventActivated == true
+    @Condition eventPlayer.hasSpawned() == true
+    @Condition (eventPlayer.hudRedPackId or eventPlayer.hudTextId) == null
+
+    eventPlayer.hudText = ""
+    hudText(eventPlayer, null, "{0}".format(HUD_PAD_BOTTOM), eventPlayer.hudText, HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    eventPlayer.hudTextId = getLastCreatedText()
+
+    eventPlayer.hudRedPackText = ""
+    hudText(eventPlayer, null, "{0}".format(HUD_PAD_BOTTOM), eventPlayer.hudRedPackText, HudPosition.TOP, 8, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
+    eventPlayer.hudRedPackId = getLastCreatedText()
+
 rule "get red packet":
     @Event eachPlayer
     @Team 1
@@ -37,25 +55,22 @@ rule "get red packet":
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     @Condition all([vishkarEventActivated, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventId == -1]) == true
 
-    if eventPlayer.hudTextId != null:
-        goto lbl_0
-    eventPlayer.hudText = ""
-    hudText(eventPlayer, null, "{0}".format(HUD_PAD_BOTTOM), eventPlayer.hudText, HudPosition.TOP, 9, Color.WHITE, Color.WHITE, Color.WHITE, HudReeval.VISIBILITY_AND_STRING)
-    eventPlayer.hudTextId = getLastCreatedText()
-        
-    lbl_0:
-    wait(max(0.96, getAverageServerLoad() / 100 * 0.032), Wait.ABORT_WHEN_FALSE)
+    eventPlayer.packetFxId = null
+    wait(0.25, Wait.ABORT_WHEN_FALSE)
 
-    eventPlayer.packetFxId = sorted([player for player in activePacket if eventPlayer.isInViewAngle(player, 75)], lambda i: distance(eventPlayer, i))
-    if DEBUG:
-        smallMessage(eventPlayer, "附近红包：{0} / 相距距离：{1}".format(eventPlayer.packetFxId.frist(), distance(eventPlayer.packetFxId.frist(), eventPlayer)))
+    eventPlayer.packetFxId = sorted([player for player in activePacket if distance(eventPlayer.getEyePosition(), player) <= 15], lambda i: distance(eventPlayer.getEyePosition(), i))
+    if eventPlayer.packetFxId != null:
+        eventPlayer.hudRedPackText = "  附近红包：{0} / 相距距离：{1}".format(len(eventPlayer.packetFxId) if DEBUG != true else eventPlayer.packetFxId, distance(eventPlayer.packetFxId.frist(), eventPlayer))
+        # smallMessage(eventPlayer, "  附近红包：{0} / 相距距离：{1}".format(len(eventPlayer.packetFxId) if DEBUG != true else eventPlayer.packetFxId, distance(eventPlayer.packetFxId.frist(), eventPlayer)))
 
     wait()
-    if eventPlayer.packetFxId[0] != null and distance(eventPlayer.packetFxId[0], eventPlayer) <= 1.25:
+    if len(eventPlayer.packetFxId) > 0 and distance(eventPlayer.packetFxId.frist(), eventPlayer.getEyePosition()) != 0 and distance(eventPlayer.packetFxId.frist(), eventPlayer.getEyePosition()) <= 5.5:
         getRedPacket()
         setPlayerEvent()
         wait()
+        
         waitUntil(eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
         wait(getAverageServerLoad() / 100 * 0.032)
         clearPlayerEvent()
         eventPlayer.packetFxId = null
+        wait(0.3) 

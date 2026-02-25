@@ -21,6 +21,8 @@ rule "map - king's row":
     __currentMapPioneerText___ = __currentMapText___
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey.append(DATA_KINGS_ROW[0])
-    mapTitlePlayersByKey.append(DATA_KINGS_ROW[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_KINGS_ROW[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_KINGS_ROW[0],
+        DATA_KINGS_ROW[1].split("-"),
+        DATA_KINGS_ROW[2].split("-")
+    ]

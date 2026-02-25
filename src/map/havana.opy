@@ -20,6 +20,8 @@ rule "map - havana":
     creditsPosition = vect(193.45, 13.25, -46.49)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey.append(DATA_HAVANA[0])
-    mapTitlePlayersByKey.append(DATA_HAVANA[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_HAVANA[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_HAVANA[0],
+        DATA_HAVANA[1].split("-"),
+        DATA_HAVANA[2].split("-")
+    ]

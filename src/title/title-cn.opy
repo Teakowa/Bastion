@@ -9,7 +9,7 @@
 # ------------------------------
 # 1. 定义称号枚举 (Enums)
 # ------------------------------
-enum Title:
+enum TITLE:
     PIONEER,            # 0 开拓者
     TEST_LONG,          # 1 长文本测试
     NOT_MY_MAP,         # 2 地图不是我做的
@@ -60,7 +60,7 @@ enum Title:
     GREEN_MOUNTAIN,     # 47 踏遍青山
     SUAN_BU_LA          # 48 我不会放过你的酸不辣
 
-enum MapTitleKey:
+enum MapTITLEKey:
   PIONEER = 0
   CONQUEROR = 1
   DOMINATOR = 2
@@ -69,7 +69,7 @@ enum MapTitleKey:
 # 2. 定义玩家数据 (Database)
 # 注意：Key (name, titles) 必须不加引号，否则 splitDictArray 会报错
 # ------------------------------
-#!define TP_ALL [Title.PIONEER, Title.TEST_LONG, Title.NOT_MY_MAP, Title.WILD_DEV, Title.ARCHITECT, Title.MAINTAINER, Title.THREE_IN_ONE, Title.BLACK_SHEEP, Title.PURE_HARM, Title.CONQUEROR, Title.DOMINATOR, Title.SURVIVOR_EXPERT, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.DODGE_ULTIMATE, Title.LIGHT_PACK, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.PERSEVERANCE, Title.SPEEDRUN, Title.DODGE_GOD, Title.ZENYATTA, Title.HARD_TO_KILL, Title.WIN_HEAVEN, Title.IDOL, Title.EGG_FIRST, Title.EAT_MORE, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.FLAME, Title.PASS_EGGS, Title.CHOSEN, Title.LUCKY_STAR, Title.GAMBLE_KING, Title.LUCKY_SHINE, Title.UNLUCKY, Title.MANBA, Title.MY_FATE, Title.GOD_GAMBLER, Title.LAO_DA, Title.V_50, Title.STEEL, Title.HACKING, Title.SUAN_BU_LA, Title.RED_PACKET, Title.GOOD_LUCK, Title.LONE_WALKER, Title.GREEN_MOUNTAIN ]
+#!define TP_ALL [TITLE.PIONEER, TITLE.TEST_LONG, TITLE.NOT_MY_MAP, TITLE.WILD_DEV, TITLE.ARCHITECT, TITLE.MAINTAINER, TITLE.THREE_IN_ONE, TITLE.BLACK_SHEEP, TITLE.PURE_HARM, TITLE.CONQUEROR, TITLE.DOMINATOR, TITLE.SURVIVOR_EXPERT, TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.DODGE_ULTIMATE, TITLE.LIGHT_PACK, TITLE.FLAWLESS, TITLE.NEVER_GIVE_UP, TITLE.PERSEVERANCE, TITLE.SPEEDRUN, TITLE.DODGE_GOD, TITLE.ZENYATTA, TITLE.HARD_TO_KILL, TITLE.WIN_HEAVEN, TITLE.IDOL, TITLE.EGG_FIRST, TITLE.EAT_MORE, TITLE.ALL_IN_ONE, TITLE.TRAVELER, TITLE.SKY, TITLE.FLAME, TITLE.PASS_EGGS, TITLE.CHOSEN, TITLE.LUCKY_STAR, TITLE.GAMBLE_KING, TITLE.LUCKY_SHINE, TITLE.UNLUCKY, TITLE.MANBA, TITLE.MY_FATE, TITLE.GOD_GAMBLER, TITLE.LAO_DA, TITLE.V_50, TITLE.STEEL, TITLE.HACKING, TITLE.SUAN_BU_LA, TITLE.RED_PACKET, TITLE.GOOD_LUCK, TITLE.LONE_WALKER, TITLE.GREEN_MOUNTAIN ]
 #!define player_database [ \
     { \
         name: "他又", \
@@ -81,157 +81,157 @@ enum MapTitleKey:
     }, \
     { \
         name: "草艮", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL] \
     }, \
     { \
         name: "烛台与南九", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.EGG_FIRST] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.EGG_FIRST] \
     }, \
     { \
         name: "顾北酒笙", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.SPEEDRUN, Title.TRAVELER_HELL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.FLAWLESS, TITLE.SPEEDRUN, TITLE.TRAVELER_HELL] \
     }, \
     { \
         name: "WildRage", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.EGG_FIRST] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.EGG_FIRST] \
     }, \
     { \
         name: "尘风歌者", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.FLAWLESS, Title.PERSEVERANCE, Title.SPEEDRUN, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.HARD_TO_KILL, Title.EGG_FIRST, Title.PASS_EGGS] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.FLAWLESS, TITLE.PERSEVERANCE, TITLE.SPEEDRUN, TITLE.LIGHT_PACK, TITLE.DODGE_ULTIMATE, TITLE.HARD_TO_KILL, TITLE.EGG_FIRST, TITLE.PASS_EGGS] \
     }, \
     { \
         name: "吾携秋水揽星河", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.FLAWLESS, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.CHOSEN, Title.LUCKY_STAR, Title.LUCKY_SHINE, Title.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.FLAWLESS, TITLE.NEVER_GIVE_UP, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL, TITLE.LIGHT_PACK, TITLE.DODGE_ULTIMATE, TITLE.FLAWLESS, TITLE.ALL_IN_ONE, TITLE.TRAVELER, TITLE.SKY, TITLE.CHOSEN, TITLE.LUCKY_STAR, TITLE.LUCKY_SHINE, TITLE.HACKING, TITLE.MANBA] \
     }, \
     { \
         name: "寒霜冰湮", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.LUCKY_STAR, Title.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.FLAWLESS, TITLE.NEVER_GIVE_UP, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL, TITLE.LIGHT_PACK, TITLE.DODGE_ULTIMATE, TITLE.ALL_IN_ONE, TITLE.TRAVELER, TITLE.SKY, TITLE.LUCKY_STAR, TITLE.MANBA] \
     }, \
     { \
         name: "Cold", \
-        titles: [Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.EGG_FIRST, Title.PASS_EGGS, Title.MANBA] \
+        titles: [TITLE.FLAWLESS, TITLE.NEVER_GIVE_UP, TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL, TITLE.LIGHT_PACK, TITLE.DODGE_ULTIMATE, TITLE.EGG_FIRST, TITLE.PASS_EGGS, TITLE.MANBA] \
     }, \
     { \
         name: "豆本豆豆奶", \
-        titles: [Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.NEVER_GIVE_UP, Title.SPEEDRUN, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.DODGE_ULTIMATE, Title.EGG_FIRST, Title.UNLUCKY] \
+        titles: [TITLE.FLAWLESS, TITLE.CHALLENGER_LEGEND, TITLE.NEVER_GIVE_UP, TITLE.SPEEDRUN, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.DODGE_ULTIMATE, TITLE.EGG_FIRST, TITLE.GOOD_LUCK, TITLE.UNLUCKY] \
     }, \
     { \
         name: "神之岛風咲", \
-        titles: [Title.FLAWLESS] \
+        titles: [TITLE.FLAWLESS] \
     }, \
     { \
         name: "溪云初起日沉阁", \
-        titles: [Title.SPEEDRUN, Title.FLAWLESS, Title.NEVER_GIVE_UP, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.EGG_FIRST, Title.UNLUCKY] \
+        titles: [TITLE.SPEEDRUN, TITLE.FLAWLESS, TITLE.NEVER_GIVE_UP, TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.EGG_FIRST, TITLE.UNLUCKY] \
     }, \
     { \
         name: "卖核弹的小女孩", \
-        titles: [Title.SPEEDRUN, Title.FLAWLESS, Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.ALL_IN_ONE, Title.TRAVELER, Title.SKY, Title.LUCKY_STAR, Title.MANBA,Title.HACKING, Title.UNLUCKY,] \
+        titles: [TITLE.SPEEDRUN, TITLE.FLAWLESS, TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.ALL_IN_ONE, TITLE.TRAVELER, TITLE.SKY, TITLE.LUCKY_STAR, TITLE.MANBA,TITLE.HACKING, TITLE.UNLUCKY, TITLE.RED_PACKET, TITLE.GOOD_LUCK, TITLE.GREEN_MOUNTAIN] \
     }, \
     { \
         name: "挽风", \
-        titles: [Title.LIGHT_PACK, Title.DODGE_ULTIMATE, Title.SPEEDRUN, Title.FLAWLESS, Title.CHALLENGER_LEGEND] \
+        titles: [TITLE.LIGHT_PACK, TITLE.DODGE_ULTIMATE, TITLE.SPEEDRUN, TITLE.FLAWLESS, TITLE.CHALLENGER_LEGEND] \
     }, \
     { \
         name: "水濑祈", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "别打老顾我啊", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.FLAWLESS, Title.SPEEDRUN, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.FLAWLESS, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "看啊情", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.FLAWLESS, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "眼镜小宅", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.DODGE_ULTIMATE, Title.LIGHT_PACK, Title.FLAWLESS, Title.SPEEDRUN, Title.HARD_TO_KILL, Title.LUCKY_STAR] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.DODGE_ULTIMATE, TITLE.LIGHT_PACK, TITLE.FLAWLESS, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL, TITLE.LUCKY_STAR] \
     }, \
     { \
         name: "初一吖", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.FLAWLESS, Title.HARD_TO_KILL, Title.EGG_FIRST, Title.PASS_EGGS, Title.CHOSEN, Title.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.FLAWLESS, TITLE.HARD_TO_KILL, TITLE.EGG_FIRST, TITLE.PASS_EGGS, TITLE.CHOSEN, TITLE.MANBA] \
     }, \
     { \
         name: "锦木千束", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.FLAWLESS] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.FLAWLESS] \
     }, \
     { \
         name: "她说话有股孩子气", \
-        titles: [Title.CHALLENGER_LEGEND, Title.FLAWLESS, Title.SPEEDRUN] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.FLAWLESS, TITLE.SPEEDRUN] \
     }, \
     { \
         name: "白银之鹰", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN] \
     }, \
     { \
         name: "蝎子莱莱", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.FLAWLESS, Title.SPEEDRUN, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.FLAWLESS, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "雨鸢", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.LUCKY_STAR, Title.UNLUCKY, Title.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.LUCKY_STAR, TITLE.UNLUCKY, TITLE.MANBA] \
     }, \
     { \
         name: "Jargon", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "我心飞扬", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL] \
     }, \
     { \
         name: "绿里奇迹", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN] \
     }, \
     { \
         name: "EruIluvatar", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL, TITLE.HACKING, TITLE.UNLUCKY] \
     }, \
     { \
         name: "糯米进脑子", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.SPEEDRUN, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.SPEEDRUN, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "半夜汽笛", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.MANBA] \
     }, \
     { \
         name: "雷个大憨憨", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL] \
     }, \
     { \
         name: "一痕沙", \
-        titles: [Title.CHALLENGER_LEGEND, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "Augenstern", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.LUCKY_STAR] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.LUCKY_STAR] \
     }, \
     { \
         name: "明月有时", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "旅店老板", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "谁能体谅我的雨天", \
-        titles: [Title.CHALLENGER_LEGEND, Title.HARD_TO_KILL] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.HARD_TO_KILL] \
     }, \
     { \
         name: "锄禾日当午", \
-        titles: [Title.CHALLENGER_LEGEND, Title.TRAVELER_HELL, Title.HARD_TO_KILL, Title.HACKING, Title.LUCKY_STAR] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.HACKING, TITLE.LUCKY_STAR] \
     } \
 ]
 
 # ------------------------------
 # 3. 定义地图数据宏 (Map Macros)
 # ------------------------------
-# 称号包 (Title Packs)
-#!define TP_CONQUEROR [Title.CONQUEROR]
-#!define TP_9_10 [Title.CONQUEROR, Title.DOMINATOR]
-#!define TP_9_10_0 [Title.CONQUEROR, Title.DOMINATOR, Title.PIONEER]
+# 称号包 (TITLE Packs)
+#!define TP_CONQUEROR [TITLE.CONQUEROR]
+#!define TP_9_10 [TITLE.CONQUEROR, TITLE.DOMINATOR]
+#!define TP_9_10_0 [TITLE.CONQUEROR, TITLE.DOMINATOR, TITLE.PIONEER]
 # 地图数据块 (Data Blocks)
 # 暴雪世界
 #!define DATA_BLIZZARD_WORLD [\
@@ -404,8 +404,8 @@ enum MapTitleKey:
 # 伊利奥斯
 #!define DATA_ILIOS [ \
    [], \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","别打老顾我啊","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","蝎子莱莱","雨鸢","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 漓江塔
@@ -432,8 +432,8 @@ enum MapTitleKey:
 # 绿洲城
 #!define DATA_OASIS [ \
    playerNameToIndexDelimited(["尘风歌者","豆本豆豆奶"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","EruIluvatar","锄禾日当午"], "-")\
 ]
 
 # 新渣客城
@@ -481,8 +481,8 @@ enum MapTitleKey:
 # 阿特利斯
 #!define DATA_AATLIS [\
    playerNameToIndexDelimited(["他又", "别感冒","卖核弹的小女孩"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河","初一吖"], "-"), \
+   playerNameToIndexDelimited(["卖核弹的小女孩","EruIluvatar", "吾携秋水揽星河","初一吖"], "-"), \
 ]
 
 # ------------------------------
@@ -581,7 +581,7 @@ rule "initialize title array":
         # 43: HACKING
         ["开了", heroColor[20]],
         # 44: 红包收藏家
-        ["红包收藏家", Color.ROSE],
+        ["红包收藏家", heroColor[43]],
         ["好运来", breathGold], 
         # 46: LONE_WALKER (千里独行 - 独行侠风格，推荐使用旅行家同款或冷色调)
         ["千里独行", heroColor[33]], 

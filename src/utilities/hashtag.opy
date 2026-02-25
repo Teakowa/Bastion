@@ -26,9 +26,9 @@ rule "Hashtag":
     
     waitUntil(
         any([
-            len(buffEventId) != 34, 
-            len(debuffEventId) != 22, 
-            len(mechEventId) != 25
+            len(buffEventId) < 34, 
+            len(debuffEventId) < 22, 
+            len(mechEventId) < 25
         ]), 
     MAX_TIME)
     hashTag = false

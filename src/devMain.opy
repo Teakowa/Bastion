@@ -1,7 +1,7 @@
 #!include "env/env_dev.opy"
 #!include "locales/zh-CN.opy"
 # Useful constants and macros
-#!include "constants/player_constants.opy"
+#!include "constants/"
 #!include "utilities/macros.opy"
 
 settings {
@@ -416,8 +416,6 @@ playervar menuHeroIndex
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
-#!include "utilities/macros.opy"
-
 rule STR_LICENSE_TITLE:
     @Disabled
     @Delimiter
@@ -436,13 +434,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "title/title-cn.opy"
 
-#!include "events/check-flag.opy"
+#!include "events/init/detectFlag.opy"
 
-#!include "heros/all_hero.opy"
+#!include "heroes/all_hero.opy"
 
-#!include "./settings/dev.opy"
+#!include "./config/eventConfigDev.opy"
 
-#!include "events/rejecSampling.opy"
+#!include "events/allocation/rejectSampling.opy"
 
 #!include "utilities/updatePlayerStats.opy"
 
@@ -482,9 +480,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerTitle.opy"
 
-#!include "utilities/anticrash.opy"
+#!include "events/allocation/assignPlayerEvent.opy"
 
-#!include "events/get_player_event.opy"
+#!include "events/effects/buffEffects.opy"
+
+#!include "events/effects/debuffEffects.opy"
+
+#!include "events/effects/mechEffects.opy"
 
 # Maps
 #!include "map/setup_all_map.opy"
@@ -495,7 +497,7 @@ rule STR_LICENSE_PERMIT:
 rule "players pick up speed while not targeted for 3 seconds":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent) == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
+    @Condition all([dlcVishkarEvent == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
     
     wait(3, Wait.ABORT_WHEN_FALSE)
     eventPlayer.setMoveSpeed(160)
@@ -507,7 +509,7 @@ rule "players pick up speed while not targeted for 3 seconds":
 rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
     @Event eachPlayer
     @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isInSpawnRoom() == true
     @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
@@ -520,7 +522,7 @@ rule "when players reaches the end and not respawn at first respawn point, they 
 rule "when a player reaches the control jump point, they move on to the next map":
     @Event eachPlayer
     @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
+    @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
     @Condition eventPlayer.isInSpawnRoom() != true
     @Condition eventPlayer.isMoving() == true
@@ -604,18 +606,6 @@ rule "winners earn their ult once per minute":
     if ruleCondition:
         loop()
 
-rule "update scoreboard every few seconds":
-    @Condition getPlayers(Team.1)[0] != false
-    @Disabled
-    
-    scoreboardArray = sorted([player for player in getPlayers(Team.1) if not player.isWinner], lambda i: 0 - i.heroNumber)
-    firstPlace = scoreboardArray[0]
-    secondPlace = scoreboardArray[1]
-    thirdPlace = scoreboardArray[2]
-    wait(getAverageServerLoad() / 50)
-    if ruleCondition:
-        loop()
-
 #!include "effects/init.opy"
 #!include "effects/nano.opy"
 #!include "effects/player.opy"
@@ -632,8 +622,12 @@ rule "auto reboot":
     wait(60)
     restartMatch()
 
-#!include "utilities/devTool.opy"
+#!include "events/effects//buffEffects.opy"
 
-#!include "events/effect.opy"
+#!include "events/effects/debuffEffects.opy"
+
+#!include "events/effects/mechEffects.opy"
+
+#!include "utilities/devTool.opy"
 
 #!include "player/achievement.opy"

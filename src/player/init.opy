@@ -8,8 +8,8 @@ rule "when a player joins, load player data if they have it and initialize them"
     @Event playerJoined
     @Team 1
     
-    eventPlayer.isDev = evalOnce("{0}".format(eventPlayer) in devList)
-    if not evalOnce(dlcVishkarEvent):
+    eventPlayer.isDev = "{0}".format(eventPlayer) in devList
+    if not dlcVishkarEvent:
         goto lbl_0
     eventPlayer.eventId = -1
     eventPlayer.sizeHealth = 1
@@ -43,9 +43,25 @@ rule "when a player joins, load player data if they have it and initialize them"
         eventPlayer.playerTitleRelationIndex = titlePlayer.index("{0}".format(eventPlayer))
         setPlayerTitle()
         wait(0.032)
+        
+        
         smallMessage(eventPlayer, "  称号已加载")
-        eventPlayer.playerTitleAndColor = [eventPlayer.playerTitles.last()[0], eventPlayer.playerTitles.last().last()]
-        eventPlayer.rgb_vect = eventPlayer.playerTitleAndColor[1][0] if eventPlayer.playerTitleAndColor[1] != null else rgbList[eventPlayer.info_pvar[0]]
+
+        eventPlayer.playerTitleAndColor = eventPlayer.playerTitles[eventPlayer.playerTitleIndex]
+
+        if allTitle[eventPlayer.playerTitleAndColor][1] == null:
+            eventPlayer.info_pvar = 0
+            eventPlayer.rgb_vect = rgbList[eventPlayer.info_pvar]
+            eventPlayer.rgb_activated = true
+        elif len(allTitle[eventPlayer.playerTitleAndColor][1]) >= 1:
+            eventPlayer.info_pvar = 0
+            eventPlayer.rgb_vect = allTitle[eventPlayer.playerTitleAndColor][1][0]
+            eventPlayer.rgb_activated = true
+        else:
+            # 单色向量（或你定义的其他形式）
+            eventPlayer.rgb_vect = allTitle[eventPlayer.playerTitleAndColor][1]
+            eventPlayer.rgb_activated = false
+
     eventPlayer.obstrucVis = []
     if "{0}".format(eventPlayer) in savedIndex:
         smallMessage(eventPlayer, "  你的进度已成功加载")

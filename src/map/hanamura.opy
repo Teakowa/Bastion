@@ -24,6 +24,8 @@ rule "map - 花村":
     __currentMapText___ = "花村"
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey.append(DATA_HANAMURA[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_HANAMURA[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_HANAMURA[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_HANAMURA[0].split("-"),
+        DATA_HANAMURA[1].split("-"),
+        DATA_HANAMURA[2].split("-")
+    ]

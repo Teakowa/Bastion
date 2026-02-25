@@ -21,6 +21,8 @@ rule "map - watchpoint gibraltar":
     creditsPosition = vect(112.23, 0, 73.59)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey.append(DATA_WATCHPOINT_GIBRALTAR[0])
-    mapTitlePlayersByKey.append(DATA_WATCHPOINT_GIBRALTAR[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_WATCHPOINT_GIBRALTAR[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_WATCHPOINT_GIBRALTAR[0],
+        DATA_WATCHPOINT_GIBRALTAR[1].split("-"),
+        DATA_WATCHPOINT_GIBRALTAR[2].split("-")
+    ]

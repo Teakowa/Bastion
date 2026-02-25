@@ -20,6 +20,8 @@ rule "map - 阿努比斯王座":
     endPosition = vect(-10.49, 8.92, -125.57)
     bastionPosition = [vect(-28.955, 6.079, 65.912), vect(23.873, 21.939, 104.507), vect(0.457, 10.482, 97.234), vect(-7.399, 7.583, 50.502), vect(-1.101, 1.051, 19.039), vect(11.358, 8.052, -15.668), vect(-25.866, 9.142, -44.072), vect(11.875, 7.904, -24.293), vect(-27.944, 5.78, -83.352), vect(-16.021, 5.815, -98.212)]
 
-    mapTitlePlayersByKey.append(DATA_THRONE_OF_ANUBIS[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_THRONE_OF_ANUBIS[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_THRONE_OF_ANUBIS[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_THRONE_OF_ANUBIS[0].split("-"),
+        DATA_THRONE_OF_ANUBIS[1].split("-"),
+        DATA_THRONE_OF_ANUBIS[2].split("-")
+    ]

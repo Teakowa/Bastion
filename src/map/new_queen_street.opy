@@ -14,6 +14,8 @@ rule "map - 新皇后街":
     creditsPosition = vect(-102.08, 17.29, -24.46)
     startForcingSpawn(Team.1, 2)
 
-    mapTitlePlayersByKey.append(DATA_NEW_QUEEN_STREET[0].split("-"))
-    mapTitlePlayersByKey.append(DATA_NEW_QUEEN_STREET[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_NEW_QUEEN_STREET[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_NEW_QUEEN_STREET[0].split("-"),
+        DATA_NEW_QUEEN_STREET[1].split("-"),
+        DATA_NEW_QUEEN_STREET[2].split("-")
+    ]

@@ -1,7 +1,7 @@
-#!include "env/env_dev.opy"
+#!include "env/env.opy"
 #!include "special/locale.opy"
 # Useful constants and macros
-#!include "constants/player_constants.opy"
+#!include "constants/"
 #!include "utilities/macros.opy"
 
 settings {
@@ -64,7 +64,7 @@ settings {
                 "ability1Cooldown%": 0
             },
             "cassidy": {
-                "ability1Cooldown%": 50
+                "ability1Cooldown%": 67
             },
             "echo": {
                 "ability1Cooldown%": 33
@@ -79,6 +79,10 @@ settings {
             },
             "ana": {
                 "ability1Cooldown%": 67
+            },
+            "anran": {
+                "ability1Cooldown%": 75,
+                "ability2Cooldown%": 80
             },
             "baptiste": {
                 "healingReceived%": 50,
@@ -109,6 +113,9 @@ settings {
                 "secondaryFireCooldown%": 80,
                 "ability2Cooldown%": 80
             },
+            "emre": {
+                 "damageReceived%": 95,
+            },
             "juno": {
                 "ability1Cooldown%": 67,
                 "ability1Duration%": 150
@@ -125,6 +132,9 @@ settings {
             },
             "mauga": {
                 "ability1Cooldown%": 80
+            },
+            "mizuki": {
+                "ability1Cooldown%": 50
             },
             "winston": {
                 "ability1Cooldown%": 80,
@@ -176,12 +186,16 @@ settings {
                 "secondaryFireCooldown%": 50,
                 "ability2Cooldown%": 50
             },
+            "jetpackCat": {
+                "primaryFireRange%": 500,
+                "secondaryFireMaximumTime%": 300
+            },
             "roadhog": {
                 "secondaryFireCooldown%": 100
             },
             "kiriko": {
                 "ability1Distance%": 143,
-                "ability2Cooldown%": 43
+                "ability2Cooldown%": 29
             },
             "hazard": {
                 "ability1Cooldown%": 55,
@@ -393,6 +407,7 @@ playervar earnedAchievements
 playervar menuHeroIndex
 playervar packetFxId
 
+
 #Activated extensions
 
 #!extension buffStatusEffects
@@ -403,8 +418,6 @@ playervar packetFxId
 
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
-
-#!include "utilities/macros.opy"
 
 rule STR_LICENSE_TITLE:
     @Disabled
@@ -424,14 +437,13 @@ rule STR_LICENSE_PERMIT:
 
 #!include "title/title-cn.opy"
 
-#!include "events/check-flag.opy"
+#!include "events/init/detectFlag.opy"
 
-#!include "heros/all_hero.opy"
+#!include "heroes/all_hero.opy"
 
-#!include "./settings/player.opy"
+#!include "special/eventConfig.opy"
 
-#!include "events/rejecSampling.opy"
-
+#!include "events/allocation/rejectSampling.opy"
 
 
 #!include "utilities/updatePlayerStats.opy"
@@ -472,9 +484,15 @@ rule STR_LICENSE_PERMIT:
 
 #!include "utilities/setPlayerTitle.opy"
 
-#!include "utilities/anticrash.opy"
 
-# !include "events/get_player_event.opy"
+
+#!include "events/effects/buffEffects.opy"
+
+#!include "events/effects/debuffEffects.opy"
+
+#!include "events/effects/mechEffects.opy"
+
+#!include "special/event.opy"
 
 globalvar activePacket
 
@@ -488,75 +506,7 @@ globalvar activePacket
 
 #!include "bastion/init.opy"
 
-#!include "utilities/playerRegen.opy"
-
-rule "players pick up speed while not targeted for 3 seconds":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent) == false, getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] == false, eventPlayer.isMoving()]) == true
-    
-    wait(3, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setMoveSpeed(160)
-    waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
-    eventPlayer.setMoveSpeed(100)
-
-
-rule "player deaths are counted manually rather than relying on in-game statistics":
-    @Event playerDied
-    @Team 1
-    @Condition eventPlayer.isWinner == false
-    
-    wait(0.5 * getServerLoad() / 100)
-    eventPlayer.runDeathCount++
-    if eventPlayer in savedIndex:
-        wait(0.032)
-        savedDeaths[savedIndex.index("{0}".format(eventPlayer))] = eventPlayer.runDeathCount
-    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), endPosition.getPosition() if evalOnce(controlRespawnPosition) == null else controlJumpPosition[0].getPosition()), Relativity.TO_WORLD)
-
-
-
 #!include "utilities/hashtag.opy"
-
-rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
-    @Condition eventPlayer.hasSpawned() == true
-    @Condition eventPlayer.isInSpawnRoom() == true
-    @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
-    
-    eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
-    eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
-    wait(0.032)
-
-
-rule "when a player reaches the control jump point, they move on to the next map":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) != null
-    @Condition eventPlayer.hasSpawned() == true
-    @Condition eventPlayer.isInSpawnRoom() != true
-    @Condition eventPlayer.isMoving() == true
-    #@Condition eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y
-    #@Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4
-    
-    wait(0.032, Wait.ABORT_WHEN_FALSE)
-    wait(0.2)
-    if all([eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y, distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
-        if controlJumpPosition[eventPlayer.controlJumpIndex] == null:
-            goto lbl_0
-        eventPlayer.controlJumpIndex++
-        wait()
-        if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]):
-            goto lbl_1
-        eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 0.5)
-        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 0.5)
-        lbl_1:
-        eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
-        eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
-        wait(2.16)
-    lbl_0:
-    loop()
 
 rule "when a player reaches the end, they move on to the next hero or win if they're bastion":
     @Event eachPlayer
@@ -617,18 +567,6 @@ rule "winners earn their ult once per minute":
     if ruleCondition:
         loop()
 
-rule "update scoreboard every few seconds":
-    @Condition getPlayers(Team.1)[0] != false
-    @Disabled
-    
-    scoreboardArray = sorted([player for player in getPlayers(Team.1) if not player.isWinner], lambda i: 0 - i.heroNumber)
-    firstPlace = scoreboardArray[0]
-    secondPlace = scoreboardArray[1]
-    thirdPlace = scoreboardArray[2]
-    wait(getAverageServerLoad() / 50)
-    if ruleCondition:
-        loop()
-
 #!include "effects/init.opy"
 #!include "effects/nano.opy"
 #!include "effects/player.opy"
@@ -647,6 +585,4 @@ rule "auto reboot":
 
 #!include "utilities/devTool.opy"
 
-#!include "events/effect.opy"
-
-#!include "player/achievement.opy"
+#!include "special/achievement.opy"

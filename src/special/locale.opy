@@ -2,7 +2,7 @@
 
 # 核心信息
 #!define STR_MODE_NAME "躲避堡垒3：鸿运当头"
-#!define STR_MODE_CODE "代码【SVMQK】"
+#!define STR_MODE_CODE "代码【CKKWN】"
 
 # 描述文本 - 标题与状态
 #!define STR_DESC_EVENT_STATUS "春节限时活动「鸿运当头」 已上线"
@@ -74,7 +74,7 @@
 #!define STR_EVT_BUFF_4_TITLE "生命源泉"
 #!define STR_EVT_BUFF_4_DESC "每秒恢复{0}%最大生命值"
 #!define STR_EVT_BUFF_5_TITLE "黑粉来袭"
-#!define STR_EVT_BUFF_5_DESC "显示正在瞄准你的堡垒数量"
+#!define STR_EVT_BUFF_5_DESC "即将受到伤害时\n获得{0}+{1}%最大生命值的临时生命值"
 #!define STR_EVT_BUFF_6_TITLE "足力健"
 #!define STR_EVT_BUFF_6_DESC "持续移动获得{0}%可叠加的移动速度"
 #!define STR_EVT_BUFF_7_TITLE "血肉再生"
@@ -247,6 +247,30 @@
 #!define STR_EVT_MECH_24_TITLE "三位一体"
 #!define STR_EVT_MECH_24_DESC "100HP→2.5%减伤，1%减伤→2%移速\n每5秒获得1层心之钢"
 
+# ------------------------------------------------
+# 鸿运当头事件包：增益 (Buff Events Pack 4)
+# ------------------------------------------------
+
+#!define STR_EVT_BUFF_34_TITLE "马到成功"
+#!define STR_EVT_BUFF_34_DESC  "移动速度 +{0}%"
+
+#!define STR_EVT_BUFF_35_TITLE "一马当先"
+#!define STR_EVT_BUFF_35_DESC  "如果进度落后，则跳过落后的英雄\n如果已处于第1，则永久获得{0}%伤害减免/{1}%移速加成/{2}层心之钢"
+
+#!define STR_EVT_BUFF_36_TITLE "龙马精神"
+#!define STR_EVT_BUFF_36_DESC "生命值低于{0}%触发\n回复{1}%生命值"
+
+#!define STR_EVT_BUFF_37_TITLE "爆竹声声"
+#!define STR_EVT_BUFF_37_DESC "击晕{0}米内的堡垒"
+
+#!define STR_EVT_BUFF_38_TITLE "我不需要治疗"
+#!define STR_EVT_BUFF_38_DESC "发送“需要治疗”信号回复{0}点生命值"
+
+#!define STR_EVT_BUFF_39_TITLE "礼貌金"
+#!define STR_EVT_BUFF_39_DESC "对堡垒发送“你好”信号有概率将其击晕"
+
+#!define STR_EVT_BUFF_40_TITLE "费斯卡时空信标"
+#!define STR_EVT_BUFF_40_DESC "按下装填设置一个信标\n再次按下回到信标位置"
 
 # 设置菜单分类 (Pack)
 #!define STR_CAT_RANDOM_PACK "随机事件包"
@@ -254,6 +278,7 @@
 #!define STR_CAT_RANDOM_PACK_2 "随机事件包 2"
 #!define STR_CAT_RANDOM_PACK_3 "随机事件包 3"
 #!define STR_CAT_RANDOM_PACK_4 "随机事件包 4"
+#!define STR_CAT_RANDOM_PACK_LUNAR "鸿运当头事件包"
 #!define STR_CAT_RANDOM_PACK_1_BUFF "随机事件包 1：增益"
 #!define STR_CAT_RANDOM_PACK_2_BUFF "随机事件包 2：增益"
 #!define STR_CAT_RANDOM_PACK_3_BUFF "随机事件包 3：增益"
@@ -305,7 +330,7 @@
 
 # 统计详情
 # {0}=死亡数, {1}=跳过数
-#!define STR_MSG_WIN_STATS "{0} 次阵亡 & {1} 次跳过"
+#!define STR_MSG_WIN_STATS "{0} 次阵亡"
 
 # 时间单位
 #!define STR_TIME_UNIT_HOUR "{0} 小时"
@@ -325,7 +350,7 @@
 # 机器人名称格式
 # ------------------------------------------------
 # {0}=编号 (Slot+1), {1}=击杀数
-#!define STR_BOT_NAME_FORMAT "看守{0} 击杀{1}"
+#!define STR_BOT_NAME_FORMAT "年兽{0} 吞噬{1}"
 
 # ------------------------------------------------
 # HUD 文本
@@ -335,7 +360,7 @@
 #!define STR_HUD_HEROES "英雄"
 #!define STR_HUD_HEROES_VAL "{0} / {1}"
 #!define STR_HUD_NEXT_HERO "下一个英雄"
-#!define STR_HUD_ESCAPED "逃脱成功"
+#!define STR_HUD_ESCAPED "挑战成功"
 #!define STR_HUD_UNLOCKED "{0} 已解锁！"
 #!define STR_HUD_CHALLENGE_COMPLETE "挑战完成"
 #!define STR_HUD_ACHIEVEMENT_DISABLED "成就挑战已禁用 {0}"
@@ -348,9 +373,9 @@
 #!define STR_HUD_TOTAL_TIME "\n通关总计耗时\n{0}"
 #!define STR_HUD_SKIP_HINT "[秘籍] 使用终极技能跳过（{0}） "
 #!define STR_HUD_WELCOME_MULTI "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！阵亡 {0} 次之后可跳过英雄"
-#!define STR_HUD_WELCOME_MULTI_HARD "欢迎来到三合一大地图！你需要挑战所有小地图并到达终点！当前难度无法跳过英雄，加油吧！"
+#!define STR_HUD_WELCOME_MULTI_HARD "欢迎来到鸿运当头挑战！你需要收集地图上随机刷新的红包抽取事件！当前难度无法跳过英雄，加油吧！"
 #!define STR_HUD_WELCOME_NORMAL "使用全部英雄通关，一旦你解锁了一个英雄就可以在后续的游戏中随时使用！当阵亡 {0} 次之后可跳过英雄"
-#!define STR_HUD_WELCOME_NORMAL_HARD "使用全部英雄通关！当前难度无法跳过英雄，加油吧！"
+#!define STR_HUD_WELCOME_NORMAL_HARD "欢迎来到鸿运当头挑战！你需要收集地图上随机刷新的红包抽取事件！当前难度无法跳过英雄，加油吧！"
 #!define STR_HUD_FOOTER_INFO "500强交流群：445152554 | 加群给你喜欢的事件点赞 \n"
 #!define STR_HUD_EVENT_GLOBAL "全局事件：{0} {1}（{2}）"
 #!define STR_HUD_EVENT_DESC "{0} {1}"

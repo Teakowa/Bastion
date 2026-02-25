@@ -14,6 +14,8 @@ rule "map - numbani":
     creditsPosition = vect(254.54, 3.2, 22.87)
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey.append(DATA_NUMBANI[0])
-    mapTitlePlayersByKey.append(DATA_NUMBANI[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_NUMBANI[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_NUMBANI[0],
+        DATA_NUMBANI[1].split("-"),
+        DATA_NUMBANI[2].split("-")
+    ]

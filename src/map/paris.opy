@@ -19,6 +19,8 @@ rule "map - paris":
     creditsPosition = vect(-119.74, 19, -132.45)
     startForcingSpawn(Team.1, 1)
 
-    mapTitlePlayersByKey.append(DATA_PARIS[0])
-    mapTitlePlayersByKey.append(DATA_PARIS[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_PARIS[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_PARIS[0],
+        DATA_PARIS[1].split("-"),
+        DATA_PARIS[2].split("-")
+    ]

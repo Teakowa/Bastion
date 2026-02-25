@@ -7,7 +7,8 @@
 rule "Juno disable Ability 1 if possess":
     @Event eachPlayer
     @Team 1
-    @Condition all([evalOnce(dlcVishkarEvent), eventPlayer.hasSpawned(), eventPlayer.getHero() == Hero.JUNO, eventPlayer.eventType == 0, eventPlayer.eventId == 12, eventPlayer.possess[0].possessed == true]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.getHero() == Hero.JUNO, eventPlayer.eventType == 0, eventPlayer.eventId == 12, eventPlayer.possess[0].possessed == true]) == true
+    @Disabled
     
     eventPlayer.disallowButton(Button.ABILITY_1)
     eventPlayer.setAbility1Enabled(false)

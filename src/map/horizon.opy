@@ -21,6 +21,8 @@ rule "map - horizon lunar colony":
     __currentMapText___ = "月球基地"
     __currentMapPioneerText___ = __currentMapText___
 
-    mapTitlePlayersByKey.append(DATA_HORIZON_LUNAR_COLONY[0])
-    mapTitlePlayersByKey.append(DATA_HORIZON_LUNAR_COLONY[1].split("-"))
-    mapTitlePlayersByKey.append(DATA_HORIZON_LUNAR_COLONY[2].split("-"))
+    mapTitlePlayersByKey = [
+        DATA_HORIZON_LUNAR_COLONY[0],
+        DATA_HORIZON_LUNAR_COLONY[1].split("-"),
+        DATA_HORIZON_LUNAR_COLONY[2].split("-")
+    ]
