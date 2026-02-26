@@ -69,9 +69,9 @@ rule "Hashtag":
     @Condition vishkarEventActivated == true
     @Condition getTotalTimeElapsed() > 125
     @Condition any([
-            len(buffEventId) < 34, 
-            len(debuffEventId) < 22, 
-            len(mechEventId) < 25
+            len(buffEventId) < BUFF_EVENT_ID_COUNT, 
+            len(debuffEventId) < DEBUFF_EVENT_ID_COUNT, 
+            len(mechEventId) < MECH_EVENT_ID_COUNT
         ]) == true
     
     wait()

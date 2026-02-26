@@ -68,3 +68,7 @@ enum BuffEventId:
     F5_REFRESH
     # legacy numeric id: 31
     HEALING_TOWER_PROMAX
+    # sentinel only for integrity checks (do not register as an event)
+    COUNT
+
+#!define BUFF_EVENT_ID_COUNT BuffEventId.COUNT

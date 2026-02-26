@@ -46,3 +46,7 @@ enum MechEventId:
     VALKYRIE_DESCENT
     # legacy numeric id: 20
     TRINITY_SSR
+    # sentinel only for integrity checks (do not register as an event)
+    COUNT
+
+#!define MECH_EVENT_ID_COUNT MechEventId.COUNT

@@ -48,3 +48,7 @@ enum DebuffEventId:
     VAMPIRE
     # legacy numeric id: 21
     TONS_OF_DEBUFFS
+    # sentinel only for integrity checks (do not register as an event)
+    COUNT
+
+#!define DEBUFF_EVENT_ID_COUNT DebuffEventId.COUNT

@@ -40,6 +40,12 @@
 
 建议：新增/调优事件优先在该文件做参数化，避免硬编码散落在 `events/effects/*.opy`。
 
+### `constants/event_ids_*.opy`
+
+- 使用 `BuffEventId` / `DebuffEventId` / `MechEventId` 枚举定义事件 ID
+- 每个枚举末尾包含哨兵项 `COUNT`（仅用于计数，不参与事件注册）
+- 同文件提供 `BUFF_EVENT_ID_COUNT` / `DEBUFF_EVENT_ID_COUNT` / `MECH_EVENT_ID_COUNT`（映射到各自 `*.COUNT`），用于按枚举总数动态校验事件池完整性（例如 `utilities/hashtag.opy`）
+
 ## `locales/` 模块
 
 - `locales/zh-CN.opy`：中文主文本
