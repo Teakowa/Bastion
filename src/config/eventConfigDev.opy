@@ -194,6 +194,9 @@ rule "initialize event array":
 
     buffEvent[BuffEventId.SUPER_TRANSFORM] = [STR_EVT_BUFF_32_TITLE, STR_EVT_BUFF_32_DESC.format(EVT_32_HP_FLAT, percent(EVT_32_HP_MAXHP_FACTOR), EVT_32_OVERHEALTH_DURATION), EVT_BUFF_32_DURATION, EVT_BUFF_32_WEIGHT]
     buffEventId.append(BuffEventId.SUPER_TRANSFORM)
+
+    buffEvent[BuffEventId.DRAW_FIRE] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC.format(EVT_33_ARMOR_AMOUNT, negToPos(EVT_33_DMG_TAKEN)), EVT_BUFF_33_DURATION, EVT_BUFF_33_WEIGHT]
+    buffEventId.append(BuffEventId.DRAW_FIRE)
     
     # ================================================
     # 减益事件 (Debuff Events)

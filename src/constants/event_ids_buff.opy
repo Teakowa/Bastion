@@ -70,6 +70,8 @@ enum BuffEventId:
     HEALING_TOWER_PROMAX
     # legacy numeric id: 32
     SUPER_TRANSFORM
+    # legacy numeric id: 33
+    DRAW_FIRE
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 

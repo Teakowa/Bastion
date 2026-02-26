@@ -387,6 +387,15 @@
 #!define EVT_32_OVERHEALTH_DURATION 5
 #!define EVT_32_TRIGGER_GCD 0.1
 
+# --- ID 33: 向我开炮 ---
+# Duration（秒）
+#!define EVT_BUFF_33_DURATION 45
+# Weight（权重）
+#!define EVT_BUFF_33_WEIGHT 1.4
+#!define EVT_33_DMG_TAKEN -50
+#!define EVT_33_ARMOR_AMOUNT 500
+#!define EVT_33_TARGET_WEIGHT 999
+
 #!define EVT_BUFF_35_DURATION 5
 #!define EVT_BUFF_35_WEIGHT 0.6
 #!define EVT_35_DMG_TAKEN_DELTA 10
