@@ -7,18 +7,24 @@ description: 为 Bastion Overwatch Workshop 项目新增或调整随机事件（
 
 按以下顺序执行，保持最小改动，不做无关重排。
 
-## 1) 判定事件类型与归属
+## 1) 判定事件类型、枚举与归属
 
 1. 先确认事件类型：`Buff=eventType 0`、`Debuff=eventType 1`、`Mech=eventType 2`。
-2. 先确认事件包（Pack）与开关策略：
+2. 先确认对应枚举文件并新增枚举项（必须先做）：
+- Buff: [`src/constants/event_ids_buff.opy`](../../src/constants/event_ids_buff.opy)
+- Debuff: [`src/constants/event_ids_debuff.opy`](../../src/constants/event_ids_debuff.opy)
+- Mech: [`src/constants/event_ids_mech.opy`](../../src/constants/event_ids_mech.opy)
+3. 在 `COUNT` 之前插入新枚举名，禁止改动已有枚举顺序与历史映射注释。
+4. 先确认事件包（Pack）与开关策略：
 - 生产配置：[`src/config/eventConfig.opy`](../../src/config/eventConfig.opy)
 - 开发配置：[`src/config/eventConfigDev.opy`](../../src/config/eventConfigDev.opy)
-3. 在同类型下分配未占用 ID，保持数组索引与 ID 一致。
+5. 优先使用枚举名（`BuffEventId.* / DebuffEventId.* / MechEventId.*`），不要在规则和配置里新增裸数字 ID。
 
 快速检查命令：
 
 ```bash
-rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DEBUFF|MECH)_<ID>" src/events src/config src/locales
+rg -n "enum BuffEventId|enum DebuffEventId|enum MechEventId|COUNT" src/constants/event_ids_*.opy
+rg -n "BuffEventId\\.|DebuffEventId\\.|MechEventId\\." src/config src/events/effects
 ```
 
 ## 2) 添加常量（必做）
@@ -30,11 +36,12 @@ rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DE
 3. 该事件行为参数常量（如速度、伤害、半径、间隔等）
 4. 可视化/音效常量（如需要）
 
-命名规则：
+命名规则（当前仓库）：
 
 1. Buff 参数前缀：`EVT_<ID>_...` 或 `EVT_BUFF_<ID>_...`（与现有风格保持一致）
 2. Debuff 参数前缀：`EVT_DEBUFF_<ID>_...`
 3. Mech 参数前缀：`EVT_MECH_<ID>_...`
+4. 若常量文件里已有同类命名风格，跟随原风格，不引入第三种风格。
 
 ## 3) 添加本地化文案（必做）
 
@@ -63,14 +70,15 @@ rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DE
 
 为对应类型数组加入条目并 append ID：
 
-1. Buff: `buffEvent[ID] = [TITLE, DESC, DURATION, WEIGHT]` + `buffEventId.append(ID)`
-2. Debuff: `debuffEvent[ID] = [...]` + `debuffEventId.append(ID)`
-3. Mech: `mechEvent[ID] = [...]` + `mechEventId.append(ID)`
+1. Buff: `buffEvent[BuffEventId.<NAME>] = [TITLE, DESC, DURATION, WEIGHT]` + `buffEventId.append(BuffEventId.<NAME>)`
+2. Debuff: `debuffEvent[DebuffEventId.<NAME>] = [...]` + `debuffEventId.append(DebuffEventId.<NAME>)`
+3. Mech: `mechEvent[MechEventId.<NAME>] = [...]` + `mechEventId.append(MechEventId.<NAME>)`
 
 注意：
 
 1. `eventConfig.opy` 与 `eventConfigDev.opy` 的开关粒度不同，保持该文件原有风格，不要强行统一结构。
 2. 若只改一个配置文件，必须在回复中明确原因。
+3. 本仓库存在“旧数字 ID -> 新枚举名”映射；新增事件时以枚举为唯一真值，避免手填数字导致错位。
 
 ## 5) 实现事件效果规则（按类型）
 
@@ -80,10 +88,10 @@ rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DE
 2. Debuff: [`src/events/effects/debuffEffects.opy`](../../src/events/effects/debuffEffects.opy)
 3. Mech: [`src/events/effects/mechEffects.opy`](../../src/events/effects/mechEffects.opy)
 
-规则条件必须包含类型 + ID：
+规则条件必须包含类型 + 枚举 ID：
 
 ```opy
-@Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == <TYPE_NUM>, eventPlayer.eventId == <ID>]) == true
+@Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == <TYPE_NUM>, eventPlayer.eventId == <TYPE_ENUM>.<NAME>]) == true
 ```
 
 实现时执行以下收尾原则：
@@ -107,6 +115,7 @@ rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DE
 ## 7) 提交前核对清单
 
 1. 常量是否已定义并命名一致。
+2. 枚举项是否已加入对应 `event_ids_*.opy` 且位于 `COUNT` 之前。
 2. `zh-CN` 与 `en-US` 是否都存在 title/desc。
 3. `eventConfig.opy` 与 `eventConfigDev.opy` 是否都注册了该事件。
 4. 规则是否包含正确 `eventType` 与 `eventId`。
@@ -116,8 +125,8 @@ rg -n "eventType == [012]|buffEvent\[|debuffEvent\[|mechEvent\[|STR_EVT_(BUFF|DE
 ## 8) 快速自检命令
 
 ```bash
-rg -n "EVT_(BUFF|DEBUFF|MECH)_<ID>|EVT_<ID>_|STR_EVT_(BUFF|DEBUFF|MECH)_<ID>|eventId == <ID>|eventType == <TYPE_NUM>" src
-rg -n "buffEvent\[<ID>\]|debuffEvent\[<ID>\]|mechEvent\[<ID>\]" src/config
+rg -n "<TYPE_ENUM>\\.<NAME>|STR_EVT_(BUFF|DEBUFF|MECH)_<ID>|EVT_(BUFF|DEBUFF|MECH)_<ID>|eventType == <TYPE_NUM>" src/config src/events src/locales src/constants
+rg -n "enum <TYPE_ENUM>|<NAME>|COUNT" src/constants/event_ids_*.opy
 ```
 
 需要样板时，读取：[`skills/add-workshop-event/references/event-template.md`](references/event-template.md)

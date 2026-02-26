@@ -1,5 +1,5 @@
 version: 1
 interface:
   display_name: Add Workshop Event
-  short_description: Add Buff/Debuff/Mech events with constants, config, and i18n sync.
-  default_prompt: Add or modify an event in this Bastion Overwatch Workshop project, including event constants, eventConfig/eventConfigDev registration, zh-CN/en-US localization, and effect rules with safe cleanup.
+  short_description: Add Buff/Debuff/Mech events with enum IDs, constants, config, and i18n sync.
+  default_prompt: Add or modify an event in this Bastion Overwatch Workshop project using BuffEventId/DebuffEventId/MechEventId, including event constants, eventConfig/eventConfigDev registration, zh-CN/en-US localization, and effect rules with safe cleanup.
