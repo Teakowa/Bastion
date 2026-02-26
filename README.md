@@ -40,3 +40,17 @@ Configurable within Map Workshop settings
 ## Full Hero Perk Charge
 
 Enable via Map Workshop settings
+
+## CI Auto Release
+
+This repository now includes a GitHub Actions release workflow:
+
+- Trigger: push a tag that matches `v*`.
+- Build: compile `src/main.opy` and `src/devMain.opy` through an npm-based OverPy toolchain.
+- Release assets: upload `build/main.ow` and `build/devMain.ow` to the generated GitHub Release.
+
+Useful local commands:
+
+- `npm run build:main`
+- `npm run build:dev`
+- `npm run build`

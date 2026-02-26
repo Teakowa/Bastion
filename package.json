@@ -1,0 +1,14 @@
+{
+  "name": "bastion-overpy-build",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build and release workflow for Bastion OverPy sources",
+  "scripts": {
+    "build": "npm run build:main && npm run build:dev",
+    "build:main": "node scripts/compile.js src/main.opy build/main.ow",
+    "build:dev": "node scripts/compile.js src/devMain.opy build/devMain.ow"
+  },
+  "dependencies": {
+    "overpy": "^6.7.0"
+  }
+}
