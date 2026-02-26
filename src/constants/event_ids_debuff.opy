@@ -48,6 +48,8 @@ enum DebuffEventId:
     VAMPIRE
     # legacy numeric id: 21
     TONS_OF_DEBUFFS
+    # legacy numeric id: 22
+    MOON_ROCKET
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 

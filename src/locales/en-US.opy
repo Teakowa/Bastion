@@ -199,6 +199,8 @@
 #!define STR_EVT_DEBUFF_20_DESC "Drains ally HP to heal yourself."
 #!define STR_EVT_DEBUFF_21_TITLE "Tons of Debuffs"
 #!define STR_EVT_DEBUFF_21_DESC "All stats massively reduced.\nGood Luck."
+#!define STR_EVT_DEBUFF_22_TITLE "Moon Rocket"
+#!define STR_EVT_DEBUFF_22_DESC "Randomly launches you skyward\nand scrambles your flight direction."
 
 # ------------------------------------------------
 # Random Pack 4: Mechanics

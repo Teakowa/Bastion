@@ -486,3 +486,16 @@ rule "[VishkarEvent]: 成吨的减益 (全属性削弱)":
     setPlayerHP()
     updatePlayerStats()
     clearEventEffect()
+
+
+rule "[VishkarEvent]: 登月火箭":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.MOON_ROCKET]) == true
+
+    eventPlayer.startForcingThrottle(0, 0, 0, 0, 0, 0)
+    eventPlayer.setGravity(EVT_DEBUFF_22_GRAVITY)
+    eventPlayer.applyImpulse(Vector.UP, EVT_DEBUFF_22_UPWARD_IMPULSE, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    wait(eventPlayer.eventDuration)
+    eventPlayer.stopForcingThrottle()
+    eventPlayer.setGravity(100)

@@ -214,6 +214,8 @@
 #!define STR_EVT_DEBUFF_20_DESC "吸取队友生命值来治疗自己"
 #!define STR_EVT_DEBUFF_21_TITLE "成吨的减益"
 #!define STR_EVT_DEBUFF_21_DESC "-50%生命/移速/减伤/治疗增益\n祝你好运"
+#!define STR_EVT_DEBUFF_22_TITLE "登月火箭"
+#!define STR_EVT_DEBUFF_22_DESC "被随机射向天空\n并在空中无法控制方向"
 
 # ------------------------------------------------
 # 随机事件包 4：机制 (Mech Events Pack 4)

@@ -686,6 +686,14 @@
 # Weight（权重）
 #!define EVT_DEBUFF_21_WEIGHT 0.2
 
+# --- ID 22 (Debuff): 登月火箭 ---
+# Duration（秒）
+#!define EVT_DEBUFF_22_DURATION 5
+# Weight（权重）
+#!define EVT_DEBUFF_22_WEIGHT 1.2
+#!define EVT_DEBUFF_22_GRAVITY 5
+#!define EVT_DEBUFF_22_UPWARD_IMPULSE 85
+
 
 # -----------------------------------------------------------------------------
 # MECH 事件（按ID排序）

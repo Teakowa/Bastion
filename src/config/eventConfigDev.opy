@@ -413,6 +413,9 @@ rule "initialize event array":
 
     debuffEvent[BuffEventId.HEART_OF_STEEL_PRO] = [STR_EVT_DEBUFF_21_TITLE, STR_EVT_DEBUFF_21_DESC, EVT_DEBUFF_21_DURATION, EVT_DEBUFF_21_WEIGHT]
     debuffEventId.append(BuffEventId.HEART_OF_STEEL_PRO)
+
+    debuffEvent[DebuffEventId.MOON_ROCKET] = [STR_EVT_DEBUFF_22_TITLE, STR_EVT_DEBUFF_22_DESC, EVT_DEBUFF_22_DURATION, EVT_DEBUFF_22_WEIGHT]
+    debuffEventId.append(DebuffEventId.MOON_ROCKET)
     
     # ================================================
     # 机制事件 (Mech Events)
