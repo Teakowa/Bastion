@@ -15,7 +15,7 @@ rule "map - 斗兽场":
     bastionPosition.append(vect(-9.98, 5, -39.5))
     bastionPosition.append(vect(-60.93, 12.21, -11.91))
     #终点
-    bastionPosition.append(vect(-88.63, 13.77, -23.49))
+    bastionPosition.append(vect(-87.64, 16.77, -22.43))
     endPosition = vect(-90.31, 9, -33.55)
     thirdPersonPosition = vect(117.38, 9, -38.98)
     resetPosition = vect(111.17, 9, -50.91)
