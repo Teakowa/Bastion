@@ -194,6 +194,8 @@
 #!define STR_EVT_BUFF_31_DESC "无视距离，每秒为全队提供25+125%最大生命值的治疗"
 #!define STR_EVT_BUFF_32_TITLE "超级变换形态"
 #!define STR_EVT_BUFF_32_DESC "切换形态时获得{0}+{1}最大生命值的临时生命值，持续{2}秒"
+#!define STR_EVT_BUFF_33_TITLE "向我开炮"
+#!define STR_EVT_BUFF_33_DESC "获得{0}点可恢复护甲与{1}%伤害减免\n成为堡垒的优先攻击目标"
 
 # ------------------------------------------------
 # 随机事件包 4：减益 (Debuff Events Pack 4)

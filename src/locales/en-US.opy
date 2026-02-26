@@ -179,6 +179,8 @@
 #!define STR_EVT_BUFF_31_DESC "Global range. Heals team for 25 + 125% Max HP/s."
 #!define STR_EVT_BUFF_32_TITLE "Super Transform Form"
 #!define STR_EVT_BUFF_32_DESC "Entering alternate form grants {0} + {1} Max HP overhealth for {2}s."
+#!define STR_EVT_BUFF_33_TITLE "Fire at Me"
+#!define STR_EVT_BUFF_33_DESC "Gain {0} recoverable armor and {1}% damage reduction.\nBastions prioritize targeting you."
 
 # ------------------------------------------------
 # Random Pack 4: Debuffs
