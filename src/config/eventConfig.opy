@@ -346,6 +346,9 @@ rule "initialize event array":
     buffEvent[BuffEventId.HEALING_TOWER_PROMAX] = [STR_EVT_BUFF_31_TITLE, STR_EVT_BUFF_31_DESC, EVT_BUFF_31_DURATION, EVT_BUFF_31_WEIGHT]
     buffEventId.append(BuffEventId.HEALING_TOWER_PROMAX)
 
+    buffEvent[34] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(EVT_34_HP_FLAT, percent(EVT_34_HP_MAXHP_FACTOR), EVT_34_OVERHEALTH_DURATION), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
+    buffEventId.append(34)
+
     # ================================================
     # Pack 4: Debuffs
     # ================================================
