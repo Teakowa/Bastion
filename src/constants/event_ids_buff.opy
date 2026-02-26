@@ -72,6 +72,8 @@ enum BuffEventId:
     SUPER_TRANSFORM
     # legacy numeric id: 33
     DRAW_FIRE
+    # legacy numeric id: 34
+    TENACITY
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 

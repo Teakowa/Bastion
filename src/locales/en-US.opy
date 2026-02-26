@@ -181,6 +181,8 @@
 #!define STR_EVT_BUFF_32_DESC "Entering alternate form grants {0} + {1} Max HP overhealth for {2}s."
 #!define STR_EVT_BUFF_33_TITLE "Fire at Me"
 #!define STR_EVT_BUFF_33_DESC "Gain {0} recoverable armor and {1}% damage reduction.\nBastions prioritize targeting you."
+#!define STR_EVT_BUFF_34_TITLE "Tenacity"
+#!define STR_EVT_BUFF_34_DESC "Auto-triggers below {0}% HP.\nRestore {2}% Max HP over {1}s.\nBuilt-in {3}s cooldown."
 
 # ------------------------------------------------
 # Random Pack 4: Debuffs
