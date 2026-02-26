@@ -40,3 +40,35 @@ Configurable within Map Workshop settings
 ## Full Hero Perk Charge
 
 Enable via Map Workshop settings
+
+## CI 自动发布（pnpm）
+
+项目已支持通过 GitHub Actions 在推送 `v*` 标签时自动编译并发布 Workshop 文件：
+
+- 工作流文件：`.github/workflows/release.yml`
+- 发布产物（双语言）：
+  - `build/main.en-US.ow`
+  - `build/devMain.en-US.ow`
+  - `build/main.zh-CN.ow`
+  - `build/devMain.zh-CN.ow`
+- 包管理器：`pnpm`
+
+本地构建命令：
+
+```bash
+pnpm install
+pnpm run build
+```
+
+可分别编译双入口：
+
+```bash
+pnpm run build:main
+pnpm run build:dev
+```
+
+用于发布的双语言构建命令：
+
+```bash
+pnpm run build:release
+```

@@ -1,0 +1,20 @@
+{
+  "name": "bastion",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build tooling for OverPy workshop outputs",
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "build:main": "node scripts/compile.js --input src/main.opy --output build/main.ow --language en-US",
+    "build:dev": "node scripts/compile.js --input src/devMain.opy --output build/devMain.ow --language en-US",
+    "build:main:en": "node scripts/compile.js --input src/main.opy --output build/main.en-US.ow --language en-US",
+    "build:dev:en": "node scripts/compile.js --input src/devMain.opy --output build/devMain.en-US.ow --language en-US",
+    "build:main:zh": "node scripts/compile.js --input src/main.opy --output build/main.zh-CN.ow --language zh-CN",
+    "build:dev:zh": "node scripts/compile.js --input src/devMain.opy --output build/devMain.zh-CN.ow --language zh-CN",
+    "build:release": "pnpm run build:main:en && pnpm run build:dev:en && pnpm run build:main:zh && pnpm run build:dev:zh",
+    "build": "pnpm run build:main && pnpm run build:dev"
+  },
+  "dependencies": {
+    "@zezombye/overpy": "^9.4.19"
+  }
+}
