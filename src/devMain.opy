@@ -531,7 +531,7 @@ rule "when a player reaches the control jump point, they move on to the next map
     
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     wait(0.2)
-    if all([eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y, distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
+    if all([((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= controlJumpPosition[eventPlayer.controlJumpIndex].y), distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
         if controlJumpPosition[eventPlayer.controlJumpIndex] == null:
             goto lbl_0
         eventPlayer.controlJumpIndex++
@@ -551,8 +551,8 @@ rule "when a player reaches the end, they move on to the next hero or win if the
     @Event eachPlayer
     @Team 1
     @Condition eventPlayer.hasSpawned() == true
-    @Condition eventPlayer.getPosition().y >= endPosition.y
-    @Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
+    @Condition (eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= endPosition.y
+    @Condition distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
     
     eventPlayer.respawn()
     wait(0.032)
