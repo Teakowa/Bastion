@@ -16,7 +16,7 @@ rule "display death progress as ult charge":
     @Event eachPlayer
     @Team 1
     @Condition difficulty != 5
-    @Condition all([dlcVishkarEvent, eventPlayer.eventType == 0, eventPlayer.eventId == 23]) == false
+    @Condition all([dlcVishkarEvent, eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM]) == false
     @Condition eventPlayer.progressionDeathCount < maxDeath
     @Condition eventPlayer.isWinner == false
     @Condition (eventPlayer.getHero() == Hero.DVA and eventPlayer.isInAlternateForm()) == false
@@ -32,7 +32,7 @@ rule "display message if hero available":
     @Event eachPlayer
     @Team 1
     @Condition difficulty != 5
-    @Condition all([dlcVishkarEvent, eventPlayer.eventType == 0, eventPlayer.eventId == 23]) != true
+    @Condition all([dlcVishkarEvent, eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM]) != true
     @Condition eventPlayer.progressionDeathCount == maxDeath
     @Condition eventPlayer.heroNumber + 1 < len(heroList)
     @Condition (eventPlayer.getHero() == Hero.DVA and eventPlayer.isInAlternateForm()) == false

@@ -42,6 +42,7 @@ rule "Trigger: Normal Damage":
     @Team 1
     # @Condition attacker.getHero() == Hero.BASTION and attacker != eventPlayer
     
+    eventPlayer.combatRegen = false
     wait(3, Wait.RESTART_WHEN_TRUE)
     eventPlayer.combatRegen = true
     wait()

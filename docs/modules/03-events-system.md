@@ -37,6 +37,21 @@
 - `eventLucky`（幸运倾向累计）
 - `eventForceRoll/eventForceCount`（强制类别调试与作弊链）
 
+## 机制事件 ID（Enum 管理）
+
+- 机制事件使用 `src/constants/event_ids_mech.opy` 的 `MechEventId` enum 管理。
+- `config/eventConfig*.opy` 与 `events/effects/mechEffects.opy` 只引用 `MechEventId.<MEMBER>`，不直接写裸数字 ID。
+- 当前策略为“源码版本内自洽”：删除中间 enum 成员时，后续成员自动前移，相关规则引用会随编译同步。
+- 若新增机制事件，优先在 enum 末尾追加成员，再补配置与效果规则。
+- 代码注释需独立成行，避免 `代码 # 注释` 的行尾注释写法，以免触发 OverPy 语法兼容问题。
+
+## 增益与减益事件 ID（Enum 管理）
+
+- 增益事件使用 `src/constants/event_ids_buff.opy` 的 `BuffEventId` enum 管理。
+- 减益事件使用 `src/constants/event_ids_debuff.opy` 的 `DebuffEventId` enum 管理。
+- `config/eventConfig*.opy`、`events/effects/buffEffects.opy`、`events/effects/debuffEffects.opy` 只引用 enum 成员，不直接写裸数字 ID。
+- 与机制组一致，当前策略为“源码版本内自洽”：删除中间 enum 成员时，后续成员自动前移。
+
 ## 配置文件差异
 
 ### `eventConfig.opy`（生产）
@@ -61,9 +76,11 @@
 
 ## 事件效果层设计
 
-- `buffEffects.opy`：增益、任务、共生、回血/护甲/位移增强等
+- `buffEffects.opy`：增益、任务、共生、回血/护甲/位移增强等（含“超级变换形态”：指定英雄进入非初始形态时获得短时临时生命值；“向我开炮”：50%减伤 + 500可恢复护甲 + 提高堡垒索敌优先级）
 - `debuffEffects.opy`：减速、易伤、禁疗、技能连锁、共享伤害等
+- 新增事件示例（Debuff 22「登月火箭 / Moon Rocket」）：强制 throttle 归零、重力降至 5 并施加向上冲量，实现“被射向天空且难以控向”
 - `mechEffects.opy`：机制类变体（体型、反向移动、赌徒、作弊链等）
+- 新增事件示例（Buff 34「坚韧 / Tenacity」）：血量低于 40% 自动触发，使用 HOT 在 1.25 秒内恢复 60% 最大生命值，随后进入 5 秒内置冷却
 
 ## 性能与稳定性点
 
@@ -75,7 +92,7 @@
 ## 扩展步骤（推荐）
 
 1. 在 `event_constants.opy` 新增参数
-2. 在 `locales/*.opy` 增加标题/描述
+2. 在 `locales/*.opy` 增加标题/描述（不写持续时间，持续时间只放在 `event_constants.opy`）
 3. 在 `config/eventConfig*.opy` 注入条目与开关
 4. 在 `events/effects/*` 增加规则实现
 5. 在 `clearPlayerEvent` 核对是否有新状态需回收

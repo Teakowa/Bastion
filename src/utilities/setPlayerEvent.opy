@@ -22,7 +22,7 @@ def setPlayerEvent():
         eventPlayer.eventName = buffEvent[eventPlayer.eventId][0]
         eventPlayer.eventDesc = buffEvent[eventPlayer.eventId][1]
         eventPlayer.eventDuration = buffEvent[eventPlayer.eventId][2]
-        if eventPlayer.eventId == 0:
+        if eventPlayer.eventId == BuffEventId.OLIVIA_GIFT:
             goto lbl_0
         eventPlayer.eventCount[0]++
         lbl_0:

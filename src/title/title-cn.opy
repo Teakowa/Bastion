@@ -169,7 +169,7 @@ enum MapTITLEKey:
     }, \
     { \
         name: "雨鸢", \
-        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.LUCKY_STAR, TITLE.UNLUCKY, TITLE.MANBA] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.LUCKY_STAR, TITLE.HACKING, TITLE.UNLUCKY, TITLE.MANBA] \
     }, \
     { \
         name: "Jargon", \
@@ -221,7 +221,7 @@ enum MapTITLEKey:
     }, \
     { \
         name: "锄禾日当午", \
-        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.HACKING, TITLE.LUCKY_STAR] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.HACKING, TITLE.LUCKY_STAR, TITLE.UNLUCKY, TITLE.MANBA] \
     } \
 ]
 
@@ -285,8 +285,8 @@ enum MapTITLEKey:
 # 渣客镇
 #!define DATA_JUNKERTOWN [ \
    [], \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢"], "-")\
 ]
 
 # 国王大道

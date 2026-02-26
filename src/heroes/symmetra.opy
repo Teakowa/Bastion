@@ -12,9 +12,8 @@ rule "symmetra auto-breaks tp after going through":
     @Condition eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0
     
     wait(0.5)
-    while all([eventPlayer.isUsingAbility2(), eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0]):
+    if eventPlayer.isUsingAbility2() and eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0:
         eventPlayer.forceButtonPress(Button.ABILITY_2)
-        wait(0.25)
 
 
 rule "symmetra auto-breaks tp after time limit":
@@ -24,8 +23,7 @@ rule "symmetra auto-breaks tp after time limit":
     @Condition eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0
     
     wait(1.25, Wait.ABORT_WHEN_FALSE)
-    while all([eventPlayer.isUsingAbility2(), eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0]):
+    if eventPlayer.isUsingAbility2() and eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0:
         eventPlayer.forceButtonPress(Button.ABILITY_2)
-        wait(0.25)
 
 

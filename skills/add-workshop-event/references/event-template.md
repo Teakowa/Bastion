@@ -1,6 +1,23 @@
 # Event Template
 
-按类型替换 `<TYPE>`、`<TYPE_NUM>`、`<ID>`、`<PACK>`、`<PARAMS...>`。
+按类型替换 `<TYPE>`、`<TYPE_NUM>`、`<TYPE_ENUM>`、`<ENUM_NAME>`、`<ID>`、`<PACK>`、`<PARAMS...>`。
+
+先改枚举，再改 config/effects。
+
+## 0. 枚举模板（`src/constants/event_ids_*.opy`）
+
+```opy
+enum <TYPE_ENUM>:
+    ...
+    <ENUM_NAME>
+    # sentinel only for integrity checks (do not register as an event)
+    COUNT
+```
+
+要求：
+
+1. 新项必须插入在 `COUNT` 之前。
+2. 不要改动已有枚举顺序。
 
 ## A. 常量模板（`src/constants/event_constants.opy`）
 
@@ -24,20 +41,20 @@
 
 ```opy
 # Pack <PACK>: <TYPE>
-<arrayName>[<ID>] = [
+<arrayName>[<TYPE_ENUM>.<ENUM_NAME>] = [
     STR_EVT_<TYPE>_<ID>_TITLE,
     STR_EVT_<TYPE>_<ID>_DESC.format(<PARAMS...>),
     EVT_<TYPE>_<ID>_DURATION,
     EVT_<TYPE>_<ID>_WEIGHT
 ]
-<arrayIdName>.append(<ID>)
+<arrayIdName>.append(<TYPE_ENUM>.<ENUM_NAME>)
 ```
 
 映射：
 
-1. Buff: `<arrayName>=buffEvent`, `<arrayIdName>=buffEventId`
-2. Debuff: `<arrayName>=debuffEvent`, `<arrayIdName>=debuffEventId`
-3. Mech: `<arrayName>=mechEvent`, `<arrayIdName>=mechEventId`
+1. Buff: `<TYPE_ENUM>=BuffEventId`, `<arrayName>=buffEvent`, `<arrayIdName>=buffEventId`
+2. Debuff: `<TYPE_ENUM>=DebuffEventId`, `<arrayName>=debuffEvent`, `<arrayIdName>=debuffEventId`
+3. Mech: `<TYPE_ENUM>=MechEventId`, `<arrayName>=mechEvent`, `<arrayIdName>=mechEventId`
 
 ## D. 效果规则模板（`src/events/effects/*.opy`）
 
@@ -45,7 +62,7 @@
 rule "[VishkarEvent]: <NAME>":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == <TYPE_NUM>, eventPlayer.eventId == <ID>]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == <TYPE_NUM>, eventPlayer.eventId == <TYPE_ENUM>.<ENUM_NAME>]) == true
 
     # 先做轻量条件与初始化
     wait(getAverageServerLoad() / 100 * 0.032)
@@ -63,6 +80,6 @@ rule "[VishkarEvent]: <NAME>":
 
 ## E. 类型映射
 
-1. Buff: `<TYPE>=BUFF`, `<TYPE_NUM>=0`
-2. Debuff: `<TYPE>=DEBUFF`, `<TYPE_NUM>=1`
-3. Mech: `<TYPE>=MECH`, `<TYPE_NUM>=2`
+1. Buff: `<TYPE>=BUFF`, `<TYPE_NUM>=0`, `<TYPE_ENUM>=BuffEventId`
+2. Debuff: `<TYPE>=DEBUFF`, `<TYPE_NUM>=1`, `<TYPE_ENUM>=DebuffEventId`
+3. Mech: `<TYPE>=MECH`, `<TYPE_NUM>=2`, `<TYPE_ENUM>=MechEventId`
