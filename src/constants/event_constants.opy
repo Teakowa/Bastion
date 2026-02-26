@@ -377,15 +377,15 @@
 #!define EVT_31_HEAL_FLAT 50
 #!define EVT_31_HEAL_MAXHP_FACTOR 0.75
 
-# --- ID 34: 超级变换形态 ---
+# --- ID 32: 超级变换形态 ---
 # Duration（秒）
-#!define EVT_BUFF_34_DURATION 30
+#!define EVT_BUFF_32_DURATION 30
 # Weight（权重）
-#!define EVT_BUFF_34_WEIGHT 1.6
-#!define EVT_34_HP_FLAT 50
-#!define EVT_34_HP_MAXHP_FACTOR 0.1
-#!define EVT_34_OVERHEALTH_DURATION 5
-#!define EVT_34_TRIGGER_GCD 0.1
+#!define EVT_BUFF_32_WEIGHT 1.6
+#!define EVT_32_HP_FLAT 50
+#!define EVT_32_HP_MAXHP_FACTOR 0.1
+#!define EVT_32_OVERHEALTH_DURATION 5
+#!define EVT_32_TRIGGER_GCD 0.1
 
 #!define EVT_BUFF_35_DURATION 5
 #!define EVT_BUFF_35_WEIGHT 0.6

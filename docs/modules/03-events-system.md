@@ -90,7 +90,7 @@
 ## 扩展步骤（推荐）
 
 1. 在 `event_constants.opy` 新增参数
-2. 在 `locales/*.opy` 增加标题/描述
+2. 在 `locales/*.opy` 增加标题/描述（不写持续时间，持续时间只放在 `event_constants.opy`）
 3. 在 `config/eventConfig*.opy` 注入条目与开关
 4. 在 `events/effects/*` 增加规则实现
 5. 在 `clearPlayerEvent` 核对是否有新状态需回收

@@ -821,7 +821,7 @@ rule "[VishkarEvent]: 超级变换形态 (触发)":
         dlcVishkarEvent,
         eventPlayer.hasSpawned(),
         eventPlayer.eventType == 0,
-        eventPlayer.eventId == 34,
+        eventPlayer.eventId == BuffEventId.SUPER_TRANSFORM,
         eventPlayer.altFormTrigger != true,
         eventPlayer.isInAlternateForm(),
         any([
@@ -837,14 +837,14 @@ rule "[VishkarEvent]: 超级变换形态 (触发)":
     ]) == true
 
     eventPlayer.altFormTrigger = true
-    eventPlayer.addHealthPool(Health.NORMAL, round(EVT_34_HP_FLAT + eventPlayer.getMaxHealth() * EVT_34_HP_MAXHP_FACTOR), false, false)
-    eventPlayer.hp_data.append([[getTotalTimeElapsed() + EVT_34_OVERHEALTH_DURATION, getLastCreatedHealthPool()]])
-    wait(EVT_34_TRIGGER_GCD)
+    eventPlayer.addHealthPool(Health.NORMAL, round(EVT_32_HP_FLAT + eventPlayer.getMaxHealth() * EVT_32_HP_MAXHP_FACTOR), false, false)
+    eventPlayer.hp_data.append([[getTotalTimeElapsed() + EVT_32_OVERHEALTH_DURATION, getLastCreatedHealthPool()]])
+    wait(EVT_32_TRIGGER_GCD)
 
 
 rule "[VishkarEvent]: 超级变换形态 (状态重置)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 34, eventPlayer.altFormTrigger == true, not eventPlayer.isInAlternateForm()]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.SUPER_TRANSFORM, eventPlayer.altFormTrigger == true, not eventPlayer.isInAlternateForm()]) == true
 
     eventPlayer.altFormTrigger = false

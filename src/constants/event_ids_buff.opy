@@ -68,6 +68,8 @@ enum BuffEventId:
     F5_REFRESH
     # legacy numeric id: 31
     HEALING_TOWER_PROMAX
+    # legacy numeric id: 32
+    SUPER_TRANSFORM
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 
