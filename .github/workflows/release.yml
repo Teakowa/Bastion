@@ -31,11 +31,13 @@ jobs:
         run: pnpm install --frozen-lockfile=false
 
       - name: Build workshop outputs
-        run: pnpm run build
+        run: pnpm run build:release
 
       - name: Upload workshop files to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            build/main.ow
-            build/devMain.ow
+            build/main.en-US.ow
+            build/devMain.en-US.ow
+            build/main.zh-CN.ow
+            build/devMain.zh-CN.ow

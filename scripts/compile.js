@@ -2,7 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { spawnSync } = require('node:child_process');
+const overpy = require('@zezombye/overpy');
 
 function getArg(name) {
   const idx = process.argv.indexOf(name);
@@ -12,48 +12,49 @@ function getArg(name) {
 
 const input = getArg('--input');
 const output = getArg('--output');
+const language = getArg('--language') || 'en-US';
 
 if (!input || !output) {
-  console.error('Usage: node scripts/compile.js --input <src/main.opy> --output <build/main.ow>');
+  console.error('Usage: node scripts/compile.js --input <src/main.opy> --output <build/main.ow> [--language en-US]');
   process.exit(1);
 }
 
-if (!fs.existsSync(input)) {
-  console.error(`Input file does not exist: ${input}`);
+const absInput = path.resolve(input);
+const absOutput = path.resolve(output);
+
+if (!fs.existsSync(absInput)) {
+  console.error(`Input file does not exist: ${absInput}`);
   process.exit(1);
 }
 
-const outputDir = path.dirname(output);
+const outputDir = path.dirname(absOutput);
 fs.mkdirSync(outputDir, { recursive: true });
 
-const localOverpy = path.resolve('node_modules', '.bin', process.platform === 'win32' ? 'overpy.cmd' : 'overpy');
-const cliCommand = fs.existsSync(localOverpy) ? localOverpy : 'overpy';
+async function main() {
+  try {
+    const content = fs.readFileSync(absInput, 'utf8');
+    if (overpy.readyPromise) {
+      await overpy.readyPromise;
+    }
 
-const argVariants = [
-  [input, '--output', output],
-  [input, '-o', output],
-  ['compile', input, '--output', output],
-  ['compile', input, '-o', output],
-  ['--input', input, '--output', output]
-];
+    const compileResult = await overpy.compile(
+      content,
+      language,
+      `${path.dirname(absInput)}${path.sep}`,
+      path.basename(absInput)
+    );
 
-let lastError = null;
+    if (!compileResult || typeof compileResult.result !== 'string' || compileResult.result.length === 0) {
+      throw new Error('OverPy compile returned empty result.');
+    }
 
-for (const args of argVariants) {
-  const result = spawnSync(cliCommand, args, { stdio: 'inherit' });
-  if (result.status === 0) {
-    process.exit(0);
-  }
-
-  if (result.error) {
-    lastError = result.error;
+    fs.writeFileSync(absOutput, compileResult.result, 'utf8');
+    console.log(`Compiled [${language}] ${absInput} -> ${absOutput}`);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Failed to compile [${language}] ${absInput}: ${message}`);
+    process.exit(1);
   }
 }
 
-if (lastError) {
-  console.error('Failed to execute overpy CLI:', lastError.message);
-} else {
-  console.error('Failed to compile with all known overpy CLI argument formats.');
-}
-
-process.exit(1);
+main();
