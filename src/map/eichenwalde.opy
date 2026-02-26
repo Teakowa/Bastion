@@ -11,7 +11,10 @@ rule "map - eichenwalde":
     bastionPosition.append(vect(54.429, 23.32, -102.936))
     bastionPosition.append(vect(75.164, 12.66, -71.852))
     bastionPosition.append(vect(36.49, 8.938, -71.14))
-    bastionPosition.append(vect(2.584, 8.026, -63.687))
+    if __currentMap___ != 565:
+        bastionPosition.append(vect(2.584, 8.026, -63.687))
+    else:
+        bastionPosition.append(vect(3.66, 9.08, -62.94))
     bastionPosition.append(vect(-12.503, 3.514, -31.548))
     bastionPosition.append(vect(0.632, 6.073, -2.154))
     bastionPosition.append(vect(-32.381, -1.334, 0.005))
