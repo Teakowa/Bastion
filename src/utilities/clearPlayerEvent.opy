@@ -27,6 +27,7 @@ def clearPlayerEvent():
     eventPlayer.knockback = null
     eventPlayer.sizeHealth = 1
     eventPlayer.eventSize = 0
+    eventPlayer.altFormTrigger = false
     if eventPlayer.isWinner:
         goto lbl_0
     destroyEffect(eventPlayer.invincibleEffect)

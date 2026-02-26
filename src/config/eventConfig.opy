@@ -365,6 +365,9 @@ rule "initialize event array":
     buffEvent[33] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC, EVT_BUFF_33_DURATION, EVT_BUFF_33_WEIGHT]
     buffEventId.append(33)
 
+    buffEvent[34] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(EVT_34_HP_FLAT, percent(EVT_34_HP_MAXHP_FACTOR), EVT_34_OVERHEALTH_DURATION), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
+    buffEventId.append(34)
+
     # ================================================
     # Pack 4: Debuffs
     # ================================================

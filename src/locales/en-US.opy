@@ -189,6 +189,8 @@
 #!define STR_EVT_BUFF_32_DESC "Resets all cooldowns every 5s."
 #!define STR_EVT_BUFF_33_TITLE "Healing Pylon ProMax"
 #!define STR_EVT_BUFF_33_DESC "Global range. Heals team for 25 + 125% Max HP/s."
+#!define STR_EVT_BUFF_34_TITLE "Super Transform Form"
+#!define STR_EVT_BUFF_34_DESC "Entering alternate form grants {0} + {1} Max HP overhealth"
 
 # ------------------------------------------------
 # Random Pack 4: Debuffs

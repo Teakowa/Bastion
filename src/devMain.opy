@@ -401,6 +401,7 @@ playervar eventTargetHP 105
 playervar lastThreatTime 108
 playervar hudText 109
 playervar eventMissionGoal 110
+playervar altFormTrigger 111
 playervar tempUnlockId
 playervar earnedAchievements
 playervar menuHeroIndex

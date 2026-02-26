@@ -204,6 +204,8 @@
 #!define STR_EVT_BUFF_32_DESC "每5秒重置所有技能冷却"
 #!define STR_EVT_BUFF_33_TITLE "治疗光塔 ProMax"
 #!define STR_EVT_BUFF_33_DESC "无视距离，每秒为全队提供25+125%最大生命值的治疗"
+#!define STR_EVT_BUFF_34_TITLE "超级变换形态"
+#!define STR_EVT_BUFF_34_DESC "切换形态时获得{0}+{1}最大生命值的临时生命值"
 
 # ------------------------------------------------
 # 随机事件包 4：减益 (Debuff Events Pack 4)
