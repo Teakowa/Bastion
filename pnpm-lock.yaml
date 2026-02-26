@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@zezombye/overpy':
+        specifier: ^9.4.19
+        version: 9.4.19
+
+packages:
+
+  '@zezombye/overpy@9.4.19':
+    resolution: {integrity: sha512-PY+lKt1Q1Gedbqo3o6VymsenWDrPAEjmPsi/PJg6EqRTFrMLzPDbj9LHHZKGn4pBwEP5OssDLEQ8edMJ0RUkwQ==}
+
+snapshots:
+
+  '@zezombye/overpy@9.4.19': {}

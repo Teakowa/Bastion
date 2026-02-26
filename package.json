@@ -1,0 +1,15 @@
+{
+  "name": "bastion",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build tooling for OverPy workshop outputs",
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "build:main": "node scripts/compile.js --input src/main.opy --output build/main.ow",
+    "build:dev": "node scripts/compile.js --input src/devMain.opy --output build/devMain.ow",
+    "build": "pnpm run build:main && pnpm run build:dev"
+  },
+  "dependencies": {
+    "@zezombye/overpy": "^9.4.19"
+  }
+}
