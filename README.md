@@ -1,20 +1,24 @@
-# Bastion Escape
+# Bastion Escape 3
 
-This is a subsequent development version based on [OW2 Bastion Escape](https://workshop.codes/QF8RN).
+English | [简体中文](README.zh-CN.md)
 
-The classic Bastion Escape 2 experience, but revamped for Overwatch 2.
+This is a continued development build based on [OW2 Bastion Escape](https://workshop.codes/QF8RN).
 
-Work together to sneak past the Bastion prison guards and reach the end of the map to escape as every hero, each time a little harder. AKA Prison Escape or CCTV.
+It preserves the classic Bastion Escape gameplay and expands it for Overwatch 2.
+
+Players cooperate to sneak past Bastion guards and reach each map's finish line. The challenge increases over time. This mode is also known as Prison Escape / CCTV.
 
 We have added the following content:
 
 ## Random Events
 
-At the 2-minute mark after the game commences, the system will randomly assign an event to each surviving player. Subsequently, a new event will be drawn within 30-45 seconds after each event concludes, continuing until the level is cleared or the game ends. Events fall into three categories: buffs, debuffs, and mechanics. They may be a blessing from above or a deadly curse. Your objective remains unchanged—survive and reach the finish line. But now, you must navigate the Bastion's hail of bullets while managing the constant stream of ‘surprises’ or ‘scares’ bestowed upon you.
+Two minutes after the match starts, the system assigns a random event to each surviving player. After each event ends, another one is drawn in about 30-45 seconds until the match ends.
 
-# Tri-Map Challenge
+Events are split into buffs, debuffs, and mechanics. Some events help, some are deadly. The goal is unchanged: survive and reach the finish line, while handling constant "surprises" under Bastion fire.
 
-This mode merges three smaller maps from the Conquest series into one large map. Players must complete all three sections and reach the finish line. If killed, they respawn in the current map's respawn room.
+# 3-in-1 Challenge
+
+This mode combines three Control maps into one long run. Players must clear all three phases and reach the final finish line. If a player dies, they respawn in the current phase's respawn room.
 
 Supported Maps:
     - Lijiang Tower
@@ -25,50 +29,76 @@ Supported Maps:
 ## New Difficulty: Inferno
 
 - AI Bastions deal increased damage
-- AI Bastions deploy grenades
+- AI Bastions launch grenades
 - AI Bastion damage reduction cannot be disabled
 - Hero selection cannot be skipped
 
-## Third-Person
+## Third-Person Support
 
-Players may freely switch between first-person and third-person perspectives
+Players can switch between first-person and third-person in the respawn room, or open the in-game menu via `Interact + Melee` to switch.
 
 ## Auto-Restart
 
-Configurable within Map Workshop settings
+Configurable in Workshop settings, up to 4.5 hours.
 
 ## Full Hero Perk Charge
 
-Enable via Map Workshop settings
+Enable in Workshop settings.
 
-## CI 自动发布（pnpm）
+## Development Notes
 
-项目已支持通过 GitHub Actions 在推送 `v*` 标签时自动编译并发布 Workshop 文件：
+- This project supports AI-assisted development. Read `AGENTS.md` first for architecture and collaboration rules.
+- Keep `src/main.opy` and `src/devMain.opy` structurally aligned whenever practical.
+- When changing event logic, validate both:
+  - `src/config/eventConfig.opy`
+  - `src/config/eventConfigDev.opy`
+- Follow server stability rules in `docs/improve-server-stability.md`:
+  - Avoid loops without `wait`
+  - Put cheap conditions before expensive checks
+  - Avoid heavy computation in `Ongoing - Each Player` whenever possible
+- Module docs are under `docs/modules/`. Update related docs together with source changes when relevant.
+- Keep changes minimal; avoid unrelated include-order changes or broad formatting-only diffs.
 
-- 工作流文件：`.github/workflows/release.yml`
-- 发布产物（双语言）：
+### CI Auto Release (pnpm)
+
+This project supports automatic compile-and-release of Workshop files via GitHub Actions when pushing `v*` tags:
+
+- Workflow file: `.github/workflows/release.yml`
+- Release artifacts (dual-language):
   - `build/main.en-US.ow`
   - `build/devMain.en-US.ow`
   - `build/main.zh-CN.ow`
   - `build/devMain.zh-CN.ow`
-- 包管理器：`pnpm`
+- Package manager: `pnpm`
 
-本地构建命令：
+Local build:
 
 ```bash
 pnpm install
 pnpm run build
 ```
 
-可分别编译双入口：
+Build each entry independently:
 
 ```bash
 pnpm run build:main
 pnpm run build:dev
 ```
 
-用于发布的双语言构建命令：
+Dual-language release build:
 
 ```bash
 pnpm run build:release
 ```
+
+# Credits
+
+Tower escape mod made by: WOBBLYOW#2981, NOTBANANA#21520 and PIRATEBOOT#2133.  
+Hanamura made by: REYDI#21629 (not in current version though)  
+Blizzard World, Eichenwalde, Hollywood, Junkertown, Paris, Temple of Anubis by DATZENYAT#2990.  
+Bastion Escape 2 by EfeDursun125#2815  
+OW2 Bastion Escape by BearWhoLived#1783
+
+# License
+
+[MIT License](./LICENSE)
