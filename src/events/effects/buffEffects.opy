@@ -56,10 +56,14 @@ rule "[VishkarEvent]: 肾上腺素":
     createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect[1] = getLastCreatedEntity()
     eventPlayer.mod_dmg_taken = EVT_3_DMG_TAKEN
+    eventPlayer.mod_heal_event = EVT_3_HEAL_BOOST
+    eventPlayer.heal_recv = EVT_3_HEAL_BOOST
     wait(getAverageServerLoad() / 100 * 0.032)
     updatePlayerStats()
     wait(eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0
+    eventPlayer.mod_heal_event = 0
+    eventPlayer.heal_recv = 0
     updatePlayerStats()
     clearEventEffect()
 
@@ -680,31 +684,31 @@ rule "[VishkarEvent]: 相位猛冲 (智能检测版)":
 rule "[VishkarEvent]: 保镖 (Bodyguard)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 26, eventPlayer.phase_trigger == true]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 25, eventPlayer.phase_trigger == true]) == true
     
-    eventPlayer.target = getPlayersInRadius(eventPlayer, EVT_26_ALLY_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
-    eventPlayer.addHealthPool(EVT_26_HEALTH_TYPE, round(EVT_26_ARMOR_FLAT + eventPlayer.getMaxHealth() * EVT_26_ARMOR_MAXHP_FACTOR), false, false)
-    eventPlayer.hp_data.append([[getTotalTimeElapsed() + EVT_26_ARMOR_DURATION, getLastCreatedHealthPool()]])
-    playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, EVT_26_VFX_RADIUS)
+    eventPlayer.target = getPlayersInRadius(eventPlayer, EVT_25_ALLY_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
+    eventPlayer.addHealthPool(EVT_25_HEALTH_TYPE, round(EVT_25_ARMOR_FLAT + eventPlayer.getMaxHealth() * EVT_25_ARMOR_MAXHP_FACTOR), false, false)
+    eventPlayer.hp_data.append([[getTotalTimeElapsed() + EVT_25_ARMOR_DURATION, getLastCreatedHealthPool()]])
+    playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, EVT_25_VFX_RADIUS)
     wait()
     if len(eventPlayer.target) > 0:
-        playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer.target[0], EVT_26_VFX_RADIUS)
-        eventPlayer.target[0].addHealthPool(EVT_26_HEALTH_TYPE, round(EVT_26_ARMOR_FLAT + eventPlayer.getMaxHealth() * EVT_26_ARMOR_MAXHP_FACTOR), false, false)
-        eventPlayer.target[0].hp_data.append([[getTotalTimeElapsed() + EVT_26_ARMOR_DURATION, getLastCreatedHealthPool()]])
-    wait(EVT_26_POST_WAIT)
+        playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer.target[0], EVT_25_VFX_RADIUS)
+        eventPlayer.target[0].addHealthPool(EVT_25_HEALTH_TYPE, round(EVT_25_ARMOR_FLAT + eventPlayer.getMaxHealth() * EVT_25_ARMOR_MAXHP_FACTOR), false, false)
+        eventPlayer.target[0].hp_data.append([[getTotalTimeElapsed() + EVT_25_ARMOR_DURATION, getLastCreatedHealthPool()]])
+    wait(EVT_25_POST_WAIT)
 
 rule "[VishkarEvent]: 任务：殉道者 (初始化)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 26]) == true
     
     eventPlayer.eventMissionGoal = max(
-        EVT_27_GOAL_MIN,
+        EVT_26_GOAL_MIN,
         min(
             round(
-                EVT_27_GOAL_MIN
+                EVT_26_GOAL_MIN
                 + ((random.uniform(0, 1) + random.uniform(0, 1)) / 2)
-                * (MARTYR_GOAL_MAX - EVT_27_GOAL_MIN)
+                * (MARTYR_GOAL_MAX - EVT_26_GOAL_MIN)
             ),
             MARTYR_GOAL_MAX
         )
@@ -719,7 +723,7 @@ rule "[VishkarEvent]: 任务：殉道者 (初始化)":
 rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
     @Event playerDied
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 26]) == true
     @Condition attacker.getTeam() == Team.2
     @Condition (not attacker in eventPlayer.eventMission) == true
     
@@ -729,33 +733,33 @@ rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
         eventPlayer.eventMissionGoal
     )
     if len(eventPlayer.eventMission) == eventPlayer.eventMissionGoal:
-        waitUntil(eventPlayer.isAlive(), EVT_27_WAITUNTIL_TIMEOUT)
+        waitUntil(eventPlayer.isAlive(), EVT_26_WAITUNTIL_TIMEOUT)
         bigMessage(eventPlayer, "任务：殉道者 完成！")
         smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 伤害减免".format(abilityIconString(Hero.HAZARD, Button.SECONDARY_FIRE), 5))
-        eventPlayer.mod_dmg_perma += EVT_27_REWARD_DMG_PERMA
+        eventPlayer.mod_dmg_perma += EVT_26_REWARD_DMG_PERMA
         updatePlayerStats()
 
         
 rule "[VishkarEvent]: 多动症 (触发回血)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 28, eventPlayer.phase_trigger == true]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 27, eventPlayer.phase_trigger == true]) == true
     
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > EVT_28_CD_THRESHOLD:
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > EVT_27_CD_THRESHOLD:
         eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > EVT_28_CD_THRESHOLD:
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > EVT_27_CD_THRESHOLD:
         eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
-    eventPlayer.startHealingOverTime(eventPlayer, EVT_28_HOT_DIVISOR, (round(50 + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)) / EVT_28_HOT_DIVISOR)
-    wait(EVT_28_POST_WAIT)
+    eventPlayer.startHealingOverTime(eventPlayer, EVT_27_HOT_DIVISOR, (round(50 + eventPlayer.getMaxHealth() * EVT_27_HOT_MAXHP_FACTOR)) / EVT_27_HOT_DIVISOR)
+    wait(EVT_27_POST_WAIT)
 
 rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 30]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 28]) == true
     
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_WHIP_SHOT_HEAL_AREA, Color.TEAM_1, eventPlayer, 200)
-    getPlayersInRadius(eventPlayer, EVT_30_HEAL_RADIUS, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, EVT_30_HOT_DURATION, EVT_30_HOT_FLAT + eventPlayer.getMaxHealth() * EVT_30_HOT_MAXHP_FACTOR)
-    wait(EVT_30_TICK_INTERVAL)
+    getPlayersInRadius(eventPlayer, EVT_28_HEAL_RADIUS, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, EVT_28_HOT_DURATION, EVT_28_HOT_FLAT + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)
+    wait(EVT_28_TICK_INTERVAL)
     if ruleCondition:
         loop()
     clearEventEffect()
@@ -764,20 +768,20 @@ rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
 rule "[VishkarEvent]: 成吨的增益 (初始化与属性)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 31]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 29]) == true
     
-    eventPlayer.mod_speed_event += EVT_31_SPEED_DELTA
-    eventPlayer.mod_dmg_taken -= EVT_31_DMG_TAKEN_DELTA
-    eventPlayer.mod_heal_event += EVT_31_HEAL_DEALT_DELTA
-    eventPlayer.heal_recv += EVT_31_HEAL_RECV_DELTA
+    eventPlayer.mod_speed_event += EVT_29_SPEED_DELTA
+    eventPlayer.mod_dmg_taken -= EVT_29_DMG_TAKEN_DELTA
+    eventPlayer.mod_heal_event += EVT_29_HEAL_DEALT_DELTA
+    eventPlayer.heal_recv += EVT_29_HEAL_RECV_DELTA
     updatePlayerStats()
-    eventPlayer.sizeHealth = EVT_31_SIZE_HEALTH_SCALE
+    eventPlayer.sizeHealth = EVT_29_SIZE_HEALTH_SCALE
     setPlayerHP()
     wait(eventPlayer.eventDuration)
-    eventPlayer.mod_speed_event -= EVT_31_SPEED_DELTA
-    eventPlayer.mod_dmg_taken -= EVT_31_DMG_TAKEN_DELTA
-    eventPlayer.mod_heal_event -= EVT_31_HEAL_DEALT_DELTA
-    eventPlayer.heal_recv -= EVT_31_HEAL_RECV_DELTA
+    eventPlayer.mod_speed_event -= EVT_29_SPEED_DELTA
+    eventPlayer.mod_dmg_taken -= EVT_29_DMG_TAKEN_DELTA
+    eventPlayer.mod_heal_event -= EVT_29_HEAL_DEALT_DELTA
+    eventPlayer.heal_recv -= EVT_29_HEAL_RECV_DELTA
     updatePlayerStats()
     eventPlayer.sizeHealth = 1
     setPlayerHP()
@@ -786,10 +790,10 @@ rule "[VishkarEvent]: 成吨的增益 (初始化与属性)":
 rule "[VishkarEvent]: F5 (循环刷新)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 32]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 30]) == true
     
     resetPlayerCD()
-    wait(EVT_32_REFRESH_INTERVAL)
+    wait(EVT_30_REFRESH_INTERVAL)
     if ruleCondition:
         loop()
 
@@ -797,14 +801,14 @@ rule "[VishkarEvent]: F5 (循环刷新)":
 rule "[VishkarEvent]: 治疗光塔 ProMax (全图奶)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 33]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == 31]) == true
     
     if eventPlayer.getNormalizedHealth() == 1:
         goto lbl_0
         smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
     lbl_0:
-    getPlayers(Team.1).startHealingOverTime(eventPlayer, EVT_33_HOT_DURATION, round(EVT_33_HEAL_FLAT + eventPlayer.getMaxHealth() * EVT_33_HEAL_MAXHP_FACTOR))
-    wait(EVT_33_HOT_DURATION)
+    getPlayers(Team.1).startHealingOverTime(eventPlayer, EVT_31_HOT_DURATION, round(EVT_31_HEAL_FLAT + eventPlayer.getMaxHealth() * EVT_31_HEAL_MAXHP_FACTOR))
+    wait(EVT_31_HOT_DURATION)
     if ruleCondition:
         loop()
     clearEventEffect()

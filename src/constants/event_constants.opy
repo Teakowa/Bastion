@@ -16,7 +16,7 @@
 # Duration（秒）
 #!define EVT_BUFF_0_DURATION 5
 # Weight（权重）
-#!define EVT_BUFF_0_WEIGHT 2
+#!define EVT_BUFF_0_WEIGHT 1.8
 
 # --- ID 1: 疾风祝福 ---
 # Duration（秒）
@@ -39,8 +39,9 @@
 # Duration（秒）
 #!define EVT_BUFF_3_DURATION 20
 # Weight（权重）
-#!define EVT_BUFF_3_WEIGHT 1.2
+#!define EVT_BUFF_3_WEIGHT 1.4
 #!define EVT_3_DMG_TAKEN -50
+#!define EVT_3_HEAL_BOOST 50
 #!define EVT_3_EFFECT Effect.ANA_NANO_BOOSTED
 
 # --- ID 4: 生命源泉 ---
@@ -74,7 +75,7 @@
 # Duration（秒）
 #!define EVT_BUFF_7_DURATION 90
 # Weight（权重）
-#!define EVT_BUFF_7_WEIGHT 1.1
+#!define EVT_BUFF_7_WEIGHT 1.3
 #!define EVT_7_HEALTH_PERCENT 0.25
 #!define EVT_7_BASE_HEALTH 75
 #!define EVT_7_REGEN_INTERVAL 5
@@ -109,7 +110,7 @@
 
 # --- ID 11: 死亡延迟 ---
 # Duration（秒）
-#!define EVT_BUFF_11_DURATION 30
+#!define EVT_BUFF_11_DURATION 45
 # Weight（权重）
 #!define EVT_BUFF_11_WEIGHT 0.7
 # 15% 血量触发
@@ -162,7 +163,7 @@
 # Duration（秒）
 #!define EVT_BUFF_16_DURATION 30
 # Weight（权重）
-#!define EVT_BUFF_16_WEIGHT 0.4
+#!define EVT_BUFF_16_WEIGHT 0.5
 # 检测间隔 (秒)
 #!define EVT_16_CHECK_INTERVAL 5
 
@@ -248,7 +249,7 @@
 #!define EVT_BUFF_21_DURATION 90
 # Weight（权重）
 #!define EVT_BUFF_21_WEIGHT 0.9
-#!define EVT_21_HP_GAIN_FLAT 6
+#!define EVT_21_HP_GAIN_FLAT 12
 #!define EVT_21_HP_MULTIPLIER 2
 
 # --- ID 22: 数值之力 ---
@@ -277,121 +278,104 @@
 #!define EVT_24_EFFECT_RADIUS 200
 #!define EVT_24_EFFECT Effect.SOLDIER_SPRINTING
 
-# --- ID 25: 操盘手 (伤害+状态检测) ---
+# --- ID 25: 保镖 (Bodyguard) ---
 # Duration（秒）
-#!define EVT_BUFF_25_DURATION 60
+#!define EVT_BUFF_25_DURATION 75
 # Weight（权重）
-#!define EVT_BUFF_25_WEIGHT 0
-# 冷却缩放系数：当前冷却 *= 系数
-#!define EVT_25_COOLDOWN_FACTOR 0.5
-
-# 触发后等待 (秒)：用于降低同一规则实例的连续执行节奏
-#!define EVT_25_POST_WAIT 1
-
-# --- ID 26: 保镖 (Bodyguard) ---
-# Duration（秒）
-#!define EVT_BUFF_26_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_26_WEIGHT 1
+#!define EVT_BUFF_25_WEIGHT 1
 # 搜索队友半径 (米)
-#!define EVT_26_ALLY_RADIUS 12
+#!define EVT_25_ALLY_RADIUS 12
 
 # 护甲池数值 = round( flat + MaxHP * factor )
-#!define EVT_26_HEALTH_TYPE Health.ARMOR
-#!define EVT_26_ARMOR_FLAT 25
-#!define EVT_26_ARMOR_MAXHP_FACTOR 0.2
+#!define EVT_25_HEALTH_TYPE Health.ARMOR
+#!define EVT_25_ARMOR_FLAT 25
+#!define EVT_25_ARMOR_MAXHP_FACTOR 0.2
 
 # 护甲持续时间 (秒)：写入 hp_data 的到期偏移
-#!define EVT_26_ARMOR_DURATION 4
+#!define EVT_25_ARMOR_DURATION 4
 
 # 动态特效播放半径 (米) - 仅视觉表现
-#!define EVT_26_VFX_RADIUS 200
+#!define EVT_25_VFX_RADIUS 200
 
 # 事件尾部等待 (秒)
-#!define EVT_26_POST_WAIT 3
+#!define EVT_25_POST_WAIT 3
 
-# --- ID 27: 任务：殉道者 ---
+# --- ID 26: 任务：殉道者 ---
 # Duration（秒）
-#!define EVT_BUFF_27_DURATION 120
+#!define EVT_BUFF_26_DURATION 120
 # Weight（权重）
-#!define EVT_BUFF_27_WEIGHT 0.8
+#!define EVT_BUFF_26_WEIGHT 0.8
 # 任务目标最小值
-#!define EVT_27_GOAL_MIN 6
+#!define EVT_26_GOAL_MIN 6
 
-# 任务目标最大值 = max(EVT_27_GOAL_MIN, round(len(bastionPosition) * factor))
-#!define EVT_27_GOAL_MAX_FACTOR 0.75
+# 任务目标最大值 = max(EVT_26_GOAL_MIN, round(len(bastionPosition) * factor))
+#!define EVT_26_GOAL_MAX_FACTOR 0.75
 
 # 完成奖励：永久减伤数值（与 mod_dmg_perma 的单位保持一致）
-#!define EVT_27_REWARD_DMG_PERMA 5
+#!define EVT_26_REWARD_DMG_PERMA 5
 
 # waitUntil 超时时间（秒）
-#!define EVT_27_WAITUNTIL_TIMEOUT 3
+#!define EVT_26_WAITUNTIL_TIMEOUT 3
 
-#!define MARTYR_GOAL_MAX max(EVT_27_GOAL_MIN, round(len(bastionPosition) * EVT_27_GOAL_MAX_FACTOR))
+#!define MARTYR_GOAL_MAX max(EVT_26_GOAL_MIN, round(len(bastionPosition) * EVT_26_GOAL_MAX_FACTOR))
 
-# --- ID 28: 多动症 (触发回血) ---
+# --- ID 27: 多动症 (触发回血) ---
 # Duration（秒）
-#!define EVT_BUFF_28_DURATION 90
+#!define EVT_BUFF_27_DURATION 90
 # Weight（权重）
-#!define EVT_BUFF_28_WEIGHT 0.7
+#!define EVT_BUFF_27_WEIGHT 0.7
 # 冷却缩减：仅当当前冷却 > threshold 才生效
-#!define EVT_28_CD_THRESHOLD 1
-#!define EVT_28_CD_FACTOR 0.5
+#!define EVT_27_CD_THRESHOLD 1
+#!define EVT_27_CD_FACTOR 0.5
 
 # 持续治疗 (HOT)
-#!define EVT_28_HOT_DURATION 2
+#!define EVT_27_HOT_DURATION 2
 
 # HOT 每秒治疗量 = round(flat + MaxHP * factor) / divisor
-#!define EVT_28_HOT_FLAT 50
-#!define EVT_28_HOT_MAXHP_FACTOR 0.25
-#!define EVT_28_HOT_DIVISOR 1
+#!define EVT_27_HOT_FLAT 50
+#!define EVT_27_HOT_MAXHP_FACTOR 0.25
+#!define EVT_27_HOT_DIVISOR 1
 
 # 触发后等待 (秒)
-#!define EVT_28_POST_WAIT 2.5
+#!define EVT_27_POST_WAIT 2.5
 
-# --- ID 29 ---
+# --- ID 28: 鼓舞士气 ProMax ---
+# Duration（秒）
+#!define EVT_BUFF_28_DURATION 60
+# Weight（权重）
+#!define EVT_BUFF_28_WEIGHT 0.4
+#!define EVT_28_HEAL_RADIUS 5
+#!define EVT_28_HOT_DURATION 1
+#!define EVT_28_HOT_FLAT 75
+#!define EVT_28_HOT_MAXHP_FACTOR 0.5
+#!define EVT_28_TICK_INTERVAL 1
+
+# --- ID 29: 成吨的增益 (初始化与属性) ---
 # Duration（秒）
 #!define EVT_BUFF_29_DURATION 30
 # Weight（权重）
-#!define EVT_BUFF_29_WEIGHT 0
+#!define EVT_BUFF_29_WEIGHT 0.3
+#!define EVT_29_SPEED_DELTA 50
+#!define EVT_29_DMG_TAKEN_DELTA 50
+#!define EVT_29_HEAL_DEALT_DELTA 50
+#!define EVT_29_HEAL_RECV_DELTA 50
+#!define EVT_29_SIZE_HEALTH_SCALE 1.5
 
-# --- ID 30: 鼓舞士气 ProMax ---
+# --- ID 30: F5 (循环刷新) ---
 # Duration（秒）
 #!define EVT_BUFF_30_DURATION 60
 # Weight（权重）
-#!define EVT_BUFF_30_WEIGHT 0.4
-#!define EVT_30_HEAL_RADIUS 5
-#!define EVT_30_HOT_DURATION 1
-#!define EVT_30_HOT_FLAT 75
-#!define EVT_30_HOT_MAXHP_FACTOR 0.5
-#!define EVT_30_TICK_INTERVAL 1
+#!define EVT_BUFF_30_WEIGHT 0.25
+#!define EVT_30_REFRESH_INTERVAL 5
 
-# --- ID 31: 成吨的增益 (初始化与属性) ---
+# --- ID 31: 治疗光塔 ProMax (全图奶) ---
 # Duration（秒）
-#!define EVT_BUFF_31_DURATION 30
+#!define EVT_BUFF_31_DURATION 90
 # Weight（权重）
-#!define EVT_BUFF_31_WEIGHT 0.3
-#!define EVT_31_SPEED_DELTA 50
-#!define EVT_31_DMG_TAKEN_DELTA 50
-#!define EVT_31_HEAL_DEALT_DELTA 50
-#!define EVT_31_HEAL_RECV_DELTA 50
-#!define EVT_31_SIZE_HEALTH_SCALE 1.5
-
-# --- ID 32: F5 (循环刷新) ---
-# Duration（秒）
-#!define EVT_BUFF_32_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_32_WEIGHT 0.25
-#!define EVT_32_REFRESH_INTERVAL 5
-
-# --- ID 33: 治疗光塔 ProMax (全图奶) ---
-# Duration（秒）
-#!define EVT_BUFF_33_DURATION 90
-# Weight（权重）
-#!define EVT_BUFF_33_WEIGHT 0.1
-#!define EVT_33_HOT_DURATION 2
-#!define EVT_33_HEAL_FLAT 50
-#!define EVT_33_HEAL_MAXHP_FACTOR 0.75
+#!define EVT_BUFF_31_WEIGHT 0.1
+#!define EVT_31_HOT_DURATION 2
+#!define EVT_31_HEAL_FLAT 50
+#!define EVT_31_HEAL_MAXHP_FACTOR 0.75
 
 #!define EVT_BUFF_34_DURATION 25
 #!define EVT_BUFF_34_WEIGHT 1.4
@@ -472,7 +456,7 @@
 #!define EVT_DEBUFF_3_DURATION 25
 # Weight（权重）
 #!define EVT_DEBUFF_3_WEIGHT 1.2
-#!define EVT_DEBUFF_3_DMG_TAKEN 30
+#!define EVT_DEBUFF_3_DMG_TAKEN 35
 
 # --- ID 4 (Debuff): 限速40 ---
 # Duration（秒）
@@ -513,7 +497,7 @@
 # Duration（秒）
 #!define EVT_DEBUFF_6_DURATION 30
 # Weight（权重）
-#!define EVT_DEBUFF_6_WEIGHT 1.3
+#!define EVT_DEBUFF_6_WEIGHT 1.2
 # 每秒减少的速度 (%)
 #!define EVT_DEBUFF_6_SPEED_DEC_PER_SEC 5
 
@@ -524,7 +508,7 @@
 # Duration（秒）
 #!define EVT_DEBUFF_7_DURATION 8
 # Weight（权重）
-#!define EVT_DEBUFF_7_WEIGHT 1.2
+#!define EVT_DEBUFF_7_WEIGHT 1.3
 # 爆炸半径 (米)
 #!define EVT_DEBUFF_7_RADIUS 75
 
@@ -611,10 +595,10 @@
 # Weight（权重）
 #!define EVT_DEBUFF_13_WEIGHT 1.5
 # 治疗输出减少量 (%)
-#!define EVT_DEBUFF_13_HEAL_DEALT_RED -90
+#!define EVT_DEBUFF_13_HEAL_DEALT_RED -80
 
 # 治疗接收减少量 (%)
-#!define EVT_DEBUFF_13_HEAL_RECV_RED -90
+#!define EVT_DEBUFF_13_HEAL_RECV_RED -80
 
 # 视觉特效
 #!define EVT_DEBUFF_13_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
@@ -953,7 +937,7 @@
 # Duration（秒）
 #!define EVT_MECH_14_DURATION 30
 # Weight（权重）
-#!define EVT_MECH_14_WEIGHT 0.8
+#!define EVT_MECH_14_WEIGHT 0.5
 
 # --- ID 15 (Mech/Special): 俄罗斯方块 (变大复活) ---
 # Duration（秒）
@@ -1058,7 +1042,7 @@
 # Duration（秒）
 #!define EVT_MECH_20_DURATION 120
 # Weight（权重）
-#!define EVT_MECH_20_WEIGHT 0.2
+#!define EVT_MECH_20_WEIGHT 0.4
 
 # 减伤上限 (%)
 #!define EVT_MECH_20_DMG_REDUCE_CAP 85

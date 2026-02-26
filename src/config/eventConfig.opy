@@ -27,7 +27,7 @@ rule "initialize event array":
     mechEventId = []
     
     # Pack 0 - Special
-    buffEvent[0] = [STR_EVT_BUFF_0_TITLE, STR_EVT_BUFF_0_DESC, 5, 2]
+    buffEvent[0] = [STR_EVT_BUFF_0_TITLE, STR_EVT_BUFF_0_DESC, EVT_BUFF_0_DURATION, EVT_BUFF_0_WEIGHT]
     buffEventId.append(0)
     
     # ================================================
@@ -328,29 +328,23 @@ rule "initialize event array":
     buffEvent[25] = [STR_EVT_BUFF_25_TITLE, STR_EVT_BUFF_25_DESC, EVT_BUFF_25_DURATION, EVT_BUFF_25_WEIGHT]
     buffEventId.append(25)
 
-    buffEvent[26] = [STR_EVT_BUFF_26_TITLE, STR_EVT_BUFF_26_DESC, EVT_BUFF_26_DURATION, EVT_BUFF_26_WEIGHT]
+    buffEvent[26] = [STR_EVT_BUFF_26_TITLE, STR_EVT_BUFF_26_DESC.format(EVT_26_REWARD_DMG_PERMA), EVT_BUFF_26_DURATION, EVT_BUFF_26_WEIGHT]
     buffEventId.append(26)
 
-    buffEvent[27] = [STR_EVT_BUFF_27_TITLE, STR_EVT_BUFF_27_DESC.format(EVT_27_REWARD_DMG_PERMA), EVT_BUFF_27_DURATION, EVT_BUFF_27_WEIGHT]
+    buffEvent[27] = [STR_EVT_BUFF_27_TITLE, STR_EVT_BUFF_27_DESC.format(EVT_27_HOT_FLAT, percent(EVT_27_HOT_MAXHP_FACTOR)), EVT_BUFF_27_DURATION, EVT_BUFF_27_WEIGHT]
     buffEventId.append(27)
 
-    buffEvent[28] = [STR_EVT_BUFF_28_TITLE, STR_EVT_BUFF_28_DESC.format(EVT_28_HOT_FLAT, percent(EVT_28_HOT_MAXHP_FACTOR)), EVT_BUFF_28_DURATION, EVT_BUFF_28_WEIGHT]
+    buffEvent[28] = [STR_EVT_BUFF_28_TITLE, STR_EVT_BUFF_28_DESC.format(EVT_28_HEAL_RADIUS, EVT_28_HOT_FLAT, percent(EVT_28_HOT_MAXHP_FACTOR)), EVT_BUFF_28_DURATION, EVT_BUFF_28_WEIGHT]
     buffEventId.append(28)
 
     buffEvent[29] = [STR_EVT_BUFF_29_TITLE, STR_EVT_BUFF_29_DESC, EVT_BUFF_29_DURATION, EVT_BUFF_29_WEIGHT]
     buffEventId.append(29)
 
-    buffEvent[30] = [STR_EVT_BUFF_30_TITLE, STR_EVT_BUFF_30_DESC.format(EVT_30_HEAL_RADIUS, EVT_30_HOT_FLAT, percent(EVT_30_HOT_MAXHP_FACTOR)), EVT_BUFF_30_DURATION, EVT_BUFF_30_WEIGHT]
+    buffEvent[30] = [STR_EVT_BUFF_30_TITLE, STR_EVT_BUFF_30_DESC, EVT_BUFF_30_DURATION, EVT_BUFF_30_WEIGHT]
     buffEventId.append(30)
 
     buffEvent[31] = [STR_EVT_BUFF_31_TITLE, STR_EVT_BUFF_31_DESC, EVT_BUFF_31_DURATION, EVT_BUFF_31_WEIGHT]
     buffEventId.append(31)
-
-    buffEvent[32] = [STR_EVT_BUFF_32_TITLE, STR_EVT_BUFF_32_DESC, EVT_BUFF_32_DURATION, EVT_BUFF_32_WEIGHT]
-    buffEventId.append(32)
-
-    buffEvent[33] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC, EVT_BUFF_33_DURATION, EVT_BUFF_33_WEIGHT]
-    buffEventId.append(33)
 
     # ================================================
     # Pack 4: Debuffs
