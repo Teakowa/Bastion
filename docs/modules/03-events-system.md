@@ -37,6 +37,21 @@
 - `eventLucky`（幸运倾向累计）
 - `eventForceRoll/eventForceCount`（强制类别调试与作弊链）
 
+## 机制事件 ID（Enum 管理）
+
+- 机制事件使用 `src/constants/event_ids_mech.opy` 的 `MechEventId` enum 管理。
+- `config/eventConfig*.opy` 与 `events/effects/mechEffects.opy` 只引用 `MechEventId.<MEMBER>`，不直接写裸数字 ID。
+- 当前策略为“源码版本内自洽”：删除中间 enum 成员时，后续成员自动前移，相关规则引用会随编译同步。
+- 若新增机制事件，优先在 enum 末尾追加成员，再补配置与效果规则。
+- 代码注释需独立成行，避免 `代码 # 注释` 的行尾注释写法，以免触发 OverPy 语法兼容问题。
+
+## 增益与减益事件 ID（Enum 管理）
+
+- 增益事件使用 `src/constants/event_ids_buff.opy` 的 `BuffEventId` enum 管理。
+- 减益事件使用 `src/constants/event_ids_debuff.opy` 的 `DebuffEventId` enum 管理。
+- `config/eventConfig*.opy`、`events/effects/buffEffects.opy`、`events/effects/debuffEffects.opy` 只引用 enum 成员，不直接写裸数字 ID。
+- 与机制组一致，当前策略为“源码版本内自洽”：删除中间 enum 成员时，后续成员自动前移。
+
 ## 配置文件差异
 
 ### `eventConfig.opy`（生产）
