@@ -101,3 +101,38 @@ For each change, verify at least:
 4. `src/config/eventConfig.opy`
 5. `src/events/` and `src/utilities/`
 6. `docs/improve-server-stability.md`
+
+## 10. Source Manual (New)
+
+For detailed module-level documentation of `src/`, refer to:
+
+- `docs/modules/README.md` (index)
+- `docs/modules/01-entry-architecture.md`
+- `docs/modules/02-env-constants-locales.md`
+- `docs/modules/03-events-system.md`
+- `docs/modules/04-bastion-ai.md`
+- `docs/modules/05-map-system.md`
+- `docs/modules/06-utilities.md`
+- `docs/modules/07-heroes.md`
+- `docs/modules/08-player-effects-title.md`
+- `docs/modules/09-special-seasonal.md`
+- `docs/modules/10-references-workshop-codes.md`
+- `docs/modules/appendix-src-file-index.md`
+
+These files are the canonical onboarding companion for architecture, module responsibilities, and extension points.
+
+## 11. Documentation Maintenance Rules
+
+When changing source logic, update related docs in the same change whenever practical:
+
+1. Entry/include flow changes → update `01-entry-architecture.md`.
+2. Constants/localization/env changes → update `02-env-constants-locales.md`.
+3. Event pool/effects/allocation changes → update `03-events-system.md`.
+4. Bastion AI behavior changes → update `04-bastion-ai.md`.
+5. Map point/flow changes → update `05-map-system.md`.
+6. Utility subroutine/system changes → update `06-utilities.md`.
+7. Hero-specific logic changes → update `07-heroes.md`.
+8. Player/effects/title changes → update `08-player-effects-title.md`.
+9. Seasonal branch changes → update `09-special-seasonal.md`.
+
+When introducing new external workshop references, record them in `10-references-workshop-codes.md`.
