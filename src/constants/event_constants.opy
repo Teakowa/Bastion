@@ -402,43 +402,6 @@
 #!define EVT_35_SPEED_DELTA 20
 #!define EVT_35_HP_LAYER 6
 
-# --- ID 36: 龙马精神 ---
-# Duration（秒）
-#!define EVT_BUFF_36_DURATION 120
-# Weight（权重）
-#!define EVT_BUFF_36_WEIGHT 1.2
-# 触发阈值 (血量百分比)
-#!define EVT_36_TRIGGER_HP_PERCENT 0.4
-#!define EVT_36_HEAL_PERCENT 0.6
-
-# --- ID 37 (buff): 爆竹声声 ---
-# Duration（秒）
-#!define EVT_BUFF_37_DURATION 5
-# Weight（权重）
-#!define EVT_BUFF_37_WEIGHT 1.2
-# 爆炸半径 (米)
-#!define EVT_BUFF_37_RADIUS 15
-#!define EVT_BUFF_37_KNOCKDOWN_DURATION 2
-
-# --- ID 38 (buff): 我不需要治疗 ---
-# Duration（秒）
-#!define EVT_BUFF_38_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_38_WEIGHT 2
-#!define EVT_38_HEAL 5
-
-# --- ID 39 (buff): 礼貌金 ---
-# Duration（秒）
-#!define EVT_BUFF_39_DURATION 25
-# Weight（权重）
-#!define EVT_BUFF_39_WEIGHT 1.1
-
-# --- ID 40 (buff): 费斯卡时空信标 ---
-# Duration（秒）
-#!define EVT_BUFF_40_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_40_WEIGHT 1.1
-
 # -----------------------------------------------------------------------------
 # DEBUFF 事件（按ID排序）
 # -----------------------------------------------------------------------------
@@ -711,39 +674,6 @@
 #!define EVT_DEBUFF_21_DURATION 30
 # Weight（权重）
 #!define EVT_DEBUFF_21_WEIGHT 0.2
-
-# --- ID 22 (Debuff): 红包刺客 ---
-# Duration（秒）
-#!define EVT_DEBUFF_22_DURATION 8
-# Weight（权重）
-#!define EVT_DEBUFF_22_WEIGHT 1.6
-
-# --- ID 23 (Debuff): 惊吓红包 ---
-# Duration（秒）
-#!define EVT_DEBUFF_23_DURATION 5
-# Weight（权重）
-#!define EVT_DEBUFF_23_WEIGHT 1.6
-
-# --- ID 24 (Debuff): 岁岁平安 ---
-# Duration（秒）
-#!define EVT_DEBUFF_24_DURATION 25
-# Weight（权重）
-#!define EVT_DEBUFF_24_WEIGHT 1.6
-#!define EVT_DEBUFF_24_DMG_TAKEN_DELTA -20
-#!define EVT_DEBUFF_24_SPEED_DELTA -20
-
-
-# --- ID 25 (Debuff): 登月火箭 ---
-# Duration（秒）
-#!define EVT_DEBUFF_25_DURATION 5
-# Weight（权重）
-#!define EVT_DEBUFF_25_WEIGHT 1.6
-
-# --- ID 26 (Debuff): 凛冬盛宴 ---
-# Duration（秒）
-#!define EVT_DEBUFF_26_DURATION 30
-# Weight（权重）
-#!define EVT_DEBUFF_26_WEIGHT 1.6
 
 
 # -----------------------------------------------------------------------------
