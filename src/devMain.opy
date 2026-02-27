@@ -555,6 +555,8 @@ rule "when a player reaches the end, they move on to the next hero or win if the
     @Condition (eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= endPosition.y
     @Condition distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
     
+    if len(eventPlayer.possessed) > 0:
+        eventPlayer.possessed = []
     eventPlayer.respawn()
     wait(0.032)
     if controlRespawnPosition == null:
