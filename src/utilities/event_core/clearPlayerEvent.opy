@@ -47,4 +47,3 @@ def clearPlayerEvent():
             abilityIconString(Hero.MOIRA, Button.ABILITY_2)
         )
     )
-

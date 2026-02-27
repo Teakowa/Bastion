@@ -268,6 +268,8 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     eventPlayer.possess[0].possessed[2] = eventPlayer.mod_dmg_taken
     eventPlayer.possess[0].possessed[3] = eventPlayer.mod_speed_event
     eventPlayer.possess[0].possessed[5] = eventPlayer.getMaxHealth()
+    # possess: [0:目标玩家, 1:附身开始时自身heroNumber, 2:附身开始时目标heroNumber]
+    eventPlayer.possess = [eventPlayer.possess[0], eventPlayer.heroNumber, eventPlayer.possess[0].heroNumber]
     
     # 3. 附身连接
     eventPlayer.teleport(eventPlayer.possess[0].getPosition())
@@ -303,9 +305,30 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
         # removeHealthPool(eventPlayer.possess[0].possessed[4])
         
         eventPlayer.possess[0].possessed = []
+
+    # 若附身期间目标触发了终点结算（heroNumber 变化），且附身者还未进阶，则在重生室补一次进阶
+    if all([
+        eventPlayer.isInSpawnRoom() == true,
+        eventPlayer.possess != null,
+        eventPlayer.possess[0] != null,
+        entityExists(eventPlayer.possess[0]),
+        eventPlayer.possess[1] != null,
+        eventPlayer.possess[2] != null,
+        eventPlayer.heroNumber == eventPlayer.possess[1],
+        eventPlayer.possess[0].heroNumber != eventPlayer.possess[2],
+        eventPlayer.heroNumber + 1 < len(heroList),
+        eventPlayer.getHero() == heroList[eventPlayer.heroNumber]
+    ]):
+        progressHero()
     
     # 寻找安全落脚点
-    if eventPlayer.possess[0].getPosition() != null:
+    # 使用标准重生室判定：若附身者已在重生室，则不再执行落脚传送
+    if all([
+        eventPlayer.isInSpawnRoom() != true,
+        eventPlayer.possess != null,
+        eventPlayer.possess[0] != null,
+        entityExists(eventPlayer.possess[0])
+    ]):
         eventPlayer.teleport(nearestWalkablePosition(eventPlayer.possess[0].getPosition() + vect(random.randint(-1, 1), 0.5, random.randint(-1, 1))))
     
     # 自身重置
