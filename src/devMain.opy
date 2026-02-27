@@ -2,7 +2,7 @@
 #!include "locales/zh-CN.opy"
 # Useful constants and macros
 #!include "constants/"
-#!include "utilities/macros.opy"
+#!include "utilities/dev_support/macros.opy"
 
 settings {
     "main": {
@@ -425,11 +425,11 @@ rule STR_LICENSE_PERMIT:
     @Disabled
     @Delimiter
 
-#!include "utilities/mapDetection.opy"
+#!include "utilities/system/mapDetection.opy"
 
 #!include "blacklist/init.opy"
 
-#!include "utilities/removeFromBlacklist.opy"
+#!include "utilities/system/removeFromBlacklist.opy"
     
 #!include "env/game.opy"
 
@@ -443,43 +443,47 @@ rule STR_LICENSE_PERMIT:
 
 #!include "events/allocation/rejectSampling.opy"
 
-#!include "utilities/updatePlayerStats.opy"
+## Utilities: system
+#!include "utilities/system/healthPool.opy"
 
-#!include "utilities/setEventDuration.opy"
+#!include "utilities/system/dashDetector.opy"
 
-#!include "utilities/resetPlayerCD.opy"
+#!include "utilities/system/savePlayerData.opy"
 
-#!include "utilities/healthPool.opy"
+#!include "utilities/system/progressHero.opy"
 
-#!include "utilities/dashDetector.opy"
+#!include "utilities/system/playerRegen.opy"
 
-#!include "utilities/setPlayerSize.opy"
+#!include "utilities/system/setDifficulty.opy"
 
-#!include "utilities/savePlayerData.opy"
+#!include "utilities/system/setThirdPerson.opy"
 
-#!include "utilities/progressHero.opy"
+#!include "utilities/system/createBastionBot.opy"
 
-#!include "utilities/playerRegen.opy"
+#!include "utilities/system/setPlayerTitle.opy"
 
-#!include "utilities/setDifficulty.opy"
+#!include "utilities/system/hashtag.opy"
 
-#!include "utilities/setThirdPerson.opy"
+#!include "utilities/system/unlockAchievement.opy"
 
-#!include "utilities/clearEventEffect.opy"
+## Utilities: event_core
+#!include "utilities/event_core/updatePlayerStats.opy"
 
-#!include "utilities/setPlayerEvent.opy"
+#!include "utilities/event_core/setEventDuration.opy"
 
-#!include "utilities/clearPlayerEvent.opy"
+#!include "utilities/event_core/resetPlayerCD.opy"
 
-#!include "utilities/setPlayerHP.opy"
+#!include "utilities/event_core/setPlayerSize.opy"
 
-#!include "utilities/unlockAchievement.opy"
+#!include "utilities/event_core/clearEventEffect.opy"
 
-#!include "utilities/startCombatRegen.opy"
+#!include "utilities/event_core/setPlayerEvent.opy"
 
-#!include "utilities/createBastionBot.opy"
+#!include "utilities/event_core/clearPlayerEvent.opy"
 
-#!include "utilities/setPlayerTitle.opy"
+#!include "utilities/event_core/setPlayerHP.opy"
+
+#!include "utilities/event_core/startCombatRegen.opy"
 
 #!include "events/allocation/assignPlayerEvent.opy"
 
@@ -504,8 +508,6 @@ rule "players pick up speed while not targeted for 3 seconds":
     eventPlayer.setMoveSpeed(160)
     waitUntil(getPlayersInRadius(eventPlayer, 60, Team.2, LosCheck.SURFACES)[0] or not eventPlayer.isMoving(), MAX_TIME)
     eventPlayer.setMoveSpeed(100)
-
-#!include "utilities/hashtag.opy"
 
 rule "when players reaches the end and not respawn at first respawn point, they move to the first respawn point.":
     @Event eachPlayer
@@ -631,6 +633,6 @@ rule "auto reboot":
 
 #!include "events/effects/mechEffects.opy"
 
-#!include "utilities/devTool.opy"
+#!include "utilities/dev_support/devTool.opy"
 
 #!include "player/achievement.opy"
