@@ -192,14 +192,20 @@ rule "initialize event array":
     buffEvent[BuffEventId.HEALING_TOWER_PROMAX] = [STR_EVT_BUFF_31_TITLE, STR_EVT_BUFF_31_DESC, EVT_BUFF_31_DURATION, EVT_BUFF_31_WEIGHT]
     buffEventId.append(BuffEventId.HEALING_TOWER_PROMAX)
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_32_TITLE, true, 32):
+        goto lbl_32
     buffEvent[BuffEventId.SUPER_TRANSFORM] = [STR_EVT_BUFF_32_TITLE, STR_EVT_BUFF_32_DESC.format(EVT_32_HP_FLAT, percent(EVT_32_HP_MAXHP_FACTOR), EVT_32_OVERHEALTH_DURATION), EVT_BUFF_32_DURATION, EVT_BUFF_32_WEIGHT]
     buffEventId.append(BuffEventId.SUPER_TRANSFORM)
+    lbl_32:
 
     buffEvent[BuffEventId.DRAW_FIRE] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC.format(EVT_33_ARMOR_AMOUNT, negToPos(EVT_33_DMG_TAKEN)), EVT_BUFF_33_DURATION, EVT_BUFF_33_WEIGHT]
     buffEventId.append(BuffEventId.DRAW_FIRE)
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_34_TITLE, true, 34):
+        goto lbl_33
     buffEvent[BuffEventId.TENACITY] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(percent(EVT_34_TRIGGER_HP_PERCENT), EVT_34_HEAL_DURATION, percent(EVT_34_HEAL_MAXHP_FACTOR), EVT_34_TRIGGER_COOLDOWN), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
     buffEventId.append(BuffEventId.TENACITY)
+    lbl_33:
     
     # ================================================
     # 减益事件 (Debuff Events)
