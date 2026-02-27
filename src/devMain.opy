@@ -627,12 +627,6 @@ rule "auto reboot":
     wait(60)
     restartMatch()
 
-#!include "events/effects//buffEffects.opy"
-
-#!include "events/effects/debuffEffects.opy"
-
-#!include "events/effects/mechEffects.opy"
-
 #!include "utilities/dev_support/devTool.opy"
 
 #!include "player/achievement.opy"
