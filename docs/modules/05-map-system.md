@@ -41,7 +41,7 @@
 
 - 单图：如 `dorado`, `eichenwalde`, `route66`, `kings_row`, `paraiso` 等
 - 多段：`lijiang_tower`, `samoa`, `oasis`, `busan`, `nepal`, `rialto`, `new_junk_city`
-- 新图/实验：`SURAVASA`, `hanaoka`, `aatlis`, `throne_of_anubis`
+- 新图/实验：`suravasa`, `hanaoka`, `aatlis`, `throne_of_anubis`
 
 ## 关联模块
 

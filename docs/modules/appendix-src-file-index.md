@@ -62,7 +62,7 @@
 - `src/map/dorado.opy`
 - `src/map/blizzworld.opy`
 - `src/map/havana.opy`
-- `src/map/SURAVASA.opy`
+- `src/map/suravasa.opy`
 - `src/map/setup_all_map.opy`
 - `src/map/throne_of_anubis.opy`
 - `src/map/runasapi.opy`
