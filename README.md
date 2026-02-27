@@ -1,5 +1,8 @@
 # Bastion Escape 3
 
+![GitHub License](https://img.shields.io/github/license/Teakowa/Bastion)
+[![CI Build Check](https://github.com/Teakowa/Bastion/actions/workflows/ci-build.yml/badge.svg)](https://github.com/Teakowa/Bastion/actions/workflows/ci-build.yml)
+
 English | [简体中文](README.zh-CN.md)
 
 This is a continued development build based on [OW2 Bastion Escape](https://workshop.codes/QF8RN).

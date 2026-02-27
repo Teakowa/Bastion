@@ -1,4 +1,7 @@
-# Bastion Escape 3
+# 躲避堡垒3
+
+![GitHub License](https://img.shields.io/github/license/Teakowa/Bastion)
+[![CI Build Check](https://github.com/Teakowa/Bastion/actions/workflows/ci-build.yml/badge.svg)](https://github.com/Teakowa/Bastion/actions/workflows/ci-build.yml)
 
 [English](README.md) | 简体中文
 
