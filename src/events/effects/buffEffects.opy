@@ -305,9 +305,18 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
         eventPlayer.possess[0].possessed = []
     
     # 寻找安全落脚点
-    # 若附身者已因终点结算而重生到重生室，则不再执行落脚传送
-    # 重生室判定使用标准 isInSpawnRoom() 逻辑
-    if eventPlayer.isInSpawnRoom() != true:
+    # 使用标准重生室判定：若附身者已在重生室，则不再执行落脚传送
+    # 同时在目标已触发终点判定时跳过，避免附身解除后把玩家拉回终点附近重复计进度
+    if all([
+        eventPlayer.isInSpawnRoom() != true,
+        eventPlayer.possess != null,
+        eventPlayer.possess[0] != null,
+        entityExists(eventPlayer.possess[0]),
+        not all([
+            eventPlayer.possess[0].getPosition().y >= endPosition.y,
+            distance(eventPlayer.possess[0].getPosition() * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
+        ])
+    ]):
         eventPlayer.teleport(nearestWalkablePosition(eventPlayer.possess[0].getPosition() + vect(random.randint(-1, 1), 0.5, random.randint(-1, 1))))
     
     # 自身重置
