@@ -352,7 +352,7 @@ rule "initialize event array":
     buffEvent[BuffEventId.DRAW_FIRE] = [STR_EVT_BUFF_33_TITLE, STR_EVT_BUFF_33_DESC.format(EVT_33_ARMOR_AMOUNT, negToPos(EVT_33_DMG_TAKEN)), EVT_BUFF_33_DURATION, EVT_BUFF_33_WEIGHT]
     buffEventId.append(BuffEventId.DRAW_FIRE)
 
-    buffEvent[BuffEventId.TENACITY] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(percent(EVT_34_TRIGGER_HP_PERCENT), EVT_34_HEAL_DURATION, percent(EVT_34_HEAL_MAXHP_FACTOR), EVT_34_TRIGGER_COOLDOWN), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
+    buffEvent[BuffEventId.TENACITY] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(percent(EVT_34_TRIGGER_HP_PERCENT), percent(EVT_34_HEAL_MAXHP_FACTOR), EVT_34_TRIGGER_COOLDOWN), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
     buffEventId.append(BuffEventId.TENACITY)
 
     # ================================================
