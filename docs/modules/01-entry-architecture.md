@@ -16,12 +16,21 @@
 1. 环境/本地化/宏
 2. 全局变量与玩家变量声明
 3. 基础系统：地图检测、黑名单、游戏设置初始化、称号库、事件开关
-4. 功能系统：英雄规则、事件配置、抽样器、通用工具子程序
+4. 功能系统：英雄规则、事件配置、抽样器、工具层（`utilities/system` -> `utilities/event_core`）
 5. 事件执行层：分配器 + buff/debuff/mech 规则
 6. 地图层 + 堡垒 AI
 7. 效果层：HUD、特效、玩家状态可视化
 8. 玩家层：初始化、进度、成就
-9. 开发层：`utilities/devTool.opy`
+9. 开发层：`utilities/dev_support/devTool.opy`
+
+## Utilities include 约定（main/devMain 同步）
+
+- 入口顶部宏 include 固定为：`utilities/dev_support/macros.opy`
+- 中段 utilities include 分两组，顺序固定：
+  - `utilities/system/*`
+  - `utilities/event_core/*`
+- 开发工具 include 固定在靠后位置：`utilities/dev_support/devTool.opy`
+- 旧路径 `utilities/*.opy` 为兼容 shim，过渡期可被外部分支引用，但入口文件应优先使用新路径
 
 ## 核心全局数据结构
 
@@ -49,3 +58,4 @@
 - include 顺序敏感，不能随意重排。
 - `devMain.opy` 在末尾包含事件效果文件（含一次重复 include），修改时需注意行为是否重复触发。
 - 新增全局变量时需谨慎维护索引稳定性，避免覆盖既有槽位。
+- 修改 utilities 时，优先改分组目录下真实文件，不要把业务逻辑写回旧路径 shim。

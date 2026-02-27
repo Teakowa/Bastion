@@ -7,7 +7,7 @@
 - 分配：`src/events/allocation/assignPlayerEvent.opy`
 - 抽样：`src/events/allocation/rejectSampling.opy`
 - 效果：`src/events/effects/buffEffects.opy`, `debuffEffects.opy`, `mechEffects.opy`
-- 玩家态子程序：`utilities/setPlayerEvent.opy`, `clearPlayerEvent.opy`, `setEventDuration.opy`
+- 玩家态子程序：`utilities/event_core/setPlayerEvent.opy`, `clearPlayerEvent.opy`, `setEventDuration.opy`（旧 `utilities/*.opy` 路径在兼容窗口内由 shim 转发）
 
 ## 生命周期
 
