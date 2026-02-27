@@ -5,7 +5,7 @@
 ### `env/env.opy`
 
 - `DEBUG = false`
-- 版本号示例：`VERSION = "26.0220.1"`
+- 版本号示例：`VERSION = "26.0227.3"`
 
 ### `env/env_dev.opy`
 
@@ -33,6 +33,7 @@
 
 - 事件系统参数主表（千行级）
 - 统一管理：持续时间、权重、阈值、半径、触发间隔、治疗/伤害系数
+- 近期调优示例：`EVT_MECH_20_DMG_REDUCE_DIVISOR` 从 `40` 调整为 `25`，`EVT_MECH_20_SPEED_FACTOR` 从 `2` 调整为 `2.5`
 - 命名模式：
   - `EVT_BUFF_x_*`
   - `EVT_DEBUFF_x_*`

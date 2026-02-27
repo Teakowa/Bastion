@@ -54,3 +54,22 @@
 - 事件类改动需同时核对：`config` + `events/effects` + `locales`。
 - 地图类改动需同时核对：对应地图文件 + `map/setup_all_map.opy` +（必要时）`utilities/mapDetection.opy`。
 - 若仅改 `main.opy` 或仅改 `devMain.opy`，必须在变更说明中写明原因。
+
+## 近期 Session 纪要（2026-02-27 ~ 2026-02-28）
+
+以下为最近一轮提交窗口（最近 10 条 commit）的高频主题，便于回溯与协作同步。
+
+- 入口与英雄设置解耦
+  - `main/devMain` 的 `settings.heroes` 已提取为共享宏 + 入口覆盖结构（`src/heroes/settings/`），降低双入口重复维护成本。
+  - `docs/modules/01-entry-architecture.md` 与 `docs/modules/07-heroes.md` 已同步说明新的 include 与覆盖策略。
+- 事件系统调参与可控性增强
+  - 开发入口对 Buff Pack 4（含 Buff 32/34）补充了 Workshop 开关，便于单事件回归测试。
+  - Buff 34（坚韧）描述改为基于常量格式化注入，减少文案与数值漂移。
+  - Mech 20（三位一体）减伤/移速换算参数上调，并同步中英文文案描述。
+  - Buff 19（胜利意志）增加存活前置条件，避免死亡后误触发。
+- 系统稳定性修复
+  - `playerRegen` 脱战回复改为受伤信号驱动 + 显式 HOT 生命周期收敛，减少重复启动/残留。
+  - `hashtag` 哨兵校验新增雾子基础生命值（225）校验，哈希判定更严格。
+- 版本与工程流
+  - 版本号更新至 `26.0227.3`。
+  - CI 工作流新增去重触发控制，避免重复构建。

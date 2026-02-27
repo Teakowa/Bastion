@@ -62,6 +62,7 @@
 - 通过 `wait(getAverageServerLoad()/...)` 做负载自适应节流
 - 长循环均包含 wait，避免无等待循环
 - 高复用动作封装为 subroutine，规则中只做触发与组合
+- `playerRegen.opy` 采用“受伤信号 + `waitUntil`”驱动 HOT 生命周期：受伤即停疗，满 3 秒未再受伤后才重新允许触发
 
 ## 易错点
 
@@ -70,3 +71,4 @@
 - `hp_data` 相关功能必须维护过期清理，否则元素数会累积
 - 过渡期修改 utility 时应改分组目录下的“真实文件”，不要改旧路径 shim
 - `playerRegen.opy` 的脱战回复由受伤信号控制：受伤会立即停止 HOT，并通过 `wait(3, Wait.RESTART_WHEN_TRUE)` 保证“满 3 秒未再受伤”后才重新允许启动回复
+- `hashtag.opy` 现依赖雾子哨兵双重校验（`ABILITY_2` 冷却区间 + `getMaxHealth() == 225`）；如需改动相关设置，请同步调整常量与判定逻辑
