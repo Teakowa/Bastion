@@ -402,6 +402,8 @@ playervar lastThreatTime 108
 playervar hudText 109
 playervar eventMissionGoal 110
 playervar altFormTrigger 111
+playervar symbiosisStartHeroNumber 112
+playervar symbiosisTargetStartHeroNumber 113
 playervar tempUnlockId
 playervar earnedAchievements
 playervar menuHeroIndex
