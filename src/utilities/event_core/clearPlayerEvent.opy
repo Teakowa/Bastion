@@ -35,8 +35,6 @@ def clearPlayerEvent():
     eventPlayer.eventMission = 0
     eventPlayer.hudText = ""
     eventPlayer.target = null
-    eventPlayer.symbiosisStartHeroNumber = null
-    eventPlayer.symbiosisTargetStartHeroNumber = null
     eventPlayer.possess = null
     eventPlayer.stopScalingSize()
     eventPlayer.stopScalingBarriers()

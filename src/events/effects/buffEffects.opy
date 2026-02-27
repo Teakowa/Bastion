@@ -268,8 +268,8 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     eventPlayer.possess[0].possessed[2] = eventPlayer.mod_dmg_taken
     eventPlayer.possess[0].possessed[3] = eventPlayer.mod_speed_event
     eventPlayer.possess[0].possessed[5] = eventPlayer.getMaxHealth()
-    eventPlayer.symbiosisStartHeroNumber = eventPlayer.heroNumber
-    eventPlayer.symbiosisTargetStartHeroNumber = eventPlayer.possess[0].heroNumber
+    # possess: [0:目标玩家, 1:附身开始时自身heroNumber, 2:附身开始时目标heroNumber]
+    eventPlayer.possess = [eventPlayer.possess[0], eventPlayer.heroNumber, eventPlayer.possess[0].heroNumber]
     
     # 3. 附身连接
     eventPlayer.teleport(eventPlayer.possess[0].getPosition())
@@ -312,10 +312,10 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
         eventPlayer.possess != null,
         eventPlayer.possess[0] != null,
         entityExists(eventPlayer.possess[0]),
-        eventPlayer.symbiosisStartHeroNumber != null,
-        eventPlayer.symbiosisTargetStartHeroNumber != null,
-        eventPlayer.heroNumber == eventPlayer.symbiosisStartHeroNumber,
-        eventPlayer.possess[0].heroNumber != eventPlayer.symbiosisTargetStartHeroNumber,
+        eventPlayer.possess[1] != null,
+        eventPlayer.possess[2] != null,
+        eventPlayer.heroNumber == eventPlayer.possess[1],
+        eventPlayer.possess[0].heroNumber != eventPlayer.possess[2],
         eventPlayer.heroNumber + 1 < len(heroList),
         eventPlayer.getHero() == heroList[eventPlayer.heroNumber]
     ]):
@@ -342,8 +342,6 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     if eventPlayer.getHero() in phaseHero[1]:
         eventPlayer.allowButton(Button.ABILITY_2)
         eventPlayer.setAbility2Enabled(true)
-    eventPlayer.symbiosisStartHeroNumber = null
-    eventPlayer.symbiosisTargetStartHeroNumber = null
     eventPlayer.possess = null
     wait(2)
 
