@@ -86,6 +86,7 @@
 
 - 大量 `eachPlayer` 规则中采用 `wait(...)`、`waitUntil(...)`、短路条件。
 - 「死亡延迟（Buff 11）」在致命伤害帧立即施加 `UNKILLABLE`，并增加“未处于 UNKILLABLE”前置条件，避免多段伤害（如堡垒榴弹）导致效果在死亡后才误触发。
+- 「有我有你（Buff 12）」在解除附身时会同步附身者与被附身者的 `controlJumpIndex`（仅在目标索引更高时同步），避免三合一地图跨图传送后出现索引回退导致的传送点失效。
 - 清理逻辑统一走 `clearPlayerEvent()`，减少状态泄漏。
 - 数值更新统一走 `updatePlayerStats()`，避免重复写 setXxx。
 

@@ -320,6 +320,18 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
         eventPlayer.getHero() == heroList[eventPlayer.heroNumber]
     ]):
         progressHero()
+
+    # 三合一地图控制点同步：若被附身目标在附身期间完成了传送点推进，
+    # 解除附身后将附身者的 controlJumpIndex 同步到不落后于目标，
+    # 避免“目标已过图但附身者仍停留上一图索引”导致后续传送失效。
+    if all([
+        controlRespawnPosition != null,
+        eventPlayer.possess != null,
+        eventPlayer.possess[0] != null,
+        entityExists(eventPlayer.possess[0]),
+        eventPlayer.possess[0].controlJumpIndex > eventPlayer.controlJumpIndex
+    ]):
+        eventPlayer.controlJumpIndex = eventPlayer.possess[0].controlJumpIndex
     
     # 寻找安全落脚点
     # 使用标准重生室判定：若附身者已在重生室，则不再执行落脚传送
