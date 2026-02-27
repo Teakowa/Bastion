@@ -14,7 +14,7 @@ settings {
         "enableMatchVoiceChat": true,
         "team1Slots": LOBBY_TEAM1_SLOTS,
         "team2Slots": LOBBY_TEAM2_SLOTS,
-        "spectatorSlots": LOBBY_SPECTATOR_SLOTS,
+        "spectatorSlots": LOBBY_SPECTATOR_SLOTS_DEV,
         "returnToLobby": "never",
         "allowPlayersInQueue": true
     },

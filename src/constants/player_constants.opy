@@ -12,7 +12,9 @@
 # ========= lobby（房间容量/常改项）=========
 #!define LOBBY_TEAM1_SLOTS 8
 #!define LOBBY_TEAM2_SLOTS 0
-#!define LOBBY_SPECTATOR_SLOTS 2
+#!define LOBBY_SPECTATOR_SLOTS_MAIN 12
+#!define LOBBY_SPECTATOR_SLOTS_DEV 2
+#!define LOBBY_SPECTATOR_SLOTS LOBBY_SPECTATOR_SLOTS_DEV
 
 # =========================
 # CTF 参数（易调）

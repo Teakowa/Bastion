@@ -71,4 +71,6 @@
 - 参数改动优先改常量，不直接改效果规则体。
 - 本地化 key 与配置/事件逻辑必须同名联动。
 - 事件持续时间不写入 `locales` 文案；持续时间统一由 `constants/event_constants.opy` 管理。
+- 事件文案中涉及动态数值时，优先使用占位符并由 `EVT_*` 常量通过 `.format()` 注入，避免把数值硬编码在文案里。
+- 提交前运行 `tools/check_locale_keys.sh`，确保中英 key 对齐、无重复 key、配置引用 key 有定义。
 - `env` 层的默认值变更会影响 main/dev 两入口行为，应同步验证。
