@@ -84,6 +84,7 @@ For each change, verify at least:
 4. Whether new events are synced across config, implementation, and copy/text.
 5. Whether unrelated formatting/reordering was introduced (should be avoided).
 6. If the change is seasonal/event-specific, whether it should go to a dedicated branch instead of current mainline.
+7. Run `tools/check_locale_keys.sh` and ensure locale key sync checks pass (missing/duplicate/invalid references), and event dynamic numbers come from constants via formatting.
 
 ## 8. AI Agent Collaboration Requirements
 
