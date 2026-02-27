@@ -11,42 +11,46 @@ rule "SYSTEM: Core Regen Logic (Signal Based)":
     @Team 1
     @Condition eventPlayer.passiveRegenBlocked != true
     @Condition eventPlayer.combatRegen == true
-    
-    eventPlayer.combatRegen = false
-    stopHealingOverTime(eventPlayer.healID)
-    eventPlayer.healID = 0
-    wait(3, Wait.RESTART_WHEN_TRUE)
 
+    eventPlayer.combatRegen = false
     if any([
-        eventPlayer.passiveRegenBlocked,
         eventPlayer.isDead(),
-        eventPlayer.getNormalizedHealth() == 1, 
+        eventPlayer.getNormalizedHealth() == 1,
         eventPlayer.heal_recv <= -100
     ]):
-        stopHealingOverTime(eventPlayer.healID)
-        eventPlayer.healID = 0
         return
-    
+
     smallMessage(
-        eventPlayer, 
+        eventPlayer,
         STR_MSG_PASSIVE_HEAL_START.format(
             abilityIconString(Hero.BAPTISTE, Button.ABILITY_1)
         )
     )
     eventPlayer.startHealingOverTime(eventPlayer, MAX_TIME, 50 + eventPlayer.getMaxHealth() * 0.08)
     eventPlayer.healID = getLastHealingOverTimeId()
+    waitUntil(any([
+        eventPlayer.passiveRegenBlocked,
+        eventPlayer.isDead(),
+        eventPlayer.getNormalizedHealth() == 1,
+        eventPlayer.heal_recv <= -100,
+        eventPlayer.healID == 0
+    ]), MAX_TIME)
+    if eventPlayer.healID != 0:
+        stopHealingOverTime(eventPlayer.healID)
+        eventPlayer.healID = 0
 
 
 rule "Trigger: Normal Damage":
     @Event playerTookDamage
     @Team 1
     # @Condition attacker.getHero() == Hero.BASTION and attacker != eventPlayer
-    
+
     eventPlayer.combatRegen = false
+    if eventPlayer.healID != 0:
+        stopHealingOverTime(eventPlayer.healID)
+        eventPlayer.healID = 0
     wait(3, Wait.RESTART_WHEN_TRUE)
     eventPlayer.combatRegen = true
-    wait()
-
 
 rule "Trigger: Grenade Alive":
     @Event playerTookDamage
@@ -56,4 +60,3 @@ rule "Trigger: Grenade Alive":
     
     eventPlayer.A36TGrenadeAlive = true
     return
-

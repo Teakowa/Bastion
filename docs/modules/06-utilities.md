@@ -69,3 +69,4 @@
 - 新增属性修正时需记得并入 `updatePlayerStats()`
 - `hp_data` 相关功能必须维护过期清理，否则元素数会累积
 - 过渡期修改 utility 时应改分组目录下的“真实文件”，不要改旧路径 shim
+- `playerRegen.opy` 的脱战回复由受伤信号控制：受伤会立即停止 HOT，并通过 `wait(3, Wait.RESTART_WHEN_TRUE)` 保证“满 3 秒未再受伤”后才重新允许启动回复
