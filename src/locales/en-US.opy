@@ -235,7 +235,7 @@
 #!define STR_EVT_MECH_19_TITLE "Valkyrie's Descent"
 #!define STR_EVT_MECH_19_DESC "Become BOSS: 500% HP.\nNo healing received. Heal via Ultimate."
 #!define STR_EVT_MECH_20_TITLE "Trinity"
-#!define STR_EVT_MECH_20_DESC "100HP->2.5% DR, 1% DR->2% Speed, 100% Speed/s->1 Heartsteel."
+#!define STR_EVT_MECH_20_DESC "100HP->4% DR, 1% DR->2.5% Speed, 100% Speed/s->1 Heartsteel."
 
 # Settings Categories
 #!define STR_CAT_RANDOM_PACK "Random Events Pack"

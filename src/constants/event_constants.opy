@@ -1012,10 +1012,10 @@
 #!define EVT_MECH_20_DMG_REDUCE_CAP 85
 
 # 减伤成长：reduce = min(cap, MaxHP / divisor)
-#!define EVT_MECH_20_DMG_REDUCE_DIVISOR 40
+#!define EVT_MECH_20_DMG_REDUCE_DIVISOR 25
 
 # 移速系数：speed = (-mod_dmg_taken) * factor
-#!define EVT_MECH_20_SPEED_FACTOR 2
+#!define EVT_MECH_20_SPEED_FACTOR 2.5
 
 # 心之钢每跳增加量
 #!define EVT_MECH_20_HEART_STEEL_PER_TICK 0.25
