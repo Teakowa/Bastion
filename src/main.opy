@@ -3,6 +3,10 @@
 # Useful constants and macros
 #!include "constants/"
 #!include "utilities/dev_support/macros.opy"
+#!include "heroes/settings/shared_team_rules.opy"
+#!include "heroes/settings/shared_all_teams.opy"
+#!include "heroes/settings/main_overrides.opy"
+#!include "heroes/settings/main_heroes_settings.opy"
 
 settings {
     "main": {
@@ -51,183 +55,9 @@ settings {
         }
     },
     "heroes": {
-        "team1": {
-            "general": {
-                "abilityCooldown%": TEAM1_ABILITY_COOLDOWN_PCT
-            }
-        },
-        "team2": {
-            "bastion": {
-                "secondaryFireCooldown%": BOSS_BASTION_SEC_FIRE_COOLDOWN_PCT,
-                "secondaryFireKb%": BOSS_BASTION_SEC_FIRE_KB_PCT,
-                "projectileSpeed%": BOSS_BASTION_PROJECTILE_SPEED_PCT,
-                "enableInfiniteAmmo": BOSS_BASTION_INFINITE_AMMO,
-                "health%": BOSS_BASTION_HEALTH_PCT
-            },
-            "general": {
-                "damageReceived%": TEAM2_DAMAGE_RECEIVED_PCT,
-                "abilityCooldown%": TEAM2_ABILITY_COOLDOWN_PCT,
-                "health%": TEAM2_HEALTH_PCT
-            }
-        },
-        "allTeams": {
-            "dva": {
-                "ability1Cooldown%": 125
-            },
-            "hanzo": {
-                "ability3Cooldown%": 60,
-                "ability1Cooldown%": 0
-            },
-            "cassidy": {
-                "ability1Cooldown%": 67
-            },
-            "echo": {
-                "ability1Cooldown%": 33
-            },
-            "mercy": {
-                "ability1Cooldown%": 67,
-                "ability2Cooldown%": 27
-            },
-            "orisa": {
-                "ability1Cooldown%": 50,
-                "ability2Cooldown%": 70
-            },
-            "ana": {
-                "ability1Cooldown%": 67
-            },
-            "anran": {
-                "ability1Cooldown%": 75,
-                "ability2Cooldown%": 80
-            },
-            "baptiste": {
-                "healingReceived%": 50,
-                "projectileSpeed%": 500,
-                "projectileGravity%": 0,
-                "health%": 50,
-                "ability2Cooldown%": 20
-            },
-            "brigitte": {
-                "secondaryFireRechargeRate%": 500,
-                "shieldBashCooldown%": 80
-            },
-            "freja": {
-                "ability1Cooldown%": 67,
-                "ability1Distance%": 130
-            },
-            "torbjorn": {
-                "weaponsEnabled": "hammer",
-                "ability2Cooldown%": 20,
-                "ability2Duration%": 40,
-                "enableAbility1": false
-            },
-            "venture": {
-                "ability1Duration%": 25
-            },
-            "doomfist": {
-                "ability1Cooldown%": 50,
-                "secondaryFireCooldown%": 80,
-                "ability2Cooldown%": 80
-            },
-            "emre": {
-                 "damageReceived%": 95,
-            },
-            "juno": {
-                "ability1Cooldown%": 67,
-                "ability1Duration%": 150
-            },
-            "zarya": {
-                "jumpVerticalSpeed%": 140,
-                "ability2Cooldown%": 56,
-                "ability1Cooldown%": 46,
-                "secondaryFireKb%": 200
-            },
-            "reaper": {
-                "ability1Cooldown%": 75,
-                "ability2Cooldown%": 300
-            },
-            "mauga": {
-                "ability1Cooldown%": 80
-            },
-            "mizuki": {
-                "ability1Cooldown%": 50
-            },
-            "winston": {
-                "ability1Cooldown%": 80,
-                "ability2Cooldown%": 83
-            },
-            "genji": {
-                "ability2Cooldown%": 75
-            },
-            "junkrat": {
-                "ability1Cooldown%": 100,
-                "ability1Kb%": 100
-            },
-            "tracer": {
-                "ability2Cooldown%": 50,
-                "ability1Cooldown%": 50
-            },
-            "lifeweaver": {
-                "ability2Cooldown%": 84,
-                "primaryFireRange%": 200,
-                "secondaryFireCooldown%": 84
-            },
-            "wreckingBall": {
-                "enableRollOnly": false
-            },
-            "zenyatta": {
-                "healingDealt%": 200,
-                "health%": 150
-            },
-            "symmetra": {
-                "ability2Cooldown%": 66,
-                "enableAbility1": false
-            },
-            "mei": {
-                "ability2Cooldown%": 67
-            },
-            "ashe": {
-                "ability2Cooldown%": 50,
-                "ability1Cooldown%": 40
-            },
-            "moira": {
-                "ability1Cooldown%": 50,
-                "ability2MaxHealing%": 500
-            },
-            "reinhardt": {
-                "ability1Cooldown%": 75
-            },
-            "sigma": {
-                "ability1Cooldown%": 75,
-                "secondaryFireCooldown%": 50,
-                "ability2Cooldown%": 50
-            },
-            "jetpackCat": {
-                "primaryFireRange%": 500,
-                "secondaryFireMaximumTime%": 300
-            },
-            "roadhog": {
-                "secondaryFireCooldown%": 100
-            },
-            "kiriko": {
-                "ability1Distance%": 143,
-                "ability2Cooldown%": 29
-            },
-            "hazard": {
-                "ability1Cooldown%": 55,
-                "ability2Cooldown%": 92
-            },
-            "sombra": {
-                "ability2Cooldown%": 0
-            },
-            "widowmaker": {
-                "enableInfiniteUlt": true
-            },
-            "general": {
-                "combatUltGen%": 0,
-                "enableInfiniteAmmo": true,
-                "passiveUltGen%": 0
-            }
-        }
+        "team1": HERO_SETTINGS_TEAM1,
+        "team2": HERO_SETTINGS_TEAM2,
+        "allTeams": HERO_SETTINGS_ALL_TEAMS
     },
     "workshop": {
         "自动重开时间间隔（小时）": 2,
