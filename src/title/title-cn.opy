@@ -222,6 +222,14 @@ enum MapTITLEKey:
     { \
         name: "锄禾日当午", \
         titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HARD_TO_KILL, TITLE.HACKING, TITLE.LUCKY_STAR, TITLE.UNLUCKY, TITLE.MANBA] \
+    }, \
+    { \
+        name: "板鸭", \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.MANBA] \
+    }, \
+    { \
+        name: "八十万萝莉总教头", \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.UNLUCKY, TITLE.MANBA] \
     } \
 ]
 
@@ -285,8 +293,8 @@ enum MapTITLEKey:
 # 渣客镇
 #!define DATA_JUNKERTOWN [ \
    [], \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢"], "-"), \
-   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢"], "-")\
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢", "八十万萝莉总教头"], "-"), \
+   playerNameToIndexDelimited(["WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","EruIluvatar", "雨鸢", "八十万萝莉总教头"], "-")\
 ]
 
 # 国王大道
@@ -397,8 +405,8 @@ enum MapTITLEKey:
 # 花村
 #!define DATA_HANAMURA [ \
    playerNameToIndexDelimited(["尘风歌者","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","看啊情"], "-"), \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar", "板鸭"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","卖核弹的小女孩","看啊情","眼镜小宅","初一吖","雨鸢","EruIluvatar", "板鸭"], "-")\
 ]
 
 # 伊利奥斯
@@ -425,8 +433,8 @@ enum MapTITLEKey:
 # 釜山
 #!define DATA_BUSAN [ \
    playerNameToIndexDelimited(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河"], "-"), \
-   playerNameToIndexDelimited(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"], "-"), \
-   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨"], "-")\
+   playerNameToIndexDelimited(["草艮","顾北酒笙","WildRage","尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨", "板鸭","雨鸢"], "-"), \
+   playerNameToIndexDelimited(["尘风歌者","吾携秋水揽星河","寒霜冰湮","Cold","豆本豆豆奶","溪云初起日沉阁","卖核弹的小女孩","眼镜小宅","初一吖","EruIluvatar","糯米进脑子","半夜汽笛","雷个大憨憨", "板鸭","雨鸢"], "-")\
 ]
 
 # 绿洲城
