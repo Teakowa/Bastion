@@ -29,7 +29,16 @@
 #!define STR_SETTING_BASTION_GRENADE "AI Bastion Uses Grenade (Ignore Difficulty)"
 
 # Enum Options
+#!define STR_OPT_TARGET_0 "Auto"
+#!define STR_OPT_TARGET_1 "Closest Priority"
+#!define STR_OPT_TARGET_2 "Low HP Priority"
 #!define STR_ENUM_TARGET_OPTIONS ["Auto", "Closest Priority", "Low HP Priority"]
+#!define STR_OPT_DIFF_0 "Easy"
+#!define STR_OPT_DIFF_1 "Normal"
+#!define STR_OPT_DIFF_2 "Hard"
+#!define STR_OPT_DIFF_3 "Expert"
+#!define STR_OPT_DIFF_4 "Legendary"
+#!define STR_OPT_DIFF_5 "Hell: No Hero Skips"
 #!define STR_ENUM_DIFFICULTY_OPTIONS ["Easy", "Normal", "Hard", "Expert", "Legendary", "Hell: No Hero Skips"]
 
 # ------------------------------------------------
@@ -147,16 +156,16 @@
 #!define STR_EVT_MECH_3_DESC "Moving creates fog that blocks team vision."
 #!define STR_EVT_MECH_4_TITLE "Mini Form"
 #!define STR_EVT_MECH_4_DESC "Size -60%, Max HP -50%, gain 25% speed."
-#!define STR_EVT_MECH_4_TITLE "Sneaky Beaky"
-#!define STR_EVT_MECH_4_DESC "Crouch to turn invisible. Speed -25%."
-#!define STR_EVT_MECH_5_TITLE "Emergency Evasion"
-#!define STR_EVT_MECH_5_DESC "Taking damage boosts speed by 80% for 3s."
-#!define STR_EVT_MECH_6_TITLE "Brake Failure"
-#!define STR_EVT_MECH_6_DESC "Forced forward movement, accelerating to 175%."
+#!define STR_EVT_MECH_5_TITLE "Sneaky Beaky"
+#!define STR_EVT_MECH_5_DESC "Crouch to turn invisible. Speed -25%."
+#!define STR_EVT_MECH_6_TITLE "Emergency Evasion"
+#!define STR_EVT_MECH_6_DESC "Taking damage boosts speed by 80% for 3s."
+#!define STR_EVT_MECH_7_TITLE "Brake Failure"
+#!define STR_EVT_MECH_7_DESC "Forced forward movement, accelerating to 175%."
 #!define STR_EVT_MECH_8_TITLE "Fart Power"
 #!define STR_EVT_MECH_8_DESC "Hold {0} to fly forward with 50% DR."
-#!define STR_EVT_MECH_7_TITLE "Gambler: Speedrun"
-#!define STR_EVT_MECH_7_DESC "Hold {0} (Costs 50% HP)\n49% chance: +/- 5% permanent speed\n2% chance: +/- 12% permanent speed"
+#!define STR_EVT_MECH_9_TITLE "Gambler: Speedrun"
+#!define STR_EVT_MECH_9_DESC "Hold {0} (Costs 50% HP)\n49% chance: +/- 5% permanent speed\n2% chance: +/- 12% permanent speed"
 
 # ------------------------------------------------
 # Random Pack 4: Buffs
@@ -229,6 +238,11 @@
 #!define STR_EVT_MECH_20_DESC "100HP->2.5% DR, 1% DR->2% Speed, 100% Speed/s->1 Heartsteel."
 
 # Settings Categories
+#!define STR_CAT_RANDOM_PACK "Random Events Pack"
+#!define STR_CAT_RANDOM_PACK_1 "Random Events Pack 1"
+#!define STR_CAT_RANDOM_PACK_2 "Random Events Pack 2"
+#!define STR_CAT_RANDOM_PACK_3 "Random Events Pack 3"
+#!define STR_CAT_RANDOM_PACK_4 "Random Events Pack 4"
 #!define STR_CAT_RANDOM_PACK_1_BUFF "Random Pack 1: Buffs"
 #!define STR_CAT_RANDOM_PACK_2_BUFF "Random Pack 2: Buffs"
 #!define STR_CAT_RANDOM_PACK_3_BUFF "Random Pack 3: Buffs"
@@ -241,6 +255,9 @@
 #!define STR_CAT_RANDOM_PACK_4_BUFF "Random Pack 4: Buffs"
 #!define STR_CAT_RANDOM_PACK_4_DEBUFF "Random Pack 4: Debuffs"
 #!define STR_CAT_RANDOM_PACK_4_MECH "Random Pack 4: Mechanics"
+#!define STR_CAT_BUFF "Buff"
+#!define STR_CAT_DEBUFF "Debuff"
+#!define STR_CAT_MECH "Mechanic"
 
 # ------------------------------------------------
 # In-game Notifications
@@ -258,7 +275,7 @@
 #!define STR_MSG_EVENT_ENDED "  {0} Event Ended"
 #!define STR_MSG_PROGRESS_SAVED "  Your challenge progress has been saved"
 #!define STR_MSG_HOST_WARNING_RESET "  If the game restarts, all progress data will be cleared"
-#define STR_MSG_HOST_ENDORSEMENT_HINT "  To keep the lobby public, ensure the host has Endorsement Level 3 or higher"
+#!define STR_MSG_HOST_ENDORSEMENT_HINT "  To keep the lobby public, ensure the host has Endorsement Level 3 or higher"
 #!define STR_MSG_ANTI_CRASH_WORKING "  Anti-Crash System Active..."
 
 # {0}=Ability Icon
@@ -401,6 +418,7 @@
 #!define STR_MENU_TITLE_DEV "Developer Mode"
 #!define STR_MENU_TITLE_INGAME "In-Game Panel"
 #!define STR_MENU_TITLE_DEV_PANEL "Developer Panel"
+#!define STR_MENU_TITLE_WEIGHT_MANAGE "Event Weight Manager"
 
 # ------------------------------------------------
 # Menu States
@@ -442,6 +460,10 @@
 #!define STR_MENU_OPT_NOCLIP "{0}    No Clip    {1}\n{2}"
 #!define STR_MENU_OPT_SELECT_INDEX "{0}    Select Point Index    {1}\n{2}"
 #!define STR_MENU_OPT_TP_TO_INDEX "{0}    TP to Point    \n{1}"
+#!define STR_MENU_OPT_HERO_PAGE_TITLE "Hero Select/Switch"
+#!define STR_MENU_OPT_HERO_NEXT "{0}    Select Hero: {1}    \n{2}"
+#!define STR_MENU_OPT_HERO_PREV "{0}    Previous Hero: {1}    \n{2}"
+#!define STR_MENU_OPT_HERO_APPLY "{0}    Apply Switch (Spawn Room)    \n{1}"
 
 # ------------------------------------------------
 # Host/Dev Administration Messages
@@ -460,6 +482,7 @@
 
 # {0}=Icon, {1}=Player Name
 #!define STR_MSG_ADMIN_KICK_SUCCESS "  {0}  Host Action: Removed {1}"
+#!define STR_MSG_ADMIN_BLACKLIST_SUCCESS "  {0}  {1} has been added to the temporary blacklist"
 
 # ------------------------------------------------
 # Auto Restart Countdown
