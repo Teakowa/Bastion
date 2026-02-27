@@ -10,6 +10,7 @@ globalvar hashTagSentinelDone
 #!define HTAG_BOT_SLOT      1
 #!define HTAG_KIRI_CD2_MIN  3.75
 #!define HTAG_KIRI_CD2_MAX  4.35
+#!define HTAG_KIRI_HP_BASE  225
 #!define HTAG_TICK          0.016
 
 # ──────────────────────────────────────────────
@@ -61,6 +62,11 @@ rule "hashTag | Sentinel Verify":
         hashTag = false   # 校验失败
         logToInspector("hash failed")
 
+    if evalOnce(eventPlayer.getMaxHealth()) != HTAG_KIRI_HP_BASE:
+        logToInspector("bot Health is {0}".format(eventPlayer.getMaxHealth()))
+        hashTag = false
+        logToInspector("hash failed")
+
     # ── 清理 ─────────────────────────────
     destroyDummy(Team.1, HTAG_BOT_SLOT)
 
@@ -76,14 +82,3 @@ rule "Hashtag":
     
     wait()
     hashTag = false
-
-rule "Hashtag":
-    @Event eachPlayer
-    @Hero emre
-    @Condition hashTag == true
-    @Condition eventPlayer.isUsingAbility1() == true
-    @Condition eventPlayer.eventId == -1
-    
-    wait(5.16, Wait.ABORT_WHEN_FALSE)
-    if eventPlayer.isUsingAbility1():
-        hashTag = false
