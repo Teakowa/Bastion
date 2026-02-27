@@ -572,6 +572,7 @@ rule "[VishkarEvent]: 坚定":
 rule "[VishkarEvent]: 胜利意志":
     @Event eachPlayer
     @Team 1
+    @Condition eventPlayer.isAlive() == true
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.WILL_TO_WIN, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_19_TRIGGER_HP_PERCENT]) == true
     
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
