@@ -241,7 +241,7 @@
 #!define STR_EVT_MECH_19_TITLE "瓦尔基里降临"
 #!define STR_EVT_MECH_19_DESC "生命值提高1000%，获得禁疗\n受到伤害获得大招充能\n大招持续期间最多回复85%生命值"
 #!define STR_EVT_MECH_20_TITLE "三位一体"
-#!define STR_EVT_MECH_20_DESC "100HP→2.5%减伤，1%减伤→2%移速\n每5秒获得1层心之钢"
+#!define STR_EVT_MECH_20_DESC "100HP→4%减伤，1%减伤→2.5%移速\n每5秒获得1层心之钢"
 
 
 # 设置菜单分类 (Pack)
