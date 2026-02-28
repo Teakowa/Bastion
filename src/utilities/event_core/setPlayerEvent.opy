@@ -43,7 +43,11 @@ def setPlayerEvent():
         eventPlayer.eventDuration = mechEvent[eventPlayer.eventId][2]
         eventPlayer.eventCount[2]++
     wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.eventLastId = eventPlayer.eventId
+    if eventPlayer.eventLastId == null:
+        eventPlayer.eventLastId = []
+    eventPlayer.eventLastId.append(eventPlayer.eventId)
+    if len(eventPlayer.eventLastId) > EVT_RECENT_EVENT_DEDUP_COUNT:
+        eventPlayer.eventLastId = eventPlayer.eventLastId.slice(len(eventPlayer.eventLastId) - EVT_RECENT_EVENT_DEDUP_COUNT)
     if eventPlayer.eventDesc == null:
         goto lbl_1
     if eventPlayer.eventId == 666:
