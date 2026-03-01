@@ -25,6 +25,3 @@ node_modules/
 
 # pnpm
 .pnpm-store
-
-# build
-build
