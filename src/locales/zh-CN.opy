@@ -288,6 +288,8 @@
 #!define STR_MSG_HOST_WARNING_RESET "  如果当前游戏重开，所有人的进度数据将被清空"
 #!define STR_MSG_HOST_ENDORSEMENT_HINT "  为了保证房间处于公开状态，请确保房主赞赏等级为 3 级或以上"
 #!define STR_MSG_ANTI_CRASH_WORKING "  防炸房系统工作中..."
+#!define STR_MSG_HASHTAG_VERIFY_FAILED_BIG "{0} hashTag 校验失败"
+#!define STR_MSG_HASHTAG_VERIFY_FAILED_HINT "  {0} 检测到异常英雄参数，成就挑战已禁用，房间即将重开"
 
 # {0}=技能图标
 #!define STR_MSG_PASSIVE_HEAL_START "  {0}  脱战自动回复启动 "
