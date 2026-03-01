@@ -277,6 +277,8 @@
 #!define STR_MSG_HOST_WARNING_RESET "  If the game restarts, all progress data will be cleared"
 #!define STR_MSG_HOST_ENDORSEMENT_HINT "  To keep the lobby public, ensure the host has Endorsement Level 3 or higher"
 #!define STR_MSG_ANTI_CRASH_WORKING "  Anti-Crash System Active..."
+#!define STR_MSG_HASHTAG_VERIFY_FAILED_BIG "{0} hashTag verification failed"
+#!define STR_MSG_HASHTAG_VERIFY_FAILED_HINT "  {0} Abnormal hero stats detected, achievements are disabled and the match will restart soon"
 
 # {0}=Ability Icon
 #!define STR_MSG_PASSIVE_HEAL_START "  {0}  Auto-Regen Activated "

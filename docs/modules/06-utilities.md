@@ -71,4 +71,4 @@
 - `hp_data` 相关功能必须维护过期清理，否则元素数会累积
 - 过渡期修改 utility 时应改分组目录下的“真实文件”，不要改旧路径 shim
 - `playerRegen.opy` 的脱战回复由受伤信号控制：受伤会立即停止 HOT，并通过 `wait(3, Wait.RESTART_WHEN_TRUE)` 保证“满 3 秒未再受伤”后才重新允许启动回复
-- `hashtag.opy` 现依赖雾子哨兵双重校验（`ABILITY_2` 冷却区间 + `getMaxHealth() == 225`）；如需改动相关设置，请同步调整常量与判定逻辑
+- `hashtag.opy` 现采用 host-only 长期校验：在“非事件窗口”持续记录房主英雄净血量签名（`getMaxHealth() - heart_steel * EVT_8_HP_PERCENT_PER_STACK`）并做阈值判定，同时对 Kiriko/Tracer/Mei/Ashe/Genji/Torbjorn 做 `ABILITY_2` 冷却抽检；异常通过风险分累计触发失败处理。若调整 hero settings，请同步更新该文件阈值常量与本地化提示文案
