@@ -81,6 +81,8 @@ pnpm install
 pnpm run build
 ```
 
+Build scripts use the `overpy` CLI (`overpy compile ...`) from the npm package.
+
 Build each entry independently:
 
 ```bash

@@ -21,7 +21,7 @@ Please read these first before contributing:
 - [Visual Studio Code](https://code.visualstudio.com/download)  
   Recommended editor for `.opy` source files / 推荐用于编辑 `.opy` 源码
 - [OverPy]  
-  Toolchain for compiling OverPy source to Workshop script / 用于将 OverPy 源码编译为工坊代码
+  Toolchain for compiling OverPy source to Workshop script (repo scripts use the `overpy` CLI) / 用于将 OverPy 源码编译为工坊代码（仓库脚本使用 `overpy` CLI）
 - [Git](https://git-scm.com/downloads)  
   Version control / 版本控制
 - [GitHub](https://github.com/)  
@@ -250,4 +250,4 @@ For first-time contributors / 首次贡献者建议按以下顺序阅读：
 5. `src/events/` and `src/utilities/`
 6. `docs/improve-server-stability.md`
 
-[OverPy]: https://github.com/Zezombye/overpy
+[OverPy]: https://www.npmjs.com/package/overpy

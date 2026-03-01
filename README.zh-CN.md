@@ -81,6 +81,8 @@ pnpm install
 pnpm run build
 ```
 
+构建脚本已切换为 npm 包 `overpy` 的 CLI（`overpy compile ...`）。
+
 分别构建双入口：
 
 ```bash
