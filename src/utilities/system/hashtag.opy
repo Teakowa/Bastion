@@ -5,6 +5,8 @@
 
 globalvar hashTagVerifyLibrary
 globalvar hashTagRuntime
+globalvar hashTagHostRule
+globalvar hashTagHostNetHp
 # ──────────────────────────────────────────────
 # 常量（若 hero settings 变更，需同步调整阈值）
 # ──────────────────────────────────────────────
