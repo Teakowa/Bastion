@@ -1,0 +1,5 @@
+version: 1
+interface:
+  display_name: Grant Player Title
+  short_description: Grant global and map-specific titles to players safely.
+  default_prompt: Use $grant-player-title to grant titles to players, add missing players into title data, and sync map-specific title mappings.
