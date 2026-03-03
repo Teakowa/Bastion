@@ -363,8 +363,8 @@ enum MapTITLEKey:
 # 沃斯卡娅工业区
 #!define DATA_VOLSKAYA [ \
    playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","卖核弹的小女孩","眼镜小宅"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖"], "-")\
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","旅店老板"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河","寒霜冰湮","豆本豆豆奶","卖核弹的小女孩","眼镜小宅","初一吖","雨鸢","旅店老板"], "-")\
 ]
 
 # 埃斯佩兰萨
