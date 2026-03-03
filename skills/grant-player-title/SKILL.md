@@ -44,6 +44,9 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
    - 索引 `2` -> `DOMINATOR`
 2. 使用 `playerNameToIndexDelimited([...], "-")` 维护玩家名列表。
 3. 保持列表唯一；若玩家已存在则不重复添加。
+4. 等级约束（必做）：
+   - `DOMINATOR` 高于 `CONQUEROR`：当玩家被加入索引 `2`（`DOMINATOR`）时，必须确保同一玩家也在索引 `1`（`CONQUEROR`）。
+   - 反向不成立：加入 `CONQUEROR` 时，不应自动加入 `DOMINATOR`，除非用户明确要求。
 
 ## 6) 校验
 
@@ -60,6 +63,7 @@ rg -n "DATA_<MAP>|MapTITLEKey|setPlayerTitle" src/title/title-cn.opy src/utiliti
 1. 新增玩家是否同时出现在 `player_database` 与两个 `TITLE_PLAYER_NAMES`。
 2. 两个 `TITLE_PLAYER_NAMES` 是否完全同序。
 3. 地图专属称号是否落在正确的 `DATA_*` 索引位置。
+4. 若本次新增了 `DOMINATOR`，对应玩家是否也已出现在同图的 `CONQUEROR` 列表中。
 
 ## 7) 交付说明
 
