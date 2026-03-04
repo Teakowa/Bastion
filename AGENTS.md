@@ -35,6 +35,7 @@ This document defines the shared collaboration conventions (for both humans and 
 2. `main.opy` and `devMain.opy` should remain as structurally aligned as possible; if only one is changed, explain why in the PR/commit notes.
 3. `src/config/eventConfig.opy` and `src/config/eventConfigDev.opy` are both core event-system configs; when adding or adjusting events, check behavior differences in both files.
 4. Seasonal/event-specific configurations are not maintained on the current mainline and should be implemented in follow-up dedicated Git branches; mainline should keep only general gameplay logic.
+5. After all code changes are complete, both tests and build validation must pass before the task is considered done.
 
 ## 4. Development Workflow (Recommended)
 
