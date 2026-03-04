@@ -65,7 +65,10 @@ This document defines the shared collaboration conventions (for both humans and 
   - `pnpm run build` (build both `main.opy` and `devMain.opy`)
   - `pnpm run build:main`
   - `pnpm run build:dev`
+  - `pnpm run build:main:en`, `pnpm run build:dev:en` (single-locale en-US outputs)
+  - `pnpm run build:main:zh`, `pnpm run build:dev:zh` (single-locale zh-CN outputs)
   - `pnpm run build:release` (dual-language release artifacts)
+- CI build check workflow is `.github/workflows/ci-build.yml` and runs on pull requests (`pnpm run build`).
 - CI auto release workflow is `.github/workflows/release.yml` and is triggered by pushed `v*` tags.
 - When using the OverPy toolchain, prioritize independent compile/decompile verification for both `main.opy` and `devMain.opy`.
 - `build/` is an artifact directory and should not contain business/source logic.
