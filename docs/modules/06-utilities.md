@@ -71,4 +71,4 @@
 - `hp_data` 相关功能必须维护过期清理，否则元素数会累积
 - 过渡期修改 utility 时应改分组目录下的“真实文件”，不要改旧路径 shim
 - `playerRegen.opy` 的脱战回复由受伤信号控制：受伤会立即停止 HOT，并通过 `wait(3, Wait.RESTART_WHEN_TRUE)` 保证“满 3 秒未再受伤”后才重新允许启动回复
-- `hashtag.opy` 现依赖雾子哨兵双重校验（`ABILITY_2` 冷却区间 + `getMaxHealth() == 225`）；如需改动相关设置，请同步调整常量与判定逻辑
+- `hashtag.opy` 现改为 init 阶段主机 `titlePlayer` 白名单校验：等待称号数组初始化并确认 `hostPlayer` 存在后，若主机名不在白名单中则关闭 `hashTag`
