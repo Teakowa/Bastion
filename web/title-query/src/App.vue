@@ -313,9 +313,10 @@ watch(
             type="button"
             class="theme-toggle ow-button ow-button-secondary"
             :aria-pressed="themeMode === 'dark'"
+            :aria-label="themeMode === 'dark' ? '切换为亮色主题' : '切换为暗色主题'"
             @click="toggleTheme"
           >
-            {{ themeMode === 'dark' ? '切换为亮色' : '切换为暗色' }}
+            <span class="theme-toggle-icon" aria-hidden="true">{{ themeMode === 'dark' ? '☀' : '☾' }}</span>
           </button>
         </div>
 
