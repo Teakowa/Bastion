@@ -176,14 +176,24 @@ onMounted(() => {
   <div class="page-shell">
     <div class="ambient ambient-left"></div>
     <div class="ambient ambient-right"></div>
+    <div class="backdrop-grid"></div>
 
     <main class="page-frame">
-      <section class="hero-panel">
-        <p class="eyebrow">Bastion Title Query</p>
-        <h1>玩家称号查询</h1>
-        <p class="hero-copy">
-          输入玩家名后可直接看到“已获取 / 未获取”的完整称号进度情况。
-        </p>
+      <section class="hero-panel ow-card">
+        <div class="hero-band">
+          <p class="eyebrow">Bastion Workshop</p>
+          <p class="hero-band-copy">TEAM-BASED TITLE PROGRESSION</p>
+        </div>
+
+        <div class="hero-heading">
+          <div>
+            <h1>玩家称号查询</h1>
+            <p class="hero-copy">
+              输入玩家名后可直接看到“已获取 / 未获取”的完整称号进度情况。
+            </p>
+          </div>
+          <div class="hero-emblem">QUERY PANEL</div>
+        </div>
 
         <label class="search-panel">
           <span>搜索玩家</span>
@@ -198,7 +208,7 @@ onMounted(() => {
           <button
             v-for="player in filteredPlayers"
             :key="`candidate-${player.name}`"
-            class="candidate-chip"
+            class="candidate-chip ow-button ow-button-secondary"
             type="button"
             @click="query = player.name"
           >
@@ -211,11 +221,11 @@ onMounted(() => {
         </p>
 
         <div class="hero-stats" v-if="meta">
-          <article>
+          <article class="stat-card">
             <strong>{{ meta.titleCount }}</strong>
             <span>称号定义</span>
           </article>
-          <article>
+          <article class="stat-card">
             <strong>{{ filteredPlayers.length }}</strong>
             <span>{{ hasQuery ? '搜索候选' : '搜索候选（待输入）' }}</span>
           </article>
@@ -223,7 +233,7 @@ onMounted(() => {
       </section>
 
       <section class="content-grid">
-        <article class="card spotlight-card">
+        <article class="card ow-card spotlight-card">
           <header class="card-header">
             <p>查询结果</p>
             <h2>玩家详情</h2>
@@ -237,7 +247,7 @@ onMounted(() => {
                 <p class="player-name">未选择玩家</p>
                 <p class="player-meta">请输入玩家昵称后查看个人称号与解锁条件</p>
               </div>
-              <div class="player-badge">SEARCH FIRST</div>
+              <div class="player-badge">READY</div>
             </div>
           </div>
           <div v-else-if="!showcasedPlayer" class="state-block">
@@ -251,13 +261,13 @@ onMounted(() => {
                   已获取 {{ groupedTitles.ownedCount }} / {{ visibleTitles.length }}
                 </p>
               </div>
-              <div class="player-badge">TITLE STATUS</div>
+              <div class="player-badge">LOCKED IN</div>
             </div>
           </div>
         </article>
       </section>
 
-      <section class="catalog-panel card" v-if="hasQuery">
+      <section class="catalog-panel card ow-card" v-if="hasQuery">
         <header class="card-header">
           <p>所有称号列表</p>
           <h2>已获取 / 未获取</h2>
@@ -326,7 +336,7 @@ onMounted(() => {
         </div>
       </section>
 
-      <section class="catalog-panel card" v-if="hasQuery">
+      <section class="catalog-panel card ow-card" v-if="hasQuery">
         <header class="card-header">
           <p>地图专属称号</p>
           <h2>开拓者 / 征服者 / 主宰（未获得优先）</h2>
