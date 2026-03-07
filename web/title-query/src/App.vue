@@ -10,19 +10,15 @@ const meta = ref(null);
 
 const filteredPlayers = computed(() => {
   const keyword = query.value.trim().toLocaleLowerCase();
-  const rankedPlayers = [...players.value].sort((left, right) => {
-    if (right.titleCount !== left.titleCount) {
-      return right.titleCount - left.titleCount;
-    }
-
-    return left.name.localeCompare(right.name, 'zh-Hans-CN');
-  });
+  const sortedPlayers = [...players.value].sort((left, right) =>
+    left.name.localeCompare(right.name, 'zh-Hans-CN')
+  );
 
   if (!keyword) {
-    return rankedPlayers.slice(0, 12);
+    return sortedPlayers.slice(0, 12);
   }
 
-  return rankedPlayers.filter((player) => player.name.toLocaleLowerCase().includes(keyword));
+  return sortedPlayers.filter((player) => player.name.toLocaleLowerCase().includes(keyword));
 });
 
 const exactMatch = computed(() => {
@@ -35,13 +31,14 @@ const exactMatch = computed(() => {
 });
 
 const showcasedPlayer = computed(() => exactMatch.value || filteredPlayers.value[0] || null);
+const visibleTitles = computed(() => titles.value.filter((title) => title.id === 0 || title.id > 8));
 
 const groupedTitles = computed(() => {
   const player = showcasedPlayer.value;
   if (!player) {
     return {
       owned: [],
-      missing: [...titles.value]
+      missing: [...visibleTitles.value]
     };
   }
 
@@ -49,7 +46,7 @@ const groupedTitles = computed(() => {
   const owned = [];
   const missing = [];
 
-  for (const title of titles.value) {
+  for (const title of visibleTitles.value) {
     if (ownedIds.has(title.id)) {
       owned.push(title);
     } else {
@@ -65,14 +62,11 @@ const groupedTitles = computed(() => {
 
 const sourceDisplay = computed(() => {
   if (!meta.value) {
-    return '';
+    return '躲避堡垒3';
   }
 
-  if (meta.value.sourceLabel && meta.value.sourceVersion) {
-    return `${meta.value.sourceLabel} ${meta.value.sourceVersion}`;
-  }
-
-  return meta.value.sourceFile || '-';
+  const sourceLabel = meta.value.sourceLabel || '躲避堡垒3';
+  return meta.value.sourceVersion ? `${sourceLabel} ${meta.value.sourceVersion}` : sourceLabel;
 });
 
 async function loadData() {
@@ -111,9 +105,7 @@ onMounted(() => {
         <p class="eyebrow">Bastion Title Query</p>
         <h1>玩家称号查询</h1>
         <p class="hero-copy">
-          从
-          <code>src/title/title-cn.opy</code>
-          自动生成数据，输入玩家名后可直接看到“已获取 / 未获取”的完整称号对照。
+          输入玩家名后可直接看到“已获取 / 未获取”的完整称号对照。
         </p>
 
         <label class="search-panel">
@@ -155,7 +147,7 @@ onMounted(() => {
               <div>
                 <p class="player-name">{{ showcasedPlayer.name }}</p>
                 <p class="player-meta">
-                  已获取 {{ groupedTitles.owned.length }} / {{ titles.length }}
+                  已获取 {{ groupedTitles.owned.length }} / {{ visibleTitles.length }}
                 </p>
               </div>
               <div class="player-badge">TITLE STATUS</div>
@@ -166,7 +158,7 @@ onMounted(() => {
         <article class="card list-card">
           <header class="card-header">
             <p>玩家列表</p>
-            <h2>{{ query.trim() ? '匹配候选' : '称号数量前列' }}</h2>
+            <h2>{{ query.trim() ? '匹配候选' : '默认候选' }}</h2>
           </header>
 
           <div v-if="loading" class="state-block">列表准备中…</div>
