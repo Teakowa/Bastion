@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue';
 
+const THEME_STORAGE_KEY = 'title-query-theme-mode';
 const query = ref('');
 const loading = ref(true);
 const error = ref('');
@@ -11,6 +12,7 @@ const meta = ref(null);
 const expandedSeriesKeys = ref(new Set());
 const collapsedDefaultSeriesKeys = ref(new Set());
 const completedMapsExpanded = ref(false);
+const themeMode = ref('light');
 const hasQuery = computed(() => query.value.trim().length > 0);
 const MAP_TITLE_LABELS = {
   PIONEER: '开拓者',
@@ -221,6 +223,41 @@ function isRetiredTitle(title) {
   return /不再发放|历史称号/.test(conditionText);
 }
 
+function detectSystemTheme() {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return 'light';
+  }
+
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(nextMode, persist = true) {
+  const normalized = nextMode === 'dark' ? 'dark' : 'light';
+  themeMode.value = normalized;
+
+  if (persist && typeof window !== 'undefined') {
+    window.localStorage.setItem(THEME_STORAGE_KEY, normalized);
+  }
+}
+
+function initTheme() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    applyTheme(savedTheme, false);
+    return;
+  }
+
+  applyTheme(detectSystemTheme(), false);
+}
+
+function toggleTheme() {
+  applyTheme(themeMode.value === 'dark' ? 'light' : 'dark');
+}
+
 async function loadData() {
   loading.value = true;
   error.value = '';
@@ -244,6 +281,7 @@ async function loadData() {
 }
 
 onMounted(() => {
+  initTheme();
   loadData();
 });
 
@@ -258,7 +296,7 @@ watch(
 </script>
 
 <template>
-  <div class="page-shell">
+  <div class="page-shell" :data-theme="themeMode">
     <div class="ambient ambient-left"></div>
     <div class="ambient ambient-right"></div>
     <div class="backdrop-grid"></div>
@@ -268,6 +306,14 @@ watch(
         <div class="hero-band">
           <p class="eyebrow">躲避堡垒 3</p>
           <p class="hero-band-copy">TEAM-BASED TITLE PROGRESSION</p>
+          <button
+            type="button"
+            class="theme-toggle ow-button ow-button-secondary"
+            :aria-pressed="themeMode === 'dark'"
+            @click="toggleTheme"
+          >
+            {{ themeMode === 'dark' ? '切换为亮色' : '切换为暗色' }}
+          </button>
         </div>
 
         <div class="hero-heading">
