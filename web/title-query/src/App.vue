@@ -11,9 +11,13 @@ const hasQuery = computed(() => query.value.trim().length > 0);
 
 const filteredPlayers = computed(() => {
   const keyword = query.value.trim().toLocaleLowerCase();
-  const sortedPlayers = [...players.value].sort((left, right) =>
-    left.name.localeCompare(right.name, 'zh-Hans-CN')
-  );
+  const sortedPlayers = [...players.value].sort((left, right) => {
+    if (right.titleCount !== left.titleCount) {
+      return right.titleCount - left.titleCount;
+    }
+
+    return left.name.localeCompare(right.name, 'zh-Hans-CN');
+  });
 
   if (!keyword) {
     return [];
@@ -38,7 +42,7 @@ const showcasedPlayer = computed(() => {
 
   return exactMatch.value || filteredPlayers.value[0] || null;
 });
-const visibleTitles = computed(() => titles.value.filter((title) => title.id === 0 || title.id > 8));
+const visibleTitles = computed(() => titles.value.filter((title) => title.id > 10));
 
 const groupedTitles = computed(() => {
   const player = showcasedPlayer.value;
@@ -112,7 +116,7 @@ onMounted(() => {
         <p class="eyebrow">Bastion Title Query</p>
         <h1>玩家称号查询</h1>
         <p class="hero-copy">
-          输入玩家名后可直接看到“已获取 / 未获取”的完整称号对照。
+          输入玩家名后可直接看到“已获取 / 未获取”的完整称号进度情况。
         </p>
 
         <label class="search-panel">
@@ -156,7 +160,7 @@ onMounted(() => {
             </div>
 
             <div class="result-merged-divider"></div>
-            <p class="result-merged-heading">已获取 / 未获取 对照（当前未选择玩家）</p>
+            <p class="result-merged-heading">已获取 / 未获取 进度（当前未选择玩家）</p>
             <div class="title-groups title-groups-stacked">
               <article class="title-group title-group-owned">
                 <h3>已获取（{{ groupedTitles.owned.length }}）</h3>
@@ -220,7 +224,7 @@ onMounted(() => {
       <section class="catalog-panel card" v-if="hasQuery">
         <header class="card-header">
           <p>所有称号列表</p>
-          <h2>已获取 / 未获取 对照</h2>
+          <h2>已获取 / 未获取</h2>
         </header>
 
         <div v-if="loading" class="state-block">正在生成称号对照…</div>
