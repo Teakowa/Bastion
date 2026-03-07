@@ -73,6 +73,10 @@ end
 # Condition Ordering
 Conditions in a rule are not checked all at once but sequentially one by one in order. While a condition remains false, the conditions below it will not be checked.
 
+For `Ongoing - Global` and `Ongoing - Each Player`, this condition pass happens every server tick (about 0.016s). In practice, the rule is evaluated top-to-bottom with short-circuit behavior every tick.
+
+When multiple rules have effectively the same gates, execution order follows scan order: the rule declared earlier is processed first.
+
 ```
 rule("My Rule")
 {
@@ -132,7 +136,8 @@ Is Button Held(Event Player, Button(Interact)) == True;
 - Avoid multiple rules sharing the same conditions as the first condition.
 - Avoid having conditions that involve complex calculations as the first condition in a rule.
 
-With this in mind we would want to swap conditions around, with the least frequently changing condition first.
+With this in mind we would want to swap conditions around, with high-selectivity gates first.
+High-selectivity means "hard to trigger", not "most computationally complex".
 
 Optimal ordering of conditions can ensure that conditions are only checked when they need to be, reducing the server load and potential for the server to crash.  
 
@@ -271,6 +276,12 @@ rule("Player Entered Lava Zone (Optimized)")
 > This rule will check for lava zone collisions 5 times per second instead of the previous 62.5. In other words, once every 0.2 seconds instead of once every 0.016 seconds while players move.
 
 This trick is also a great way to help with the <a href="#too-many-conditions">Too Many Conditions at Startup</a> issue since it gets rid of all conditions in the rule. Unfortunately, this method will not be of use when your rule absolutely requires more precision and decreasing the evaluation interval is not enough.
+
+Important default policy: keep continuous-rule gates in the `conditions` block whenever possible. Moving checks into `actions` (`If` + `Wait`) is an exception strategy, not the default pattern.
+
+Use action-side checks mainly when:
+- you must manually control evaluation frequency for non-frame-critical logic
+- multiple expensive sub-checks share one upper gate and can be scheduled together
 
 ---
 

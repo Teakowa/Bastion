@@ -98,8 +98,10 @@ rg -n "BuffEventId\\.|DebuffEventId\\.|MechEventId\\." src/config src/events/eff
 
 1. 结束时重置玩家修饰变量（如 `mod_speed_event`、`mod_dmg_taken`、`heal_recv` 等）。
 2. 销毁已创建效果实体（常用 `clearEventEffect()` 或 `destroyEffect(...)`）。
-3. 需要循环时必须有 `wait(...)`。
-4. 重计算前优先快速条件短路，避免高频昂贵表达式。
+3. 默认使用“条件区门控 + 动作区执行”：持续规则优先把主门槛写在 `conditions`，不要把动作区 `If` 当常规替代。
+4. 例外场景才使用动作区判断：`while` 自定义判断间隔，或多个子判断共用一个上级门槛。
+5. 使用动作区判断时必须显式 `wait(...)`，并在注释或命名中写明判定频率意图。
+6. 条件顺序遵循“高筛选率低成本优先，昂贵计算后置”。
 
 ## 6) 双入口一致性检查
 
@@ -119,8 +121,10 @@ rg -n "BuffEventId\\.|DebuffEventId\\.|MechEventId\\." src/config src/events/eff
 2. `zh-CN` 与 `en-US` 是否都存在 title/desc。
 3. `eventConfig.opy` 与 `eventConfigDev.opy` 是否都注册了该事件。
 4. 规则是否包含正确 `eventType` 与 `eventId`。
-5. 所有新增循环是否包含合理 `wait`。
-6. 收尾是否清理效果/状态，避免残留。
+5. 持续规则是否默认采用条件区门控，动作区判断是否仅用于例外场景。
+6. 使用动作区判断的规则是否包含显式 `wait` 且频率意图清晰。
+7. 所有新增循环是否包含合理 `wait`。
+8. 收尾是否清理效果/状态，避免残留。
 
 ## 8) 快速自检命令
 

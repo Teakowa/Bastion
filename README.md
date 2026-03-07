@@ -57,8 +57,11 @@ Enable in Workshop settings.
   - `src/config/eventConfigDev.opy`
 - Follow server stability rules in `docs/improve-server-stability.md`:
   - Avoid loops without `wait`
-  - Put cheap conditions before expensive checks
+  - Default to condition-block gating for continuous rules (`~0.016s` top-to-bottom short-circuit)
+  - Put high-selectivity low-cost conditions before expensive checks
   - Avoid heavy computation in `Ongoing - Each Player` whenever possible
+  - Use action-side `If + wait` checks only for explicit frequency control or shared-gate sub-checks
+  - Rules with identical gates are execution-order sensitive (earlier declaration runs first)
 - Module docs are under `docs/modules/`. Update related docs together with source changes when relevant.
 - Keep changes minimal; avoid unrelated include-order changes or broad formatting-only diffs.
 

@@ -78,10 +78,13 @@ This document defines the shared collaboration conventions (for both humans and 
 Based on `docs/improve-server-stability.md` and existing code practices, the following rules are mandatory by default:
 
 1. Avoid loops without `wait` (rule loops / while loops).
-2. Order conditions with cheap short-circuit checks first; move expensive calculations later.
-3. Use complex array/distance calculations carefully in `Ongoing - Each Player` rules.
-4. Split heavy action bursts across frames (insert short `wait` when needed).
-5. Prefer merging/absorbing new rules where appropriate to reduce startup condition explosion.
+2. For `Ongoing - Global` / `Ongoing - Each Player`, prefer condition-block gating by default (top-to-bottom short-circuit each tick, ~0.016s).
+3. Order conditions with high-selectivity low-cost checks first; move expensive calculations later.
+4. Only move checks into actions (`If` + `wait`) for explicit interval control or when multiple sub-checks share one upper gate.
+5. Rules with the same gates execute by scan order; declaration order is behavior-critical.
+6. Use complex array/distance calculations carefully in `Ongoing - Each Player` rules.
+7. Split heavy action bursts across frames (insert short `wait` when needed).
+8. Prefer merging/absorbing new rules where appropriate to reduce startup condition explosion.
 
 ## 7. Pre-Commit Checklist
 
@@ -89,11 +92,13 @@ For each change, verify at least:
 
 1. Whether corresponding updates are needed in both `main.opy` and `devMain.opy`.
 2. Whether every new loop has a reasonable `wait`.
-3. Whether newly added conditions are ordered by low-cost-first.
-4. Whether new events are synced across config, implementation, and copy/text.
-5. Whether unrelated formatting/reordering was introduced (should be avoided).
-6. If the change is seasonal/event-specific, whether it should go to a dedicated branch instead of current mainline.
-7. Run `./tools/check_locale_keys.sh` and ensure locale key sync checks pass (missing/duplicate/invalid references), and event dynamic numbers come from constants via formatting.
+3. Whether newly added conditions are ordered by high-selectivity low-cost-first.
+4. Whether action-side checks are only used for interval-control / shared-gate exceptions, with explicit `wait`.
+5. Whether rule declaration order changes could alter same-gate execution order.
+6. Whether new events are synced across config, implementation, and copy/text.
+7. Whether unrelated formatting/reordering was introduced (should be avoided).
+8. If the change is seasonal/event-specific, whether it should go to a dedicated branch instead of current mainline.
+9. Run `./tools/check_locale_keys.sh` and ensure locale key sync checks pass (missing/duplicate/invalid references), and event dynamic numbers come from constants via formatting.
 
 ## 8. AI Agent Collaboration Requirements
 
