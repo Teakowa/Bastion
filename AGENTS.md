@@ -23,7 +23,8 @@ Read only the documents needed by task type:
 | Task type | Read first | Then read if needed |
 | --- | --- | --- |
 | Entry/include/order updates, `main/devMain` parity | `docs/agents/architecture-rules.md` | `docs/modules/01-entry-architecture.md` |
-| Build/CI/check commands and validation flow | `docs/agents/build-validation.md` | `.github/workflows/ci-build.yml` |
+| Build/CI/check commands and validation flow | `docs/agents/build-validation.md` | `.github/workflows/ci-build.yml`, `.github/workflows/release.yml`, `.github/workflows/pages-title-query.yml` |
+| Title source sync / title-query page updates | `docs/modules/08-player-effects-title.md` | `README.md`, `tools/sync-title-data.mjs`, `.github/workflows/pages-title-query.yml` |
 | Performance tuning, loops, Ongoing rules | `docs/agents/performance-loop-safety.md` | `docs/improve-server-stability.md`, `docs/Loops.md` |
 | PR/commit hygiene and AI collaboration boundaries | `docs/agents/collaboration-commit.md` | this file (`AGENTS.md`) |
 | Doc sync and module documentation updates | `docs/agents/doc-sync.md` | `docs/modules/README.md` |
@@ -48,3 +49,12 @@ Each rule family has exactly one canonical document:
 6. Context routing and conditional loading -> `docs/agents/context-routing.md`
 
 If a rule is referenced elsewhere, keep only a short pointer and do not duplicate full rule text.
+
+## Workflow Command Pointers
+
+- CI-parity install: `pnpm install --frozen-lockfile`
+- Core compile validation: `pnpm run build`
+- Title data sync and validation: `pnpm run sync:title-data` then `pnpm run test:title-data-sync`
+- Title query page build: `pnpm run build:title-query` (or `pnpm run build:pages` in CI)
+- Release trigger: `git tag vX.Y.Z` then `git push origin vX.Y.Z`
+- TODO: Document one canonical local decompile verification command once standardized.
