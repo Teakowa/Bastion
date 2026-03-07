@@ -6,6 +6,7 @@ const loading = ref(true);
 const error = ref('');
 const players = ref([]);
 const titles = ref([]);
+const mapTitles = ref([]);
 const meta = ref(null);
 const hasQuery = computed(() => query.value.trim().length > 0);
 
@@ -71,6 +72,23 @@ const groupedTitles = computed(() => {
   };
 });
 
+const groupedMapTitles = computed(() => {
+  const player = showcasedPlayer.value;
+  const maps = mapTitles.value ?? [];
+
+  return maps.map((mapItem) => {
+    const status = player?.mapTitleStatus?.[mapItem.mapKey] ?? {};
+    return {
+      ...mapItem,
+      status: {
+        PIONEER: Boolean(status.PIONEER),
+        CONQUEROR: Boolean(status.CONQUEROR),
+        DOMINATOR: Boolean(status.DOMINATOR)
+      }
+    };
+  });
+});
+
 const sourceDisplay = computed(() => {
   if (!meta.value) {
     return '躲避堡垒3';
@@ -102,6 +120,7 @@ async function loadData() {
     const payload = await response.json();
     players.value = payload.players ?? [];
     titles.value = payload.titles ?? [];
+    mapTitles.value = payload.mapTitles ?? [];
     meta.value = payload.meta ?? null;
   } catch (loadError) {
     error.value = loadError instanceof Error ? loadError.message : '称号数据加载失败';
@@ -247,6 +266,33 @@ onMounted(() => {
               </li>
             </ul>
             <p v-else class="group-empty">当前玩家已获取全部称号。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="catalog-panel card" v-if="hasQuery">
+        <header class="card-header">
+          <p>地图专属称号</p>
+          <h2>PIONEER / CONQUEROR / DOMINATOR</h2>
+        </header>
+
+        <div v-if="loading" class="state-block">正在生成地图称号进度…</div>
+        <div v-else-if="error" class="state-block state-error">当前无法显示地图称号进度。</div>
+        <div v-else-if="!showcasedPlayer" class="state-block">请选择玩家后查看地图专属称号。</div>
+        <div v-else class="map-title-grid">
+          <article class="map-title-card" v-for="mapItem in groupedMapTitles" :key="mapItem.mapKey">
+            <p class="map-title-name">{{ mapItem.mapLabel }}</p>
+            <div class="map-title-slots">
+              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.PIONEER }">
+                PIONEER: {{ mapItem.status.PIONEER ? '已获取' : '未获取' }}
+              </span>
+              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.CONQUEROR }">
+                CONQUEROR: {{ mapItem.status.CONQUEROR ? '已获取' : '未获取' }}
+              </span>
+              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.DOMINATOR }">
+                DOMINATOR: {{ mapItem.status.DOMINATOR ? '已获取' : '未获取' }}
+              </span>
+            </div>
           </article>
         </div>
       </section>

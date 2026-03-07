@@ -47,21 +47,29 @@ Append title key to `players[*].titleKeys`:
 
 Rule: keep `players` order stable; add new players only at the end.
 
-## 3) Map reward data snippet (.opy remains manual)
+## 3) Map reward grant in JSON source
 
-```opy
-#!define DATA_MAP_NAME [ \
-   playerNameToIndexDelimited(["A"], "-"), \
-   playerNameToIndexDelimited(["A", "B"], "-"), \
-   playerNameToIndexDelimited(["A", "B", "C"], "-") \
-]
+Update `mapTitles[*].holders` slots:
+
+```json
+{
+  "mapKey": "DATA_MAP_NAME",
+  "mapLabel": "地图名",
+  "holders": {
+    "PIONEER": ["A"],
+    "CONQUEROR": ["A", "B"],
+    "DOMINATOR": ["A", "B"]
+  }
+}
 ```
+
+Rule: `DOMINATOR` must be a subset of `CONQUEROR`.
 
 ## 4) Sync and checks
 
 ```bash
 pnpm run sync:title-data
 pnpm run test:title-data-sync
-rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
-rg -n "\"key\":|\"titleKeys\":" data/title-source.json
+rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED MAP_TITLE_DATA|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
+rg -n "\"key\":|\"titleKeys\":|\"mapTitles\":|\"holders\":" data/title-source.json
 ```

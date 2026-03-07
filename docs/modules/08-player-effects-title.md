@@ -70,6 +70,6 @@
 ## 维护流程（称号）
 
 1. 编辑 `data/title-source.json`（称号定义、玩家授予）。
-2. 如有地图奖励变更，手工更新 `src/title/title-cn.opy` 的 `DATA_*` 宏。
+2. 如有地图奖励变更，更新 `data/title-source.json` 的 `mapTitles` 对应槽位。
 3. 执行 `pnpm run sync:title-data`。
 4. 执行 `pnpm run test:title-data-sync`。

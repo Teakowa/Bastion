@@ -16,6 +16,8 @@ const PLAYER_DB_BEGIN = '# BEGIN AUTO-GENERATED TITLE PLAYER DATABASE';
 const PLAYER_DB_END = '# END AUTO-GENERATED TITLE PLAYER DATABASE';
 const ALL_TITLE_BEGIN = '    # BEGIN AUTO-GENERATED ALL_TITLE';
 const ALL_TITLE_END = '    # END AUTO-GENERATED ALL_TITLE';
+const MAP_DATA_BEGIN = '# BEGIN AUTO-GENERATED MAP_TITLE_DATA';
+const MAP_DATA_END = '# END AUTO-GENERATED MAP_TITLE_DATA';
 
 function escapeRegex(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -36,6 +38,16 @@ function parseMainVersion(source) {
   return match[1];
 }
 
+function ensureNoDuplicate(items, label) {
+  const seen = new Set();
+  for (const item of items) {
+    if (seen.has(item)) {
+      throw new Error(`Duplicate ${label}: ${item}`);
+    }
+    seen.add(item);
+  }
+}
+
 function validateSourceShape(sourceData) {
   if (!sourceData || typeof sourceData !== 'object') {
     throw new Error('Title source must be a JSON object.');
@@ -47,6 +59,10 @@ function validateSourceShape(sourceData) {
 
   if (!Array.isArray(sourceData.players)) {
     throw new Error('title-source.json must include a players array.');
+  }
+
+  if (!Array.isArray(sourceData.mapTitles)) {
+    throw new Error('title-source.json must include a mapTitles array.');
   }
 
   if (!sourceData.meta || typeof sourceData.meta !== 'object') {
@@ -107,18 +123,14 @@ function validateSourceShape(sourceData) {
       throw new Error(`players[${index}].titleKeys must be an array.`);
     }
 
-    const seen = new Set();
+    ensureNoDuplicate(player.titleKeys, `title key in player ${player.name}`);
+
     const titleKeysForPlayer = player.titleKeys.map((key, keyIndex) => {
       ensureString(key, `players[${index}].titleKeys[${keyIndex}] must be a non-empty string.`);
 
       if (!titleKeys.has(key)) {
         throw new Error(`Unknown title key ${key} in player ${player.name}.`);
       }
-
-      if (seen.has(key)) {
-        throw new Error(`Duplicate title key ${key} in player ${player.name}.`);
-      }
-      seen.add(key);
 
       return key;
     });
@@ -129,12 +141,73 @@ function validateSourceShape(sourceData) {
     };
   });
 
+  const playerNameSet = new Set(players.map((player) => player.name));
+  const mapKeySet = new Set();
+  const mapTitles = sourceData.mapTitles.map((mapItem, index) => {
+    if (!mapItem || typeof mapItem !== 'object') {
+      throw new Error(`mapTitles[${index}] must be an object.`);
+    }
+
+    ensureString(mapItem.mapKey, `mapTitles[${index}].mapKey is required.`);
+    ensureString(mapItem.mapLabel, `mapTitles[${index}].mapLabel is required.`);
+
+    if (!/^DATA_[A-Z0-9_]+$/.test(mapItem.mapKey)) {
+      throw new Error(`mapTitles[${index}].mapKey must match DATA_*: ${mapItem.mapKey}`);
+    }
+
+    if (mapKeySet.has(mapItem.mapKey)) {
+      throw new Error(`Duplicate map key detected: ${mapItem.mapKey}`);
+    }
+    mapKeySet.add(mapItem.mapKey);
+
+    const holders = mapItem.holders;
+    if (!holders || typeof holders !== 'object') {
+      throw new Error(`mapTitles[${index}].holders must be an object.`);
+    }
+
+    const slots = ['PIONEER', 'CONQUEROR', 'DOMINATOR'];
+    const normalizedHolders = {};
+
+    for (const slot of slots) {
+      if (!Array.isArray(holders[slot])) {
+        throw new Error(`mapTitles[${index}].holders.${slot} must be an array.`);
+      }
+
+      const slotNames = holders[slot].map((name, slotIndex) => {
+        ensureString(name, `mapTitles[${index}].holders.${slot}[${slotIndex}] must be a non-empty string.`);
+
+        if (!playerNameSet.has(name)) {
+          throw new Error(`Unknown player ${name} in ${mapItem.mapKey}.${slot}`);
+        }
+
+        return name;
+      });
+
+      ensureNoDuplicate(slotNames, `player name in ${mapItem.mapKey}.${slot}`);
+      normalizedHolders[slot] = slotNames;
+    }
+
+    const conquerorSet = new Set(normalizedHolders.CONQUEROR);
+    for (const dominatorName of normalizedHolders.DOMINATOR) {
+      if (!conquerorSet.has(dominatorName)) {
+        throw new Error(`${mapItem.mapKey}: DOMINATOR holder ${dominatorName} must also be in CONQUEROR.`);
+      }
+    }
+
+    return {
+      mapKey: mapItem.mapKey,
+      mapLabel: mapItem.mapLabel,
+      holders: normalizedHolders
+    };
+  });
+
   return {
     meta: {
       sourceLabel: sourceData.meta.sourceLabel
     },
     titles,
-    players
+    players,
+    mapTitles
   };
 }
 
@@ -192,6 +265,37 @@ function renderAllTitleAssignment(titles) {
   return lines.join('\n');
 }
 
+function renderDelimitedNames(names) {
+  if (!names.length) {
+    return '[]';
+  }
+
+  const quoted = names.map((name) => JSON.stringify(name)).join(', ');
+  return `playerNameToIndexDelimited([${quoted}], "-")`;
+}
+
+function renderMapTitleData(mapTitles) {
+  const lines = [];
+  lines.push('# 地图数据块 (Data Blocks)');
+  lines.push(MAP_DATA_BEGIN);
+
+  mapTitles.forEach((mapItem, index) => {
+    if (index > 0) {
+      lines.push('');
+    }
+
+    lines.push(`# ${mapItem.mapLabel}`);
+    lines.push(`#!define ${mapItem.mapKey} [ \\`);
+    lines.push(`   ${renderDelimitedNames(mapItem.holders.PIONEER)}, \\`);
+    lines.push(`   ${renderDelimitedNames(mapItem.holders.CONQUEROR)}, \\`);
+    lines.push(`   ${renderDelimitedNames(mapItem.holders.DOMINATOR)}\\`);
+    lines.push(']');
+  });
+
+  lines.push(MAP_DATA_END);
+  return lines.join('\n');
+}
+
 function replaceManagedBlock(source, beginMarker, endMarker, blockContent) {
   const pattern = new RegExp(`${escapeRegex(beginMarker)}[\\s\\S]*?${escapeRegex(endMarker)}`);
 
@@ -206,6 +310,7 @@ function applyManagedTitleFile(source, data) {
   const enumBlock = renderTitleEnum(data.titles);
   const dbBlock = renderPlayerDatabase(data.titles, data.players);
   const allTitleBlock = renderAllTitleAssignment(data.titles);
+  const mapDataBlock = renderMapTitleData(data.mapTitles);
 
   let next = source;
 
@@ -226,6 +331,17 @@ function applyManagedTitleFile(source, data) {
     next = replacedDb;
   }
 
+  const replacedMap = replaceManagedBlock(next, MAP_DATA_BEGIN, MAP_DATA_END, mapDataBlock);
+  if (replacedMap === null) {
+    next = next.replace(
+      /# 地图数据块 \(Data Blocks\)[\s\S]*?(?=\n\n# ------------------------------\n# 4\. 初始化变量)/,
+      mapDataBlock
+    );
+  } else {
+    next = replacedMap;
+  }
+  next = next.replace(/(?:# 地图数据块 \(Data Blocks\)\n){2,}/g, '# 地图数据块 (Data Blocks)\n');
+
   const replacedAllTitle = replaceManagedBlock(next, ALL_TITLE_BEGIN, ALL_TITLE_END, allTitleBlock);
   if (replacedAllTitle === null) {
     next = next.replace(/\n    allTitle = \[[\s\S]*?\n    \]\n(?=    splitDictArray\()/, `\n${allTitleBlock}\n`);
@@ -234,6 +350,20 @@ function applyManagedTitleFile(source, data) {
   }
 
   return next;
+}
+
+function buildMapTitleStatus(mapTitles, playerName) {
+  const status = {};
+
+  for (const mapItem of mapTitles) {
+    status[mapItem.mapKey] = {
+      PIONEER: mapItem.holders.PIONEER.includes(playerName),
+      CONQUEROR: mapItem.holders.CONQUEROR.includes(playerName),
+      DOMINATOR: mapItem.holders.DOMINATOR.includes(playerName)
+    };
+  }
+
+  return status;
 }
 
 function buildWebPayload(data, sourceVersion) {
@@ -245,7 +375,8 @@ function buildWebPayload(data, sourceVersion) {
       return {
         name: player.name,
         titleIds,
-        titleCount: titleIds.length
+        titleCount: titleIds.length,
+        mapTitleStatus: buildMapTitleStatus(data.mapTitles, player.name)
       };
     });
 
@@ -259,11 +390,17 @@ function buildWebPayload(data, sourceVersion) {
       availability: title.availability
     })),
     players,
+    mapTitles: data.mapTitles.map((mapItem) => ({
+      mapKey: mapItem.mapKey,
+      mapLabel: mapItem.mapLabel,
+      holders: mapItem.holders
+    })),
     meta: {
       sourceFile: 'data/title-source.json',
       generatedAt: new Date().toISOString(),
       titleCount: data.titles.length,
       playerCount: players.length,
+      mapTitleCount: data.mapTitles.length,
       sourceLabel: data.meta.sourceLabel,
       sourceVersion
     }
@@ -330,7 +467,7 @@ if (invokedPath === __filename) {
   syncTitleData()
     .then(({ webPayload }) => {
       console.log(
-        `Synced ${webPayload.meta.playerCount} players and ${webPayload.meta.titleCount} titles from data/title-source.json`
+        `Synced ${webPayload.meta.playerCount} players, ${webPayload.meta.titleCount} titles and ${webPayload.meta.mapTitleCount} map title sets from data/title-source.json`
       );
     })
     .catch((error) => {

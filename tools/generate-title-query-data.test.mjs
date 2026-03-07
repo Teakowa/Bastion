@@ -17,7 +17,8 @@ test('loads unified title source shape', async () => {
   const data = await loadTitleSource(sourceFile);
 
   assert.equal(data.titles.length, 49);
-  assert.equal(data.players.length, 41);
+  assert.equal(data.players.length, 42);
+  assert.equal(data.mapTitles.length, 36);
   assert.equal(data.titles[0].key, 'PIONEER');
   assert.equal(data.players.find((player) => player.name === '草艮')?.titleKeys.length, 2);
 });
@@ -46,7 +47,8 @@ test('validates duplicate title keys', async () => {
         colorExpr: 'null'
       }
     ],
-    players: [{ name: 'u', titleKeys: [] }]
+    players: [{ name: 'u', titleKeys: [] }],
+    mapTitles: []
   };
   await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
 
@@ -68,7 +70,8 @@ test('validates unknown player title keys', async () => {
         colorExpr: 'null'
       }
     ],
-    players: [{ name: 'u', titleKeys: ['UNKNOWN'] }]
+    players: [{ name: 'u', titleKeys: ['UNKNOWN'] }],
+    mapTitles: []
   };
   await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
 
@@ -93,7 +96,8 @@ test('validates duplicate player names', async () => {
     players: [
       { name: 'u', titleKeys: ['A'] },
       { name: 'u', titleKeys: [] }
-    ]
+    ],
+    mapTitles: []
   };
   await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
 
@@ -115,11 +119,75 @@ test('validates duplicate title keys inside a player', async () => {
         colorExpr: 'null'
       }
     ],
-    players: [{ name: 'u', titleKeys: ['A', 'A'] }]
+    players: [{ name: 'u', titleKeys: ['A', 'A'] }],
+    mapTitles: []
   };
   await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
 
-  await assert.rejects(() => loadTitleSource(tmpFile), /Duplicate title key A in player u/);
+  await assert.rejects(() => loadTitleSource(tmpFile), /Duplicate title key in player u: A/);
+});
+
+test('validates duplicate map keys and unknown map holders', async () => {
+  const tmpFile = path.join(os.tmpdir(), `title-source-map-invalid-${Date.now()}.json`);
+  const invalid = {
+    meta: { sourceLabel: 'x' },
+    titles: [
+      {
+        key: 'A',
+        label: 'A',
+        category: 'c',
+        condition: 'd',
+        availability: 'active',
+        displayExpr: '"A"',
+        colorExpr: 'null'
+      }
+    ],
+    players: [{ name: 'u', titleKeys: ['A'] }],
+    mapTitles: [
+      {
+        mapKey: 'DATA_X',
+        mapLabel: 'X',
+        holders: { PIONEER: ['u'], CONQUEROR: ['u'], DOMINATOR: ['u'] }
+      },
+      {
+        mapKey: 'DATA_X',
+        mapLabel: 'Y',
+        holders: { PIONEER: ['ghost'], CONQUEROR: [], DOMINATOR: [] }
+      }
+    ]
+  };
+  await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
+
+  await assert.rejects(() => loadTitleSource(tmpFile), /Duplicate map key detected: DATA_X/);
+});
+
+test('validates DOMINATOR subset of CONQUEROR', async () => {
+  const tmpFile = path.join(os.tmpdir(), `title-source-map-subset-${Date.now()}.json`);
+  const invalid = {
+    meta: { sourceLabel: 'x' },
+    titles: [
+      {
+        key: 'A',
+        label: 'A',
+        category: 'c',
+        condition: 'd',
+        availability: 'active',
+        displayExpr: '"A"',
+        colorExpr: 'null'
+      }
+    ],
+    players: [{ name: 'u', titleKeys: ['A'] }],
+    mapTitles: [
+      {
+        mapKey: 'DATA_X',
+        mapLabel: 'X',
+        holders: { PIONEER: [], CONQUEROR: [], DOMINATOR: ['u'] }
+      }
+    ]
+  };
+  await fs.writeFile(tmpFile, JSON.stringify(invalid), 'utf8');
+
+  await assert.rejects(() => loadTitleSource(tmpFile), /must also be in CONQUEROR/);
 });
 
 test('generates web payload with source version metadata', async () => {
@@ -140,5 +208,28 @@ test('sync can run in dry-run mode with existing files', async () => {
   const result = await syncTitleData({ sourceFile, titleFile, envFile, dryRun: true });
 
   assert.equal(result.sourceData.titles.length, 49);
-  assert.equal(result.webPayload.players.length, 41);
+  assert.equal(result.webPayload.players.length, 42);
+  assert.equal(result.webPayload.mapTitles.length, 36);
+});
+
+test('sync generates map DATA macros from mapTitles', async () => {
+  const tmpTitleFile = path.join(os.tmpdir(), `title-sync-${Date.now()}.opy`);
+  const tmpWebFile = path.join(os.tmpdir(), `titles-sync-${Date.now()}.json`);
+  await fs.copyFile(titleFile, tmpTitleFile);
+
+  await syncTitleData({
+    sourceFile,
+    titleFile: tmpTitleFile,
+    envFile,
+    webOutputFile: tmpWebFile
+  });
+
+  const generatedTitle = await fs.readFile(tmpTitleFile, 'utf8');
+  const generatedWeb = JSON.parse(await fs.readFile(tmpWebFile, 'utf8'));
+
+  assert.match(generatedTitle, /# BEGIN AUTO-GENERATED MAP_TITLE_DATA/);
+  assert.match(generatedTitle, /#!define DATA_BLIZZARD_WORLD/);
+  assert.match(generatedTitle, /playerNameToIndexDelimited\(\["他又"/);
+  assert.ok(generatedWeb.players[0].mapTitleStatus);
+  assert.ok(generatedWeb.mapTitles.find((item) => item.mapKey === 'DATA_BLIZZARD_WORLD'));
 });

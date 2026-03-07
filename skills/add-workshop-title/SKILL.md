@@ -11,7 +11,7 @@ description: 为 Bastion Overwatch Workshop 项目新增或调整称号（TITLE 
 
 1. 新增通用称号（新增可授予称号）
 2. 给特定玩家授予称号（`data/title-source.json` 的 `players/titleKeys`）
-3. 给地图奖励链路接入称号（`DATA_*` 宏）
+3. 给地图奖励链路接入称号（`data/title-source.json` 的 `mapTitles`）
 4. 调整称号显示文案/颜色（`data/title-source.json` 的 `displayExpr/colorExpr`）
 
 ## 2) 修改真源文件（必做）
@@ -21,28 +21,21 @@ description: 为 Bastion Overwatch Workshop 项目新增或调整称号（TITLE 
 1. 新增称号：在 `titles` 末尾追加对象，保证既有顺序不变。
 2. 必填字段：`key`、`label`、`category`、`condition`、`availability`、`displayExpr`、`colorExpr`。
 3. 若称号需要定向发放：在目标玩家 `titleKeys` 里追加对应 `key`。
-4. 玩家顺序即索引语义：新增玩家只允许追加到 `players` 末尾，禁止重排。
+4. 若包含地图奖励：修改目标 `mapTitles[*].holders` 对应槽位。
+5. 玩家顺序即索引语义：新增玩家只允许追加到 `players` 末尾，禁止重排。
 
 颜色策略（写入 `colorExpr`）：
 - `null`：由 `title/init.opy` 的开发者彩虹逻辑接管
 - `vect(r, g, b)` 或 `heroColor[n]`：固定颜色
 - 颜色数组：渐变轮换（`title/init.opy` 已支持）
 
-## 3) 可选：地图授予
-
-文件：`src/title/title-cn.opy`（仅手工维护 `DATA_*` 宏）
-
-1. 地图授予：修改对应 `DATA_<MAP>` 宏中的 pioneer/conqueror/dominator 槽位（通常用 `playerNameToIndexDelimited(...)`）。
-2. 仅在必要时改 `MapTITLEKey`；不要改已有键值映射。
-3. 不直接编辑 `enum TITLE`、`allTitle`、`player_database` 受管区块。
-
-## 4) 同步生成（必做）
+## 3) 同步生成（必做）
 
 ```bash
 pnpm run sync:title-data
 ```
 
-## 5) 双入口一致性检查
+## 4) 双入口一致性检查
 
 只检查，不轻易修改：
 
@@ -50,27 +43,27 @@ pnpm run sync:title-data
 2. `src/devMain.opy` 是否仍 include `title/title-cn.opy` 与 `title/init.opy`
 3. 不重排 include 顺序
 
-## 6) 文档同步
+## 5) 文档同步
 
 若新增了称号规则或授予策略，更新：
 
 1. `docs/modules/08-player-effects-title.md`
 
-## 7) 提交前核对清单
+## 6) 提交前核对清单
 
-1. `data/title-source.json` 中旧 `titles/players` 顺序未被重排。
+1. `data/title-source.json` 中旧 `titles/players/mapTitles` 顺序未被重排。
 2. 新称号字段完整，`key` 唯一。
-3. 若改 `DATA_*`，三个槽位语义未错位。
-4. `src/title/title-cn.opy` 受管区块存在自动生成标记。
+3. 若改地图奖励，`DOMINATOR` 持有者均在同图 `CONQUEROR` 槽位内。
+4. `src/title/title-cn.opy` 受管区块存在自动生成标记（含 MAP_TITLE_DATA）。
 5. 无无关格式化与重排。
 
-## 8) 快速自检命令
+## 7) 快速自检命令
 
 ```bash
 pnpm run sync:title-data
 pnpm run test:title-data-sync
-rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
-rg -n "\"key\":|\"players\":|\"titleKeys\":" data/title-source.json
+rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED MAP_TITLE_DATA|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
+rg -n "\"key\":|\"players\":|\"titleKeys\":|\"mapTitles\":|\"holders\":" data/title-source.json
 rg -n "title/title-cn\.opy|title/init\.opy" src/main.opy src/devMain.opy
 ```
 

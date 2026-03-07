@@ -74,7 +74,7 @@
 - `# BEGIN/END AUTO-GENERATED TITLE PLAYER DATABASE`
 - `# BEGIN/END AUTO-GENERATED ALL_TITLE`
 
-地图称号映射 `DATA_*` 宏当前仍手工维护，不在本次自动化范围。
+地图称号映射同样由 `data/title-source.json` 的 `mapTitles` 维护，并由同步脚本自动生成到 `title-cn.opy`。
 
 ## 维护要点
 

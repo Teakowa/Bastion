@@ -316,6 +316,47 @@ code {
   margin-top: 0.9rem;
 }
 
+.map-title-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.72rem;
+  margin-top: 0.85rem;
+}
+
+.map-title-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel-3);
+  padding: 0.66rem 0.72rem;
+}
+
+.map-title-name {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.map-title-slots {
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.map-slot {
+  border: 1px solid rgba(155, 181, 201, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 0.34rem 0.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  background: rgba(12, 24, 35, 0.8);
+}
+
+.map-slot-on {
+  border-color: rgba(77, 224, 183, 0.5);
+  color: var(--ok);
+  background: rgba(77, 224, 183, 0.12);
+}
+
 .title-groups {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -490,7 +531,8 @@ code {
   }
 
   .hero-stats,
-  .title-groups {
+  .title-groups,
+  .map-title-grid {
     grid-template-columns: 1fr;
   }
 

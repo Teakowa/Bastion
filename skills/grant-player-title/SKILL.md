@@ -1,6 +1,6 @@
 ---
 name: grant-player-title
-description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流程，支持通用称号与地图专属称号。Use when requests involve granting TITLE.* to players through data/title-source.json and updating map title datasets (DATA_* with PIONEER/CONQUEROR/DOMINATOR).
+description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流程，支持通用称号与地图专属称号。Use when requests involve granting TITLE.* to players and map title rewards through data/title-source.json.
 ---
 
 # Grant Player Title
@@ -11,7 +11,7 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 
 1. 玩家名（一个或多个）
 2. 通用称号列表（`TITLE.*`）
-3. 地图专属称号列表：地图数据宏（`DATA_*`）+ 键位（`PIONEER`/`CONQUEROR`/`DOMINATOR`）
+3. 地图专属称号列表：`mapTitles` + 键位（`PIONEER`/`CONQUEROR`/`DOMINATOR`）
 
 ## 2) 读取并确认现状
 
@@ -19,9 +19,11 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 - `titles[*].key`
 - `players[*].name`
 - `players[*].titleKeys`
+- `mapTitles[*].mapKey / mapLabel / holders`
 2. 读取 `src/title/title-cn.opy`，仅确认以下区块存在自动生成标记：
 - `# BEGIN/END AUTO-GENERATED TITLE ENUM`
 - `# BEGIN/END AUTO-GENERATED TITLE PLAYER DATABASE`
+- `# BEGIN/END AUTO-GENERATED MAP_TITLE_DATA`
 - `# BEGIN/END AUTO-GENERATED ALL_TITLE`
 3. 读取 `src/utilities/system/setPlayerTitle.opy`，确认地图称号合并逻辑：
 - `MapTITLEKey.PIONEER = 0`
@@ -44,19 +46,16 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 
 ## 5) 发放地图专属称号
 
-1. 在 `src/title/title-cn.opy` 的对应 `DATA_<MAP>` 宏里更新对应索引列表：
-- 索引 `0` -> `PIONEER`
-- 索引 `1` -> `CONQUEROR`
-- 索引 `2` -> `DOMINATOR`
-2. 使用 `playerNameToIndexDelimited([...], "-")` 维护玩家名列表。
-3. 保持列表唯一；若玩家已存在则不重复添加。
-4. 等级约束（必做）：
-- `DOMINATOR` 高于 `CONQUEROR`：当玩家被加入索引 `2`（`DOMINATOR`）时，必须确保同一玩家也在索引 `1`（`CONQUEROR`）。
+1. 在 `data/title-source.json` 的目标 `mapTitles[*]` 中更新对应槽位：
+- `holders.PIONEER`
+- `holders.CONQUEROR`
+- `holders.DOMINATOR`
+2. 保持槽位内玩家唯一；若已存在则不重复添加。
+3. 等级约束（必做）：
+- `DOMINATOR` 高于 `CONQUEROR`：加入 `holders.DOMINATOR` 时，必须确保同一玩家也在 `holders.CONQUEROR`。
 - 反向不成立：加入 `CONQUEROR` 时，不应自动加入 `DOMINATOR`，除非用户明确要求。
 
 ## 6) 同步生成（必做）
-
-修改 `data/title-source.json` 或 `src/title/title-cn.opy` 的地图宏后，执行：
 
 ```bash
 pnpm run sync:title-data
@@ -69,15 +68,15 @@ pnpm run sync:title-data
 ```bash
 pnpm run test:title-data-sync
 rg -n "name: \"<PLAYER>\"|DATA_<MAP>|MapTITLEKey" src/title/title-cn.opy src/utilities/system/setPlayerTitle.opy
-rg -n "\"name\": \"<PLAYER>\"|\"titleKeys\"" data/title-source.json
+rg -n "\"name\": \"<PLAYER>\"|\"titleKeys\"|\"mapTitles\"|\"holders\"" data/title-source.json
 ```
 
 再做人工校验：
 
 1. 新增玩家是否只追加在 `data/title-source.json` 的 `players` 末尾。
 2. `src/title/title-cn.opy` 受管区块是否仍由自动生成标记包裹。
-3. 地图专属称号是否落在正确的 `DATA_*` 索引位置。
-4. 若本次新增了 `DOMINATOR`，对应玩家是否也已出现在同图的 `CONQUEROR` 列表中。
+3. 地图专属称号是否落在正确地图与槽位。
+4. 若本次新增了 `DOMINATOR`，对应玩家是否也已出现在同图的 `CONQUEROR`。
 
 ## 8) 交付说明
 
