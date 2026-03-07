@@ -32,7 +32,7 @@
 
 玩家态：
 
-- `eventId`, `eventLastId`, `eventType`, `eventDuration`, `eventDurationHud`
+- `eventId`, `eventLastId`（最近 N 次事件 ID 数组）, `eventType`, `eventDuration`, `eventDurationHud`
 - `eventCount[3]`（各类别计数）
 - `eventLucky`（幸运倾向累计）
 - `eventForceRoll/eventForceCount`（强制类别调试与作弊链）
@@ -74,6 +74,12 @@
 - `81~100`：Mech
 
 `rejectSampling` 通过 `random.uniform(0, eventWeight) < 当前事件权重` 决策是否命中，高权重更易命中。
+
+去重策略：
+
+- `eventLastId` 现为最近事件历史数组（长度由 `EVT_RECENT_EVENT_DEDUP_COUNT` 控制，默认 5），抽样时会排除数组中的全部 ID。
+- 每次抽到新事件后，将其 append 到 `eventLastId`；当长度超过窗口时移除最旧记录（保留最近 N 条）。
+- 当可用事件总量过少导致候选池为空时，会降级到仅按启用状态过滤，避免抽样中断。
 
 ## 事件效果层设计
 
