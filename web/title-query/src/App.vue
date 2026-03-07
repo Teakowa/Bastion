@@ -167,9 +167,11 @@ onMounted(() => {
                 <ul class="status-title-list" v-if="groupedTitles.owned.length">
                   <li v-for="title in groupedTitles.owned" :key="`owned-inline-${title.id}`">
                     <span class="title-chip title-chip-owned">
-                      <span class="title-label">{{ title.label }}</span>
-                      <span class="title-meta">类别：{{ title.category }}</span>
-                      <span class="title-meta">条件：{{ title.condition }}</span>
+                      <span class="title-head">
+                        <span class="title-label">{{ title.label }}</span>
+                        <span class="title-tag">{{ title.category }}</span>
+                      </span>
+                      <span class="title-condition">条件：{{ title.condition }}</span>
                     </span>
                   </li>
                 </ul>
@@ -181,9 +183,11 @@ onMounted(() => {
                 <ul class="status-title-list" v-if="groupedTitles.missing.length">
                   <li v-for="title in groupedTitles.missing" :key="`missing-inline-${title.id}`">
                     <span class="title-chip title-chip-missing">
-                      <span class="title-label">{{ title.label }}</span>
-                      <span class="title-meta">类别：{{ title.category }}</span>
-                      <span class="title-meta">条件：{{ title.condition }}</span>
+                      <span class="title-head">
+                        <span class="title-label">{{ title.label }}</span>
+                        <span class="title-tag">{{ title.category }}</span>
+                      </span>
+                      <span class="title-condition">条件：{{ title.condition }}</span>
                     </span>
                   </li>
                 </ul>
@@ -243,9 +247,11 @@ onMounted(() => {
             <ul class="status-title-list" v-if="groupedTitles.owned.length">
               <li v-for="title in groupedTitles.owned" :key="`owned-${title.id}`">
                 <span class="title-chip title-chip-owned">
-                  <span class="title-label">{{ title.label }}</span>
-                  <span class="title-meta">类别：{{ title.category }}</span>
-                  <span class="title-meta">条件：{{ title.condition }}</span>
+                  <span class="title-head">
+                    <span class="title-label">{{ title.label }}</span>
+                    <span class="title-tag">{{ title.category }}</span>
+                  </span>
+                  <span class="title-condition">条件：{{ title.condition }}</span>
                 </span>
               </li>
             </ul>
@@ -257,9 +263,11 @@ onMounted(() => {
             <ul class="status-title-list" v-if="groupedTitles.missing.length">
               <li v-for="title in groupedTitles.missing" :key="`missing-${title.id}`">
                 <span class="title-chip title-chip-missing">
-                  <span class="title-label">{{ title.label }}</span>
-                  <span class="title-meta">类别：{{ title.category }}</span>
-                  <span class="title-meta">条件：{{ title.condition }}</span>
+                  <span class="title-head">
+                    <span class="title-label">{{ title.label }}</span>
+                    <span class="title-tag">{{ title.category }}</span>
+                  </span>
+                  <span class="title-condition">条件：{{ title.condition }}</span>
                 </span>
               </li>
             </ul>
