@@ -432,36 +432,77 @@ code {
 }
 
 .title-group {
-  border: 1px solid var(--ow-line);
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: var(--ow-radius-md);
-  padding: 0.75rem;
-  background: rgba(13, 20, 33, 0.48);
+  padding: 0.78rem;
+  background:
+    linear-gradient(180deg, rgba(14, 22, 36, 0.74) 0%, rgba(11, 17, 28, 0.8) 100%),
+    radial-gradient(circle at 50% -30%, rgba(255, 255, 255, 0.08), transparent 72%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 9px 24px rgba(8, 12, 20, 0.22);
+}
+
+.title-group::before {
+  content: "";
+  position: absolute;
+  left: 0.8rem;
+  right: 0.8rem;
+  top: 0;
+  height: 2px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.title-group-owned::before {
+  background: linear-gradient(90deg, rgba(104, 223, 166, 0.95), rgba(104, 223, 166, 0.2));
+}
+
+.title-group-missing::before {
+  background: linear-gradient(90deg, rgba(157, 169, 190, 0.95), rgba(157, 169, 190, 0.2));
+}
+
+.title-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
 }
 
 .title-group h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 700;
   color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.title-group-owned h3::before,
-.title-group-missing h3::before {
-  content: "";
-  display: inline-block;
-  width: 0.5rem;
-  height: 0.5rem;
+.title-group-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  padding: 0.16rem 0.5rem;
   border-radius: 999px;
-  margin-right: 0.38rem;
-  vertical-align: 1px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1;
 }
 
-.title-group-owned h3::before {
-  background: #68dfa6;
+.title-group-owned .title-group-count {
+  border-color: rgba(104, 223, 166, 0.6);
+  background: rgba(104, 223, 166, 0.24);
+  color: #ddffef;
 }
 
-.title-group-missing h3::before {
-  background: #9da9be;
+.title-group-missing .title-group-count {
+  border-color: rgba(157, 169, 190, 0.58);
+  background: rgba(157, 169, 190, 0.2);
+  color: #e4ebfb;
 }
 
 .series-list {
@@ -471,10 +512,19 @@ code {
 }
 
 .series-card {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--ow-radius-sm);
-  background: rgba(9, 14, 24, 0.36);
+  background:
+    linear-gradient(180deg, rgba(16, 24, 39, 0.72) 0%, rgba(9, 14, 23, 0.88) 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
   padding: 0.58rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color var(--ow-time-mid) ease, transform var(--ow-time-mid) ease;
+}
+
+.series-card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-1px);
 }
 
 .series-head {
@@ -487,9 +537,9 @@ code {
 
 .series-name {
   margin: 0;
-  color: #fff;
-  font-size: 0.82rem;
-  letter-spacing: 0.08em;
+  color: #f6f8ff;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -501,10 +551,11 @@ code {
   min-width: 1.4rem;
   border-radius: 999px;
   border: 1px solid var(--ow-line);
-  color: var(--ow-text-soft);
+  color: #ecf1ff;
   font-size: 0.72rem;
   line-height: 1;
   padding: 0.12rem 0.32rem;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .status-title-list {
@@ -524,26 +575,57 @@ code {
 }
 
 .title-chip {
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.25rem;
-  padding: 0.55rem 0.65rem;
+  padding: 0.55rem 0.65rem 0.55rem 0.88rem;
   border-radius: var(--ow-radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(9, 14, 24, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(7, 12, 20, 0.5);
   line-height: 1.36;
+  transition:
+    border-color var(--ow-time-fast) ease,
+    box-shadow var(--ow-time-fast) ease,
+    transform var(--ow-time-fast) ease;
+}
+
+.title-chip::before {
+  content: "";
+  position: absolute;
+  left: 0.34rem;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 3px;
+  border-radius: 99px;
+  background: rgba(194, 204, 224, 0.76);
 }
 
 .title-chip-owned {
-  border-color: rgba(104, 223, 166, 0.5);
-  background: linear-gradient(180deg, rgba(104, 223, 166, 0.16) 0%, rgba(12, 24, 35, 0.7) 100%);
+  border-color: rgba(104, 223, 166, 0.56);
+  background: linear-gradient(180deg, rgba(104, 223, 166, 0.18) 0%, rgba(10, 22, 33, 0.72) 100%);
+}
+
+.title-chip-owned::before {
+  background: rgba(104, 223, 166, 0.96);
 }
 
 .title-chip-missing {
-  border-color: rgba(157, 169, 190, 0.42);
+  border-color: rgba(157, 169, 190, 0.52);
   background: linear-gradient(180deg, rgba(157, 169, 190, 0.14) 0%, rgba(12, 24, 35, 0.7) 100%);
+}
+
+.title-chip-missing::before {
+  background: rgba(157, 169, 190, 0.96);
+}
+
+.title-chip:hover,
+.title-chip:focus-within {
+  border-color: rgba(240, 100, 20, 0.75);
+  box-shadow: 0 0 0 1px rgba(240, 100, 20, 0.36);
+  transform: translateY(-1px);
 }
 
 .title-head {
@@ -562,31 +644,34 @@ code {
 .title-tag {
   display: inline-flex;
   align-items: center;
-  padding: 0.12rem 0.36rem;
+  padding: 0.14rem 0.42rem;
   border-radius: 999px;
-  border: 1px solid var(--ow-line);
-  color: var(--ow-text-soft);
-  background: rgba(255, 255, 255, 0.06);
-  font-size: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #ecf2ff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .title-tag-retired {
-  border-color: rgba(255, 116, 82, 0.75);
+  border-color: rgba(255, 116, 82, 0.82);
   color: #ffe8e1;
-  background: rgba(139, 46, 28, 0.76);
+  background: rgba(139, 46, 28, 0.86);
 }
 
 .map-status-owned {
-  border-color: rgba(104, 223, 166, 0.58);
+  border-color: rgba(104, 223, 166, 0.62);
   color: #dafee9;
-  background: rgba(39, 97, 77, 0.58);
+  background: rgba(39, 97, 77, 0.7);
 }
 
 .map-status-missing {
-  border-color: rgba(157, 169, 190, 0.5);
+  border-color: rgba(157, 169, 190, 0.58);
   color: #d6e0f4;
-  background: rgba(42, 58, 82, 0.5);
+  background: rgba(42, 58, 82, 0.66);
 }
 
 .title-condition {
@@ -610,13 +695,13 @@ code {
 
 .title-chip:hover .title-condition,
 .title-chip:focus-within .title-condition {
-  max-height: 8.5rem;
+  max-height: 10rem;
   opacity: 1;
   transform: translateY(0);
-  margin-top: 0.18rem;
-  padding: 0.36rem 0.4rem;
-  background: rgba(7, 13, 22, 0.68);
-  border: 1px dashed rgba(157, 169, 190, 0.35);
+  margin-top: 0.24rem;
+  padding: 0.4rem 0.46rem;
+  background: linear-gradient(180deg, rgba(8, 13, 22, 0.82), rgba(8, 13, 22, 0.7));
+  border: 1px dashed rgba(178, 189, 210, 0.42);
 }
 
 .group-empty {
@@ -633,17 +718,45 @@ code {
 }
 
 .map-title-card {
-  border: 1px solid var(--ow-line);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: var(--ow-radius-md);
-  background: rgba(13, 20, 33, 0.5);
-  padding: 0.68rem 0.72rem;
+  background:
+    linear-gradient(180deg, rgba(13, 20, 33, 0.68) 0%, rgba(9, 14, 23, 0.8) 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent);
+  padding: 0.68rem 0.72rem 0.72rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.map-title-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  margin-bottom: 0.48rem;
 }
 
 .map-title-name {
-  margin: 0 0 0.48rem;
+  margin: 0;
   color: #fff;
   font-size: 0.92rem;
   font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.map-title-progress {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 154, 243, 0.56);
+  background: rgba(0, 154, 243, 0.2);
+  color: #d8efff;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1;
+  padding: 0.14rem 0.42rem;
 }
 
 .page-footer {

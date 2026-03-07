@@ -120,9 +120,13 @@ const groupedMapTitles = computed(() => {
         return left.order - right.order;
       });
 
+    const ownedSlots = orderedSlots.filter((slot) => slot.owned).length;
+
     return {
       ...mapItem,
-      orderedSlots
+      orderedSlots,
+      ownedSlots,
+      totalSlots: orderedSlots.length
     };
   });
 });
@@ -277,7 +281,10 @@ onMounted(() => {
         <div v-else-if="error" class="state-block state-error">当前无法显示称号进度。</div>
         <div v-else class="title-groups">
           <article class="title-group title-group-owned">
-            <h3>已获取（{{ groupedTitles.ownedCount }}）</h3>
+            <header class="title-group-head">
+              <h3>已获取</h3>
+              <span class="title-group-count">{{ groupedTitles.ownedCount }}</span>
+            </header>
             <div class="series-list" v-if="groupedTitles.ownedSeries.length">
               <article
                 class="series-card"
@@ -306,7 +313,10 @@ onMounted(() => {
           </article>
 
           <article class="title-group title-group-missing">
-            <h3>未获取（{{ groupedTitles.missingCount }}）</h3>
+            <header class="title-group-head">
+              <h3>未获取</h3>
+              <span class="title-group-count">{{ groupedTitles.missingCount }}</span>
+            </header>
             <div class="series-list" v-if="groupedTitles.missingSeries.length">
               <article
                 class="series-card"
@@ -347,7 +357,10 @@ onMounted(() => {
         <div v-else-if="!showcasedPlayer" class="state-block">请选择玩家后查看地图专属称号。</div>
         <div v-else class="map-title-grid">
           <article class="map-title-card" v-for="mapItem in groupedMapTitles" :key="mapItem.mapKey">
-            <p class="map-title-name">{{ mapItem.mapLabel }}</p>
+            <header class="map-title-head">
+              <p class="map-title-name">{{ mapItem.mapLabel }}</p>
+              <span class="map-title-progress">{{ mapItem.ownedSlots }} / {{ mapItem.totalSlots }}</span>
+            </header>
             <ul class="status-title-list">
               <li v-for="slot in mapItem.orderedSlots" :key="`${mapItem.mapKey}-${slot.key}`">
                 <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
