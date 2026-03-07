@@ -58,14 +58,23 @@
 - 事件标题与描述
 - 系统提示（保存进度、重开警告、成就等）
 
-## `title/title-cn.opy` 的定位
+## 称号数据源与生成链路
 
-虽然在 `title/`，但本质也承担“结构化数据配置”角色：
+称号系统现采用“单一真源 + 受管生成”模式：
 
-- TITLE 枚举
-- 玩家称号数据库
-- 地图称号映射数据
-- 名称到索引的脚本宏桥接（`tools/playerNameToIndex*.js`）
+- 真源文件：`data/title-source.json`
+- 同步脚本：`tools/sync-title-data.mjs`
+- 生成目标：
+  - `src/title/title-cn.opy` 的受管区块（`enum TITLE` / `player_database` / `allTitle`）
+  - `web/title-query/public/data/titles.json`
+
+`src/title/title-cn.opy` 中以下区块为自动生成，禁止手工直接维护：
+
+- `# BEGIN/END AUTO-GENERATED TITLE ENUM`
+- `# BEGIN/END AUTO-GENERATED TITLE PLAYER DATABASE`
+- `# BEGIN/END AUTO-GENERATED ALL_TITLE`
+
+地图称号映射 `DATA_*` 宏当前仍手工维护，不在本次自动化范围。
 
 ## 维护要点
 
@@ -75,3 +84,5 @@
 - 事件文案中涉及动态数值时，优先使用占位符并由 `EVT_*` 常量通过 `.format()` 注入，避免把数值硬编码在文案里。
 - 提交前运行 `tools/check_locale_keys.sh`，确保中英 key 对齐、无重复 key、配置引用 key 有定义。
 - `env` 层的默认值变更会影响 main/dev 两入口行为，应同步验证。
+- 称号相关改动后运行 `pnpm run sync:title-data` 与 `pnpm run test:title-data-sync`。
+- `data/title-source.json` 中 `players` 顺序即索引语义；新增玩家只允许追加，禁止重排。

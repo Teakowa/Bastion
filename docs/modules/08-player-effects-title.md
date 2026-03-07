@@ -39,9 +39,21 @@
 
 ## `title/`：称号系统
 
+### `data/title-source.json`
+
+- 称号系统唯一真源（`titles` + `players/titleKeys` + `meta`）
+- 维护规则：`players` 顺序即索引语义，新增玩家仅追加，禁止重排
+
+### `tools/sync-title-data.mjs`
+
+- 从真源生成 `title-cn.opy` 受管区块
+- 生成 web 查询页数据 `web/title-query/public/data/titles.json`
+- 提供一致性校验入口（配合 `pnpm run test:title-data-sync`）
+
 ### `title/title-cn.opy`
 
-- TITLE 枚举与玩家称号数据库
+- 运行时称号配置载体
+- 受管区块：`enum TITLE`、`player_database`、`allTitle`（由同步脚本生成）
 - 地图称号映射宏（PIONEER/CONQUEROR/DOMINATOR）
 
 ### `title/init.opy`
@@ -54,3 +66,10 @@
 - `setPlayerTitle()` 汇总个人称号 + 地图称号
 - `player/init` 负责称号恢复与显示初始化
 - `effects/init` 与 `title/init` 一起构成完整 UI 体验
+
+## 维护流程（称号）
+
+1. 编辑 `data/title-source.json`（称号定义、玩家授予）。
+2. 如有地图奖励变更，手工更新 `src/title/title-cn.opy` 的 `DATA_*` 宏。
+3. 执行 `pnpm run sync:title-data`。
+4. 执行 `pnpm run test:title-data-sync`。
