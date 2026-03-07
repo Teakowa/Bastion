@@ -2,13 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
-import { parseTitleSource } from './generate-title-query-data.mjs';
+import { generateTitleQueryData, parseTitleSource } from './generate-title-query-data.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const sourceFile = path.resolve(__dirname, '../src/title/title-cn.opy');
+const envFile = path.resolve(__dirname, '../src/env/env.opy');
 
 async function loadData() {
   const source = await fs.readFile(sourceFile, 'utf8');
@@ -20,6 +22,19 @@ test('parses current title dataset shape', async () => {
 
   assert.equal(data.meta.titleCount, 49);
   assert.equal(data.meta.playerCount, 40);
+});
+
+test('includes source label and main version metadata', async () => {
+  const outputFile = path.join(os.tmpdir(), `titles-meta-${Date.now()}.json`);
+  const [data, envSource] = await Promise.all([
+    generateTitleQueryData({ sourceFile, envFile, outputFile }),
+    fs.readFile(envFile, 'utf8')
+  ]);
+  const versionMatch = envSource.match(/^#!define\s+VERSION\s+"([^"]+)"/m);
+
+  assert.ok(versionMatch);
+  assert.equal(data.meta.sourceLabel, '躲避堡垒3');
+  assert.equal(data.meta.sourceVersion, versionMatch[1]);
 });
 
 test('extracts labels from allTitle with dynamic fallback handling', async () => {

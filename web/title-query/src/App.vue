@@ -8,8 +8,6 @@ const players = ref([]);
 const titles = ref([]);
 const meta = ref(null);
 
-const titleMap = computed(() => new Map(titles.value.map((title) => [title.id, title])));
-
 const filteredPlayers = computed(() => {
   const keyword = query.value.trim().toLocaleLowerCase();
   const rankedPlayers = [...players.value].sort((left, right) => {
@@ -38,6 +36,45 @@ const exactMatch = computed(() => {
 
 const showcasedPlayer = computed(() => exactMatch.value || filteredPlayers.value[0] || null);
 
+const groupedTitles = computed(() => {
+  const player = showcasedPlayer.value;
+  if (!player) {
+    return {
+      owned: [],
+      missing: [...titles.value]
+    };
+  }
+
+  const ownedIds = new Set(player.titleIds);
+  const owned = [];
+  const missing = [];
+
+  for (const title of titles.value) {
+    if (ownedIds.has(title.id)) {
+      owned.push(title);
+    } else {
+      missing.push(title);
+    }
+  }
+
+  return {
+    owned,
+    missing
+  };
+});
+
+const sourceDisplay = computed(() => {
+  if (!meta.value) {
+    return '';
+  }
+
+  if (meta.value.sourceLabel && meta.value.sourceVersion) {
+    return `${meta.value.sourceLabel} ${meta.value.sourceVersion}`;
+  }
+
+  return meta.value.sourceFile || '-';
+});
+
 async function loadData() {
   loading.value = true;
   error.value = '';
@@ -59,12 +96,6 @@ async function loadData() {
   }
 }
 
-function playerTitles(player) {
-  return player.titleIds
-    .map((titleId) => titleMap.value.get(titleId))
-    .filter(Boolean);
-}
-
 onMounted(() => {
   loadData();
 });
@@ -82,7 +113,7 @@ onMounted(() => {
         <p class="hero-copy">
           从
           <code>src/title/title-cn.opy</code>
-          自动生成数据，面向公开访问的静态查询页。输入玩家名，即可查看当前仓库内记录的称号信息。
+          自动生成数据，输入玩家名后可直接看到“已获取 / 未获取”的完整称号对照。
         </p>
 
         <label class="search-panel">
@@ -96,10 +127,6 @@ onMounted(() => {
         </label>
 
         <div class="hero-stats" v-if="meta">
-          <article>
-            <strong>{{ meta.playerCount }}</strong>
-            <span>玩家记录</span>
-          </article>
           <article>
             <strong>{{ meta.titleCount }}</strong>
             <span>称号定义</span>
@@ -127,19 +154,11 @@ onMounted(() => {
             <div class="player-heading">
               <div>
                 <p class="player-name">{{ showcasedPlayer.name }}</p>
-                <p class="player-meta">共 {{ showcasedPlayer.titleCount }} 个称号</p>
+                <p class="player-meta">
+                  已获取 {{ groupedTitles.owned.length }} / {{ titles.length }}
+                </p>
               </div>
-              <div class="player-badge">TOP QUERY</div>
-            </div>
-
-            <div class="title-grid">
-              <span
-                v-for="title in playerTitles(showcasedPlayer)"
-                :key="`${showcasedPlayer.name}-${title.id}`"
-                class="title-chip"
-              >
-                {{ title.label }}
-              </span>
+              <div class="player-badge">TITLE STATUS</div>
             </div>
           </div>
         </article>
@@ -163,8 +182,39 @@ onMounted(() => {
         </article>
       </section>
 
+      <section class="catalog-panel card">
+        <header class="card-header">
+          <p>所有称号列表</p>
+          <h2>已获取 / 未获取 对照</h2>
+        </header>
+
+        <div v-if="loading" class="state-block">正在生成称号对照…</div>
+        <div v-else-if="error" class="state-block state-error">当前无法显示称号对照。</div>
+        <div v-else class="title-groups">
+          <article class="title-group title-group-owned">
+            <h3>已获取（{{ groupedTitles.owned.length }}）</h3>
+            <ul class="status-title-list" v-if="groupedTitles.owned.length">
+              <li v-for="title in groupedTitles.owned" :key="`owned-${title.id}`">
+                <span class="title-chip title-chip-owned">{{ title.label }}</span>
+              </li>
+            </ul>
+            <p v-else class="group-empty">当前玩家暂无已获取称号。</p>
+          </article>
+
+          <article class="title-group title-group-missing">
+            <h3>未获取（{{ groupedTitles.missing.length }}）</h3>
+            <ul class="status-title-list" v-if="groupedTitles.missing.length">
+              <li v-for="title in groupedTitles.missing" :key="`missing-${title.id}`">
+                <span class="title-chip title-chip-missing">{{ title.label }}</span>
+              </li>
+            </ul>
+            <p v-else class="group-empty">当前玩家已获取全部称号。</p>
+          </article>
+        </div>
+      </section>
+
       <footer class="page-footer" v-if="meta">
-        <span>数据来源：{{ meta.sourceFile }}</span>
+        <span>数据来源：{{ sourceDisplay }}</span>
         <span>生成时间：{{ new Date(meta.generatedAt).toLocaleString('zh-CN') }}</span>
       </footer>
     </main>

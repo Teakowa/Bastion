@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SOURCE_FILE = path.resolve(__dirname, '../src/title/title-cn.opy');
+const ENV_FILE = path.resolve(__dirname, '../src/env/env.opy');
 const OUTPUT_FILE = path.resolve(__dirname, '../web/title-query/public/data/titles.json');
 
 function escapeRegExp(value) {
@@ -286,6 +287,15 @@ function parsePlayerDatabase(source, titleEnum) {
   return players;
 }
 
+function parseMainVersion(source) {
+  const match = source.match(/^#!define\s+VERSION\s+"([^"]+)"/m);
+  if (!match) {
+    throw new Error('Unable to parse VERSION from src/env/env.opy');
+  }
+
+  return match[1];
+}
+
 export function parseTitleSource(source) {
   const titleEnum = parseTitleEnum(source);
   const titles = parseStaticTitleLabels(source, titleEnum);
@@ -307,10 +317,14 @@ export function parseTitleSource(source) {
 
 export async function generateTitleQueryData({
   sourceFile = SOURCE_FILE,
+  envFile = ENV_FILE,
   outputFile = OUTPUT_FILE
 } = {}) {
-  const source = await fs.readFile(sourceFile, 'utf8');
+  const [source, envSource] = await Promise.all([fs.readFile(sourceFile, 'utf8'), fs.readFile(envFile, 'utf8')]);
   const data = parseTitleSource(source);
+  const mainVersion = parseMainVersion(envSource);
+  data.meta.sourceLabel = '躲避堡垒3';
+  data.meta.sourceVersion = mainVersion;
 
   await fs.mkdir(path.dirname(outputFile), { recursive: true });
   await fs.writeFile(outputFile, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
