@@ -5,12 +5,10 @@
   "description": "Build tooling for OverPy workshop outputs",
   "packageManager": "pnpm@10.6.3",
   "scripts": {
-    "build:main": "overpy compile -i src/main.opy -o build/main.ow -l en-US",
-    "build:dev": "overpy compile -i src/devMain.opy -o build/devMain.ow -l en-US",
-    "build:main:en": "overpy compile -i src/main.opy -o build/main.en-US.ow -l en-US",
-    "build:dev:en": "overpy compile -i src/devMain.opy -o build/devMain.en-US.ow -l en-US",
-    "build:main:zh": "overpy compile -i src/main.opy -o build/main.zh-CN.ow -l zh-CN",
-    "build:dev:zh": "overpy compile -i src/devMain.opy -o build/devMain.zh-CN.ow -l zh-CN",
+    "build:main": "overpy compile -i src/main.opy -o build/main.ow -l zh-CN",
+    "build:dev": "overpy compile -i src/devMain.opy -o build/devMain.ow -l zh-CN",
+    "build:main:en": "overpy compile -i src/main.opy -o build/en-US.ow -l en-US",
+    "build:main:zh": "overpy compile -i src/main.opy -o build/zh-CN.ow -l zh-CN",
     "sync:title-data": "node tools/sync-title-data.mjs",
     "generate:title-query-data": "pnpm run sync:title-data",
     "dev:title-query": "pnpm run sync:title-data && vite --config web/title-query/vite.config.mjs",
@@ -18,7 +16,7 @@
     "build:pages": "pnpm run build:title-query",
     "test:title-data-sync": "node --test tools/generate-title-query-data.test.mjs",
     "test:title-query-data": "pnpm run test:title-data-sync",
-    "build:release": "pnpm run build:main:en && pnpm run build:dev:en && pnpm run build:main:zh && pnpm run build:dev:zh",
+    "build:release": "pnpm run build:main:en && pnpm run build:main:zh",
     "build": "pnpm run build:main && pnpm run build:dev"
   },
   "dependencies": {

@@ -34,7 +34,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            build/main.en-US.ow
-            build/devMain.en-US.ow
-            build/main.zh-CN.ow
-            build/devMain.zh-CN.ow
+            build/en-US.ow
+            build/zh-CN.ow
