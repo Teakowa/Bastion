@@ -66,6 +66,15 @@ const DEFAULT_TITLE_GUIDE = {
   condition: '文档未提供该称号的公开挑战条件。'
 };
 
+const RETIRED_TITLE_KEYS = new Set([
+  'SURVIVOR_EXPERT',
+  'DODGE_GOD',
+  'IDOL',
+  'EGG_FIRST',
+  'EAT_MORE',
+  'NEVER_GIVE_UP'
+]);
+
 function extractIndentedBlock(source, header) {
   const start = source.indexOf(header);
   if (start === -1) {
@@ -247,7 +256,8 @@ function parseStaticTitleLabels(source, titleEnum) {
       key: item.key,
       label,
       category: guide.category,
-      condition: guide.condition
+      condition: guide.condition,
+      availability: RETIRED_TITLE_KEYS.has(item.key) ? 'retired' : 'active'
     };
   });
 }

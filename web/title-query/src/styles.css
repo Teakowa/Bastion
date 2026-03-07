@@ -407,6 +407,12 @@ code {
   background: rgba(5, 10, 17, 0.68);
 }
 
+.title-tag-retired {
+  border-color: rgba(255, 142, 102, 0.52);
+  color: #ffd2c3;
+  background: rgba(96, 35, 24, 0.56);
+}
+
 .title-condition {
   color: var(--muted);
   font-size: 0.8rem;

@@ -154,45 +154,9 @@ onMounted(() => {
             <div class="player-heading">
               <div>
                 <p class="player-name">未选择玩家</p>
-                <p class="player-meta">请输入玩家昵称后查看个人称号对照</p>
+                <p class="player-meta">请输入玩家昵称后查看个人称号与解锁条件</p>
               </div>
               <div class="player-badge">SEARCH FIRST</div>
-            </div>
-
-            <div class="result-merged-divider"></div>
-            <p class="result-merged-heading">已获取 / 未获取 进度（当前未选择玩家）</p>
-            <div class="title-groups title-groups-stacked">
-              <article class="title-group title-group-owned">
-                <h3>已获取（{{ groupedTitles.owned.length }}）</h3>
-                <ul class="status-title-list" v-if="groupedTitles.owned.length">
-                  <li v-for="title in groupedTitles.owned" :key="`owned-inline-${title.id}`">
-                    <span class="title-chip title-chip-owned">
-                      <span class="title-head">
-                        <span class="title-label">{{ title.label }}</span>
-                        <span class="title-tag">{{ title.category }}</span>
-                      </span>
-                      <span class="title-condition">条件：{{ title.condition }}</span>
-                    </span>
-                  </li>
-                </ul>
-                <p v-else class="group-empty">当前玩家暂无已获取称号。</p>
-              </article>
-
-              <article class="title-group title-group-missing">
-                <h3>未获取（{{ groupedTitles.missing.length }}）</h3>
-                <ul class="status-title-list" v-if="groupedTitles.missing.length">
-                  <li v-for="title in groupedTitles.missing" :key="`missing-inline-${title.id}`">
-                    <span class="title-chip title-chip-missing">
-                      <span class="title-head">
-                        <span class="title-label">{{ title.label }}</span>
-                        <span class="title-tag">{{ title.category }}</span>
-                      </span>
-                      <span class="title-condition">条件：{{ title.condition }}</span>
-                    </span>
-                  </li>
-                </ul>
-                <p v-else class="group-empty">当前玩家已获取全部称号。</p>
-              </article>
             </div>
           </div>
           <div v-else-if="!showcasedPlayer" class="state-block">
@@ -250,6 +214,7 @@ onMounted(() => {
                   <span class="title-head">
                     <span class="title-label">{{ title.label }}</span>
                     <span class="title-tag">{{ title.category }}</span>
+                    <span class="title-tag title-tag-retired" v-if="title.availability === 'retired'">不再发放</span>
                   </span>
                   <span class="title-condition">条件：{{ title.condition }}</span>
                 </span>
@@ -266,6 +231,7 @@ onMounted(() => {
                   <span class="title-head">
                     <span class="title-label">{{ title.label }}</span>
                     <span class="title-tag">{{ title.category }}</span>
+                    <span class="title-tag title-tag-retired" v-if="title.availability === 'retired'">不再发放</span>
                   </span>
                   <span class="title-condition">条件：{{ title.condition }}</span>
                 </span>
