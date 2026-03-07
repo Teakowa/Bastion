@@ -235,8 +235,11 @@ function applyTheme(nextMode, persist = true) {
   const normalized = nextMode === 'dark' ? 'dark' : 'light';
   themeMode.value = normalized;
 
-  if (persist && typeof window !== 'undefined') {
-    window.localStorage.setItem(THEME_STORAGE_KEY, normalized);
+  if (typeof window !== 'undefined') {
+    document.documentElement.dataset.theme = normalized;
+    if (persist) {
+      window.localStorage.setItem(THEME_STORAGE_KEY, normalized);
+    }
   }
 }
 

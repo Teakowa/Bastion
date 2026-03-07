@@ -30,7 +30,7 @@
   --font-display: "Big Noodle Too", "Config", "Noto Sans SC", "PingFang SC", sans-serif;
 }
 
-.page-shell[data-theme='light'] {
+:root[data-theme='light'] {
   --ow-navy: #213049;
   --ow-ink: #1a2740;
   --ow-surface: #edf2fb;
@@ -68,6 +68,7 @@ body {
   color: var(--ow-ink);
   font-family: var(--font-body);
   background: var(--ow-page-bg);
+  transition: background-color var(--ow-time-mid) ease, color var(--ow-time-mid) ease;
 }
 
 button,
@@ -83,6 +84,7 @@ code {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+  transition: background-color var(--ow-time-mid) ease, color var(--ow-time-mid) ease;
 }
 
 .backdrop-grid {
@@ -976,134 +978,170 @@ code {
   padding: 0.14rem 0.42rem;
 }
 
-.page-shell[data-theme='light'] .ow-card,
-.page-shell[data-theme='light'] .title-group,
-.page-shell[data-theme='light'] .series-card,
-.page-shell[data-theme='light'] .map-block,
-.page-shell[data-theme='light'] .map-title-card {
+:root[data-theme='light'] .ow-card,
+:root[data-theme='light'] .title-group,
+:root[data-theme='light'] .series-card,
+:root[data-theme='light'] .map-block,
+:root[data-theme='light'] .map-title-card {
   box-shadow: var(--ow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
-.page-shell[data-theme='light'] .eyebrow,
-.page-shell[data-theme='light'] .hero-band-copy,
-.page-shell[data-theme='light'] .hero-panel h1,
-.page-shell[data-theme='light'] .hero-copy,
-.page-shell[data-theme='light'] .hero-emblem,
-.page-shell[data-theme='light'] .card-header p,
-.page-shell[data-theme='light'] .card-header h2,
-.page-shell[data-theme='light'] .player-name,
-.page-shell[data-theme='light'] .player-meta,
-.page-shell[data-theme='light'] .title-group h3,
-.page-shell[data-theme='light'] .series-name,
-.page-shell[data-theme='light'] .title-label,
-.page-shell[data-theme='light'] .map-title-name,
-.page-shell[data-theme='light'] .group-empty {
+:root[data-theme='light'] .eyebrow,
+:root[data-theme='light'] .hero-band-copy,
+:root[data-theme='light'] .hero-panel h1,
+:root[data-theme='light'] .hero-copy,
+:root[data-theme='light'] .hero-emblem,
+:root[data-theme='light'] .card-header p,
+:root[data-theme='light'] .card-header h2,
+:root[data-theme='light'] .player-name,
+:root[data-theme='light'] .player-meta,
+:root[data-theme='light'] .title-group h3,
+:root[data-theme='light'] .map-block-head h3,
+:root[data-theme='light'] .series-name,
+:root[data-theme='light'] .title-label,
+:root[data-theme='light'] .map-title-name,
+:root[data-theme='light'] .group-empty {
   color: var(--ow-text);
 }
 
-.page-shell[data-theme='light'] .hero-emblem,
-.page-shell[data-theme='light'] .title-group-count,
-.page-shell[data-theme='light'] .series-count,
-.page-shell[data-theme='light'] .map-summary-item,
-.page-shell[data-theme='light'] .map-block-count {
+:root[data-theme='light'] .hero-emblem,
+:root[data-theme='light'] .title-group-count,
+:root[data-theme='light'] .series-count,
+:root[data-theme='light'] .map-summary-item,
+:root[data-theme='light'] .map-block-count {
   border-color: rgba(28, 43, 72, 0.24);
   background: rgba(28, 43, 72, 0.08);
   color: var(--ow-text-soft);
 }
 
-.page-shell[data-theme='light'] .search-panel span,
-.page-shell[data-theme='light'] .search-candidates-empty,
-.page-shell[data-theme='light'] .state-block {
+:root[data-theme='light'] .search-panel span,
+:root[data-theme='light'] .search-candidates-empty,
+:root[data-theme='light'] .state-block {
   color: var(--ow-text-soft);
 }
 
-.page-shell[data-theme='light'] .search-panel input {
+:root[data-theme='light'] .search-panel input {
   background: rgba(255, 255, 255, 0.86);
   color: var(--ow-text);
 }
 
-.page-shell[data-theme='light'] .candidate-count {
+:root[data-theme='light'] .search-panel input::placeholder {
+  color: rgba(48, 66, 97, 0.64);
+}
+
+:root[data-theme='light'] .ow-button-secondary {
+  border: 1px solid rgba(28, 43, 72, 0.22);
+  background: #ffffff;
+  color: #1d2b44;
+}
+
+:root[data-theme='light'] .ow-button-aux,
+:root[data-theme='light'] .series-toggle {
+  border-color: rgba(0, 119, 191, 0.7);
+  background: rgba(0, 137, 221, 0.92);
+  color: #ffffff;
+}
+
+:root[data-theme='light'] .theme-toggle {
+  border-color: rgba(28, 43, 72, 0.35);
+  background: rgba(255, 255, 255, 0.95);
+  color: #1b2840;
+}
+
+:root[data-theme='light'] .player-badge {
+  border-color: rgba(214, 95, 31, 0.64);
+  color: #8a3e17;
+  background: rgba(240, 100, 20, 0.18);
+}
+
+:root[data-theme='light'] .candidate-count {
   background: rgba(28, 43, 72, 0.1);
   color: var(--ow-text);
 }
 
-.page-shell[data-theme='light'] .stat-card,
-.page-shell[data-theme='light'] .title-group,
-.page-shell[data-theme='light'] .series-card,
-.page-shell[data-theme='light'] .map-block,
-.page-shell[data-theme='light'] .map-title-card,
-.page-shell[data-theme='light'] .title-chip {
+:root[data-theme='light'] .stat-card,
+:root[data-theme='light'] .title-group,
+:root[data-theme='light'] .series-card,
+:root[data-theme='light'] .map-block,
+:root[data-theme='light'] .map-title-card,
+:root[data-theme='light'] .title-chip {
   border-color: rgba(28, 43, 72, 0.17);
 }
 
-.page-shell[data-theme='light'] .stat-card {
+:root[data-theme='light'] .stat-card {
   background: rgba(255, 255, 255, 0.78);
 }
 
-.page-shell[data-theme='light'] .hero-stats strong {
+:root[data-theme='light'] .hero-stats strong {
   color: var(--ow-text);
 }
 
-.page-shell[data-theme='light'] .title-group {
+:root[data-theme='light'] .title-group {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(242, 247, 255, 0.95) 100%),
     radial-gradient(circle at 50% -30%, rgba(28, 43, 72, 0.06), transparent 72%);
 }
 
-.page-shell[data-theme='light'] .series-card,
-.page-shell[data-theme='light'] .map-block,
-.page-shell[data-theme='light'] .map-title-card,
-.page-shell[data-theme='light'] .title-chip {
+:root[data-theme='light'] .series-card,
+:root[data-theme='light'] .map-block,
+:root[data-theme='light'] .map-title-card,
+:root[data-theme='light'] .title-chip {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 248, 255, 0.96) 100%),
     linear-gradient(135deg, rgba(28, 43, 72, 0.04), transparent);
 }
 
-.page-shell[data-theme='light'] .title-chip-owned {
+:root[data-theme='light'] .title-chip-owned {
   border-color: rgba(44, 157, 114, 0.45);
   background: linear-gradient(180deg, rgba(68, 190, 143, 0.17) 0%, rgba(242, 249, 247, 0.96) 100%);
 }
 
-.page-shell[data-theme='light'] .title-chip-missing {
+:root[data-theme='light'] .title-chip-missing {
   border-color: rgba(115, 132, 163, 0.45);
   background: linear-gradient(180deg, rgba(142, 160, 194, 0.2) 0%, rgba(244, 248, 255, 0.96) 100%);
 }
 
-.page-shell[data-theme='light'] .title-tag {
+:root[data-theme='light'] .title-tag {
   border-color: rgba(28, 43, 72, 0.24);
   background: rgba(28, 43, 72, 0.08);
   color: var(--ow-text-soft);
 }
 
-.page-shell[data-theme='light'] .title-tag-retired {
+:root[data-theme='light'] .title-tag-retired {
   border-color: rgba(186, 76, 47, 0.56);
   background: rgba(186, 76, 47, 0.14);
   color: #8d341d;
 }
 
-.page-shell[data-theme='light'] .map-status-owned {
+:root[data-theme='light'] .map-status-owned {
   border-color: rgba(44, 157, 114, 0.45);
   color: #1e7450;
   background: rgba(66, 185, 138, 0.16);
 }
 
-.page-shell[data-theme='light'] .map-status-missing {
+:root[data-theme='light'] .map-status-missing {
   border-color: rgba(98, 118, 152, 0.48);
   color: #314667;
   background: rgba(109, 127, 167, 0.14);
 }
 
-.page-shell[data-theme='light'] .title-condition {
+:root[data-theme='light'] .map-title-progress {
+  border-color: rgba(0, 119, 191, 0.58);
+  background: rgba(0, 137, 221, 0.16);
+  color: #1b5680;
+}
+
+:root[data-theme='light'] .title-condition {
   color: var(--ow-text-soft);
 }
 
-.page-shell[data-theme='light'] .title-chip:hover .title-condition,
-.page-shell[data-theme='light'] .title-chip:focus-within .title-condition {
+:root[data-theme='light'] .title-chip:hover .title-condition,
+:root[data-theme='light'] .title-chip:focus-within .title-condition {
   background: linear-gradient(180deg, rgba(239, 245, 255, 0.92), rgba(234, 241, 252, 0.9));
   border-color: rgba(113, 131, 164, 0.45);
 }
 
-.page-shell[data-theme='light'] .page-footer {
+:root[data-theme='light'] .page-footer {
   color: rgba(30, 44, 69, 0.72);
 }
 
