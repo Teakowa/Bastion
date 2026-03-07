@@ -153,3 +153,17 @@ When changing source logic, update related docs in the same change whenever prac
 9. Seasonal branch changes → update `09-special-seasonal.md`.
 
 When introducing new external workshop references, record them in `10-references-workshop-codes.md`.
+
+## 12. Context Routing and Conditional Loading
+
+To reduce token usage and accidental side effects, agent context loading must follow a route-first, condition-based policy:
+
+1. Treat directory ownership as the first routing key. Only load modules that map to the task scope (for example, hero tasks -> `src/heroes/`, event tasks -> `src/events/` + `src/config/`).
+2. Do not inject full repository context by default. `src/main.opy`, `src/devMain.opy`, and `docs/modules/*` should be loaded on demand, not preloaded together.
+3. Read in layers:
+   - Layer 1: directly touched file(s)
+   - Layer 2: immediate dependencies (includes/config/constants used by Layer 1)
+   - Layer 3: architecture/reference docs only when ambiguity remains
+4. For cross-cutting changes (entry flow, shared utilities, global constants), explicitly list why additional directories are being loaded before editing.
+5. If a task can be completed with one routed subtree, avoid scanning unrelated directories (`build/`, unrelated `src/*` domains, historical docs) during the same turn.
+6. When proposing edits, state "loaded scope" in the summary so reviewers can confirm no full-context injection occurred.
