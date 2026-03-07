@@ -90,6 +90,15 @@ pnpm run build:main
 pnpm run build:dev
 ```
 
+称号查询页：
+
+```bash
+pnpm run test:title-query-data
+pnpm run build:title-query
+```
+
+静态查询页的数据由 `tools/generate-title-query-data.mjs` 从 `src/title/title-cn.opy` 自动生成，并通过 `.github/workflows/pages-title-query.yml` 部署到 GitHub Pages。
+
 发布用双语言构建：
 
 ```bash

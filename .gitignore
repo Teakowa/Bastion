@@ -25,3 +25,7 @@ node_modules/
 
 # pnpm
 .pnpm-store
+
+# Frontend build artifacts
+web/title-query/dist/
+web/title-query/public/data/titles.json

@@ -90,6 +90,15 @@ pnpm run build:main
 pnpm run build:dev
 ```
 
+Title query page:
+
+```bash
+pnpm run test:title-query-data
+pnpm run build:title-query
+```
+
+The static page is built from `src/title/title-cn.opy` via `tools/generate-title-query-data.mjs` and is deployed by `.github/workflows/pages-title-query.yml`.
+
 Dual-language release build:
 
 ```bash
