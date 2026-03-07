@@ -49,17 +49,37 @@ const showcasedPlayer = computed(() => {
   return exactMatch.value || filteredPlayers.value[0] || null;
 });
 const visibleTitles = computed(() => titles.value.filter((title) => title.id > 10));
+function groupTitlesBySeries(titleList) {
+  const seriesMap = new Map();
+
+  for (const title of titleList) {
+    const series = String(title?.category || '').trim() || '未分类';
+    const bucket = seriesMap.get(series);
+
+    if (bucket) {
+      bucket.push(title);
+    } else {
+      seriesMap.set(series, [title]);
+    }
+  }
+
+  return [...seriesMap.entries()]
+    .map(([series, seriesTitles]) => ({
+      series,
+      titles: [...seriesTitles].sort((left, right) => left.id - right.id)
+    }))
+    .sort((left, right) => {
+      if (right.titles.length !== left.titles.length) {
+        return right.titles.length - left.titles.length;
+      }
+
+      return left.series.localeCompare(right.series, 'zh-Hans-CN');
+    });
+}
 
 const groupedTitles = computed(() => {
   const player = showcasedPlayer.value;
-  if (!player) {
-    return {
-      owned: [],
-      missing: [...visibleTitles.value]
-    };
-  }
-
-  const ownedIds = new Set(player.titleIds);
+  const ownedIds = new Set(player?.titleIds ?? []);
   const owned = [];
   const missing = [];
 
@@ -72,8 +92,10 @@ const groupedTitles = computed(() => {
   }
 
   return {
-    owned,
-    missing
+    ownedSeries: groupTitlesBySeries(owned),
+    missingSeries: groupTitlesBySeries(missing),
+    ownedCount: owned.length,
+    missingCount: missing.length
   };
 });
 
@@ -226,7 +248,7 @@ onMounted(() => {
               <div>
                 <p class="player-name">{{ showcasedPlayer.name }}</p>
                 <p class="player-meta">
-                  已获取 {{ groupedTitles.owned.length }} / {{ visibleTitles.length }}
+                  已获取 {{ groupedTitles.ownedCount }} / {{ visibleTitles.length }}
                 </p>
               </div>
               <div class="player-badge">TITLE STATUS</div>
@@ -245,36 +267,60 @@ onMounted(() => {
         <div v-else-if="error" class="state-block state-error">当前无法显示称号进度。</div>
         <div v-else class="title-groups">
           <article class="title-group title-group-owned">
-            <h3>已获取（{{ groupedTitles.owned.length }}）</h3>
-            <ul class="status-title-list" v-if="groupedTitles.owned.length">
-              <li v-for="title in groupedTitles.owned" :key="`owned-${title.id}`">
-                <span class="title-chip title-chip-owned">
-                  <span class="title-head">
-                    <span class="title-label">{{ title.label }}</span>
-                    <span class="title-tag">{{ title.category }}</span>
-                    <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
-                  </span>
-                  <span class="title-condition">{{ title.condition }}</span>
-                </span>
-              </li>
-            </ul>
+            <h3>已获取（{{ groupedTitles.ownedCount }}）</h3>
+            <div class="series-list" v-if="groupedTitles.ownedSeries.length">
+              <article
+                class="series-card"
+                v-for="seriesGroup in groupedTitles.ownedSeries"
+                :key="`owned-series-${seriesGroup.series}`"
+              >
+                <header class="series-head">
+                  <p class="series-name">{{ seriesGroup.series }}</p>
+                  <span class="series-count">{{ seriesGroup.titles.length }}</span>
+                </header>
+                <ul class="status-title-list series-title-list">
+                  <li v-for="title in seriesGroup.titles" :key="`owned-${title.id}`">
+                    <span class="title-chip title-chip-owned">
+                      <span class="title-head">
+                        <span class="title-label">{{ title.label }}</span>
+                        <span class="title-tag">{{ title.category }}</span>
+                        <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
+                      </span>
+                      <span class="title-condition">{{ title.condition }}</span>
+                    </span>
+                  </li>
+                </ul>
+              </article>
+            </div>
             <p v-else class="group-empty">当前玩家暂无已获取称号。</p>
           </article>
 
           <article class="title-group title-group-missing">
-            <h3>未获取（{{ groupedTitles.missing.length }}）</h3>
-            <ul class="status-title-list" v-if="groupedTitles.missing.length">
-              <li v-for="title in groupedTitles.missing" :key="`missing-${title.id}`">
-                <span class="title-chip title-chip-missing">
-                  <span class="title-head">
-                    <span class="title-label">{{ title.label }}</span>
-                    <span class="title-tag">{{ title.category }}</span>
-                    <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
-                  </span>
-                  <span class="title-condition">{{ title.condition }}</span>
-                </span>
-              </li>
-            </ul>
+            <h3>未获取（{{ groupedTitles.missingCount }}）</h3>
+            <div class="series-list" v-if="groupedTitles.missingSeries.length">
+              <article
+                class="series-card"
+                v-for="seriesGroup in groupedTitles.missingSeries"
+                :key="`missing-series-${seriesGroup.series}`"
+              >
+                <header class="series-head">
+                  <p class="series-name">{{ seriesGroup.series }}</p>
+                  <span class="series-count">{{ seriesGroup.titles.length }}</span>
+                </header>
+                <ul class="status-title-list series-title-list">
+                  <li v-for="title in seriesGroup.titles" :key="`missing-${title.id}`">
+                    <span class="title-chip title-chip-missing">
+                      <span class="title-head">
+                        <span class="title-label">{{ title.label }}</span>
+                        <span class="title-tag">{{ title.category }}</span>
+                        <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
+                      </span>
+                      <span class="title-condition">{{ title.condition }}</span>
+                    </span>
+                  </li>
+                </ul>
+              </article>
+            </div>
             <p v-else class="group-empty">当前玩家已获取全部称号。</p>
           </article>
         </div>
