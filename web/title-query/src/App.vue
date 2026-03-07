@@ -9,6 +9,11 @@ const titles = ref([]);
 const mapTitles = ref([]);
 const meta = ref(null);
 const hasQuery = computed(() => query.value.trim().length > 0);
+const MAP_TITLE_LABELS = {
+  PIONEER: '开拓者',
+  CONQUEROR: '征服者',
+  DOMINATOR: '主宰'
+};
 
 const filteredPlayers = computed(() => {
   const keyword = query.value.trim().toLocaleLowerCase();
@@ -75,16 +80,27 @@ const groupedTitles = computed(() => {
 const groupedMapTitles = computed(() => {
   const player = showcasedPlayer.value;
   const maps = mapTitles.value ?? [];
+  const mapTitleOrder = ['PIONEER', 'CONQUEROR', 'DOMINATOR'];
 
   return maps.map((mapItem) => {
     const status = player?.mapTitleStatus?.[mapItem.mapKey] ?? {};
+    const orderedSlots = mapTitleOrder
+      .map((slotKey, index) => ({
+        key: slotKey,
+        label: MAP_TITLE_LABELS[slotKey],
+        owned: Boolean(status[slotKey]),
+        order: index
+      }))
+      .sort((left, right) => {
+        if (left.owned !== right.owned) {
+          return Number(left.owned) - Number(right.owned);
+        }
+        return left.order - right.order;
+      });
+
     return {
       ...mapItem,
-      status: {
-        PIONEER: Boolean(status.PIONEER),
-        CONQUEROR: Boolean(status.CONQUEROR),
-        DOMINATOR: Boolean(status.DOMINATOR)
-      }
+      orderedSlots
     };
   });
 });
@@ -156,6 +172,21 @@ onMounted(() => {
             autocomplete="off"
           />
         </label>
+        <div class="search-candidates" v-if="hasQuery && !loading && !error && filteredPlayers.length">
+          <button
+            v-for="player in filteredPlayers"
+            :key="`candidate-${player.name}`"
+            class="candidate-chip"
+            type="button"
+            @click="query = player.name"
+          >
+            <span class="candidate-name">{{ player.name }}</span>
+            <span class="candidate-count">{{ player.titleCount }}</span>
+          </button>
+        </div>
+        <p class="search-candidates-empty" v-else-if="hasQuery && !loading && !error">
+          没有匹配到玩家，请尝试更短关键字或完整昵称。
+        </p>
 
         <div class="hero-stats" v-if="meta">
           <article>
@@ -201,27 +232,6 @@ onMounted(() => {
               <div class="player-badge">TITLE STATUS</div>
             </div>
           </div>
-        </article>
-
-        <article class="card list-card">
-          <header class="card-header">
-            <p>玩家列表</p>
-            <h2>搜索候选</h2>
-          </header>
-
-          <div v-if="loading" class="state-block">列表准备中…</div>
-          <div v-else-if="error" class="state-block state-error">当前无法显示玩家列表。</div>
-          <div v-else-if="!hasQuery" class="state-block">
-            请输入玩家昵称后显示搜索候选。
-          </div>
-          <ul v-else class="player-list">
-            <li v-for="player in filteredPlayers" :key="player.name">
-              <button class="player-row" type="button" @click="query = player.name">
-                <span class="player-row-name">{{ player.name }}</span>
-                <span class="player-row-count">{{ player.titleCount }} 个称号</span>
-              </button>
-            </li>
-          </ul>
         </article>
       </section>
 
@@ -273,7 +283,7 @@ onMounted(() => {
       <section class="catalog-panel card" v-if="hasQuery">
         <header class="card-header">
           <p>地图专属称号</p>
-          <h2>PIONEER / CONQUEROR / DOMINATOR</h2>
+          <h2>开拓者 / 征服者 / 主宰（未获得优先）</h2>
         </header>
 
         <div v-if="loading" class="state-block">正在生成地图称号进度…</div>
@@ -282,17 +292,18 @@ onMounted(() => {
         <div v-else class="map-title-grid">
           <article class="map-title-card" v-for="mapItem in groupedMapTitles" :key="mapItem.mapKey">
             <p class="map-title-name">{{ mapItem.mapLabel }}</p>
-            <div class="map-title-slots">
-              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.PIONEER }">
-                PIONEER: {{ mapItem.status.PIONEER ? '已获取' : '未获取' }}
-              </span>
-              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.CONQUEROR }">
-                CONQUEROR: {{ mapItem.status.CONQUEROR ? '已获取' : '未获取' }}
-              </span>
-              <span class="map-slot" :class="{ 'map-slot-on': mapItem.status.DOMINATOR }">
-                DOMINATOR: {{ mapItem.status.DOMINATOR ? '已获取' : '未获取' }}
-              </span>
-            </div>
+            <ul class="status-title-list">
+              <li v-for="slot in mapItem.orderedSlots" :key="`${mapItem.mapKey}-${slot.key}`">
+                <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
+                  <span class="title-head">
+                    <span class="title-label">{{ slot.label }}</span>
+                    <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
+                      {{ slot.owned ? '已获得' : '未获得' }}
+                    </span>
+                  </span>
+                </span>
+              </li>
+            </ul>
           </article>
         </div>
       </section>
