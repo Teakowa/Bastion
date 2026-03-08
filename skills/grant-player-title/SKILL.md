@@ -36,7 +36,7 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 - 仅在 `players` 数组末尾追加新玩家对象。
 - 新玩家默认 `titleKeys` 放入本次请求中的通用称号 key；如果没有通用称号，使用空数组 `[]`。
 2. 玩家顺序即索引语义，禁止重排既有玩家。
-3. 不直接编辑 `src/title/title-cn.opy` 的受管区块。
+3. 禁止手改生成产物：`src/title/title-cn.opy` 与 `web/title-query/public/data/titles.json` 仅可通过同步脚本生成。
 
 ## 4) 发放通用称号
 
@@ -69,14 +69,16 @@ pnpm run sync:title-data
 pnpm run test:title-data-sync
 rg -n "name: \"<PLAYER>\"|DATA_<MAP>|MapTITLEKey" src/title/title-cn.opy src/utilities/system/setPlayerTitle.opy
 rg -n "\"name\": \"<PLAYER>\"|\"titleKeys\"|\"mapTitles\"|\"holders\"" data/title-source.json
+rg -n "\"players\"|\"mapTitles\"|\"sourceFile\"" web/title-query/public/data/titles.json
 ```
 
 再做人工校验：
 
 1. 新增玩家是否只追加在 `data/title-source.json` 的 `players` 末尾。
 2. `src/title/title-cn.opy` 受管区块是否仍由自动生成标记包裹。
-3. 地图专属称号是否落在正确地图与槽位。
-4. 若本次新增了 `DOMINATOR`，对应玩家是否也已出现在同图的 `CONQUEROR`。
+3. `web/title-query/public/data/titles.json` 是否已反映本次 source 变更。
+4. 地图专属称号是否落在正确地图与槽位。
+5. 若本次新增了 `DOMINATOR`，对应玩家是否也已出现在同图的 `CONQUEROR`。
 
 ## 8) 交付说明
 
