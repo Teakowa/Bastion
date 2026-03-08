@@ -31,7 +31,7 @@ Status model:
 |---|---|---|---|---|---|---|---|
 | P0-001 | P0 | `Decay Overhealth` | `src/utilities/system/overhealthDecay.opy` | Legacy disabled module with no active include path; retained code adds maintenance overhead and loop-safety review noise. | Remove unused `overhealthDecay` module and compatibility shim; keep docs/index aligned. | No remaining `overhealthDecay`/`StoreOverhealth`/`storedOverhealth` code references in `src`; no entry include references in `main.opy`/`devMain.opy`. | DONE |
 | P0-002 | P0 | `bastion constantly searches for targets in line of sight` | `src/bastion/init.opy` | High-frequency target scan does repeated `getLivingPlayers` + LoS + `sorted`/`distance`; hot-path CPU pressure scales with player count. | Apply layered gates and sparse evaluation rhythm; reduce redundant scans/sorts per tick; keep target quality logic intact. | Target acquisition behavior unchanged functionally; scan cadence is explicitly controlled; hotspot expression count per cycle reduced. | DONE |
-| P0-003 | P0 | `players pick up speed while not targeted for 3 seconds` + control-jump related eachPlayer rules | `src/main.opy` and `src/devMain.opy` | Expensive radius/distance checks appear early in eachPlayer gating; extra reevaluation load every tick. | Reorder conditions to high-selectivity/low-cost first; keep expensive radius/distance checks behind cheap gates; preserve `main/devMain` parity. | Condition order follows performance guideline; gameplay behavior unchanged; `main.opy` and `devMain.opy` remain aligned for touched rules. | IN_PROGRESS |
+| P0-003 | P0 | `players pick up speed while not targeted for 3 seconds` + control-jump related eachPlayer rules | `src/main.opy` and `src/devMain.opy` | Expensive radius/distance checks appear early in eachPlayer gating; extra reevaluation load every tick. | Reorder conditions to high-selectivity/low-cost first; keep expensive radius/distance checks behind cheap gates; preserve `main/devMain` parity. | Condition order follows performance guideline; gameplay behavior unchanged; `main.opy` and `devMain.opy` remain aligned for touched rules. | DONE |
 | P0-004 | P0 | Debuff/Mech continuous effect loops | `src/events/effects/debuffEffects.opy`, `src/events/effects/mechEffects.opy` | Multiple sustained loop rules execute heavy checks and effect operations at short intervals; cumulative server-load risk under concurrency. | Standardize loop throttling floor and move costly lookups behind narrower gates; split bursty action chains when needed. | No newly introduced waitless loops; sustained-event rules keep original effects while reducing per-cycle heavy operations. | IN_PROGRESS |
 | P0-005 | P0 | `rejecSampling` | `src/events/allocation/rejectSampling.opy` | Busy finite `while` loops (cap=8) still execute in a single frame; may contribute to startup/selection spikes under many players. | Convert to safer bounded sampling pattern with pacing or lighter per-iteration cost while preserving weighted selection intent. | Selection semantics remain equivalent (weighted rejection behavior preserved); no high-cost busy loop remains in this path. | DONE |
 
@@ -96,6 +96,15 @@ Current:
   - behavior checks: no wait cadence or core loop control flow changed; effect math and event durations remain unchanged.
   - perf observation: cuts avoidable per-tick scans on dead/non-moving players and reduces duplicate team-wide ability scans in a sustained debuff loop.
 - `Notes`: This is a partial completion wave; P0-003 control-jump and P0-004 remaining sustained-loop hotspots continue in Wave 2.
+
+- `Date`: 2026-03-08
+- `ID`: P0-003 / P0-004 (Wave 2)
+- `Change Summary`: Completed P0-003 control-jump path optimization in `main/devMain` (cheap-first `isAlive`/null gating and staged height-then-distance spatial checks), and advanced P0-004 with additional alive/availability gates for `引力异常`, `无能的丈夫/妻子`, `我和你(生命同步)`, `吸血鬼(按需吸血)`.
+- `Validation`:
+  - static scan: expensive map-control distance checks are now guarded by cheap preconditions and split into staged checks; added gates prevent repeated radius/sort work for dead/ineligible players.
+  - behavior checks: no wait cadence, duration, damage/heal formulas, or event timing constants were changed.
+  - perf observation: reduces avoidable per-tick math on control-jump path and skips heavy target collection when preconditions fail in sustained debuff loops.
+- `Notes`: P0-003 is closed in this wave. P0-004 remains `IN_PROGRESS`; remaining hotspots continue in next wave.
 
 ## 4) Regression Checklist
 

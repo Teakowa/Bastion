@@ -95,6 +95,7 @@ rule "[VishkarEvent]: 引力异常":
     @Event eachPlayer
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.GRAVITY_PULL]) == true
+    @Condition getPlayers(Team.2)[0] != null
     
     if eventPlayer.mod_speed_event != 0:
         goto lbl_0
@@ -256,7 +257,7 @@ rule "[VishkarEvent]: 狂欢盛宴计时器":
 rule "[VishkarEvent]: 无能的丈夫/妻子":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.POWERLESS_SPOUSE]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.POWERLESS_SPOUSE]) == true
     
     ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(eventPlayer, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
     wait(2)
@@ -414,7 +415,8 @@ rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
 rule "[VishkarEvent]: 我和你 (生命同步)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.HEALTH_SYNC]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.HEALTH_SYNC]) == true
+    @Condition len(getLivingPlayers(Team.1)) > 1
     
     eventPlayer.passiveRegenBlocked = true
 
@@ -435,7 +437,7 @@ rule "[VishkarEvent]: 我和你 (生命同步)":
 rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.VAMPIRE, eventPlayer.getNormalizedHealth() != 1]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.VAMPIRE, eventPlayer.getNormalizedHealth() != 1]) == true
     
     eventPlayer.passiveRegenBlocked = true
     

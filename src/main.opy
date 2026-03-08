@@ -357,7 +357,9 @@ rule "when players reaches the end and not respawn at first respawn point, they 
     @Team 1
     @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.isInSpawnRoom() == true
+    @Condition controlRespawnPosition[eventPlayer.controlJumpIndex] != null
     @Condition (any([controlRespawnAxis == 0 and distance(vect(eventPlayer.getPosition().x, 0, 0), vect(controlRespawnPosition[eventPlayer.controlJumpIndex].x, 0, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 1 and distance(vect(0, eventPlayer.getPosition().y, 0), vect(0, controlRespawnPosition[eventPlayer.controlJumpIndex].y, 0)) >= controlRespawnAxisThreshold, controlRespawnAxis == 2 and distance(vect(0, 0, eventPlayer.getPosition().z), vect(0, 0, controlRespawnPosition[eventPlayer.controlJumpIndex].z)) >= controlRespawnAxisThreshold])) == true
     
     eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
@@ -370,26 +372,27 @@ rule "when a player reaches the control jump point, they move on to the next map
     @Team 1
     @Condition controlRespawnPosition != null
     @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.isInSpawnRoom() != true
     @Condition eventPlayer.isMoving() == true
+    @Condition controlJumpPosition[eventPlayer.controlJumpIndex] != null
     #@Condition eventPlayer.getPosition().y >= controlJumpPosition[eventPlayer.controlJumpIndex].y
     #@Condition distance(eventPlayer.getPosition() * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4
     
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     wait(0.2)
-    if all([((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= controlJumpPosition[eventPlayer.controlJumpIndex].y), distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4]):
-        if controlJumpPosition[eventPlayer.controlJumpIndex] == null:
-            goto lbl_0
-        eventPlayer.controlJumpIndex++
-        wait()
-        if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]):
-            goto lbl_1
-        eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 0.5)
-        eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 0.5)
-        lbl_1:
-        eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
-        eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
-        wait(2.16)
+    if ((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= controlJumpPosition[eventPlayer.controlJumpIndex].y):
+        if distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), controlJumpPosition[eventPlayer.controlJumpIndex] * vect(1, 0, 1)) <= 4:
+            eventPlayer.controlJumpIndex++
+            wait()
+            if any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]):
+                goto lbl_1
+            eventPlayer.setStatusEffect(null, Status.PHASED_OUT, 0.5)
+            eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 0.5)
+            lbl_1:
+            eventPlayer.teleport(controlRespawnPosition[eventPlayer.controlJumpIndex])
+            eventPlayer.setFacing(directionTowards(eventPlayer.getEyePosition(), controlJumpPosition[eventPlayer.controlJumpIndex].getPosition()), Relativity.TO_WORLD)
+            wait(2.16)
     lbl_0:
     loop()
 
@@ -397,6 +400,7 @@ rule "when a player reaches the end, they move on to the next hero or win if the
     @Event eachPlayer
     @Team 1
     @Condition eventPlayer.hasSpawned() == true
+    @Condition eventPlayer.isAlive() == true
     @Condition (eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()).y >= endPosition.y
     @Condition distance((eventPlayer.possess[0].getPosition() if (eventPlayer.possess != null and eventPlayer.possess[0] != null and entityExists(eventPlayer.possess[0])) else eventPlayer.getPosition()) * vect(1, 0, 1), endPosition * vect(1, 0, 1)) <= 4
     
