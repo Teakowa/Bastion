@@ -40,15 +40,24 @@ rule "[VishkarEvent]: 献祭":
     @Event eachPlayer
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.SACRIFICE]) == true
-    @Condition [player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()] > 0
+    @Condition len([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()]) > 0
     
     eventPlayer.passiveRegenBlocked = true
 
     playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.TEAM_2, eventPlayer, 200)
-    damage(eventPlayer, (sorted([player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()], lambda i: distance(eventPlayer, i)))[0], eventPlayer.getMaxHealth() * EVT_DEBUFF_2_DMG_PERCENT)
+    eventPlayer.target = [player for player in getLivingPlayers(Team.1) if player.isUsingAbility1() or player.isUsingAbility2()]
+    if len(eventPlayer.target) > 1:
+        eventPlayer.target = sorted(eventPlayer.target, lambda i: distance(eventPlayer, i))[0]
+    elif eventPlayer.target[0] != null:
+        eventPlayer.target = eventPlayer.target[0]
+    else:
+        eventPlayer.target = null
+    if eventPlayer.target != null:
+        damage(eventPlayer, eventPlayer.target, eventPlayer.getMaxHealth() * EVT_DEBUFF_2_DMG_PERCENT)
     wait(max(0.5, getAverageServerLoad() / 100 * 0.032))
     if ruleCondition:
         loop()
+    eventPlayer.target = null
     startCombatRegen()
 
 
@@ -262,6 +271,7 @@ rule "[VishkarEvent]: 无能的丈夫/妻子":
     @Event eachPlayer
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.POWERLESS_SPOUSE]) == true
+    @Condition getLivingPlayers(Team.1)[1] != null
     
     ([player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_DEBUFF_12_RADIUS and eventPlayer != player]).setStatusEffect(eventPlayer, Status.KNOCKED_DOWN, EVT_DEBUFF_12_KNOCKDOWN_DURATION)
     wait(2)
@@ -338,8 +348,13 @@ rule "[VishkarEvent]: 保持距离 (易伤光环)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.KEEP_DISTANCE_AURA]) == true
     
     eventPlayer.target = getPlayersInRadius(eventPlayer, EVT_DEBUFF_16_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
-    if eventPlayer.target[0] != null:
+    if len(eventPlayer.target) > 1:
         eventPlayer.target = sorted(eventPlayer.target, lambda i: distance(eventPlayer, i))[0]
+    elif eventPlayer.target[0] != null:
+        eventPlayer.target = eventPlayer.target[0]
+    else:
+        eventPlayer.target = null
+    if eventPlayer.target != null:
         eventPlayer.mod_dmg_taken = min(EVT_DEBUFF_16_MAX, max(0, (EVT_DEBUFF_16_RADIUS - distance(eventPlayer, eventPlayer.target)) * EVT_DEBUFF_16_FACTOR))
         eventPlayer.hudText = "受到伤害 +{0}%".format(eventPlayer.mod_dmg_taken)
     else:
@@ -445,6 +460,7 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.VAMPIRE, eventPlayer.getNormalizedHealth() != 1]) == true
     @Condition getPlayers(Team.1)[1] != null
+    @Condition getLivingPlayers(Team.1)[1] != null
     
     eventPlayer.passiveRegenBlocked = true
     
