@@ -961,6 +961,10 @@
     {
       "name": "云雀",
       "titleKeys": []
+    },
+    {
+      "name": "嘤嘤嘤丶",
+      "titleKeys": []
     }
   ],
   "mapTitles": [
@@ -2201,7 +2205,8 @@
           "豆本豆豆奶",
           "卖核弹的小女孩",
           "眼镜小宅",
-          "EruIluvatar"
+          "EruIluvatar",
+          "嘤嘤嘤丶"
         ],
         "DOMINATOR": [
           "吾携秋水揽星河",
@@ -2209,7 +2214,8 @@
           "豆本豆豆奶",
           "卖核弹的小女孩",
           "眼镜小宅",
-          "EruIluvatar"
+          "EruIluvatar",
+          "嘤嘤嘤丶"
         ]
       }
     },
