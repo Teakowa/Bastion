@@ -348,9 +348,10 @@ rule "increase bastion's aim speed to prep for flicking to a target entering ran
     @Condition eventPlayer.isDummy() != false
     @Condition eventPlayer.isAlive() == true
     @Condition eventPlayer.target == false
-    @Condition angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.aimPosition.getPosition())) >= 1
+    @Condition eventPlayer.aimPosition != null
+    @Condition angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.aimPosition)) >= 1
     
-    eventPlayer.turnSpeed = angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.aimPosition.getPosition()) * turnSpeedMultiplier)
+    eventPlayer.turnSpeed = angleBetweenVectors(eventPlayer.getFacingDirection(), directionTowards(eventPlayer.getEyePosition(), eventPlayer.aimPosition) * turnSpeedMultiplier)
     wait(getPeakServerLoad() / 1000)
     if ruleCondition:
         loop()
