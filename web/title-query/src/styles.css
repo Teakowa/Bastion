@@ -765,6 +765,12 @@ code {
   background: rgba(139, 46, 28, 0.86);
 }
 
+.title-tag-challenge {
+  border-color: rgba(96, 188, 255, 0.68);
+  color: #dff4ff;
+  background: rgba(32, 93, 145, 0.72);
+}
+
 .map-status-owned {
   border-color: rgba(104, 223, 166, 0.62);
   color: #dafee9;
@@ -1149,6 +1155,12 @@ code {
   border-color: rgba(186, 76, 47, 0.56);
   background: rgba(186, 76, 47, 0.14);
   color: #8d341d;
+}
+
+:root[data-theme='light'] .title-tag-challenge {
+  border-color: rgba(35, 129, 201, 0.48);
+  background: rgba(58, 144, 209, 0.14);
+  color: #1e5c89;
 }
 
 :root[data-theme='light'] .map-status-owned {

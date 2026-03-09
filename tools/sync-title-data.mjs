@@ -48,6 +48,24 @@ function ensureNoDuplicate(items, label) {
   }
 }
 
+function normalizeTitleTags(tags, index) {
+  if (tags == null) {
+    return [];
+  }
+
+  if (!Array.isArray(tags)) {
+    throw new Error(`titles[${index}].tags must be an array of non-empty strings when provided.`);
+  }
+
+  const normalizedTags = tags.map((tag, tagIndex) => {
+    ensureString(tag, `titles[${index}].tags[${tagIndex}] must be a non-empty string.`);
+    return tag.trim();
+  });
+
+  ensureNoDuplicate(normalizedTags, `tag in titles[${index}]`);
+  return normalizedTags;
+}
+
 function validateSourceShape(sourceData) {
   if (!sourceData || typeof sourceData !== 'object') {
     throw new Error('Title source must be a JSON object.');
@@ -83,6 +101,7 @@ function validateSourceShape(sourceData) {
     ensureString(title.condition, `titles[${index}].condition is required.`);
     ensureString(title.displayExpr, `titles[${index}].displayExpr is required.`);
     ensureString(title.colorExpr, `titles[${index}].colorExpr is required.`);
+    const tags = normalizeTitleTags(title.tags, index);
 
     if (!['active', 'retired'].includes(title.availability)) {
       throw new Error(`titles[${index}].availability must be "active" or "retired".`);
@@ -100,6 +119,7 @@ function validateSourceShape(sourceData) {
       label: title.label,
       category: title.category,
       condition: title.condition,
+      tags,
       availability: title.availability,
       displayExpr: title.displayExpr,
       colorExpr: title.colorExpr
@@ -387,6 +407,7 @@ function buildWebPayload(data, sourceVersion) {
       label: title.label,
       category: title.category,
       condition: title.condition,
+      ...(title.tags.length ? { tags: title.tags } : {}),
       availability: title.availability
     })),
     players,

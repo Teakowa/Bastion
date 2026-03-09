@@ -214,7 +214,8 @@
       "key": "WIN_HEAVEN",
       "label": "胜天半子",
       "category": "活动限定",
-      "condition": "随机事件 2.0 限时挑战达成指定组合条件。",
+      "tags": ["随机事件 2.0", "限时挑战"],
+      "condition": "达成指定组合条件。",
       "availability": "active",
       "displayExpr": "\"胜天半子\"",
       "colorExpr": "breathOrange"
@@ -277,7 +278,8 @@
       "key": "FLAME",
       "label": "狂暴烈焰",
       "category": "活动限定",
-      "condition": "狂暴之心限定挑战：低伤害+低阵亡并 25 分钟内通关。",
+      "tags": ["狂暴之心", "限时挑战"],
+      "condition": "低伤害+低阵亡并 25 分钟内通关。",
       "availability": "active",
       "displayExpr": "\"狂暴烈焰\"",
       "colorExpr": "heroColor[28]"
@@ -286,7 +288,8 @@
       "key": "PASS_EGGS",
       "label": "万蛋丛中过",
       "category": "活动限定",
-      "condition": "狂暴之心限定挑战：单局阵亡数 ≤ 5 并通关。",
+      "tags": ["狂暴之心", "限时挑战"],
+      "condition": "单局阵亡数 ≤ 5 并通关。",
       "availability": "active",
       "displayExpr": "\"万蛋丛中过\"",
       "colorExpr": "heroColor[28]"
@@ -313,7 +316,8 @@
       "key": "GAMBLE_KING",
       "label": "赌王",
       "category": "活动限定",
-      "condition": "随机事件 3.0 限时挑战：赌徒类事件连续 5 次增益。",
+      "tags": ["随机事件 3.0", "限时挑战"],
+      "condition": "赌徒类事件连续 5 次增益。",
       "availability": "active",
       "displayExpr": "\"赌王\"",
       "colorExpr": "breathGold"
@@ -322,8 +326,8 @@
       "key": "LUCKY_SHINE",
       "label": "福星高照",
       "category": "随机事件系列",
-      "condition": "单局抽到减益事件次数低于 10。",
-      "availability": "active",
+      "condition": "历史称号（当前不再发放）。",
+      "availability": "retired",
       "displayExpr": "\"福星高照\"",
       "colorExpr": "heroColor[32]"
     },
@@ -349,7 +353,8 @@
       "key": "MY_FATE",
       "label": "我命由我",
       "category": "活动限定",
-      "condition": "随机事件 1.0 限时挑战达成指定组合条件。",
+      "tags": ["随机事件 1.0", "限时挑战"],
+      "condition": "达成指定组合条件。",
       "availability": "active",
       "displayExpr": "\"我命由我\"",
       "colorExpr": "breathBlue"
@@ -358,7 +363,8 @@
       "key": "GOD_GAMBLER",
       "label": "赌神",
       "category": "活动限定",
-      "condition": "随机事件 4.0 限时挑战：达成幸运星+钢门并满足赌徒连胜条件。",
+      "tags": ["随机事件 4.0", "限时挑战"],
+      "condition": "达成幸运星+钢门并满足赌徒连胜条件。",
       "availability": "active",
       "displayExpr": "\"赌神\"",
       "colorExpr": "breathGold"
@@ -367,7 +373,8 @@
       "key": "LAO_DA",
       "label": "牢 大",
       "category": "活动限定",
-      "condition": "随机事件 4.0 限时挑战：达成 What Can I Say + 倒霉蛋并满足赌徒连败条件。",
+      "tags": ["随机事件 4.0", "限时挑战"],
+      "condition": "达成 What Can I Say + 倒霉蛋并满足赌徒连败条件。",
       "availability": "active",
       "displayExpr": "\" 牢 大 \"",
       "colorExpr": "null"

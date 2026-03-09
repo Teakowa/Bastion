@@ -463,6 +463,9 @@ watch(
                         <span class="title-head">
                           <span class="title-label">{{ title.label }}</span>
                           <span class="title-tag">{{ title.category }}</span>
+                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`owned-tag-${title.id}-${tag}`">
+                            {{ tag }}
+                          </span>
                           <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
                         </span>
                         <span class="title-condition">{{ title.condition }}</span>
@@ -519,6 +522,9 @@ watch(
                         <span class="title-head">
                           <span class="title-label">{{ title.label }}</span>
                           <span class="title-tag">{{ title.category }}</span>
+                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`missing-tag-${title.id}-${tag}`">
+                            {{ tag }}
+                          </span>
                           <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
                         </span>
                         <span class="title-condition">{{ title.condition }}</span>
