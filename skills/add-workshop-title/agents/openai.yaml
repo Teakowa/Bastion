@@ -1,5 +1,5 @@
 version: 1
 interface:
   display_name: Add Workshop Title
-  short_description: Add TITLE enum/text/color and wire player or map title grants safely.
-  default_prompt: Use $add-workshop-title to add a new title in this Bastion repository, including enum, allTitle entry, and optional player/map assignment updates.
+  short_description: Add or adjust title entries through title-source truth with safe sync checks.
+  default_prompt: Use $add-workshop-title to update data/title-source.json for title additions or display changes, then sync generated title artifacts and verify map/player constraints.

@@ -5,132 +5,60 @@ description: 为 Bastion Overwatch Workshop 项目新增或调整随机事件（
 
 # Add Workshop Event
 
-按以下顺序执行，保持最小改动，不做无关重排。
+按最小改动执行；不做无关重排。
 
-## 1) 判定事件类型、枚举与归属
+## 1) 触发条件
 
-1. 先确认事件类型：`Buff=eventType 0`、`Debuff=eventType 1`、`Mech=eventType 2`。
-2. 先确认对应枚举文件并新增枚举项（必须先做）：
-- Buff: [`src/constants/event_ids_buff.opy`](../../src/constants/event_ids_buff.opy)
-- Debuff: [`src/constants/event_ids_debuff.opy`](../../src/constants/event_ids_debuff.opy)
-- Mech: [`src/constants/event_ids_mech.opy`](../../src/constants/event_ids_mech.opy)
-3. 在 `COUNT` 之前插入新枚举名，禁止改动已有枚举顺序与历史映射注释。
-4. 先确认事件包（Pack）与开关策略：
-- 生产配置：[`src/config/eventConfig.opy`](../../src/config/eventConfig.opy)
-- 开发配置：[`src/config/eventConfigDev.opy`](../../src/config/eventConfigDev.opy)
-5. 优先使用枚举名（`BuffEventId.* / DebuffEventId.* / MechEventId.*`），不要在规则和配置里新增裸数字 ID。
+满足任一条件时使用：
 
-快速检查命令：
+1. 新增 Buff / Debuff / Mech 事件。
+2. 变更事件常量、本地化、配置注册或效果规则。
+3. 修复事件 ID 枚举与配置/规则映射不一致。
 
-```bash
-rg -n "enum BuffEventId|enum DebuffEventId|enum MechEventId|COUNT" src/constants/event_ids_*.opy
-rg -n "BuffEventId\\.|DebuffEventId\\.|MechEventId\\." src/config src/events/effects
-```
+## 2) 必改真源
 
-## 2) 添加常量（必做）
+按固定顺序修改，禁止跳步：
 
-在 [`src/constants/event_constants.opy`](../../src/constants/event_constants.opy) 增加该事件的常量定义，至少包含：
+1. `src/constants/event_ids_*.opy`：先加枚举，必须插入 `COUNT` 之前。
+2. `src/constants/event_constants.opy`：新增时长、权重与行为参数常量。
+3. `src/locales/zh-CN.opy` 与 `src/locales/en-US.opy`：新增 TITLE/DESC 键。
+4. `src/config/eventConfig.opy` 与 `src/config/eventConfigDev.opy`：注册事件并 append 对应 ID。
+5. `src/events/effects/*.opy`：实现或更新效果规则。
 
-1. `EVT_<TYPE>_<ID>_DURATION`
-2. `EVT_<TYPE>_<ID>_WEIGHT`
-3. 该事件行为参数常量（如速度、伤害、半径、间隔等）
-4. 可视化/音效常量（如需要）
+Stop-rule：任一步校验失败，先修当前层，再进入下一层。
 
-命名规则（当前仓库）：
+## 3) 生成/同步
 
-1. Buff 参数前缀：`EVT_<ID>_...` 或 `EVT_BUFF_<ID>_...`（与现有风格保持一致）
-2. Debuff 参数前缀：`EVT_DEBUFF_<ID>_...`
-3. Mech 参数前缀：`EVT_MECH_<ID>_...`
-4. 若常量文件里已有同类命名风格，跟随原风格，不引入第三种风格。
+事件改动通常无需额外生成脚本；需保证主线/开发配置同时更新并语义一致。
 
-## 3) 添加本地化文案（必做）
+仅检查入口一致性，不重排 include：
 
-同步更新：
+1. `src/main.opy`
+2. `src/devMain.opy`
 
-1. [`src/locales/zh-CN.opy`](../../src/locales/zh-CN.opy)
-2. [`src/locales/en-US.opy`](../../src/locales/en-US.opy)
+## 4) 验证
 
-新增键：
+执行 [references/event-template.md](references/event-template.md) 中的检查命令，至少确认：
 
-1. `STR_EVT_<TYPE>_<ID>_TITLE`
-2. `STR_EVT_<TYPE>_<ID>_DESC`
+1. 枚举项位于 `COUNT` 之前，且使用枚举名而非裸数字 ID。
+2. 两套 locale 均存在 title/desc 键，`format(...)` 占位符顺序匹配。
+3. `eventConfig` 与 `eventConfigDev` 均已注册。
+4. 规则条件可检查项齐全：
+- 包含 `eventType` 与 `eventId` 双条件。
+- 默认条件区门控；动作区判断仅用于例外。
+- 使用动作区判断时含显式 `wait(...)`。
+- 收尾清理状态与效果实体。
 
-要求：
+失败处理：
 
-1. `DESC` 占位符顺序与 `.format(...)` 参数严格一致。
-2. `zh-CN` 与 `en-US` 都必须存在对应键。
-3. 避免只改一种语言导致编译期或运行期文案缺失。
+1. 若枚举或配置映射断裂，回退到“枚举 -> 配置”层修复后再检规则。
+2. 若规则缺少 `wait(...)` 或清理逻辑，禁止提交。
 
-## 4) 注册事件配置（必做）
+## 5) 交付说明
 
-在两个配置文件都注册事件，确保主线/开发行为一致：
+回复时必须列明：
 
-1. [`src/config/eventConfig.opy`](../../src/config/eventConfig.opy)
-2. [`src/config/eventConfigDev.opy`](../../src/config/eventConfigDev.opy)
-
-为对应类型数组加入条目并 append ID：
-
-1. Buff: `buffEvent[BuffEventId.<NAME>] = [TITLE, DESC, DURATION, WEIGHT]` + `buffEventId.append(BuffEventId.<NAME>)`
-2. Debuff: `debuffEvent[DebuffEventId.<NAME>] = [...]` + `debuffEventId.append(DebuffEventId.<NAME>)`
-3. Mech: `mechEvent[MechEventId.<NAME>] = [...]` + `mechEventId.append(MechEventId.<NAME>)`
-
-注意：
-
-1. `eventConfig.opy` 与 `eventConfigDev.opy` 的开关粒度不同，保持该文件原有风格，不要强行统一结构。
-2. 若只改一个配置文件，必须在回复中明确原因。
-3. 本仓库存在“旧数字 ID -> 新枚举名”映射；新增事件时以枚举为唯一真值，避免手填数字导致错位。
-
-## 5) 实现事件效果规则（按类型）
-
-在对应文件新增规则（或扩展已有规则）：
-
-1. Buff: [`src/events/effects/buffEffects.opy`](../../src/events/effects/buffEffects.opy)
-2. Debuff: [`src/events/effects/debuffEffects.opy`](../../src/events/effects/debuffEffects.opy)
-3. Mech: [`src/events/effects/mechEffects.opy`](../../src/events/effects/mechEffects.opy)
-
-规则条件必须包含类型 + 枚举 ID：
-
-```opy
-@Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == <TYPE_NUM>, eventPlayer.eventId == <TYPE_ENUM>.<NAME>]) == true
-```
-
-实现时执行以下收尾原则：
-
-1. 结束时重置玩家修饰变量（如 `mod_speed_event`、`mod_dmg_taken`、`heal_recv` 等）。
-2. 销毁已创建效果实体（常用 `clearEventEffect()` 或 `destroyEffect(...)`）。
-3. 默认使用“条件区门控 + 动作区执行”：持续规则优先把主门槛写在 `conditions`，不要把动作区 `If` 当常规替代。
-4. 例外场景才使用动作区判断：`while` 自定义判断间隔，或多个子判断共用一个上级门槛。
-5. 使用动作区判断时必须显式 `wait(...)`，并在注释或命名中写明判定频率意图。
-6. 条件顺序遵循“高筛选率低成本优先，昂贵计算后置”。
-
-## 6) 双入口一致性检查
-
-入口文件默认已 include `eventConfig*` 和三个 `events/effects/*`，通常不需要新增 include。
-
-只做检查：
-
-1. [`src/main.opy`](../../src/main.opy)
-2. [`src/devMain.opy`](../../src/devMain.opy)
-
-确认没有因新增事件破坏既有 include 顺序。
-
-## 7) 提交前核对清单
-
-1. 常量是否已定义并命名一致。
-2. 枚举项是否已加入对应 `event_ids_*.opy` 且位于 `COUNT` 之前。
-2. `zh-CN` 与 `en-US` 是否都存在 title/desc。
-3. `eventConfig.opy` 与 `eventConfigDev.opy` 是否都注册了该事件。
-4. 规则是否包含正确 `eventType` 与 `eventId`。
-5. 持续规则是否默认采用条件区门控，动作区判断是否仅用于例外场景。
-6. 使用动作区判断的规则是否包含显式 `wait` 且频率意图清晰。
-7. 所有新增循环是否包含合理 `wait`。
-8. 收尾是否清理效果/状态，避免残留。
-
-## 8) 快速自检命令
-
-```bash
-rg -n "<TYPE_ENUM>\\.<NAME>|STR_EVT_(BUFF|DEBUFF|MECH)_<ID>|EVT_(BUFF|DEBUFF|MECH)_<ID>|eventType == <TYPE_NUM>" src/config src/events src/locales src/constants
-rg -n "enum <TYPE_ENUM>|<NAME>|COUNT" src/constants/event_ids_*.opy
-```
-
-需要样板时，读取：[`skills/add-workshop-event/references/event-template.md`](references/event-template.md)
+1. 事件类型与枚举名。
+2. 新增常量/本地化键/配置注册点。
+3. 规则关键门控与收尾策略。
+4. 已执行命令与结果。

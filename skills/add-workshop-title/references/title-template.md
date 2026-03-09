@@ -1,8 +1,8 @@
 # Title Change Templates
 
-## 1) Append title in JSON source
+## 1) 新增称号（真源 JSON）
 
-Keep existing order untouched; append at the end of `data/title-source.json -> titles`.
+仅在 `data/title-source.json -> titles` 末尾追加，保持既有顺序。
 
 ```json
 {
@@ -16,27 +16,7 @@ Keep existing order untouched; append at the end of `data/title-source.json -> t
 }
 ```
 
-Gradient color example:
-
-```json
-{
-  "displayExpr": "\"新称号文案\"",
-  "colorExpr": "[vect(255, 0, 0), vect(255, 255, 0), vect(0, 255, 255)]"
-}
-```
-
-Dev rainbow example (`null` means color is driven in `title/init.opy`):
-
-```json
-{
-  "displayExpr": "\"新称号文案\"",
-  "colorExpr": "null"
-}
-```
-
-## 2) Targeted player grant in JSON source
-
-Append title key to `players[*].titleKeys`:
+## 2) 玩家授予（真源 JSON）
 
 ```json
 {
@@ -45,11 +25,9 @@ Append title key to `players[*].titleKeys`:
 }
 ```
 
-Rule: keep `players` order stable; add new players only at the end.
+规则：新增玩家只允许追加到 `players` 末尾。
 
-## 3) Map reward grant in JSON source
-
-Update `mapTitles[*].holders` slots:
+## 3) 地图奖励（真源 JSON）
 
 ```json
 {
@@ -58,18 +36,24 @@ Update `mapTitles[*].holders` slots:
   "holders": {
     "PIONEER": ["A"],
     "CONQUEROR": ["A", "B"],
-    "DOMINATOR": ["A", "B"]
+    "DOMINATOR": ["A"]
   }
 }
 ```
 
-Rule: `DOMINATOR` must be a subset of `CONQUEROR`.
+规则：`DOMINATOR` 必须是 `CONQUEROR` 子集。
 
-## 4) Sync and checks
+## 4) 验证命令
 
 ```bash
 pnpm run sync:title-data
 pnpm run test:title-data-sync
-rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED MAP_TITLE_DATA|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
-rg -n "\"key\":|\"titleKeys\":|\"mapTitles\":|\"holders\":" data/title-source.json
+pnpm run build:title-query
+rg -n 'AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED MAP_TITLE_DATA|AUTO-GENERATED ALL_TITLE|DATA_' src/title/title-cn.opy
+rg -n '"key":|"titleKeys":|"mapTitles":|"holders":' data/title-source.json
 ```
+
+## 5) 失败排查
+
+1. 生成产物差异：仅修 `data/title-source.json`，再同步。
+2. include 校验失败：只恢复缺失 include，不重排入口顺序。

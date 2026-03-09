@@ -7,64 +7,63 @@ description: 为 Bastion Overwatch Workshop 项目新增或调整称号（TITLE 
 
 按最小改动执行；禁止重排已有称号与玩家顺序。
 
-## 1) 判定变更类型
+## 1) 触发条件
 
-1. 新增通用称号（新增可授予称号）
-2. 给特定玩家授予称号（`data/title-source.json` 的 `players/titleKeys`）
-3. 给地图奖励链路接入称号（`data/title-source.json` 的 `mapTitles`）
-4. 调整称号显示文案/颜色（`data/title-source.json` 的 `displayExpr/colorExpr`）
+满足任一条件时使用：
 
-## 2) 修改真源文件（必做）
+1. 新增通用称号。
+2. 调整称号显示文案或颜色。
+3. 将称号授予特定玩家。
+4. 将称号接入地图奖励（`PIONEER/CONQUEROR/DOMINATOR`）。
 
-文件：`data/title-source.json`
+## 2) 必改真源
 
-1. 新增称号：在 `titles` 末尾追加对象，保证既有顺序不变。
-2. 必填字段：`key`、`label`、`category`、`condition`、`availability`、`displayExpr`、`colorExpr`。
-3. 若称号需要定向发放：在目标玩家 `titleKeys` 里追加对应 `key`。
-4. 若包含地图奖励：修改目标 `mapTitles[*].holders` 对应槽位。
-5. 玩家顺序即索引语义：新增玩家只允许追加到 `players` 末尾，禁止重排。
+唯一真源：`data/title-source.json`。
 
-颜色策略（写入 `colorExpr`）：
-- `null`：由 `title/init.opy` 的开发者彩虹逻辑接管
-- `vect(r, g, b)` 或 `heroColor[n]`：固定颜色
-- 颜色数组：渐变轮换（`title/init.opy` 已支持）
+1. 新称号只允许追加到 `titles` 末尾。
+2. 玩家不存在时只允许追加到 `players` 末尾。
+3. 地图奖励只改对应 `mapTitles[*].holders`。
+4. 禁止手改生成产物：`src/title/title-cn.opy`、`web/title-query/public/data/titles.json`。
 
-## 3) 同步生成（必做）
+关键约束：
+
+1. `key` 必须唯一。
+2. `DOMINATOR` 必须是同图 `CONQUEROR` 的子集。
+3. `colorExpr = null` 表示由 `title/init.opy` 彩虹逻辑接管。
+
+## 3) 生成/同步
+
+必跑：
 
 ```bash
 pnpm run sync:title-data
 ```
 
-## 4) 双入口一致性检查
+仅检查双入口 include，不重排顺序：
 
-只检查，不轻易修改：
+1. `src/main.opy`
+2. `src/devMain.opy`
 
-1. `src/main.opy` 是否仍 include `title/title-cn.opy` 与 `title/init.opy`
-2. `src/devMain.opy` 是否仍 include `title/title-cn.opy` 与 `title/init.opy`
-3. 不重排 include 顺序
+两者均需保留 `title/title-cn.opy` 与 `title/init.opy`。
 
-## 5) 文档同步
+## 4) 验证
 
-若新增了称号规则或授予策略，更新：
+执行 [references/title-template.md](references/title-template.md) 中的检查命令，至少确认：
 
-1. `docs/modules/08-player-effects-title.md`
+1. 自动生成标记区块完整。
+2. `data/title-source.json` 未发生无关重排。
+3. `sync:title-data` 与 `test:title-data-sync` 通过。
 
-## 6) 提交前核对清单
+失败处理：
 
-1. `data/title-source.json` 中旧 `titles/players/mapTitles` 顺序未被重排。
-2. 新称号字段完整，`key` 唯一。
-3. 若改地图奖励，`DOMINATOR` 持有者均在同图 `CONQUEROR` 槽位内。
-4. `src/title/title-cn.opy` 受管区块存在自动生成标记（含 MAP_TITLE_DATA）。
-5. 无无关格式化与重排。
+1. 若检测到生成产物与真源不一致，回到 `data/title-source.json` 修正后重新同步。
+2. 若发现 `DOMINATOR` 不是 `CONQUEROR` 子集，先修 map holders 再重新同步。
 
-## 7) 快速自检命令
+## 5) 交付说明
 
-```bash
-pnpm run sync:title-data
-pnpm run test:title-data-sync
-rg -n "AUTO-GENERATED TITLE ENUM|AUTO-GENERATED TITLE PLAYER DATABASE|AUTO-GENERATED MAP_TITLE_DATA|AUTO-GENERATED ALL_TITLE|DATA_" src/title/title-cn.opy
-rg -n "\"key\":|\"players\":|\"titleKeys\":|\"mapTitles\":|\"holders\":" data/title-source.json
-rg -n "title/title-cn\.opy|title/init\.opy" src/main.opy src/devMain.opy
-```
+回复时必须列明：
 
-样板片段见 [references/title-template.md](references/title-template.md)。
+1. 新增/变更的称号 key。
+2. 受影响玩家与地图奖励槽位。
+3. 已执行的同步/验证命令及结果。
+4. 若有未执行命令，给出原因与风险。

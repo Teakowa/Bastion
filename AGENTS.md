@@ -61,3 +61,12 @@ If a rule is referenced elsewhere, keep only a short pointer and do not duplicat
 - Manual env version bump (release helper): `pnpm run bump:env-version`
 - Release trigger: push to `main` (workflow auto-runs `pnpm run bump:env-version`, builds release artifacts, tags `v{VERSION}`, and publishes GitHub Release)
 - TODO: Document one canonical local decompile verification command once standardized.
+
+## Skills
+
+- `add-workshop-title`: title source truth updates via `data/title-source.json` with generated artifacts synced by script.
+- `grant-player-title`: player/global/map title grants with order/index safety and map-slot constraints.
+- `add-workshop-event`: event enum/constants/i18n/config/effects workflow with `COUNT` and rule safety checks.
+- `session-skill-maintainer`: summarize recent sessions and orchestrate skill maintenance updates with verifiable checks.
+
+Skill maintenance convention: keep AGENTS as route-only pointers; detailed step-by-step rules remain in each `skills/*/SKILL.md` and `skills/*/references/*`.
