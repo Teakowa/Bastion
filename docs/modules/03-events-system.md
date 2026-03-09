@@ -85,6 +85,7 @@
 
 ## 性能与稳定性点
 
+- Canonical 规则来源：`docs/agents/performance-loop-safety.md`（此处仅保留路由指针，不复制规则正文）。
 - 大量 `eachPlayer` 规则中采用 `wait(...)`、`waitUntil(...)`、短路条件。
 - 「死亡延迟（Buff 11）」在致命伤害帧立即施加 `UNKILLABLE`，并增加“未处于 UNKILLABLE”前置条件，避免多段伤害（如堡垒榴弹）导致效果在死亡后才误触发。
 - 「胜利意志（Buff 19）」新增 `eventPlayer.isAlive() == true` 前置条件，避免死亡后落入无敌触发流程。

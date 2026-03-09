@@ -20,3 +20,8 @@ For detailed rationale and examples, read:
 
 1. `docs/improve-server-stability.md`
 2. `docs/Loops.md`
+
+## Operational Scan Command
+
+Use `pnpm run perf:scan` for repeatable static loop/performance hotspot reporting.
+Use `pnpm run perf:scan --strict` when you need non-zero exit on high-risk findings.

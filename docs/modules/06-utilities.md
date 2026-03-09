@@ -58,6 +58,7 @@
 
 ## 关键实现模式
 
+- Canonical 规则来源：`docs/agents/performance-loop-safety.md`（此处仅保留路由指针，不复制规则正文）。
 - 通过 `wait(getAverageServerLoad()/...)` 做负载自适应节流
 - 长循环均包含 wait，避免无等待循环
 - 高复用动作封装为 subroutine，规则中只做触发与组合

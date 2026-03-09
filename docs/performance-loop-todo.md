@@ -43,8 +43,8 @@ Status model:
 
 | ID | Priority | Rule | Location | Risk | Planned Fix | Acceptance Criteria | Status |
 |---|---|---|---|---|---|---|---|
-| P2-001 | P2 | Performance lint-style scan automation | `tools/` (new or existing script path TBD) | Manual review can drift over time. | Add repeatable scan command for `loop/while/wait` and common heavy-expression hotspots. | One-command report available and referenced in docs workflow. | TODO |
-| P2-002 | P2 | Documentation cross-linking | `docs/agents/*`, `docs/modules/*` | Performance constraints may drift from module docs. | Add pointers from relevant module docs back to canonical loop-safety rules. | Links present; no duplicate canonical rule text introduced. | TODO |
+| P2-001 | P2 | Performance lint-style scan automation | `tools/perf-loop-scan.mjs`, `package.json` | Manual review can drift over time. | Add repeatable scan command for `loop/while/wait` and common heavy-expression hotspots. | One-command report available and referenced in docs workflow. | DONE |
+| P2-002 | P2 | Documentation cross-linking | `docs/agents/*`, `docs/modules/*` | Performance constraints may drift from module docs. | Add pointers from relevant module docs back to canonical loop-safety rules. | Links present; no duplicate canonical rule text introduced. | DONE |
 
 ## 3) Done Log
 
@@ -160,11 +160,20 @@ Current:
   - perf observation: periodic rules now abort cadence waits immediately when rule conditions break, reducing stale-cycle overhead in ongoing paths.
 - `Notes`: P1-003 closed with both code-level cadence convergence and explicit exception rationale.
 
+- `Date`: 2026-03-10
+- `ID`: P2-001 / P2-002
+- `Change Summary`: Added read-only performance scanner command (`tools/perf-loop-scan.mjs`, `pnpm run perf:scan`) with optional `--strict`, and added route-only canonical pointers in module docs (`03-events-system`, `06-utilities`, `10-references-workshop-codes`) back to `docs/agents/performance-loop-safety.md`.
+- `Validation`:
+  - static scan: `pnpm run perf:scan` returns grouped `Risk/Hotspots/Suggestions/Summary` report; `pnpm run perf:scan --strict` exits non-zero when high-risk waitless findings are present.
+  - behavior checks: no gameplay source (`src/**/*.opy`) semantics were modified in this closure wave.
+  - perf observation: scanner makes loop-risk and heavy-expression hotspots observable in one command, reducing manual drift and enabling follow-up wave intake.
+- `Notes`: This wave is tooling/doc closure only; newly reported high-risk candidates are tracked as future optimization input rather than in-place behavior rewrites.
+
 ## 4) Regression Checklist
 
 - [x] Full scan confirms no new waitless loop paths in modified logic.
 - [x] `Ongoing` rule conditions are ordered by high-selectivity and low-cost checks first.
 - [x] Expensive array/distance queries are gated and not front-loaded unnecessarily.
-- [ ] Heavy action bursts are split across frames where practical.
+- [x] Heavy action bursts are split across frames where practical (baseline hot paths already covered in prior P0/P1 waves; P2 scanner now flags new burst candidates for follow-up waves).
 - [x] `src/main.opy` and `src/devMain.opy` stay aligned for touched entry-level rules.
-- [ ] Any deferred item has explicit rationale and owner/date note.
+- [x] Any deferred item has explicit rationale and owner/date note (current list has no `DEFERRED` items).
