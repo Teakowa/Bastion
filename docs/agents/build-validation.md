@@ -7,8 +7,8 @@ This document is the canonical rule source for build commands and validation wor
 1. `pnpm run build` (build both entries)
 2. `pnpm run build:main`
 3. `pnpm run build:dev`
-4. `pnpm run build:main:en`, `pnpm run build:dev:en`
-5. `pnpm run build:main:zh`, `pnpm run build:dev:zh`
+4. `pnpm run build:main:en`
+5. `pnpm run build:main:zh`
 6. `pnpm run build:release`
 
 ## CI References

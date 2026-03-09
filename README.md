@@ -67,14 +67,12 @@ Enable in Workshop settings.
 
 ### CI Auto Release (pnpm)
 
-This project supports automatic compile-and-release of Workshop files via GitHub Actions when pushing `v*` tags:
+This project supports automatic compile-and-release of Workshop files via GitHub Actions when pushing to `main`:
 
 - Workflow file: `.github/workflows/release.yml`
 - Release artifacts (dual-language):
-  - `build/main.en-US.ow`
-  - `build/devMain.en-US.ow`
-  - `build/main.zh-CN.ow`
-  - `build/devMain.zh-CN.ow`
+  - `build/en-US.ow`
+  - `build/zh-CN.ow`
 - Package manager: `pnpm`
 
 Local build:
