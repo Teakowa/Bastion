@@ -107,11 +107,12 @@ const groupedTitles = computed(() => {
 const groupedMapTitles = computed(() => {
   const player = showcasedPlayer.value;
   const maps = mapTitles.value ?? [];
-  const mapTitleOrder = ['PIONEER', 'CONQUEROR', 'DOMINATOR'];
+  const mainTitleOrder = ['CONQUEROR', 'DOMINATOR'];
+  const pioneerKey = 'PIONEER';
 
   return maps.map((mapItem) => {
     const status = player?.mapTitleStatus?.[mapItem.mapKey] ?? {};
-    const orderedSlots = mapTitleOrder
+    const mainSlots = mainTitleOrder
       .map((slotKey, index) => ({
         key: slotKey,
         label: MAP_TITLE_LABELS[slotKey],
@@ -125,26 +126,37 @@ const groupedMapTitles = computed(() => {
         return left.order - right.order;
       });
 
-    const ownedSlots = orderedSlots.filter((slot) => slot.owned).length;
-    const missingSlots = orderedSlots.length - ownedSlots;
+    const pioneerSlot = {
+      key: pioneerKey,
+      label: MAP_TITLE_LABELS[pioneerKey],
+      owned: Boolean(status[pioneerKey]),
+      order: 0
+    };
+
+    const mainOwnedSlots = mainSlots.filter((slot) => slot.owned).length;
+    const mainMissingSlots = mainSlots.length - mainOwnedSlots;
+    const orderedSlots = [pioneerSlot, ...mainSlots];
 
     return {
       ...mapItem,
+      mainSlots,
+      pioneerSlot,
       orderedSlots,
-      ownedSlots,
-      totalSlots: orderedSlots.length,
-      missingSlots,
-      isComplete: missingSlots === 0
+      mainOwnedSlots,
+      mainTotalSlots: mainSlots.length,
+      mainMissingSlots,
+      isMainComplete: mainMissingSlots === 0,
+      isPioneerOwned: pioneerSlot.owned
     };
   });
 });
 
 const incompleteMapTitles = computed(() =>
   groupedMapTitles.value
-    .filter((mapItem) => !mapItem.isComplete)
+    .filter((mapItem) => !mapItem.isMainComplete)
     .sort((left, right) => {
-      if (right.missingSlots !== left.missingSlots) {
-        return right.missingSlots - left.missingSlots;
+      if (right.mainMissingSlots !== left.mainMissingSlots) {
+        return right.mainMissingSlots - left.mainMissingSlots;
       }
       return left.mapLabel.localeCompare(right.mapLabel, 'zh-Hans-CN');
     })
@@ -152,15 +164,22 @@ const incompleteMapTitles = computed(() =>
 
 const completeMapTitles = computed(() =>
   groupedMapTitles.value
-    .filter((mapItem) => mapItem.isComplete)
+    .filter((mapItem) => mapItem.isMainComplete)
     .sort((left, right) => left.mapLabel.localeCompare(right.mapLabel, 'zh-Hans-CN'))
 );
 
-const mapSummary = computed(() => ({
-  incompleteCount: incompleteMapTitles.value.length,
-  completeCount: completeMapTitles.value.length,
-  totalCount: groupedMapTitles.value.length
-}));
+const mapSummary = computed(() => {
+  const totalCount = groupedMapTitles.value.length;
+  const pioneerOwnedCount = groupedMapTitles.value.filter((mapItem) => mapItem.isPioneerOwned).length;
+
+  return {
+    incompleteCount: incompleteMapTitles.value.length,
+    completeCount: completeMapTitles.value.length,
+    totalCount,
+    pioneerOwnedCount,
+    pioneerMissingCount: totalCount - pioneerOwnedCount
+  };
+});
 
 const sourceDisplay = computed(() => {
   if (!meta.value) {
@@ -517,7 +536,7 @@ watch(
       <section class="catalog-panel card ow-card" v-if="hasQuery">
         <header class="card-header">
           <p>地图专属称号</p>
-          <h2>开拓者 / 征服者 / 主宰</h2>
+          <h2>已获取 / 未获取</h2>
         </header>
 
         <div v-if="loading" class="state-block">正在获取地图称号进度…</div>
@@ -525,9 +544,11 @@ watch(
         <div v-else-if="!showcasedPlayer" class="state-block">请选择玩家后查看地图专属称号。</div>
         <div v-else class="map-section-stack">
           <header class="map-summary">
-            <span class="map-summary-item map-summary-item-alert">未获得 {{ mapSummary.incompleteCount }}</span>
+            <span class="map-summary-item map-summary-item-alert">未完成 {{ mapSummary.incompleteCount }}</span>
             <span class="map-summary-item map-summary-item-complete">已完成 {{ mapSummary.completeCount }}</span>
             <span class="map-summary-item">总计 {{ mapSummary.totalCount }}</span>
+            <span class="map-summary-item map-summary-item-complete">开拓者 {{ mapSummary.pioneerOwnedCount }}</span>
+            <span class="map-summary-item map-summary-item-pioneer">未开拓 {{ mapSummary.pioneerMissingCount }}</span>
           </header>
 
           <section class="map-block map-block-priority">
@@ -535,25 +556,39 @@ watch(
               <h3>未获得地图</h3>
               <span class="map-block-count">{{ mapSummary.incompleteCount }}</span>
             </header>
-            <p class="map-block-empty" v-if="!incompleteMapTitles.length">全部地图称号已收集完成。</p>
+            <p class="map-block-empty" v-if="!incompleteMapTitles.length">全部地图主进度已收集完成。</p>
             <div v-else class="map-title-grid">
               <article class="map-title-card map-title-card-priority" v-for="mapItem in incompleteMapTitles" :key="mapItem.mapKey">
                 <header class="map-title-head">
                   <p class="map-title-name">{{ mapItem.mapLabel }}</p>
-                  <span class="map-title-progress">{{ mapItem.ownedSlots }} / {{ mapItem.totalSlots }}</span>
+                  <span class="map-title-progress">{{ mapItem.mainOwnedSlots }} / {{ mapItem.mainTotalSlots }}</span>
                 </header>
-                <ul class="status-title-list">
-                  <li v-for="slot in mapItem.orderedSlots" :key="`${mapItem.mapKey}-${slot.key}`">
-                    <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
-                      <span class="title-head">
-                        <span class="title-label">{{ slot.label }}</span>
-                        <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
-                          {{ slot.owned ? '已获得' : '未获得' }}
+                <section class="map-slot-group map-slot-group-main">
+                  <p class="map-slot-group-title">主进度（征服者 / 主宰）</p>
+                  <ul class="status-title-list">
+                    <li v-for="slot in mapItem.mainSlots" :key="`${mapItem.mapKey}-${slot.key}`">
+                      <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
+                        <span class="title-head">
+                          <span class="title-label">{{ slot.label }}</span>
+                          <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
+                            {{ slot.owned ? '已获得' : '未获得' }}
+                          </span>
                         </span>
                       </span>
+                    </li>
+                  </ul>
+                </section>
+                <section class="map-slot-group map-slot-group-pioneer">
+                  <p class="map-slot-group-title">开拓者</p>
+                  <span class="title-chip" :class="mapItem.pioneerSlot.owned ? 'title-chip-owned' : 'title-chip-missing'">
+                    <span class="title-head">
+                      <span class="title-label">{{ mapItem.pioneerSlot.label }}</span>
+                      <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">
+                        {{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}
+                      </span>
                     </span>
-                  </li>
-                </ul>
+                  </span>
+                </section>
               </article>
             </div>
           </section>
@@ -583,20 +618,34 @@ watch(
                 <article class="map-title-card map-title-card-complete" v-for="mapItem in completeMapTitles" :key="mapItem.mapKey">
                   <header class="map-title-head">
                     <p class="map-title-name">{{ mapItem.mapLabel }}</p>
-                    <span class="map-title-progress">{{ mapItem.ownedSlots }} / {{ mapItem.totalSlots }}</span>
+                    <span class="map-title-progress">{{ mapItem.mainOwnedSlots }} / {{ mapItem.mainTotalSlots }}</span>
                   </header>
-                  <ul class="status-title-list">
-                    <li v-for="slot in mapItem.orderedSlots" :key="`${mapItem.mapKey}-${slot.key}`">
-                      <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
-                        <span class="title-head">
-                          <span class="title-label">{{ slot.label }}</span>
-                          <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
-                            {{ slot.owned ? '已获得' : '未获得' }}
+                  <section class="map-slot-group map-slot-group-main">
+                    <p class="map-slot-group-title">主进度（征服者 / 主宰）</p>
+                    <ul class="status-title-list">
+                      <li v-for="slot in mapItem.mainSlots" :key="`${mapItem.mapKey}-${slot.key}`">
+                        <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
+                          <span class="title-head">
+                            <span class="title-label">{{ slot.label }}</span>
+                            <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
+                              {{ slot.owned ? '已获得' : '未获得' }}
+                            </span>
                           </span>
                         </span>
+                      </li>
+                    </ul>
+                  </section>
+                  <section class="map-slot-group map-slot-group-pioneer">
+                    <p class="map-slot-group-title">开拓者</p>
+                    <span class="title-chip" :class="mapItem.pioneerSlot.owned ? 'title-chip-owned' : 'title-chip-missing'">
+                      <span class="title-head">
+                        <span class="title-label">{{ mapItem.pioneerSlot.label }}</span>
+                        <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">
+                          {{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}
+                        </span>
                       </span>
-                    </li>
-                  </ul>
+                    </span>
+                  </section>
                 </article>
               </div>
             </div>
