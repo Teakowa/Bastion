@@ -1037,7 +1037,8 @@ code {
 :root[data-theme='light'] .series-name,
 :root[data-theme='light'] .title-label,
 :root[data-theme='light'] .map-title-name,
-:root[data-theme='light'] .group-empty {
+:root[data-theme='light'] .group-empty,
+:root[data-theme='light'] .map-block-empty {
   color: var(--ow-text);
 }
 
