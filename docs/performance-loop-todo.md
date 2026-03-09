@@ -39,7 +39,7 @@ Status model:
 |---|---|---|---|---|---|---|---|
 | P1-001 | P1 | Health-pool cleanup loop | `src/utilities/system/healthPool.opy` | Per-player sort + cleanup can spike when queues grow. | Cap per-cycle removals or batch with explicit frame slicing under large queues. | Cleanup remains correct; large queue processing no longer concentrates in one frame. | DONE |
 | P1-002 | P1 | Bastion aim/turn update micro-loops | `src/bastion/init.opy` | Several independent loops each tick can stack cost on Team 2 bots. | Review merge opportunities and cadence harmonization for shared gating rules. | No behavior regression in aim/turn responsiveness; reduced duplicate reevaluation work. | DONE |
-| P1-003 | P1 | Event loop consistency pass | `src/events/effects/buffEffects.opy` | Many ongoing loop patterns with heterogeneous wait strategy increase maintenance risk. | Normalize loop pattern templates (`wait` + `loop`) and annotate exceptions. | Consistent loop safety pattern applied; exceptions documented with rationale. | TODO |
+| P1-003 | P1 | Event loop consistency pass | `src/events/effects/buffEffects.opy` | Many ongoing loop patterns with heterogeneous wait strategy increase maintenance risk. | Normalize loop pattern templates (`wait` + `loop`) and annotate exceptions. | Consistent loop safety pattern applied; exceptions documented with rationale. | DONE |
 
 | ID | Priority | Rule | Location | Risk | Planned Fix | Acceptance Criteria | Status |
 |---|---|---|---|---|---|---|---|
@@ -150,6 +150,15 @@ Current:
   - behavior checks: no damage/heal/knockdown formulas, durations, or tick intervals were changed; event semantics and trigger domains remain intact.
   - perf observation: reduced repeated `getLivingPlayers/filter/sorted/distance` work in high-frequency debuff loops; no new waitless path introduced.
 - `Notes`: Mech sustained-loop review found no additional low-risk optimization points requiring code changes in this closure wave.
+
+- `Date`: 2026-03-10
+- `ID`: P1-003
+- `Change Summary`: Standardized sustained-loop cadence handling in `src/events/effects/buffEffects.opy` by converting representative periodic rules to `wait(..., Wait.ABORT_WHEN_FALSE) + loop()` style (`黑粉来袭`, `↑↑↓↓←→←→BABA`, `向我靠拢`, `鼓舞士气 ProMax - 触发器`, `F5`, `治疗光塔 ProMax`) and documenting lifecycle-bound `waitUntil` exceptions.
+- `Validation`:
+  - static scan: selected periodic rules now use consistent abortable cadence waits before `loop()`; lifecycle-bound exceptions (`钢铁防线`, `心之钢 Effect`, `危险感知`, `有我有你` initiator/receiver, `费斯卡光子护盾`, `胜利意志`) are explicitly documented in-rule.
+  - behavior checks: no event formulas, durations, trigger predicates, or variable-slot contracts changed in `buffEffects.opy`.
+  - perf observation: periodic rules now abort cadence waits immediately when rule conditions break, reducing stale-cycle overhead in ongoing paths.
+- `Notes`: P1-003 closed with both code-level cadence convergence and explicit exception rationale.
 
 ## 4) Regression Checklist
 

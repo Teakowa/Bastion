@@ -3,6 +3,12 @@
 #Only remove the following directive if the gamemode does not use tricks such as A+0, A*0, "am" == "**", etc which would otherwise be optimized out.
 #!optimizeStrict
 
+# Loop consistency note:
+# Preferred sustained-loop template:
+# action -> wait(cadence) -> if ruleCondition: loop() -> cleanup.
+# Intentional exceptions keep waitUntil or event-split patterns where external
+# lifecycle synchronization is required.
+
 
 rule "未经原作者许可，任何人不得将以下代码进行二次创作与发布":
     @Disabled
@@ -39,6 +45,7 @@ rule "[VishkarEvent]: 钢铁防线":
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
     eventPlayer.mod_dmg_taken = EVT_2_DMG_TAKEN
     updatePlayerStats()
+    # Exception: effect teardown is bound to event lifecycle completion.
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     removeHealthPool(eventPlayer.healthId[1])
     eventPlayer.mod_dmg_taken = 0
@@ -89,7 +96,7 @@ rule "[VishkarEvent]: 黑粉来袭":
     wait(getAverageServerLoad() / 100 * 0.032)
     eventPlayer.addHealthPool(EVT_5_HEALTH_TYPE, round(EVT_5_HEALTH_FLAT + eventPlayer.getMaxHealth() * EVT_5_HEALTH_MAXHP_FACTOR), false, false)
     eventPlayer.hp_data.append([[getTotalTimeElapsed() + 2, getLastCreatedHealthPool()]])
-    wait(1.96)
+    wait(1.96, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
     # eventPlayer.hudText = ""
@@ -144,6 +151,7 @@ rule "[VishkarEvent]: 心之钢 Effect":
     createEffect(getAllPlayers(), Effect.WINSTON_PRIMAL_RAGE, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
     lbl_0:
+    # Exception: one-shot effect owner, ends strictly on event lifecycle.
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     clearEventEffect()
 
@@ -171,6 +179,7 @@ rule "[VishkarEvent]: 危险感知":
     eventPlayer.mod_speed_event = EVT_9_SPEED_BOOST
     eventPlayer.mod_dmg_taken = EVT_9_DMG_TAKEN
     updatePlayerStats()
+    # Exception: cadence starts after threat list drains, then applies linger window.
     waitUntil(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) == 0, eventPlayer.eventDuration)
     wait(EVT_9_LINGER_TIME)
     if ruleCondition:
@@ -249,6 +258,7 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.SYMBIOSIS]) == true
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     
+    # Exception: this initiator/receiver pair is state-sync workflow, not cadence loop.
     # 1. 寻找目标 (排除自己、已获胜、已从属于他人、已被附身的玩家)
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     # 这里把 possessed 视为数组判断，len(p.possessed) == 0 代表未被附身
@@ -384,6 +394,7 @@ rule "[VishkarEvent]: 有我有你 (Receiver - Stats Sync)":
     
     
     # 3. 等待附身结束 (监听数组是否被置空)
+    # Exception: waitUntil is required to sync with initiator detach lifecycle.
     # 同时监控来源玩家状态，如果来源玩家中途退游戏，也需要自动清理
     waitUntil(eventPlayer.possessed[0].eventDuration <= 2 or len(eventPlayer.possessed) == 0 or not entityExists(eventPlayer.possessed[0]), 9999)
     
@@ -416,7 +427,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(EVT_13_CHECKPOINT_INTERVAL)
+    wait(EVT_13_CHECKPOINT_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
 
@@ -451,6 +462,7 @@ rule "[VishkarEvent]: 费斯卡光子护盾":
     
     wait()
     getPlayers(Team.1).target = eventPlayer
+    # Exception: shield ownership syncs to death/event end boundary.
     waitUntil(eventPlayer.isDead(), eventPlayer.eventDuration)
     eventPlayer.eventDuration = 0
     getPlayers(Team.1).target = null
@@ -464,6 +476,7 @@ rule "[VishkarEvent]: 费斯卡光子护盾":
     wait()
     eventPlayer.addHealthPool(Health.SHIELDS, eventPlayer.target.getMaxHealth() * EVT_14_SHIELD_PERCENT if eventPlayer.target.getMaxHealth() * EVT_14_SHIELD_PERCENT > EVT_14_MIN_SHIELD else EVT_14_MIN_SHIELD, true, false)
     eventPlayer.healthId[2] = getLastCreatedHealthPool()
+    # Exception: bonded target shield must track target lifecycle directly.
     waitUntil(not eventPlayer.target.isAlive() or eventPlayer.target == null, eventPlayer.target.eventDuration)
     removeHealthPool(eventPlayer.healthId[2])
     eventPlayer.healthId[2] = null
@@ -484,10 +497,10 @@ rule "[VishkarEvent]: 向我靠拢":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.REGROUP_CALL]) == true
     
-    wait(EVT_16_CHECK_INTERVAL)
+    wait(EVT_16_CHECK_INTERVAL, Wait.ABORT_WHEN_FALSE)
     eventPlayer.eventEffectPlayers = [player for player in getLivingPlayers(Team.1) if distance(eventPlayer, player) <= EVT_16_RADIUS and isInLoS(eventPlayer, player) == true and not player.hasStatus(Status.INVINCIBLE)]
     eventPlayer.eventEffectPlayers.invincible = [true, eventPlayer, EVT_16_INVINCIBLE_DURATION]
-    wait(0.5)
+    wait(0.5, Wait.ABORT_WHEN_FALSE)
     eventPlayer.eventEffectPlayers = null
     if ruleCondition:
         loop()
@@ -575,6 +588,7 @@ rule "[VishkarEvent]: 胜利意志":
     @Condition eventPlayer.isAlive() == true
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.WILL_TO_WIN, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_19_TRIGGER_HP_PERCENT]) == true
     
+    # Exception: multi-phase revive/invincible flow keeps explicit phase waits.
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
     eventPlayer.setStatusEffect(eventPlayer, Status.PHASED_OUT, 0.016)
     wait()
@@ -795,7 +809,7 @@ rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
     
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_WHIP_SHOT_HEAL_AREA, Color.TEAM_1, eventPlayer, 200)
     getPlayersInRadius(eventPlayer, EVT_28_HEAL_RADIUS, Team.1, LosCheck.SURFACES).startHealingOverTime(eventPlayer, EVT_28_HOT_DURATION, EVT_28_HOT_FLAT + eventPlayer.getMaxHealth() * EVT_28_HOT_MAXHP_FACTOR)
-    wait(EVT_28_TICK_INTERVAL)
+    wait(EVT_28_TICK_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
     clearEventEffect()
@@ -829,7 +843,7 @@ rule "[VishkarEvent]: F5 (循环刷新)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.F5_REFRESH]) == true
     
     resetPlayerCD()
-    wait(EVT_30_REFRESH_INTERVAL)
+    wait(EVT_30_REFRESH_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
 
@@ -844,7 +858,7 @@ rule "[VishkarEvent]: 治疗光塔 ProMax (全图奶)":
         smallMessage(getPlayers(Team.1).exclude(eventPlayer), "  {0}  受到来自 {1}（{2}） 治疗光塔 ProMax 的治疗效果".format(abilityIconString(Hero.ILLARI, Button.ABILITY_2), eventPlayer, eventPlayer.getHero()))
     lbl_0:
     getPlayers(Team.1).startHealingOverTime(eventPlayer, EVT_31_HOT_DURATION, round(EVT_31_HEAL_FLAT + eventPlayer.getMaxHealth() * EVT_31_HEAL_MAXHP_FACTOR))
-    wait(EVT_31_HOT_DURATION)
+    wait(EVT_31_HOT_DURATION, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
     clearEventEffect()
