@@ -506,8 +506,8 @@ enum MapTITLEKey:
 # 阿育陀耶
 #!define DATA_AYUTTHAYA [ \
    playerNameToIndexDelimited(["他又", "别感冒"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河", "寒霜冰湮", "豆本豆豆奶", "卖核弹的小女孩", "眼镜小宅", "EruIluvatar", "嘤嘤嘤丶"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河", "寒霜冰湮", "豆本豆豆奶", "卖核弹的小女孩", "眼镜小宅", "EruIluvatar", "嘤嘤嘤丶"], "-")\
+   playerNameToIndexDelimited(["吾携秋水揽星河", "寒霜冰湮", "豆本豆豆奶", "卖核弹的小女孩", "眼镜小宅", "EruIluvatar", "嘤嘤嘤丶", "雨鸢"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河", "寒霜冰湮", "豆本豆豆奶", "卖核弹的小女孩", "眼镜小宅", "EruIluvatar", "嘤嘤嘤丶", "雨鸢"], "-")\
 ]
 
 # 阿特利斯
