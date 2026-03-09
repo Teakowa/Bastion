@@ -923,8 +923,12 @@ code {
 
 .complete-map-body.is-expanded {
   opacity: 1;
-  max-height: 120rem;
+  overflow: visible;
+  max-height: none;
   margin-top: 0.56rem;
+  transition:
+    opacity var(--ow-time-fast) ease,
+    margin var(--ow-time-fast) ease;
 }
 
 .map-title-grid {

@@ -564,7 +564,6 @@ watch(
                   <span class="map-title-progress">{{ mapItem.mainOwnedSlots }} / {{ mapItem.mainTotalSlots }}</span>
                 </header>
                 <section class="map-slot-group map-slot-group-main">
-                  <p class="map-slot-group-title">主进度（征服者 / 主宰）</p>
                   <ul class="status-title-list">
                     <li v-for="slot in mapItem.mainSlots" :key="`${mapItem.mapKey}-${slot.key}`">
                       <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
@@ -621,7 +620,6 @@ watch(
                     <span class="map-title-progress">{{ mapItem.mainOwnedSlots }} / {{ mapItem.mainTotalSlots }}</span>
                   </header>
                   <section class="map-slot-group map-slot-group-main">
-                    <p class="map-slot-group-title">主进度（征服者 / 主宰）</p>
                     <ul class="status-title-list">
                       <li v-for="slot in mapItem.mainSlots" :key="`${mapItem.mapKey}-${slot.key}`">
                         <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
