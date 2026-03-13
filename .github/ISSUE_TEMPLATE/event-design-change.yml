@@ -5,8 +5,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        请填写事件设计/改动信息，便于快速评审与实现。
-        Please provide complete event details for fast review and implementation.
+        请提供事件核心信息，便于快速评审。
+        Please provide core event details for quick review.
 
   - type: input
     id: event_name
@@ -74,84 +74,6 @@ body:
       required: true
 
   - type: textarea
-    id: trigger_gate
-    attributes:
-      label: 触发频率/门控 / Trigger Gate
-      description: "选填，如 Ongoing 门控、事件触发、是否含 wait / Optional: Ongoing gates, event trigger, wait usage"
-      placeholder: |
-        例如：
-        - Ongoing - Each Player，条件区门控
-        - 动作区 wait(0.250, Ignore Condition)
-    validations:
-      required: false
-
-  - type: dropdown
-    id: config_touchpoints
-    attributes:
-      label: 配置落点 / Config Touchpoints
-      description: 请选择会影响的实现位置 / Select impacted implementation touchpoints
-      multiple: true
-      options:
-        - src/config/eventConfig.opy
-        - src/config/eventConfigDev.opy
-        - src/constants/event_constants.opy
-        - src/locales/*
-        - src/events/effects/*
-    validations:
-      required: true
-
-  - type: textarea
-    id: balance_goal
-    attributes:
-      label: 平衡预期 / Balance Goal
-      description: 说明收益/风险与对局阶段影响 / Explain value, risk, and phase impact
-      placeholder: |
-        - 期望收益 / Expected benefit:
-        - 主要风险 / Key risk:
-        - 对局阶段影响 / Match phase impact:
-    validations:
-      required: true
-
-  - type: textarea
-    id: perf_risk
-    attributes:
-      label: 性能与稳定性风险 / Perf & Stability Risk
-      description: 是否涉及循环、AOE+wait、高频计算等 / Mention loops, AOE+wait, high-frequency computation, etc.
-      placeholder: |
-        - 是否新增循环 / New loops?
-        - 是否依赖 wait 后上下文 / Post-wait context dependency?
-        - 缓解措施 / Mitigations:
-    validations:
-      required: true
-
-  - type: dropdown
-    id: validation_plan_checks
-    attributes:
-      label: 验证计划（标准命令）/ Validation Plan (Standard Commands)
-      description: 可多选，选择你计划执行的验证命令 / Multi-select standard checks you plan to run
-      multiple: true
-      options:
-        - pnpm run build
-        - pnpm run build:main
-        - pnpm run build:dev
-        - ./tools/check_locale_keys.sh
-    validations:
-      required: true
-
-  - type: textarea
-    id: validation_plan_custom
-    attributes:
-      label: 验证计划（自定义步骤）/ Validation Plan (Custom Steps)
-      description: 请补充针对本提案的回归步骤 / Add proposal-specific regression steps
-      placeholder: |
-        例如：
-        1. 在 devMain 开启单事件开关验证
-        2. 验证 clearPlayerEvent 状态回收
-        3. 验证本地化展示与持续时间一致性
-    validations:
-      required: true
-
-  - type: textarea
     id: extra_context
     attributes:
       label: 附加上下文 / Extra Context
@@ -164,9 +86,5 @@ body:
     attributes:
       label: 确认清单 / Checklist
       options:
-        - label: 我已确认 main/devMain 结构对齐要求，若只改一侧会说明原因 / I acknowledge main/devMain alignment and will explain one-sided changes
-          required: true
-        - label: 我已确认事件改动需同时核对 eventConfig 与 eventConfigDev / I acknowledge both event configs must be checked
-          required: true
-        - label: 我已确认事件文本与本地化需要同步 / I acknowledge localization sync is required
+        - label: 我已知晓实现阶段需同步 main/devMain 与双 config（提案阶段无需在此详填）/ I understand implementation should sync main/devMain and both configs
           required: true
