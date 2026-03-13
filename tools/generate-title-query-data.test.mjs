@@ -16,9 +16,9 @@ const envFile = path.resolve(__dirname, '../src/env/env.opy');
 test('loads unified title source shape', async () => {
   const data = await loadTitleSource(sourceFile);
 
-  assert.equal(data.titles.length, 49);
-  assert.equal(data.players.length, 46);
-  assert.equal(data.mapTitles.length, 36);
+  assert.ok(data.titles.length > 0);
+  assert.ok(data.players.length > 0);
+  assert.ok(data.mapTitles.length > 0);
   assert.equal(data.titles[0].key, 'PIONEER');
   assert.equal(data.players.find((player) => player.name === '草艮')?.titleKeys.length, 2);
 });
@@ -207,9 +207,9 @@ test('generates web payload with source version metadata', async () => {
 test('sync can run in dry-run mode with existing files', async () => {
   const result = await syncTitleData({ sourceFile, titleFile, envFile, dryRun: true });
 
-  assert.equal(result.sourceData.titles.length, 49);
-  assert.equal(result.webPayload.players.length, 46);
-  assert.equal(result.webPayload.mapTitles.length, 36);
+  assert.equal(result.webPayload.titles.length, result.sourceData.titles.length);
+  assert.equal(result.webPayload.players.length, result.sourceData.players.length);
+  assert.equal(result.webPayload.mapTitles.length, result.sourceData.mapTitles.length);
 });
 
 test('sync generates map DATA macros from mapTitles', async () => {

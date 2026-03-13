@@ -5,7 +5,7 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 
 # Grant Player Title
 
-按顺序执行，保持最小改动，避免无关重排。
+目标：将发放流程固定为 `标准输入 -> 预检 -> 自动写入 -> 同步校验 -> 标准回执`，降低手工改 JSON 的重复成本。
 
 ## 1) 触发条件
 
@@ -15,7 +15,16 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 2. 给玩家发放地图专属称号（`PIONEER/CONQUEROR/DOMINATOR`）。
 3. 玩家不存在，需要补入称号数据库。
 
-## 2) 必改真源
+## 2) 固定 6 步流程
+
+1. 解析请求：优先整理为 [references/grant-template.md](references/grant-template.md) 的四段结构。
+2. 口径确认：只确认派生规则开关（默认值见下）。
+3. 写入 source：仅改 `data/title-source.json`（建议用 `pnpm run grant:title -- --input <request.json>`）。
+4. 同步：`pnpm run sync:title-data`。
+5. 测试：`pnpm run test:title-data-sync`，必要时再跑 `pnpm run test:title-grant`。
+6. 回执：按“交付说明”输出新增玩家、称号和执行命令结果。
+
+## 3) 真源与硬约束
 
 唯一真源：`data/title-source.json`。
 
@@ -23,48 +32,73 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 2. 通用称号写入 `players[*].titleKeys`（去重、默认不移除历史）。
 3. 地图称号写入 `mapTitles[*].holders` 对应槽位（去重）。
 4. 禁止手改生成产物：`src/title/title-cn.opy`、`web/title-query/public/data/titles.json`。
+5. `DOMINATOR` 高于 `CONQUEROR`：加入 `DOMINATOR` 时，必须确保同图同玩家已在 `CONQUEROR`。
 
-关键约束：
+## 4) 中文别名映射（高频）
 
-1. 玩家顺序具索引语义，禁止重排。
-2. `DOMINATOR` 高于 `CONQUEROR`：加入 `DOMINATOR` 时，必须确保同图同玩家已在 `CONQUEROR`。
+地图：
 
-## 3) 地图精通自动补发（地图专属发放后必做）
+1. `66号公路 -> DATA_ROUTE66`
+2. `沃斯卡娅工业区 -> DATA_VOLSKAYA`
+3. `月球基地 -> DATA_HORIZON_LUNAR_COLONY`
 
-对本次涉及的玩家，基于 `data/title-source.json -> mapTitles[*].holders` 做条件检查并自动补发到 `players[*].titleKeys`：
+称号：
 
-1. 若玩家在全部地图都属于 `CONQUEROR`，补发 `ALL_IN_ONE`。
-2. 若玩家在全部地图都属于 `DOMINATOR`，补发 `SKY`。
-3. 仅在满足条件时补发，保持去重，不移除历史称号。
+1. `what can i say -> MANBA`
 
-## 4) 生成/同步
+## 5) 派生规则开关（默认）
 
-必跑：
+1. `DOMINATOR => 同图补 CONQUEROR`：强制开启。
+2. 难度挑战称号自动补发（`CHALLENGER_LEGEND/TRAVELER_HELL`）：默认 `OFF`，仅当用户显式提及时执行。
+3. 地图精通自动补发（`ALL_IN_ONE/SKY`）：默认 `CHECK_ONLY`（只报告条件结果，不自动写入）。
+
+## 6) 半自动工具接口
+
+命令：
 
 ```bash
-pnpm run sync:title-data
+pnpm run grant:title -- --input <request.json> [--dry-run]
 ```
 
-## 5) 验证
+输入结构：
 
-执行 [references/grant-template.md](references/grant-template.md) 中的检查命令，至少确认：
+```json
+{
+  "players": [
+    {
+      "name": "玩家名",
+      "generalTitles": ["TITLE.HACKING", "what can i say"],
+      "mapDominators": ["66号公路", "DATA_VOLSKAYA"]
+    }
+  ],
+  "options": {
+    "grantDifficultyFromMaps": false,
+    "autoMasteryMode": "check_only"
+  }
+}
+```
 
-1. `test:title-data-sync` 通过。
-2. 目标玩家、称号、地图槽位已同步到生成产物。
-3. 自动生成区块标记完整。
-4. 若本次发放了地图专属称号，已执行地图精通条件检查，并按条件补发 `ALL_IN_ONE` / `SKY`。
+说明：
 
-失败处理：
+1. `generalTitles` 支持 `TITLE.` 前缀、裸 key、中文 label、别名。
+2. `mapDominators` 支持 mapKey、中文地图名、别名。
+3. `--dry-run` 仅输出变更摘要，不落盘。
 
-1. 若玩家未写入或写错槽位，回到 `data/title-source.json` 修正后重跑同步。
-2. 若出现 `DOMINATOR` 子集约束失败，先补 `CONQUEROR` 再同步。
+## 7) 验证
 
-## 6) 交付说明
+至少确认：
+
+1. `pnpm run sync:title-data` 成功。
+2. `pnpm run test:title-data-sync` 通过。
+3. 目标玩家、称号、地图槽位已同步到生成产物。
+4. 自动生成区块标记完整。
+
+## 8) 交付说明
 
 回复时必须列明：
 
 1. 新增玩家（如有）。
 2. 每个玩家新增通用称号。
 3. 每张地图新增专属称号（含槽位）。
-4. 地图精通称号自动补发结果（是否补发 `ALL_IN_ONE` / `SKY` 及依据）。
+4. 派生规则结果（是否补发难度挑战/地图精通，及依据）。
 5. 已执行命令与结果。
