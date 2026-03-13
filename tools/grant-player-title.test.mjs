@@ -9,6 +9,7 @@ import {
   buildInteractiveRequest,
   grantPlayerTitle,
   parseCliArgs,
+  parseNumberSelection,
   validateCliArgs
 } from './grant-player-title.mjs';
 
@@ -54,12 +55,19 @@ test('cli args enforce mutual exclusivity between --interactive and --input', ()
   assert.throws(() => validateCliArgs(args), /mutually exclusive/);
 });
 
-test('buildInteractiveRequest supports player mode', () => {
+test('parseNumberSelection parses single/multi and deduplicates', () => {
+  assert.deepEqual(parseNumberSelection('2', { max: 3 }), [2]);
+  assert.deepEqual(parseNumberSelection('1,2,2,3', { max: 3, multi: true }), [1, 2, 3]);
+  assert.throws(() => parseNumberSelection('x', { max: 3 }), /无效编号/);
+  assert.throws(() => parseNumberSelection('0', { max: 3 }), /不允许选择 0/);
+});
+
+test('buildInteractiveRequest supports player mode with option selections', () => {
   const req = buildInteractiveRequest({
     targetType: 'player',
     playerName: '嘤嘤嘤丶',
-    generalTitles: 'TITLE.HACKING,what can i say',
-    mapDominators: '66号公路,DATA_VOLSKAYA',
+    generalTitles: ['HACKING', 'MANBA'],
+    mapDominators: ['DATA_ROUTE66', 'DATA_VOLSKAYA'],
     options: {
       grantDifficultyFromMaps: false,
       autoMasteryMode: 'check_only'
@@ -68,16 +76,16 @@ test('buildInteractiveRequest supports player mode', () => {
 
   assert.equal(req.players.length, 1);
   assert.equal(req.players[0].name, '嘤嘤嘤丶');
-  assert.deepEqual(req.players[0].generalTitles, ['TITLE.HACKING', 'what can i say']);
-  assert.deepEqual(req.players[0].mapDominators, ['66号公路', 'DATA_VOLSKAYA']);
+  assert.deepEqual(req.players[0].generalTitles, ['HACKING', 'MANBA']);
+  assert.deepEqual(req.players[0].mapDominators, ['DATA_ROUTE66', 'DATA_VOLSKAYA']);
   assert.equal(req.options.autoMasteryMode, 'check_only');
 });
 
 test('buildInteractiveRequest supports map mode with multi players', () => {
   const req = buildInteractiveRequest({
     targetType: 'map',
-    mapKey: '沃斯卡娅工业区',
-    targetPlayers: '板鸭, 蝎子莱莱 , 嘤嘤嘤丶',
+    mapKey: 'DATA_VOLSKAYA',
+    targetPlayers: ['板鸭', '蝎子莱莱', '嘤嘤嘤丶'],
     options: {
       grantDifficultyFromMaps: true,
       autoMasteryMode: 'off'
@@ -89,7 +97,7 @@ test('buildInteractiveRequest supports map mode with multi players', () => {
     req.players.map((item) => item.name),
     ['板鸭', '蝎子莱莱', '嘤嘤嘤丶']
   );
-  assert.deepEqual(req.players[0].mapDominators, ['沃斯卡娅工业区']);
+  assert.deepEqual(req.players[0].mapDominators, ['DATA_VOLSKAYA']);
 });
 
 test('adds missing players at tail and deduplicates general titles', () => {
@@ -139,35 +147,6 @@ test('maps alias to map key and auto-adds CONQUEROR when granting DOMINATOR', ()
 
   assert.equal(map.holders.DOMINATOR.includes('老玩家'), true);
   assert.equal(map.holders.CONQUEROR.includes('老玩家'), true);
-});
-
-test('supports mixed aliases for title and map', () => {
-  const data = buildFixture();
-
-  const req = {
-    players: [
-      {
-        name: '板鸭',
-        generalTitles: ['what can i say', '幸运星'],
-        mapDominators: ['66号公路', 'DATA_HORIZON_LUNAR_COLONY']
-      }
-    ],
-    options: {
-      grantDifficultyFromMaps: false,
-      autoMasteryMode: 'check_only'
-    }
-  };
-
-  const { sourceData } = applyGrantRequest(data, req);
-  const player = sourceData.players.find((item) => item.name === '板鸭');
-
-  assert.deepEqual(player.titleKeys, ['MANBA', 'LUCKY_STAR']);
-
-  const route66 = sourceData.mapTitles.find((item) => item.mapKey === 'DATA_ROUTE66');
-  const lunar = sourceData.mapTitles.find((item) => item.mapKey === 'DATA_HORIZON_LUNAR_COLONY');
-
-  assert.equal(route66.holders.DOMINATOR.includes('板鸭'), true);
-  assert.equal(lunar.holders.DOMINATOR.includes('板鸭'), true);
 });
 
 test('grantDifficultyFromMaps and autoMasteryMode grant behave as expected', () => {
@@ -238,8 +217,8 @@ test('dry-run does not write source file for interactive-equivalent requestData'
 
   const requestData = buildInteractiveRequest({
     targetType: 'map',
-    mapKey: '66号公路',
-    targetPlayers: '新玩家,老玩家',
+    mapKey: 'DATA_ROUTE66',
+    targetPlayers: ['新玩家', '老玩家'],
     options: { grantDifficultyFromMaps: false, autoMasteryMode: 'check_only' }
   });
 

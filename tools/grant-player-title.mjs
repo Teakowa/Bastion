@@ -35,6 +35,13 @@ function splitCsv(value) {
     .filter(Boolean);
 }
 
+function normalizeStringList(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item).trim()).filter(Boolean);
+  }
+  return splitCsv(value);
+}
+
 function parseYesNo(value, defaultValue = false) {
   const raw = String(value ?? '').trim().toLowerCase();
   if (raw === '') {
@@ -101,6 +108,40 @@ function ensureInArray(arr, value) {
     return true;
   }
   return false;
+}
+
+export function parseNumberSelection(raw, { max, allowZero = false, allowEmpty = false, multi = false } = {}) {
+  const text = String(raw ?? '').trim();
+  if (text === '') {
+    if (allowEmpty) {
+      return [];
+    }
+    throw new Error('选择不能为空');
+  }
+
+  const tokens = multi ? text.split(',') : [text];
+  const selected = [];
+
+  for (const token of tokens) {
+    const value = token.trim();
+    if (!/^\d+$/.test(value)) {
+      throw new Error(`无效编号: ${token}`);
+    }
+
+    const num = Number(value);
+    if (num === 0 && !allowZero) {
+      throw new Error('不允许选择 0');
+    }
+    if (num !== 0 && (num < 1 || num > max)) {
+      throw new Error(`编号超出范围: ${num}`);
+    }
+
+    if (!selected.includes(num)) {
+      selected.push(num);
+    }
+  }
+
+  return selected;
 }
 
 function parseRequest(raw) {
@@ -179,8 +220,8 @@ export function buildInteractiveRequest({
       players: [
         {
           name: playerName.trim(),
-          generalTitles: splitCsv(generalTitles),
-          mapDominators: splitCsv(mapDominators)
+          generalTitles: normalizeStringList(generalTitles),
+          mapDominators: normalizeStringList(mapDominators)
         }
       ],
       options: requestOptions
@@ -198,7 +239,7 @@ export function buildInteractiveRequest({
     throw new Error('mapKey is required for map mode');
   }
 
-  const players = splitCsv(targetPlayers);
+  const players = normalizeStringList(targetPlayers);
   if (!players.length) {
     throw new Error('targetPlayers is required for map mode');
   }
@@ -441,60 +482,171 @@ export function validateCliArgs(args) {
   }
 }
 
+function printOptions(list, { includeZeroLabel } = {}) {
+  if (includeZeroLabel) {
+    console.log(`  0) ${includeZeroLabel}`);
+  }
+  list.forEach((item, index) => {
+    console.log(`  ${index + 1}) ${item}`);
+  });
+}
+
+async function askSingleChoice(rl, prompt, list, { includeZeroLabel } = {}) {
+  while (true) {
+    printOptions(list, { includeZeroLabel });
+    const raw = await rl.question(`${prompt}: `);
+
+    try {
+      const selected = parseNumberSelection(raw, {
+        max: list.length,
+        allowZero: Boolean(includeZeroLabel),
+        multi: false
+      });
+      return selected[0];
+    } catch (error) {
+      console.log(`输入无效: ${error.message}`);
+    }
+  }
+}
+
+async function askMultiChoice(rl, prompt, list, { allowZero = false, allowEmpty = false, includeZeroLabel } = {}) {
+  while (true) {
+    printOptions(list, { includeZeroLabel });
+    const raw = await rl.question(`${prompt}: `);
+    try {
+      return parseNumberSelection(raw, {
+        max: list.length,
+        allowZero,
+        allowEmpty,
+        multi: true
+      });
+    } catch (error) {
+      console.log(`输入无效: ${error.message}`);
+    }
+  }
+}
+
+async function askNewPlayerName(rl) {
+  while (true) {
+    const name = (await rl.question('新玩家名称: ')).trim();
+    if (!name) {
+      console.log('玩家名称不能为空');
+      continue;
+    }
+
+    const confirm = await rl.question(`确认新增玩家 "${name}"? [y/N]: `);
+    if (parseYesNo(confirm, false)) {
+      return name;
+    }
+    console.log('已取消新增，返回选择。');
+    return null;
+  }
+}
+
+async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi = true } = {}) {
+  const selected = [];
+
+  if (!multi) {
+    const choice = await askSingleChoice(rl, '选择玩家编号', playerNames, {
+      includeZeroLabel: allowCreate ? '新增玩家' : undefined
+    });
+    if (choice === 0) {
+      const newName = await askNewPlayerName(rl);
+      if (newName) {
+        return [newName];
+      }
+      return pickPlayersByMenu(rl, playerNames, { allowCreate, multi });
+    }
+    return [playerNames[choice - 1]];
+  }
+
+  while (true) {
+    const picked = await askMultiChoice(rl, '选择玩家编号（多选逗号，回车结束）', playerNames, {
+      allowZero: allowCreate,
+      allowEmpty: true,
+      includeZeroLabel: allowCreate ? '新增玩家并加入本次选择' : undefined
+    });
+
+    if (picked.length === 0) {
+      if (selected.length > 0) {
+        return selected;
+      }
+      console.log('至少选择一名玩家');
+      continue;
+    }
+
+    for (const index of picked) {
+      if (index === 0) {
+        const newName = await askNewPlayerName(rl);
+        if (newName && !selected.includes(newName)) {
+          selected.push(newName);
+        }
+        continue;
+      }
+
+      const name = playerNames[index - 1];
+      if (!selected.includes(name)) {
+        selected.push(name);
+      }
+    }
+
+    console.log(`当前已选玩家: ${selected.join(', ')}`);
+  }
+}
+
 export async function collectInteractiveRequest(sourceData, io = { input, output }) {
   const rl = readline.createInterface(io);
   try {
-    const typeAnswer = (await rl.question('发放对象类型 [player/map] (默认 player): ')).trim().toLowerCase();
-    const targetType = typeAnswer || 'player';
+    console.log('选择对象类型:');
+    const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式']);
 
-    if (!['player', 'map'].includes(targetType)) {
-      throw new Error('对象类型必须是 player 或 map');
-    }
+    const titleOptions = sourceData.titles.map((item) => `${item.key} (${item.label})`);
+    const mapOptions = sourceData.mapTitles.map((item) => `${item.mapKey} (${item.mapLabel})`);
+    const playerNames = sourceData.players.map((item) => item.name);
 
     let requestPayload;
 
-    if (targetType === 'player') {
-      let playerName = '';
-      while (!playerName) {
-        playerName = (await rl.question('玩家名称: ')).trim();
-      }
+    if (mode === 1) {
+      const selectedPlayer = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: false });
 
-      const generalTitles = await rl.question('通用称号（逗号分隔，可空）: ');
-      const mapDominators = await rl.question('地图主宰（逗号分隔，可空）: ');
+      const titlePicked = await askMultiChoice(rl, '选择通用称号（多选逗号，0 跳过）', titleOptions, {
+        allowZero: true,
+        allowEmpty: false,
+        includeZeroLabel: '跳过'
+      });
+      const mapPicked = await askMultiChoice(rl, '选择地图主宰（多选逗号，0 跳过）', mapOptions, {
+        allowZero: true,
+        allowEmpty: false,
+        includeZeroLabel: '跳过'
+      });
 
       requestPayload = {
-        targetType,
-        playerName,
-        generalTitles,
-        mapDominators
+        targetType: 'player',
+        playerName: selectedPlayer[0],
+        generalTitles: titlePicked.filter((x) => x !== 0).map((index) => sourceData.titles[index - 1].key),
+        mapDominators: mapPicked.filter((x) => x !== 0).map((index) => sourceData.mapTitles[index - 1].mapKey)
       };
     } else {
-      const mapHints = sourceData.mapTitles
-        .slice(0, 8)
-        .map((item) => `${item.mapLabel}(${item.mapKey})`)
-        .join('、');
-      const mapKey = await rl.question(`地图（mapKey/中文名，示例：${mapHints}）: `);
-      const targetPlayers = await rl.question('玩家列表（逗号分隔）: ');
+      const mapPicked = await askSingleChoice(rl, '选择地图编号', mapOptions);
+      const selectedPlayers = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: true });
 
       requestPayload = {
-        targetType,
-        mapKey,
-        targetPlayers
+        targetType: 'map',
+        mapKey: sourceData.mapTitles[mapPicked - 1].mapKey,
+        targetPlayers: selectedPlayers
       };
     }
 
-    const difficultyAnswer = await rl.question('自动补发难度挑战称号? [y/N]: ');
-    const autoMasteryRaw = await rl.question('地图精通模式 [off/check_only/grant] (默认 check_only): ');
+    const difficultyChoice = await askSingleChoice(rl, '自动补发难度挑战称号', ['否', '是']);
+    const masteryChoice = await askSingleChoice(rl, '地图精通模式', ['off', 'check_only', 'grant']);
 
-    const requestData = buildInteractiveRequest({
+    return buildInteractiveRequest({
       ...requestPayload,
       options: {
-        grantDifficultyFromMaps: parseYesNo(difficultyAnswer, false),
-        autoMasteryMode: normalizeAutoMasteryMode(autoMasteryRaw)
+        grantDifficultyFromMaps: difficultyChoice === 2,
+        autoMasteryMode: ['off', 'check_only', 'grant'][masteryChoice - 1]
       }
     });
-
-    return requestData;
   } finally {
     rl.close();
   }

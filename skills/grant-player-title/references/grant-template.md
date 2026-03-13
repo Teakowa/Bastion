@@ -63,11 +63,12 @@ pnpm run test:title-data-sync
 
 交互模式输入示例：
 
-1. 对象类型：`player` / `map`
-2. `player`：`玩家名称` + `通用称号(逗号分隔)` + `地图主宰(逗号分隔)`
-3. `map`：`地图(mapKey/中文名)` + `玩家列表(逗号分隔)`
-4. 派生策略：`grantDifficultyFromMaps` 与 `autoMasteryMode`
-5. 预览后确认写入
+1. 对象类型：编号选择 `1) 玩家模式` / `2) 地图模式`
+2. `player`：编号选择玩家 + 编号多选通用称号 + 编号多选地图主宰
+3. `map`：编号选择地图 + 编号多选玩家
+4. 仅需新增玩家时，走 `0) 新增玩家` 分支并确认
+5. 派生策略：编号选择 `grantDifficultyFromMaps` 与 `autoMasteryMode`
+6. 预览后确认写入
 
 ## 4) 结果校验
 
