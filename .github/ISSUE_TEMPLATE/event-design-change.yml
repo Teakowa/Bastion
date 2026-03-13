@@ -69,7 +69,7 @@ body:
     attributes:
       label: 权重 / Weight
       description: 用于 reject sampling 的事件权重 / Event weight for reject sampling
-      placeholder: 例如 10
+      placeholder: 例如 1
     validations:
       required: true
 
