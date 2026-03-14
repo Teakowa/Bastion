@@ -659,20 +659,6 @@
 #!define EVT_MECH_0_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
 #!define EVT_MECH_0_SOUND DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND
 
-# --- ID 1 (Mech): 纳米战甲 ---
-# Duration（秒）
-#!define EVT_MECH_1_DURATION 15
-# Weight（权重）
-#!define EVT_MECH_1_WEIGHT 1.2
-# 额外生命值倍率 (8倍)
-#!define EVT_MECH_1_HP_MULTIPLIER 5
-
-# 速度惩罚 (%)
-#!define EVT_MECH_1_SPEED_PENALTY -20
-
-# 生命池索引
-#!define EVT_MECH_1_POOL_IDX 0
-
 # --- ID 2 (Mech): 赌徒 ---
 # Duration（秒）
 #!define EVT_MECH_2_DURATION 15
@@ -686,23 +672,6 @@
 
 # 赌徒连胜计数上限 (用于HUD显示赌王称号等)
 #!define EVT_MECH_2_WIN_STREAK_CAP 5
-
-# --- ID 3 (Mech): 有点松弛 ---
-# Duration（秒）
-#!define EVT_MECH_3_DURATION 45
-# Weight（权重）
-#!define EVT_MECH_3_WEIGHT 0
-# 烟雾/云雾效果半径
-#!define EVT_MECH_3_CLOUD_RADIUS 12
-
-# 烟雾生成间隔 (秒)
-#!define EVT_MECH_3_SPAWN_INTERVAL 1
-
-# 视觉特效 (自身火焰)
-#!define EVT_MECH_3_SELF_EFFECT Effect.WRECKING_BALL_PILEDRIVER_FIRE
-
-# 视觉特效 (干扰烟雾)
-#!define EVT_MECH_3_CLOUD_EFFECT Effect.CLOUD
 
 # --- ID 4 (Mech): 迷你形态 ---
 # Duration（秒）
@@ -728,17 +697,6 @@
 #!define EVT_MECH_5_WEIGHT 1.3
 # 蹲下时的移速惩罚 (%)
 #!define EVT_MECH_5_SPEED_PENALTY 25
-
-# --- ID 6 (Mech): 紧急避障 ---
-# Duration（秒）
-#!define EVT_MECH_6_DURATION 45
-# Weight（权重）
-#!define EVT_MECH_6_WEIGHT 1.2
-# 受伤触发的加速 (%)
-#!define EVT_MECH_6_SPEED_BOOST 30
-
-# 加速持续时间 (秒)
-#!define EVT_MECH_6_SPEED_DURATION 3
 
 # --- ID 7 (Mech): 刹车失灵 ---
 # Duration（秒）

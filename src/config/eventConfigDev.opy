@@ -405,28 +405,11 @@ rule "initialize event array":
     # ================================================
     # Pack 1: Mechanics
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_1_TITLE, true, 1):
-        goto lbl_56
-    mechEvent[MechEventId.NANO_ARMOR] = [
-        STR_EVT_MECH_1_TITLE,
-        STR_EVT_MECH_1_DESC.format(percent(EVT_MECH_1_HP_MULTIPLIER), negToPos(EVT_MECH_1_SPEED_PENALTY)),
-        EVT_MECH_1_DURATION,
-        EVT_MECH_1_WEIGHT
-    ]
-    mechEventId.append(MechEventId.NANO_ARMOR)
-    lbl_56:
-
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_2_TITLE, true, 2):
         goto lbl_57
     mechEvent[MechEventId.GAMBLER] = [STR_EVT_MECH_2_TITLE, STR_EVT_MECH_2_DESC.format(Button.RELOAD, EVT_MECH_2_WIN_RATE, EVT_MECH_2_STAKE), EVT_MECH_2_DURATION, EVT_MECH_2_WEIGHT]
     mechEventId.append(MechEventId.GAMBLER)
     lbl_57:
-
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_3_TITLE, true, 3):
-        goto lbl_58
-    mechEvent[MechEventId.CHILL_MODE] = [STR_EVT_MECH_3_TITLE, STR_EVT_MECH_3_DESC, EVT_MECH_3_DURATION, EVT_MECH_3_WEIGHT]
-    mechEventId.append(MechEventId.CHILL_MODE)
-    lbl_58:
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_4_TITLE, true, 4):
         goto lbl_59
@@ -439,12 +422,6 @@ rule "initialize event array":
     mechEvent[MechEventId.STEALTH_CROUCH] = [STR_EVT_MECH_5_TITLE, STR_EVT_MECH_5_DESC.format(EVT_MECH_5_SPEED_PENALTY), EVT_MECH_5_DURATION, EVT_MECH_5_WEIGHT]
     mechEventId.append(MechEventId.STEALTH_CROUCH)
     lbl_60:
-
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_MECH, STR_EVT_MECH_6_TITLE, true, 6):
-        goto lbl_61
-    mechEvent[MechEventId.EMERGENCY_EVASION] = [STR_EVT_MECH_6_TITLE, STR_EVT_MECH_6_DESC.format(EVT_MECH_6_SPEED_DURATION, EVT_MECH_6_SPEED_BOOST), EVT_MECH_6_DURATION, EVT_MECH_6_WEIGHT]
-    mechEventId.append(MechEventId.EMERGENCY_EVASION)
-    lbl_61:
 
     # ================================================
     # Pack 2: Mechanics
