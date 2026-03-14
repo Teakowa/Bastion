@@ -864,14 +864,6 @@
 #!define EVT_MECH_10_HEART_STEEL_COST 2
 #!define EVT_MECH_10_FORCE_ROLL 20
 
-# --- ID 11 (Mech/Special): 作弊：回溯 ---
-# Duration（秒）
-#!define EVT_MECH_11_DURATION 30
-# Weight（权重）
-#!define EVT_MECH_11_WEIGHT 1
-#!define EVT_MECH_11_RECORD_INTERVAL 3
-#!define EVT_MECH_11_TRIGGER_HP_COST 0.1
-
 # --- ID 12 (Mech/Special): 赌徒：短期投资 (交易) ---
 # Duration（秒）
 #!define EVT_MECH_12_DURATION 15
@@ -941,21 +933,6 @@
 
 # 死亡后获得的移速加成（叠加到 mod_speed_event）
 #!define EVT_MECH_16_SPEED_STEP 5
-
-# --- ID 17 (Mech/Special): 作弊：0CD (血量换CD) ---
-# Duration（秒）
-#!define EVT_MECH_17_DURATION 15
-# Weight（权重）
-#!define EVT_MECH_17_WEIGHT 0.8
-
-# waitUntil 超时 (秒)
-#!define EVT_MECH_17_WAITUNTIL_TIMEOUT 2
-
-# 触发代价：自伤 = MaxHP * percent
-#!define EVT_MECH_17_HP_COST_PERCENT 0.25
-
-# 循环间隔 (秒)
-#!define EVT_MECH_17_INTERVAL 0.25
 
 # --- ID 18 (Mech/Special): 赌徒：长期投资 (豪赌) ---
 # Duration（秒）

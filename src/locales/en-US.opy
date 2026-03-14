@@ -216,8 +216,6 @@
 # ------------------------------------------------
 #!define STR_EVT_MECH_10_TITLE "Cheat: Check Cards"
 #!define STR_EVT_MECH_10_DESC "Hold {0}: Lose 10% Max HP permanently. Next event guaranteed Buff."
-#!define STR_EVT_MECH_11_TITLE "Cheat: Rewind"
-#!define STR_EVT_MECH_11_DESC "Press {0} to rewind 3s. Costs 10% HP per use."
 #!define STR_EVT_MECH_12_TITLE "Gambler: Short Term"
 #!define STR_EVT_MECH_12_DESC "Hold {0}: Lock 3 Debuffs.\n75% chance to gain 4 Heartsteel stacks."
 #!define STR_EVT_MECH_13_TITLE "Shared Fate"
@@ -228,8 +226,6 @@
 #!define STR_EVT_MECH_15_DESC "Respawn after 2s.\nEach respawn: +5% Size & Temp HP."
 #!define STR_EVT_MECH_16_TITLE "Matryoshka"
 #!define STR_EVT_MECH_16_DESC "Respawn after 2s.\nEach respawn: -5% Size & +5% Speed."
-#!define STR_EVT_MECH_17_TITLE "Cheat: 0CD"
-#!define STR_EVT_MECH_17_DESC "Zero cooldowns. Using skills costs 25% Max HP."
 #!define STR_EVT_MECH_18_TITLE "Gambler: Long Term"
 #!define STR_EVT_MECH_18_DESC "Hold {0}: Lock 5 Debuffs.\n33% chance to gain 20 Heartsteel stacks."
 #!define STR_EVT_MECH_19_TITLE "Valkyrie's Descent"
