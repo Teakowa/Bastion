@@ -277,38 +277,6 @@ rule "[VishkarEvent]: 作弊：我要验牌 (触发)":
     if eventPlayer.eventId not in eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
         eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
 
-rule "[VishkarEvent]: 作弊：回溯 (记录位置 - 3秒心跳)":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) == null
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.CHEAT_REWIND]) == true
-    
-    if evalOnce(controlRespawnPosition) != null:
-        eventPlayer.eventDuration = 0
-        return
-    if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
-        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
-    eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
-    wait(EVT_MECH_11_RECORD_INTERVAL)
-    if ruleCondition:
-        loop()
-    eventPlayer.controlPlayerRespawnPosition = null
-
-
-rule "[VishkarEvent]: 作弊：回溯 (按键触发)":
-    @Event eachPlayer
-    @Team 1
-    @Condition evalOnce(controlRespawnPosition) == null
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.CHEAT_REWIND, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
-    
-    damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_MECH_11_TRIGGER_HP_COST)
-    playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
-    wait(0.2)
-    eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])
-    playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_REAPPEAR, Color.TEAM_1, eventPlayer, 200)
-    wait(3)
-
-
 rule "[VishkarEvent]: 赌徒：短期投资 (交易)":
     @Event eachPlayer
     @Team 1
@@ -386,24 +354,6 @@ rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
     eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_16_PITCH_MIN, 1 + EVT_MECH_16_PITCH_STEP * eventPlayer.eventSize), false)
     eventPlayer.mod_speed_event += EVT_MECH_16_SPEED_STEP
     updatePlayerStats()
-
-
-rule "[VishkarEvent]: 作弊：0CD (血量换CD)":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.CHEAT_ZERO_COOLDOWN]) == true
-    @Condition any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == true
-    
-    if eventPlayer.eventId not in  eventPlayer.dlcTimeChallenge[5] and 43 not in eventPlayer.earnedAchievements:
-        eventPlayer.dlcTimeChallenge[5].append(eventPlayer.eventId)
-    waitUntil(any([eventPlayer.isUsingAbility1(), eventPlayer.isUsingAbility2(), eventPlayer.isFiringSecondaryFire()]) == false, EVT_MECH_17_WAITUNTIL_TIMEOUT)
-    damage(eventPlayer, null, eventPlayer.getMaxHealth() * EVT_MECH_17_HP_COST_PERCENT)
-    resetPlayerCD()
-    playEffect(getAllPlayers(), DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION, Color.TEAM_2, eventPlayer, 3)
-    wait(0.25)
-    if ruleCondition:
-        loop()
-    clearEventEffect()
 
 
 rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":

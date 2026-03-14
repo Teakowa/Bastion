@@ -222,8 +222,6 @@
 # ------------------------------------------------
 #!define STR_EVT_MECH_10_TITLE "作弊：我要验牌"
 #!define STR_EVT_MECH_10_DESC "长按{0}永久损失{1}层心之钢（约{2}%最大生命值）\n下个事件必为增益"
-#!define STR_EVT_MECH_11_TITLE "作弊：回溯"
-#!define STR_EVT_MECH_11_DESC "按下{0}回到{1}秒前的位置\n每次消耗{2}%生命值"
 #!define STR_EVT_MECH_12_TITLE "赌徒：短期投资"
 #!define STR_EVT_MECH_12_DESC "长按{0}锁定{1}个减益\n{2}%概率获得{3}层心之钢"
 #!define STR_EVT_MECH_13_TITLE "命运共同体"
@@ -234,8 +232,6 @@
 #!define STR_EVT_MECH_15_DESC "阵亡{0}秒后复活\n每次复活体型变大{1}%并临时提升{2}%生命值"
 #!define STR_EVT_MECH_16_TITLE "俄罗斯套娃"
 #!define STR_EVT_MECH_16_DESC "阵亡{0}秒后复活\n每次复活变小{1}%并加速{2}%"
-#!define STR_EVT_MECH_17_TITLE "作弊：0CD"
-#!define STR_EVT_MECH_17_DESC "技能无冷却，释放消耗{0}%最大生命"
 #!define STR_EVT_MECH_18_TITLE "赌徒：长期投资"
 #!define STR_EVT_MECH_18_DESC "长按{0}锁定{1}个减益\n{2}%概率获得{3}层心之钢"
 #!define STR_EVT_MECH_19_TITLE "瓦尔基里降临"

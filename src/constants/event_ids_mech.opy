@@ -27,24 +27,20 @@ enum MechEventId:
     # legacy numeric id: 10
     CHEAT_CARD_COUNTING
     # legacy numeric id: 11
-    CHEAT_REWIND
-    # legacy numeric id: 12
     GAMBLER_SHORT_INVESTMENT
-    # legacy numeric id: 13
+    # legacy numeric id: 12
     FATE_SYNC
-    # legacy numeric id: 14
+    # legacy numeric id: 13
     CHEAT_SKIP_HERO
-    # legacy numeric id: 15
+    # legacy numeric id: 14
     TETRIS_GROWTH
-    # legacy numeric id: 16
+    # legacy numeric id: 15
     NESTING_DOLL
-    # legacy numeric id: 17
-    CHEAT_ZERO_COOLDOWN
-    # legacy numeric id: 18
+    # legacy numeric id: 16
     GAMBLER_LONG_INVESTMENT
-    # legacy numeric id: 19
+    # legacy numeric id: 17
     VALKYRIE_DESCENT
-    # legacy numeric id: 20
+    # legacy numeric id: 18
     TRINITY_SSR
     # sentinel only for integrity checks (do not register as an event)
     COUNT
