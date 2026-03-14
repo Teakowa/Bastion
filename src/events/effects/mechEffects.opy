@@ -324,35 +324,19 @@ rule "[VishkarEvent]: 作弊：跳过 (更换英雄)":
     clearPlayerEvent()
 
 
-rule "[VishkarEvent]: 俄罗斯方块 (变大复活)":
-    @Event playerDied
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.TETRIS_GROWTH]) == true
-    
-    eventPlayer.disableRespawn()
-    wait(EVT_MECH_15_RESURRECT_DELAY)
-    eventPlayer.enableRespawn()
-    eventPlayer.resurrect()
-    eventPlayer.eventSize++
-    eventPlayer.startScalingSize(1 + EVT_MECH_15_SIZE_STEP * eventPlayer.eventSize, false)
-    eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_15_PITCH_MIN, 1 - EVT_MECH_15_PITCH_STEP * eventPlayer.eventSize), false)
-    eventPlayer.sizeHealth += EVT_MECH_15_SIZE_HEALTH_STEP
-    setPlayerHP()
-
-
 rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
     @Event playerDied
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.NESTING_DOLL]) == true
     
     eventPlayer.disableRespawn()
-    wait(EVT_MECH_16_RESURRECT_DELAY)
+    wait(EVT_MECH_15_RESURRECT_DELAY)
     eventPlayer.enableRespawn()
     eventPlayer.resurrect()
     eventPlayer.eventSize++
-    eventPlayer.startScalingSize(max(EVT_MECH_16_SIZE_MIN, 1 - EVT_MECH_16_SIZE_STEP * eventPlayer.eventSize), false)
-    eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_16_PITCH_MIN, 1 + EVT_MECH_16_PITCH_STEP * eventPlayer.eventSize), false)
-    eventPlayer.mod_speed_event += EVT_MECH_16_SPEED_STEP
+    eventPlayer.startScalingSize(max(EVT_MECH_15_SIZE_MIN, 1 - EVT_MECH_15_SIZE_STEP * eventPlayer.eventSize), false)
+    eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_15_PITCH_MIN, 1 + EVT_MECH_15_PITCH_STEP * eventPlayer.eventSize), false)
+    eventPlayer.mod_speed_event += EVT_MECH_15_SPEED_STEP
     updatePlayerStats()
 
 
@@ -362,14 +346,14 @@ rule "[VishkarEvent]: 赌徒：长期投资 (豪赌)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.GAMBLER_LONG_INVESTMENT, eventPlayer.isHoldingButton(Button.RELOAD)]) == true
     
     wait(0.5, Wait.ABORT_WHEN_FALSE)
-    if random.randint(0, 99) < EVT_MECH_18_WIN_CHANCE:
+    if random.randint(0, 99) < EVT_MECH_17_WIN_CHANCE:
         eventPlayer.heart_steel += 20
-        smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_18_REWARD_STACKS, EVT_MECH_18_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
+        smallMessage(eventPlayer, "  {0}  赢！获得 {1} 层心之钢（{2}% 最大生命值）".format(iconString(Icon.CLUB), EVT_MECH_17_REWARD_STACKS, EVT_MECH_17_REWARD_STACKS * EVT_8_HP_PERCENT_PER_STACK))
         setPlayerHP()
     else:
         smallMessage(eventPlayer, "  {0}  输！祝你好运".format(iconString(Icon.DIAMOND)))
-    eventPlayer.eventForceRoll = EVT_MECH_18_FORCE_ROLL
-    eventPlayer.eventForceCount = EVT_MECH_18_FORCE_COUNT
+    eventPlayer.eventForceRoll = EVT_MECH_17_FORCE_ROLL
+    eventPlayer.eventForceCount = EVT_MECH_17_FORCE_COUNT
     smallMessage(eventPlayer, "  {0}  合约已生效：未来 5 个事件为 减益".format(iconString(Icon.DIAMOND)))
     clearPlayerEvent()
 
@@ -379,7 +363,7 @@ rule "[VishkarEvent]: 瓦尔基里降临":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.VALKYRIE_DESCENT]) == true
     
-    eventPlayer.sizeHealth = EVT_MECH_19_SIZE_HEALTH
+    eventPlayer.sizeHealth = EVT_MECH_18_SIZE_HEALTH
     setPlayerHP()
     eventPlayer.heal_recv = EVT_MECH_0_HEAL_BAN
     eventPlayer.mod_heal_event = EVT_MECH_0_HEAL_BAN
@@ -400,8 +384,8 @@ rule "[VishkarEvent]: 瓦尔基里降临 大招充能":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.VALKYRIE_DESCENT]) == true
     @Condition attacker != eventPlayer
     
-    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_MECH_19_ULT_CHARGE_GAIN)
-    wait(EVT_MECH_19_ULT_CHARGE_INTERVAL)
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_MECH_18_ULT_CHARGE_GAIN)
+    wait(EVT_MECH_18_ULT_CHARGE_INTERVAL)
 
 
 rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
@@ -411,11 +395,11 @@ rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
     
     if eventPlayer.eventTargetHP == 0:
         eventPlayer.eventTargetHP = eventPlayer.getMaxHealth()
-    eventPlayer.eventTargetHP = eventPlayer.getHealth() + ((eventPlayer.eventTargetHP - eventPlayer.getHealth()) * EVT_MECH_19_HEAL_SMOOTHING)
+    eventPlayer.eventTargetHP = eventPlayer.getHealth() + ((eventPlayer.eventTargetHP - eventPlayer.getHealth()) * EVT_MECH_18_HEAL_SMOOTHING)
     while all([eventPlayer.isUsingUltimate(), eventPlayer.getHealth() < eventPlayer.eventTargetHP]):
-        eventPlayer.setHealth(min(eventPlayer.eventTargetHP, eventPlayer.getHealth() + eventPlayer.getMaxHealth() * EVT_MECH_19_HEAL_TICK_PERCENT))
+        eventPlayer.setHealth(min(eventPlayer.eventTargetHP, eventPlayer.getHealth() + eventPlayer.getMaxHealth() * EVT_MECH_18_HEAL_TICK_PERCENT))
         playEffect(getAllPlayers(), DynamicEffect.HEAL_TARGET_ACTIVE, Color.YELLOW, eventPlayer, 60)
-        wait(EVT_MECH_19_HEAL_TICK_INTERVAL)
+        wait(EVT_MECH_18_HEAL_TICK_INTERVAL)
 
 rule "[VishkarEvent]: 三位一体 (SSR)":
     @Event eachPlayer
@@ -423,13 +407,13 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.TRINITY_SSR]) == true
     
     if eventPlayer.isAlive():
-        eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_20_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_20_DMG_REDUCE_DIVISOR))
-        eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_20_SPEED_FACTOR
+        eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_19_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_19_DMG_REDUCE_DIVISOR))
+        eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_19_SPEED_FACTOR
         updatePlayerStats()
-        eventPlayer.heart_steel += EVT_MECH_20_HEART_STEEL_PER_TICK
+        eventPlayer.heart_steel += EVT_MECH_19_HEART_STEEL_PER_TICK
         setPlayerHP()
         eventPlayer.hudText = "伤害减免：{0}% / 移速加成：{1}% / 心之钢：{2}层".format(negToPos(eventPlayer.mod_dmg_taken), eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
-    wait(EVT_MECH_20_INTERVAL)
+    wait(EVT_MECH_19_INTERVAL)
     if ruleCondition:
         loop()
     eventPlayer.mod_dmg_taken = 0
