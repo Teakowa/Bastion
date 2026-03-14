@@ -41,24 +41,6 @@ rule "[VishkarEvent]: 极限挑战":
         loop()
 
 
-rule "[VishkarEvent]: 纳米战甲":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.NANO_ARMOR]) == true
-    
-    wait()
-    waitUntil(eventPlayer.isAlive(), eventPlayer.eventDuration)
-    eventPlayer.addHealthPool(Health.NORMAL, eventPlayer.getMaxHealth() * EVT_MECH_1_HP_MULTIPLIER, false, false)
-    eventPlayer.healthId[0] = getLastCreatedHealthPool()
-    eventPlayer.mod_speed_event = EVT_MECH_1_SPEED_PENALTY
-    updatePlayerStats()
-    wait(eventPlayer.eventDuration)
-    eventPlayer.mod_speed_event = 0
-    updatePlayerStats()
-    removeHealthPool(eventPlayer.healthId[0])
-    eventPlayer.healthId[0] = null
-
-
 rule "[VishkarEvent]: 赌徒":
     @Event eachPlayer
     @Team 1
@@ -77,42 +59,6 @@ rule "[VishkarEvent]: 赌徒":
     setPlayerHP()
     wait()
     eventPlayer.eventDuration = 0
-
-
-rule "[VishkarEvent]: 有点松弛":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.CHILL_MODE, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
-    
-    wait()
-    if eventPlayer.eventEffect != null:
-        goto lbl_0
-    createEffect(getAllPlayers(), Effect.WRECKING_BALL_PILEDRIVER_FIRE, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect = getLastCreatedEntity()
-    lbl_0:
-    createEffect([player for player in getPlayers(Team.1) if not player.ignoreObstrucVis], Effect.CLOUD, random.choice([Color.YELLOW, Color.GREEN, Color.ORANGE, Color.LIME_GREEN, Color.VIOLET]), evalOnce(eventPlayer.getPosition()), EVT_MECH_3_CLOUD_RADIUS, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
-    wait()
-    eventPlayer.obstrucVis.append(getLastCreatedEntity())
-    wait(EVT_MECH_3_SPAWN_INTERVAL)
-    if ruleCondition:
-        loop()
-    clearEventEffect()
-
-
-rule "[VishkarEvent]: 有点松弛":
-    @Event eachPlayer
-    @Team 1
-    @Condition dlcVishkarEvent == true
-    @Condition eventPlayer.obstrucVis != []
-    @Condition len(eventPlayer.obstrucVis) > 0
-    
-    wait(20, Wait.ABORT_WHEN_FALSE)
-    destroyEffect(eventPlayer.obstrucVis[0])
-    eventPlayer.obstrucVis.remove(eventPlayer.obstrucVis[0])
-    wait(0.5)
-    if ruleCondition:
-        loop()
-
 
 
 rule "[VishkarEvent]: 迷你形态":
@@ -155,23 +101,6 @@ rule "[VishkarEvent]: 悄悄地进村":
     updatePlayerStats()
     clearEventEffect()
     wait(0.25)
-
-
-rule "[VishkarEvent]: 紧急避障":
-    @Event playerTookDamage
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.EMERGENCY_EVASION]) == true
-    
-    wait(0.032, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.mod_speed_event += EVT_MECH_6_SPEED_BOOST
-    updatePlayerStats()
-    createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(EVT_MECH_6_SPEED_DURATION)
-    eventPlayer.mod_speed_event = 0
-    updatePlayerStats()
-    clearEventEffect()
-
 
 
 rule "[VishkarEvent]: 刹车失灵":
