@@ -89,25 +89,6 @@
 #!define EVT_8_HP_LAYER_PER_DEATH 1
 #!define EVT_8_VISUAL_EFFECT Effect.WINSTON_PRIMAL_RAGE
 
-# --- ID 9: 危险感知 ---
-# Duration（秒）
-#!define EVT_BUFF_9_DURATION 20
-# Weight（权重）
-#!define EVT_BUFF_9_WEIGHT 1.2
-#!define EVT_9_SPEED_BOOST 60
-#!define EVT_9_DMG_TAKEN -25
-#!define EVT_9_LINGER_TIME 1
-
-# --- ID 10: 反应装甲 ---
-# Duration（秒）
-#!define EVT_BUFF_10_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_10_WEIGHT 0.8
-#!define EVT_10_ARMOR_AMOUNT 150
-# --- ID 10: 反应装甲 (反伤晕眩逻辑) ---
-#!define EVT_10_STUN_DURATION 1
-#!define EVT_10_STUN_COOLDOWN 1
-
 # --- ID 11: 死亡延迟 ---
 # Duration（秒）
 #!define EVT_BUFF_11_DURATION 45
@@ -153,12 +134,6 @@
 # 护盾池 ID 索引
 #!define EVT_14_HEALTH_ID 2
 
-# --- ID 15 ---
-# Duration（秒）
-#!define EVT_BUFF_15_DURATION 90
-# Weight（权重）
-#!define EVT_BUFF_15_WEIGHT 0
-
 # --- ID 16: 向我靠拢 (无敌光环) ---
 # Duration（秒）
 #!define EVT_BUFF_16_DURATION 30
@@ -180,28 +155,6 @@
 # invincible[0] = 是否激活 (bool)
 # invincible[1] = 来源玩家 (Entity)
 # invincible[2] = 持续时间 (Number)
-
-# --- ID 17: 我独自闯关 ---
-# Duration（秒）
-#!define EVT_BUFF_17_DURATION 120
-# Weight（权重）
-#!define EVT_BUFF_17_WEIGHT 1.1
-# 检测半径
-#!define EVT_17_CHECK_RADIUS 8
-
-# 状态 1：有队友时的数值 (普通)
-#!define EVT_17_MODE1_DMG_TAKEN -15
-#!define EVT_17_MODE1_HEAL_BOOST 30
-#!define EVT_17_MODE1_SPEED 12.5
-# 受到75%击退 = 25% 抵抗
-#!define EVT_17_MODE1_KNOCKBACK 75
-
-# 状态 2：独自一人时的数值 (强力)
-#!define EVT_17_MODE2_DMG_TAKEN -30
-#!define EVT_17_MODE2_HEAL_BOOST 60
-#!define EVT_17_MODE2_SPEED 25
-# 受到50%击退 = 50% 抵抗
-#!define EVT_17_MODE2_KNOCKBACK 50
 
 # --- ID 18: 坚定 ---
 # Duration（秒）
@@ -349,17 +302,6 @@
 #!define EVT_28_HOT_FLAT 75
 #!define EVT_28_HOT_MAXHP_FACTOR 0.5
 #!define EVT_28_TICK_INTERVAL 1
-
-# --- ID 29: 成吨的增益 (初始化与属性) ---
-# Duration（秒）
-#!define EVT_BUFF_29_DURATION 30
-# Weight（权重）
-#!define EVT_BUFF_29_WEIGHT 0.3
-#!define EVT_29_SPEED_DELTA 50
-#!define EVT_29_DMG_TAKEN_DELTA 50
-#!define EVT_29_HEAL_DEALT_DELTA 50
-#!define EVT_29_HEAL_RECV_DELTA 50
-#!define EVT_29_SIZE_HEALTH_SCALE 1.5
 
 # --- ID 30: F5 (循环刷新) ---
 # Duration（秒）
