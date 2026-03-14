@@ -170,59 +170,6 @@ rule "[VishkarEvent]: 心之钢":
     wait(0.032)
 
 
-rule "[VishkarEvent]: 危险感知":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.DANGER_SENSE]) == true
-    @Condition len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) > 0
-    
-    eventPlayer.mod_speed_event = EVT_9_SPEED_BOOST
-    eventPlayer.mod_dmg_taken = EVT_9_DMG_TAKEN
-    updatePlayerStats()
-    # Exception: cadence starts after threat list drains, then applies linger window.
-    waitUntil(len([player for player in getPlayers(Team.2) if player.target == eventPlayer]) == 0, eventPlayer.eventDuration)
-    wait(EVT_9_LINGER_TIME)
-    if ruleCondition:
-        loop()
-    eventPlayer.mod_speed_event = 0
-    eventPlayer.mod_dmg_taken = 0
-    updatePlayerStats()
-
-
-rule "[VishkarEvent]: 反应装甲":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.REACTIVE_ARMOR]) == true
-    
-    wait(0.032)
-    if eventPlayer.healthId[1] == null:
-        goto lbl_0
-    removeHealthPool(eventPlayer.healthId[1])
-    lbl_0:
-    eventPlayer.addHealthPool(Health.ARMOR, EVT_10_ARMOR_AMOUNT, true, false)
-    eventPlayer.healthId[1] = getLastCreatedHealthPool()
-    playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
-    wait(eventPlayer.eventDuration)
-    removeHealthPool(eventPlayer.healthId[1])
-    wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.healthId[1] = null
-
-
-rule "[VishkarEvent]: 反应装甲":
-    @Event playerTookDamage
-    @Team 1
-    @Condition attacker != victim
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.REACTIVE_ARMOR]) == true
-    @Condition eventPlayer.getHealthOfType(Health.ARMOR) > 0
-    
-    wait(0.032, Wait.ABORT_WHEN_FALSE)
-    if attacker.hasStatus(Status.STUNNED):
-        goto lbl_0
-    attacker.setStatusEffect(victim, Status.STUNNED, EVT_10_STUN_DURATION)
-    lbl_0:
-    wait(EVT_10_STUN_COOLDOWN)
-
-
 rule "[VishkarEvent]: 死亡延迟":
     @Event playerTookDamage
     @Team 1
@@ -482,16 +429,6 @@ rule "[VishkarEvent]: 费斯卡光子护盾":
     eventPlayer.healthId[2] = null
 
 
-rule "[VishkarEvent]: 费斯卡呼吸机":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.PHOTON_RESPIRATOR]) == true
-    
-    eventPlayer.ignoreObstrucVis = true
-    wait(eventPlayer.eventDuration)
-    eventPlayer.ignoreObstrucVis = false
-
-
 rule "[VishkarEvent]: 向我靠拢":
     @Event eachPlayer
     @Team 1
@@ -520,40 +457,6 @@ rule "[VishkarEvent]: 向我靠拢":
     destroyEffect(eventPlayer.invincibleEffect)
     eventPlayer.invincibleEffect = null
     eventPlayer.invincible = null
-
-
-rule "[VishkarEvent]: 我独自闯关":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.SOLO_RUN]) == true
-    
-    wait(0.05)
-    if len([player for player in getPlayersInRadius(eventPlayer, EVT_17_CHECK_RADIUS, Team.1, LosCheck.SURFACES) if player != eventPlayer]) > 0:
-        eventPlayer.mod_dmg_taken = EVT_17_MODE1_DMG_TAKEN
-        eventPlayer.mod_heal_event = EVT_17_MODE1_HEAL_BOOST
-        eventPlayer.mod_speed_event = EVT_17_MODE1_SPEED
-        eventPlayer.setKnockbackReceived(EVT_17_MODE1_KNOCKBACK)
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), negToPos(EVT_17_MODE1_DMG_TAKEN)))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE1_HEAL_BOOST))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE1_SPEED))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE1_KNOCKBACK))
-    else:
-        bigMessage(eventPlayer, "我独自闯关！")
-        eventPlayer.mod_dmg_taken = EVT_17_MODE2_DMG_TAKEN
-        eventPlayer.mod_heal_event = EVT_17_MODE2_HEAL_BOOST
-        eventPlayer.mod_speed_event = EVT_17_MODE2_SPEED
-        eventPlayer.setKnockbackReceived(EVT_17_MODE2_KNOCKBACK)
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 伤害减免".format(iconString(Icon.DIAMOND), negToPos(EVT_17_MODE2_DMG_TAKEN)))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 治疗增益".format(iconString(Icon.DIAMOND), EVT_17_MODE2_HEAL_BOOST))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 移速加成".format(iconString(Icon.DIAMOND), EVT_17_MODE2_SPEED))
-        smallMessage(eventPlayer, "  {0}  已获得 {1}% 击退抵抗".format(iconString(Icon.DIAMOND), 100 - EVT_17_MODE2_KNOCKBACK))
-    updatePlayerStats()
-    wait(eventPlayer.eventDuration)
-    eventPlayer.setKnockbackReceived(100)
-    eventPlayer.mod_dmg_taken = 0
-    eventPlayer.mod_heal_event = 0
-    eventPlayer.mod_speed_event = 0
-    updatePlayerStats()
 
 
 rule "[VishkarEvent]: 坚定":
@@ -814,28 +717,6 @@ rule "[VishkarEvent]: 鼓舞士气 ProMax - 触发器":
         loop()
     clearEventEffect()
 
-
-rule "[VishkarEvent]: 成吨的增益 (初始化与属性)":
-    @Event eachPlayer
-    @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.TONS_OF_BUFFS]) == true
-    
-    eventPlayer.mod_speed_event += EVT_29_SPEED_DELTA
-    eventPlayer.mod_dmg_taken -= EVT_29_DMG_TAKEN_DELTA
-    eventPlayer.mod_heal_event += EVT_29_HEAL_DEALT_DELTA
-    eventPlayer.heal_recv += EVT_29_HEAL_RECV_DELTA
-    updatePlayerStats()
-    eventPlayer.sizeHealth = EVT_29_SIZE_HEALTH_SCALE
-    setPlayerHP()
-    wait(eventPlayer.eventDuration)
-    eventPlayer.mod_speed_event -= EVT_29_SPEED_DELTA
-    eventPlayer.mod_dmg_taken -= EVT_29_DMG_TAKEN_DELTA
-    eventPlayer.mod_heal_event -= EVT_29_HEAL_DEALT_DELTA
-    eventPlayer.heal_recv -= EVT_29_HEAL_RECV_DELTA
-    updatePlayerStats()
-    eventPlayer.sizeHealth = 1
-    setPlayerHP()
-    clearEventEffect()
 
 rule "[VishkarEvent]: F5 (循环刷新)":
     @Event eachPlayer
