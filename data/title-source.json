@@ -991,7 +991,8 @@
         "CHALLENGER_LEGEND",
         "TRAVELER_HELL",
         "MANBA",
-        "LUCKY_STAR"
+        "LUCKY_STAR",
+        "HACKING"
       ]
     },
     {
@@ -1021,7 +1022,8 @@
       "name": "云雀",
       "titleKeys": [
         "CHALLENGER_LEGEND",
-        "TRAVELER_HELL"
+        "TRAVELER_HELL",
+        "HACKING"
       ]
     },
     {
@@ -1264,7 +1266,9 @@
           "糯米进脑子",
           "EruIluvatar",
           "锄禾日当午",
-          "岂不六哉"
+          "岂不六哉",
+          "云雀",
+          "板鸭"
         ],
         "DOMINATOR": [
           "吾携秋水揽星河",
@@ -1277,7 +1281,9 @@
           "糯米进脑子",
           "EruIluvatar",
           "锄禾日当午",
-          "岂不六哉"
+          "岂不六哉",
+          "云雀",
+          "板鸭"
         ]
       }
     },
@@ -1795,7 +1801,8 @@
           "EruIluvatar",
           "他又",
           "豆本豆豆奶",
-          "八月八月八"
+          "八月八月八",
+          "云雀"
         ],
         "DOMINATOR": [
           "他又",
@@ -1809,7 +1816,8 @@
           "初一吖",
           "雨鸢",
           "EruIluvatar",
-          "八月八月八"
+          "八月八月八",
+          "云雀"
         ]
       }
     },
@@ -2234,7 +2242,8 @@
           "初一吖",
           "EruIluvatar",
           "雨鸢",
-          "旅店老板"
+          "旅店老板",
+          "云雀"
         ],
         "DOMINATOR": [
           "吾携秋水揽星河",
@@ -2246,7 +2255,8 @@
           "初一吖",
           "EruIluvatar",
           "雨鸢",
-          "旅店老板"
+          "旅店老板",
+          "云雀"
         ]
       }
     },
