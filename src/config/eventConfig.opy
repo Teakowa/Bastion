@@ -63,53 +63,45 @@ rule "initialize event array":
     # Pack 1: Debuffs
     # ================================================
 
-    debuffEvent[BuffEventId.OLIVIA_GIFT] = [
+    debuffEvent[DebuffEventId.GRAVITY_ANOMALY] = [
         STR_EVT_DEBUFF_0_TITLE,
         STR_EVT_DEBUFF_0_DESC.format(negToPos(EVT_DEBUFF_0_SPEED), EVT_DEBUFF_0_GRAVITY),
         EVT_DEBUFF_0_DURATION,
         EVT_DEBUFF_0_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.OLIVIA_GIFT)
+    debuffEventId.append(DebuffEventId.GRAVITY_ANOMALY)
 
-    debuffEvent[BuffEventId.GALE_BLESSING] = [STR_EVT_DEBUFF_1_TITLE, STR_EVT_DEBUFF_1_DESC, EVT_DEBUFF_1_HACK_DURATION, EVT_DEBUFF_1_WEIGHT]
-    debuffEventId.append(BuffEventId.GALE_BLESSING)
+    debuffEvent[DebuffEventId.EMP] = [STR_EVT_DEBUFF_1_TITLE, STR_EVT_DEBUFF_1_DESC, EVT_DEBUFF_1_HACK_DURATION, EVT_DEBUFF_1_WEIGHT]
+    debuffEventId.append(DebuffEventId.EMP)
 
-    debuffEvent[BuffEventId.IRON_BULWARK] = [
+    debuffEvent[DebuffEventId.SACRIFICE] = [
         STR_EVT_DEBUFF_2_TITLE,
         STR_EVT_DEBUFF_2_DESC.format(percent(EVT_DEBUFF_2_DMG_PERCENT)),
         EVT_DEBUFF_2_DURATION,
         EVT_DEBUFF_2_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.IRON_BULWARK)
+    debuffEventId.append(DebuffEventId.SACRIFICE)
 
-    debuffEvent[BuffEventId.ADRENALINE] = [
+    debuffEvent[DebuffEventId.VULNERABLE] = [
         STR_EVT_DEBUFF_3_TITLE,
         STR_EVT_DEBUFF_3_DESC.format(EVT_DEBUFF_3_DMG_TAKEN),
         EVT_DEBUFF_3_DURATION,
         EVT_DEBUFF_3_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.ADRENALINE)
+    debuffEventId.append(DebuffEventId.VULNERABLE)
 
-    debuffEvent[BuffEventId.LIFE_SPRING] = [
+    debuffEvent[DebuffEventId.SPEED_LIMIT_40] = [
         STR_EVT_DEBUFF_4_TITLE,
         STR_EVT_DEBUFF_4_DESC.format(EVT_DEBUFF_4_DMG_BASE, percent(EVT_DEBUFF_4_DMG_PERCENT)),
         EVT_DEBUFF_4_DURATION,
         EVT_DEBUFF_4_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.LIFE_SPRING)
+    debuffEventId.append(DebuffEventId.SPEED_LIMIT_40)
 
 
     # ================================================
     # Pack 1: Mechanics
     # ================================================
-
-    mechEvent[MechEventId.NANO_ARMOR] = [
-        STR_EVT_MECH_1_TITLE,
-        STR_EVT_MECH_1_DESC.format(percent(EVT_MECH_1_HP_MULTIPLIER), negToPos(EVT_MECH_1_SPEED_PENALTY)),
-        EVT_MECH_1_DURATION,
-        EVT_MECH_1_WEIGHT
-    ]
-    mechEventId.append(MechEventId.NANO_ARMOR)
 
     mechEvent[MechEventId.GAMBLER] = [
         STR_EVT_MECH_2_TITLE,
@@ -118,14 +110,6 @@ rule "initialize event array":
         EVT_MECH_2_WEIGHT
     ]
     mechEventId.append(MechEventId.GAMBLER)
-
-    mechEvent[MechEventId.CHILL_MODE] = [
-        STR_EVT_MECH_3_TITLE,
-        STR_EVT_MECH_3_DESC,
-        EVT_MECH_3_DURATION,
-        EVT_MECH_3_WEIGHT
-    ]
-    mechEventId.append(MechEventId.CHILL_MODE)
 
     mechEvent[MechEventId.MINI_FORM] = [
         STR_EVT_MECH_4_TITLE,
@@ -143,15 +127,6 @@ rule "initialize event array":
     ]
     mechEventId.append(MechEventId.STEALTH_CROUCH)
 
-    mechEvent[MechEventId.EMERGENCY_EVASION] = [
-        STR_EVT_MECH_6_TITLE,
-        STR_EVT_MECH_6_DESC.format(EVT_MECH_6_SPEED_DURATION, EVT_MECH_6_SPEED_BOOST),
-        EVT_MECH_6_DURATION,
-        EVT_MECH_6_WEIGHT
-    ]
-    mechEventId.append(MechEventId.EMERGENCY_EVASION)
-
-    
     lbl_0:
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK, STR_CAT_RANDOM_PACK_2, true, 1):
@@ -160,12 +135,6 @@ rule "initialize event array":
     # ================================================
     # Pack 2: Buffs
     # ================================================
-
-    buffEvent[BuffEventId.DANGER_SENSE] = [STR_EVT_BUFF_9_TITLE, STR_EVT_BUFF_9_DESC.format(EVT_9_SPEED_BOOST, negToPos(EVT_9_DMG_TAKEN)), EVT_BUFF_9_DURATION, EVT_BUFF_9_WEIGHT]
-    buffEventId.append(BuffEventId.DANGER_SENSE)
-
-    buffEvent[BuffEventId.REACTIVE_ARMOR] = [STR_EVT_BUFF_10_TITLE, STR_EVT_BUFF_10_DESC, EVT_BUFF_10_DURATION, EVT_BUFF_10_WEIGHT]
-    buffEventId.append(BuffEventId.REACTIVE_ARMOR)
 
     buffEvent[BuffEventId.DEATH_DELAY] = [STR_EVT_BUFF_11_TITLE, STR_EVT_BUFF_11_DESC, EVT_BUFF_11_DURATION, EVT_BUFF_11_WEIGHT]
     buffEventId.append(BuffEventId.DEATH_DELAY)
@@ -184,29 +153,26 @@ rule "initialize event array":
     # Pack 2: Debuffs
     # ================================================
 
-    debuffEvent[BuffEventId.BLACK_FANS_ASSAULT] = [STR_EVT_DEBUFF_5_TITLE, STR_EVT_DEBUFF_5_DESC.format(EVT_DEBUFF_5_SPEED_REDUCTION), EVT_DEBUFF_5_DURATION, EVT_DEBUFF_5_WEIGHT]
-    debuffEventId.append(BuffEventId.BLACK_FANS_ASSAULT)
+    debuffEvent[DebuffEventId.GRAVITY_PULL] = [STR_EVT_DEBUFF_5_TITLE, STR_EVT_DEBUFF_5_DESC.format(EVT_DEBUFF_5_SPEED_REDUCTION), EVT_DEBUFF_5_DURATION, EVT_DEBUFF_5_WEIGHT]
+    debuffEventId.append(DebuffEventId.GRAVITY_PULL)
 
-    debuffEvent[BuffEventId.SPEED_STACK] = [STR_EVT_DEBUFF_6_TITLE, STR_EVT_DEBUFF_6_DESC.format(negToPos(EVT_DEBUFF_6_MAX_SPEED_DEC)), EVT_DEBUFF_6_DURATION, EVT_DEBUFF_6_WEIGHT]
-    debuffEventId.append(BuffEventId.SPEED_STACK)
+    debuffEvent[DebuffEventId.OSTEOPOROSIS] = [STR_EVT_DEBUFF_6_TITLE, STR_EVT_DEBUFF_6_DESC.format(negToPos(EVT_DEBUFF_6_MAX_SPEED_DEC)), EVT_DEBUFF_6_DURATION, EVT_DEBUFF_6_WEIGHT]
+    debuffEventId.append(DebuffEventId.OSTEOPOROSIS)
 
-    debuffEvent[BuffEventId.FLESH_REGEN] = [STR_EVT_DEBUFF_7_TITLE, STR_EVT_DEBUFF_7_DESC.format(EVT_DEBUFF_7_RADIUS), EVT_DEBUFF_7_DURATION, EVT_DEBUFF_7_WEIGHT]
-    debuffEventId.append(BuffEventId.FLESH_REGEN)
+    debuffEvent[DebuffEventId.EMP_PROMAX] = [STR_EVT_DEBUFF_7_TITLE, STR_EVT_DEBUFF_7_DESC.format(EVT_DEBUFF_7_RADIUS), EVT_DEBUFF_7_DURATION, EVT_DEBUFF_7_WEIGHT]
+    debuffEventId.append(DebuffEventId.EMP_PROMAX)
 
-    debuffEvent[BuffEventId.HEART_OF_STEEL] = [STR_EVT_DEBUFF_8_TITLE, STR_EVT_DEBUFF_8_DESC.format(percent(EVT_DEBUFF_8_DMG_PERCENT)), EVT_DEBUFF_8_DURATION, EVT_DEBUFF_8_WEIGHT]
-    debuffEventId.append(BuffEventId.HEART_OF_STEEL)
+    debuffEvent[DebuffEventId.ENERGY_LEAK] = [STR_EVT_DEBUFF_8_TITLE, STR_EVT_DEBUFF_8_DESC.format(percent(EVT_DEBUFF_8_DMG_PERCENT)), EVT_DEBUFF_8_DURATION, EVT_DEBUFF_8_WEIGHT]
+    debuffEventId.append(DebuffEventId.ENERGY_LEAK)
 
-    debuffEvent[BuffEventId.DANGER_SENSE] = [STR_EVT_DEBUFF_9_TITLE, STR_EVT_DEBUFF_9_DESC.format(percent(EVT_DEBUFF_9_DMG_STILL), percent(EVT_DEBUFF_9_DMG_MOVING)), EVT_DEBUFF_9_DURATION, EVT_DEBUFF_9_WEIGHT]
-    debuffEventId.append(BuffEventId.DANGER_SENSE)
+    debuffEvent[DebuffEventId.SHARE_THE_PAIN] = [STR_EVT_DEBUFF_10_TITLE, STR_EVT_DEBUFF_10_DESC.format(percent(EVT_DEBUFF_10_DMG_FACTOR), EVT_DEBUFF_10_RADIUS), EVT_DEBUFF_10_DURATION, EVT_DEBUFF_10_WEIGHT]
+    debuffEventId.append(DebuffEventId.SHARE_THE_PAIN)
 
-    debuffEvent[BuffEventId.REACTIVE_ARMOR] = [STR_EVT_DEBUFF_10_TITLE, STR_EVT_DEBUFF_10_DESC.format(percent(EVT_DEBUFF_10_DMG_FACTOR), EVT_DEBUFF_10_RADIUS), EVT_DEBUFF_10_DURATION, EVT_DEBUFF_10_WEIGHT]
-    debuffEventId.append(BuffEventId.REACTIVE_ARMOR)
+    debuffEvent[DebuffEventId.FEAST_FRENZY] = [STR_EVT_DEBUFF_11_TITLE, STR_EVT_DEBUFF_11_DESC.format(EVT_DEBUFF_11_BERSERK_ADD), EVT_DEBUFF_11_DURATION, EVT_DEBUFF_11_WEIGHT]
+    debuffEventId.append(DebuffEventId.FEAST_FRENZY)
 
-    debuffEvent[BuffEventId.DEATH_DELAY] = [STR_EVT_DEBUFF_11_TITLE, STR_EVT_DEBUFF_11_DESC.format(EVT_DEBUFF_11_BERSERK_ADD), EVT_DEBUFF_11_DURATION, EVT_DEBUFF_11_WEIGHT]
-    debuffEventId.append(BuffEventId.DEATH_DELAY)
-
-    debuffEvent[BuffEventId.SYMBIOSIS] = [STR_EVT_DEBUFF_12_TITLE, STR_EVT_DEBUFF_12_DESC.format(EVT_DEBUFF_12_KNOCKDOWN_DURATION), EVT_DEBUFF_12_DURATION, EVT_DEBUFF_12_WEIGHT]
-    debuffEventId.append(BuffEventId.SYMBIOSIS)
+    debuffEvent[DebuffEventId.POWERLESS_SPOUSE] = [STR_EVT_DEBUFF_12_TITLE, STR_EVT_DEBUFF_12_DESC.format(EVT_DEBUFF_12_KNOCKDOWN_DURATION), EVT_DEBUFF_12_DURATION, EVT_DEBUFF_12_WEIGHT]
+    debuffEventId.append(DebuffEventId.POWERLESS_SPOUSE)
 
 
     # ================================================
@@ -226,14 +192,8 @@ rule "initialize event array":
     # Pack 3: Buffs
     # ================================================
     
-    buffEvent[BuffEventId.PHOTON_RESPIRATOR] = [STR_EVT_BUFF_15_TITLE, STR_EVT_BUFF_15_DESC, EVT_BUFF_15_DURATION, EVT_BUFF_15_WEIGHT]
-    buffEventId.append(BuffEventId.PHOTON_RESPIRATOR)
-    
     buffEvent[BuffEventId.REGROUP_CALL] = [STR_EVT_BUFF_16_TITLE, STR_EVT_BUFF_16_DESC.format(EVT_16_CHECK_INTERVAL, EVT_16_INVINCIBLE_DURATION), EVT_BUFF_16_DURATION, EVT_BUFF_16_WEIGHT]
     buffEventId.append(BuffEventId.REGROUP_CALL)
-    
-    buffEvent[BuffEventId.SOLO_RUN] = [STR_EVT_BUFF_17_TITLE, STR_EVT_BUFF_17_DESC, EVT_BUFF_17_DURATION, EVT_BUFF_17_WEIGHT]
-    buffEventId.append(BuffEventId.SOLO_RUN)
     
     buffEvent[BuffEventId.RESOLVE] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC.format(negToPos(EVT_18_KNOCKBACK_RESISTANCE), EVT_18_DMG_REDUCE_PER_STACK, percent(EVT_18_HEAL_PERCENT)), EVT_BUFF_18_DURATION, EVT_BUFF_18_WEIGHT]
     buffEventId.append(BuffEventId.RESOLVE)
@@ -257,29 +217,29 @@ rule "initialize event array":
     # Pack 3: Debuffs
     # ================================================
 
-    debuffEvent[BuffEventId.KONAMI_CODE] = [
+    debuffEvent[DebuffEventId.GRIEVOUS_WOUNDS] = [
         STR_EVT_DEBUFF_13_TITLE,
         STR_EVT_DEBUFF_13_DESC.format(negToPos(EVT_DEBUFF_13_HEAL_DEALT_RED)),
         EVT_DEBUFF_13_DURATION,
         EVT_DEBUFF_13_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.KONAMI_CODE)
+    debuffEventId.append(DebuffEventId.GRIEVOUS_WOUNDS)
 
-    debuffEvent[BuffEventId.PHOTON_SHIELD] = [
+    debuffEvent[DebuffEventId.HALVED] = [
         STR_EVT_DEBUFF_14_TITLE,
         STR_EVT_DEBUFF_14_DESC.format(EVT_DEBUFF_14_INTERVAL, percent(EVT_DEBUFF_14_DAMAGE_PERCENT), percent(EVT_DEBUFF_14_EXECUTE_THRESHOLD)),
         EVT_DEBUFF_14_DURATION,
         EVT_DEBUFF_14_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.PHOTON_SHIELD)
+    debuffEventId.append(DebuffEventId.HALVED)
 
-    debuffEvent[BuffEventId.PHOTON_RESPIRATOR] = [
+    debuffEvent[DebuffEventId.SELFLESS_GIVEAWAY] = [
         STR_EVT_DEBUFF_15_TITLE,
         STR_EVT_DEBUFF_15_DESC.format(EVT_DEBUFF_15_STACKS_TAKE),
         EVT_DEBUFF_15_DURATION,
         EVT_DEBUFF_15_WEIGHT
     ]
-    debuffEventId.append(BuffEventId.PHOTON_RESPIRATOR)
+    debuffEventId.append(DebuffEventId.SELFLESS_GIVEAWAY)
 
 
     # ================================================
@@ -337,9 +297,6 @@ rule "initialize event array":
     buffEvent[BuffEventId.MORALE_BOOST_PROMAX] = [STR_EVT_BUFF_28_TITLE, STR_EVT_BUFF_28_DESC.format(EVT_28_HEAL_RADIUS, EVT_28_HOT_FLAT, percent(EVT_28_HOT_MAXHP_FACTOR)), EVT_BUFF_28_DURATION, EVT_BUFF_28_WEIGHT]
     buffEventId.append(BuffEventId.MORALE_BOOST_PROMAX)
 
-    buffEvent[BuffEventId.TONS_OF_BUFFS] = [STR_EVT_BUFF_29_TITLE, STR_EVT_BUFF_29_DESC.format(percent(EVT_29_SIZE_HEALTH_SCALE - 1), EVT_29_SPEED_DELTA, EVT_29_DMG_TAKEN_DELTA, EVT_29_HEAL_DEALT_DELTA), EVT_BUFF_29_DURATION, EVT_BUFF_29_WEIGHT]
-    buffEventId.append(BuffEventId.TONS_OF_BUFFS)
-
     buffEvent[BuffEventId.F5_REFRESH] = [STR_EVT_BUFF_30_TITLE, STR_EVT_BUFF_30_DESC.format(EVT_30_REFRESH_INTERVAL), EVT_BUFF_30_DURATION, EVT_BUFF_30_WEIGHT]
     buffEventId.append(BuffEventId.F5_REFRESH)
 
@@ -358,23 +315,20 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Debuffs
     # ================================================
-    debuffEvent[BuffEventId.REGROUP_CALL] = [STR_EVT_DEBUFF_16_TITLE, STR_EVT_DEBUFF_16_DESC, EVT_DEBUFF_16_DURATION, EVT_DEBUFF_16_WEIGHT]
-    debuffEventId.append(BuffEventId.REGROUP_CALL)
+    debuffEvent[DebuffEventId.KEEP_DISTANCE_AURA] = [STR_EVT_DEBUFF_16_TITLE, STR_EVT_DEBUFF_16_DESC, EVT_DEBUFF_16_DURATION, EVT_DEBUFF_16_WEIGHT]
+    debuffEventId.append(DebuffEventId.KEEP_DISTANCE_AURA)
 
-    debuffEvent[BuffEventId.SOLO_RUN] = [STR_EVT_DEBUFF_17_TITLE, STR_EVT_DEBUFF_17_DESC, EVT_DEBUFF_17_DURATION, EVT_DEBUFF_17_WEIGHT]
-    debuffEventId.append(BuffEventId.SOLO_RUN)
+    debuffEvent[DebuffEventId.ERROR_404] = [STR_EVT_DEBUFF_17_TITLE, STR_EVT_DEBUFF_17_DESC, EVT_DEBUFF_17_DURATION, EVT_DEBUFF_17_WEIGHT]
+    debuffEventId.append(DebuffEventId.ERROR_404)
 
-    debuffEvent[BuffEventId.RESOLVE] = [STR_EVT_DEBUFF_18_TITLE, STR_EVT_DEBUFF_18_DESC, EVT_DEBUFF_18_DURATION, EVT_DEBUFF_18_WEIGHT]
-    debuffEventId.append(BuffEventId.RESOLVE)
+    debuffEvent[DebuffEventId.CHAIN_OVERLOAD] = [STR_EVT_DEBUFF_18_TITLE, STR_EVT_DEBUFF_18_DESC, EVT_DEBUFF_18_DURATION, EVT_DEBUFF_18_WEIGHT]
+    debuffEventId.append(DebuffEventId.CHAIN_OVERLOAD)
 
-    debuffEvent[BuffEventId.WILL_TO_WIN] = [STR_EVT_DEBUFF_19_TITLE, STR_EVT_DEBUFF_19_DESC, EVT_DEBUFF_19_DURATION, EVT_DEBUFF_19_WEIGHT]
-    debuffEventId.append(BuffEventId.WILL_TO_WIN)
+    debuffEvent[DebuffEventId.HEALTH_SYNC] = [STR_EVT_DEBUFF_19_TITLE, STR_EVT_DEBUFF_19_DESC, EVT_DEBUFF_19_DURATION, EVT_DEBUFF_19_WEIGHT]
+    debuffEventId.append(DebuffEventId.HEALTH_SYNC)
 
-    debuffEvent[BuffEventId.PHEIDIPPIDES_TRIAL] = [STR_EVT_DEBUFF_20_TITLE, STR_EVT_DEBUFF_20_DESC, EVT_DEBUFF_20_DURATION, EVT_DEBUFF_20_WEIGHT]
-    debuffEventId.append(BuffEventId.PHEIDIPPIDES_TRIAL)
-
-    debuffEvent[BuffEventId.HEART_OF_STEEL_PRO] = [STR_EVT_DEBUFF_21_TITLE, STR_EVT_DEBUFF_21_DESC, EVT_DEBUFF_21_DURATION, EVT_DEBUFF_21_WEIGHT]
-    debuffEventId.append(BuffEventId.HEART_OF_STEEL_PRO)
+    debuffEvent[DebuffEventId.VAMPIRE] = [STR_EVT_DEBUFF_20_TITLE, STR_EVT_DEBUFF_20_DESC, EVT_DEBUFF_20_DURATION, EVT_DEBUFF_20_WEIGHT]
+    debuffEventId.append(DebuffEventId.VAMPIRE)
 
     debuffEvent[DebuffEventId.MOON_ROCKET] = [STR_EVT_DEBUFF_22_TITLE, STR_EVT_DEBUFF_22_DESC, EVT_DEBUFF_22_DURATION, EVT_DEBUFF_22_WEIGHT]
     debuffEventId.append(DebuffEventId.MOON_ROCKET)
@@ -386,9 +340,6 @@ rule "initialize event array":
     mechEvent[MechEventId.CHEAT_CARD_COUNTING] = [STR_EVT_MECH_10_TITLE, STR_EVT_MECH_10_DESC.format(Button.RELOAD, EVT_MECH_10_HEART_STEEL_COST, EVT_MECH_10_HEART_STEEL_COST * EVT_8_HP_PERCENT_PER_STACK), EVT_MECH_10_DURATION, EVT_MECH_10_WEIGHT]
     mechEventId.append(MechEventId.CHEAT_CARD_COUNTING)
 
-    mechEvent[MechEventId.CHEAT_REWIND] = [STR_EVT_MECH_11_TITLE, STR_EVT_MECH_11_DESC.format(Button.RELOAD, EVT_MECH_11_RECORD_INTERVAL, percent(EVT_MECH_11_TRIGGER_HP_COST)), EVT_MECH_11_DURATION, EVT_MECH_11_WEIGHT]
-    mechEventId.append(MechEventId.CHEAT_REWIND)
-
     mechEvent[MechEventId.GAMBLER_SHORT_INVESTMENT] = [STR_EVT_MECH_12_TITLE, STR_EVT_MECH_12_DESC.format(Button.RELOAD, EVT_MECH_12_CONTRACT_EVENTS, EVT_MECH_12_WIN_CHANCE, EVT_MECH_12_REWARD_STACKS), EVT_MECH_12_DURATION, EVT_MECH_12_WEIGHT]
     mechEventId.append(MechEventId.GAMBLER_SHORT_INVESTMENT)
 
@@ -398,22 +349,16 @@ rule "initialize event array":
     mechEvent[MechEventId.CHEAT_SKIP_HERO] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(Button.RELOAD), EVT_MECH_14_DURATION, EVT_MECH_14_WEIGHT]
     mechEventId.append(MechEventId.CHEAT_SKIP_HERO)
 
-    mechEvent[MechEventId.TETRIS_GROWTH] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(EVT_MECH_15_RESURRECT_DELAY, percent(EVT_MECH_15_SIZE_STEP), percent(EVT_MECH_15_SIZE_HEALTH_STEP)), EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
-    mechEventId.append(MechEventId.TETRIS_GROWTH)
-
-    mechEvent[MechEventId.NESTING_DOLL] = [STR_EVT_MECH_16_TITLE, STR_EVT_MECH_16_DESC.format(EVT_MECH_16_RESURRECT_DELAY, percent(EVT_MECH_16_SIZE_STEP), EVT_MECH_16_SPEED_STEP), EVT_MECH_16_DURATION, EVT_MECH_16_WEIGHT]
+    mechEvent[MechEventId.NESTING_DOLL] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(EVT_MECH_15_RESURRECT_DELAY, percent(EVT_MECH_15_SIZE_STEP), EVT_MECH_15_SPEED_STEP), EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
     mechEventId.append(MechEventId.NESTING_DOLL)
 
-    mechEvent[MechEventId.CHEAT_ZERO_COOLDOWN] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC.format(percent(EVT_MECH_17_HP_COST_PERCENT)), EVT_MECH_17_DURATION, EVT_MECH_17_WEIGHT]
-    mechEventId.append(MechEventId.CHEAT_ZERO_COOLDOWN)
-
-    mechEvent[MechEventId.GAMBLER_LONG_INVESTMENT] = [STR_EVT_MECH_18_TITLE, STR_EVT_MECH_18_DESC.format(Button.RELOAD, EVT_MECH_18_CONTRACT_EVENTS, EVT_MECH_18_WIN_CHANCE, EVT_MECH_18_REWARD_STACKS), EVT_MECH_18_DURATION, EVT_MECH_18_WEIGHT]
+    mechEvent[MechEventId.GAMBLER_LONG_INVESTMENT] = [STR_EVT_MECH_17_TITLE, STR_EVT_MECH_17_DESC.format(Button.RELOAD, EVT_MECH_17_CONTRACT_EVENTS, EVT_MECH_17_WIN_CHANCE, EVT_MECH_17_REWARD_STACKS), EVT_MECH_17_DURATION, EVT_MECH_17_WEIGHT]
     mechEventId.append(MechEventId.GAMBLER_LONG_INVESTMENT)
 
-    mechEvent[MechEventId.VALKYRIE_DESCENT] = [STR_EVT_MECH_19_TITLE, STR_EVT_MECH_19_DESC.format(EVT_MECH_19_SIZE_HEALTH * 100, percent(EVT_MECH_19_HEAL_SMOOTHING)), EVT_MECH_19_DURATION, EVT_MECH_19_WEIGHT]
+    mechEvent[MechEventId.VALKYRIE_DESCENT] = [STR_EVT_MECH_18_TITLE, STR_EVT_MECH_18_DESC.format(EVT_MECH_18_SIZE_HEALTH * 100, percent(EVT_MECH_18_HEAL_SMOOTHING)), EVT_MECH_18_DURATION, EVT_MECH_18_WEIGHT]
     mechEventId.append(MechEventId.VALKYRIE_DESCENT)
 
-    mechEvent[MechEventId.TRINITY_SSR] = [STR_EVT_MECH_20_TITLE, STR_EVT_MECH_20_DESC.format(100 / EVT_MECH_20_DMG_REDUCE_DIVISOR, EVT_MECH_20_SPEED_FACTOR, EVT_MECH_20_INTERVAL / EVT_MECH_20_HEART_STEEL_PER_TICK), EVT_MECH_20_DURATION, EVT_MECH_20_WEIGHT]
+    mechEvent[MechEventId.TRINITY_SSR] = [STR_EVT_MECH_19_TITLE, STR_EVT_MECH_19_DESC.format(100 / EVT_MECH_19_DMG_REDUCE_DIVISOR, EVT_MECH_19_SPEED_FACTOR, EVT_MECH_19_INTERVAL / EVT_MECH_19_HEART_STEEL_PER_TICK), EVT_MECH_19_DURATION, EVT_MECH_19_WEIGHT]
     mechEventId.append(MechEventId.TRINITY_SSR)
 
 

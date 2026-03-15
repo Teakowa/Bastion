@@ -7,44 +7,32 @@ enum MechEventId:
     # legacy numeric id: 0
     EXTREME_CHALLENGE = 0
     # legacy numeric id: 1
-    NANO_ARMOR
-    # legacy numeric id: 2
     GAMBLER
-    # legacy numeric id: 3
-    CHILL_MODE
-    # legacy numeric id: 4
+    # legacy numeric id: 2
     MINI_FORM
-    # legacy numeric id: 5
+    # legacy numeric id: 3
     STEALTH_CROUCH
-    # legacy numeric id: 6
-    EMERGENCY_EVASION
-    # legacy numeric id: 7
+    # legacy numeric id: 4
     BRAKE_FAILURE
-    # legacy numeric id: 8
+    # legacy numeric id: 5
     JUMP_THRUST
-    # legacy numeric id: 9
+    # legacy numeric id: 6
     GAMBLER_SPEED_CHALLENGE
-    # legacy numeric id: 10
+    # legacy numeric id: 7
     CHEAT_CARD_COUNTING
-    # legacy numeric id: 11
-    CHEAT_REWIND
-    # legacy numeric id: 12
+    # legacy numeric id: 8
     GAMBLER_SHORT_INVESTMENT
-    # legacy numeric id: 13
+    # legacy numeric id: 9
     FATE_SYNC
-    # legacy numeric id: 14
+    # legacy numeric id: 10
     CHEAT_SKIP_HERO
-    # legacy numeric id: 15
-    TETRIS_GROWTH
-    # legacy numeric id: 16
+    # legacy numeric id: 11
     NESTING_DOLL
-    # legacy numeric id: 17
-    CHEAT_ZERO_COOLDOWN
-    # legacy numeric id: 18
+    # legacy numeric id: 12
     GAMBLER_LONG_INVESTMENT
-    # legacy numeric id: 19
+    # legacy numeric id: 13
     VALKYRIE_DESCENT
-    # legacy numeric id: 20
+    # legacy numeric id: 14
     TRINITY_SSR
     # sentinel only for integrity checks (do not register as an event)
     COUNT
