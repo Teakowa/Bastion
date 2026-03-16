@@ -105,10 +105,6 @@ rule "initialize event array":
     buffEventId.append(BuffEventId.REGROUP_CALL)
     lbl_15:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_18_TITLE, true, 18):
-        goto lbl_17
-    lbl_17:
-
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_19_TITLE, true, 19):
         goto lbl_18
     buffEvent[BuffEventId.WILL_TO_WIN] = [STR_EVT_BUFF_19_TITLE, STR_EVT_BUFF_19_DESC.format(EVT_19_TRIGGER_HP_PERCENT * 100, EVT_19_INVINCIBLE_DURATION), EVT_BUFF_19_DURATION, EVT_BUFF_19_WEIGHT]

@@ -157,45 +157,6 @@
 # invincible[1] = 来源玩家 (Entity)
 # invincible[2] = 持续时间 (Number)
 
-# --- ID 17: 我独自闯关 ---
-# Duration（秒）
-#!define EVT_BUFF_17_DURATION 120
-# Weight（权重）
-#!define EVT_BUFF_17_WEIGHT 1.1
-# 检测半径
-#!define EVT_17_CHECK_RADIUS 8
-
-# 状态 1：有队友时的数值 (普通)
-#!define EVT_17_MODE1_DMG_TAKEN -15
-#!define EVT_17_MODE1_HEAL_BOOST 30
-#!define EVT_17_MODE1_SPEED 12.5
-# 受到75%击退 = 25% 抵抗
-#!define EVT_17_MODE1_KNOCKBACK 75
-
-# 状态 2：独自一人时的数值 (强力)
-#!define EVT_17_MODE2_DMG_TAKEN -30
-#!define EVT_17_MODE2_HEAL_BOOST 60
-#!define EVT_17_MODE2_SPEED 25
-# 受到50%击退 = 50% 抵抗
-#!define EVT_17_MODE2_KNOCKBACK 50
-
-# --- ID 18: 坚定（已并入坚韧，保留历史占位） ---
-# Duration（秒）
-#!define EVT_BUFF_18_DURATION 90
-# Weight（权重）
-#!define EVT_BUFF_18_WEIGHT 0.5
-# 基础属性
-# 95% 击退抵抗 (mod 值，不是 setKnockbackReceived)
-#!define EVT_18_KNOCKBACK_RESISTANCE -95
-
-# 受击触发属性
-# 每次受到击退增加 5% 减伤
-#!define EVT_18_DMG_REDUCE_PER_STACK 5
-# 最大减伤上限 (负数表示减伤)
-#!define EVT_18_MAX_DMG_REDUCE -75
-# 每次受到击退回复 8% 最大生命
-#!define EVT_18_HEAL_PERCENT 0.08
-
 # --- ID 19: 胜利意志 ---
 # Duration（秒）
 #!define EVT_BUFF_19_DURATION 30
