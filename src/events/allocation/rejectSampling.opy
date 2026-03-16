@@ -36,6 +36,8 @@ def rejecSampling():
             eventPlayer.eventTempId = [id for id in mechEventId if (mechEvent[id] != 0 and mechEvent[id].last() > 0)]
 
     while eventPlayer.eventIsSelected == false and eventPlayer.eventLoopCount < 8:
+        if eventPlayer.eventLoopCount > 0:
+            wait(0.016)
         eventPlayer.eventId = random.choice(eventPlayer.eventTempId)
         if eventPlayer.eventType == 0:
             eventPlayer.eventTempWeight = buffEvent[eventPlayer.eventId][3]
