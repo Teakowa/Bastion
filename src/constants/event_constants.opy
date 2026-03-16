@@ -156,7 +156,29 @@
 # invincible[1] = 来源玩家 (Entity)
 # invincible[2] = 持续时间 (Number)
 
-# --- ID 18: 坚定 ---
+# --- ID 17: 我独自闯关 ---
+# Duration（秒）
+#!define EVT_BUFF_17_DURATION 120
+# Weight（权重）
+#!define EVT_BUFF_17_WEIGHT 1.1
+# 检测半径
+#!define EVT_17_CHECK_RADIUS 8
+
+# 状态 1：有队友时的数值 (普通)
+#!define EVT_17_MODE1_DMG_TAKEN -15
+#!define EVT_17_MODE1_HEAL_BOOST 30
+#!define EVT_17_MODE1_SPEED 12.5
+# 受到75%击退 = 25% 抵抗
+#!define EVT_17_MODE1_KNOCKBACK 75
+
+# 状态 2：独自一人时的数值 (强力)
+#!define EVT_17_MODE2_DMG_TAKEN -30
+#!define EVT_17_MODE2_HEAL_BOOST 60
+#!define EVT_17_MODE2_SPEED 25
+# 受到50%击退 = 50% 抵抗
+#!define EVT_17_MODE2_KNOCKBACK 50
+
+# --- ID 18: 坚定（已并入坚韧，保留兼容位） ---
 # Duration（秒）
 #!define EVT_BUFF_18_DURATION 90
 # Weight（权重）
@@ -342,11 +364,12 @@
 # Duration（秒）
 #!define EVT_BUFF_34_DURATION 120
 # Weight（权重）
-#!define EVT_BUFF_34_WEIGHT 1.2
+#!define EVT_BUFF_34_WEIGHT 1.0
+#!define EVT_34_KNOCKBACK_RESISTANCE -60
 #!define EVT_34_TRIGGER_HP_PERCENT 0.4
 #!define EVT_34_HEAL_DURATION 1.25
-#!define EVT_34_HEAL_MAXHP_FACTOR 0.6
-#!define EVT_34_TRIGGER_COOLDOWN 5
+#!define EVT_34_HEAL_MAXHP_FACTOR 0.45
+#!define EVT_34_TRIGGER_COOLDOWN 6
 #!define EVT_34_HEAL_PER_SEC_MAXHP_FACTOR (EVT_34_HEAL_MAXHP_FACTOR / EVT_34_HEAL_DURATION)
 
 #!define EVT_BUFF_35_DURATION 5

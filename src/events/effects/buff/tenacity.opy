@@ -7,6 +7,23 @@ rule "[VishkarEvent]: 坚韧":
     @Condition all([
         dlcVishkarEvent,
         eventPlayer.hasSpawned(),
+        eventPlayer.eventType == 0,
+        eventPlayer.eventId == BuffEventId.TENACITY
+    ]) == true
+
+    eventPlayer.knockback = EVT_34_KNOCKBACK_RESISTANCE
+    updatePlayerStats()
+    wait(eventPlayer.eventDuration)
+    eventPlayer.knockback = 0
+    updatePlayerStats()
+
+
+rule "[VishkarEvent]: 坚韧":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([
+        dlcVishkarEvent,
+        eventPlayer.hasSpawned(),
         eventPlayer.isAlive(),
         eventPlayer.eventType == 0,
         eventPlayer.eventId == BuffEventId.TENACITY,

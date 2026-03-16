@@ -25,7 +25,6 @@
 #!include "buff/konami_code.opy"
 #!include "buff/photon_shield.opy"
 #!include "buff/regroup_call.opy"
-#!include "buff/resolve.opy"
 #!include "buff/will_to_win.opy"
 #!include "buff/pheidippides_trial.opy"
 #!include "buff/heart_of_steel_pro.opy"

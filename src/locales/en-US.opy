@@ -87,7 +87,7 @@
 #!define STR_EVT_BUFF_16_TITLE "Rally to Me"
 #!define STR_EVT_BUFF_16_DESC "You and nearby teammates gain 2.5s damage immunity every 5s."
 #!define STR_EVT_BUFF_18_TITLE "Unwavering"
-#!define STR_EVT_BUFF_18_DESC "95% knockback resistance.\nBeing knocked back grants 5% stacking DR and heals 8% max HP."
+#!define STR_EVT_BUFF_18_DESC "Merged into Tenacity: Gain {0}% knockback resistance.\nBelow {1}% HP, restore {3}% max HP over {2}s.\nBuilt-in {4}s cooldown."
 #!define STR_EVT_BUFF_19_TITLE "Will to Win"
 #!define STR_EVT_BUFF_19_DESC "Triggered below 30% HP: 5s damage immunity, cleanse debuffs, restore lost HP."
 #!define STR_EVT_BUFF_20_TITLE "Mission: Marathon"
@@ -175,7 +175,7 @@
 #!define STR_EVT_BUFF_33_TITLE "Fire at Me"
 #!define STR_EVT_BUFF_33_DESC "Gain {0} recoverable armor and {1}% damage reduction.\nBastions prioritize targeting you."
 #!define STR_EVT_BUFF_34_TITLE "Tenacity"
-#!define STR_EVT_BUFF_34_DESC "Auto-triggers below {0}% HP.\nRestore {2}% Max HP over {1}s.\nBuilt-in {3}s cooldown."
+#!define STR_EVT_BUFF_34_DESC "Gain {0}% knockback resistance.\nBelow {1}% HP, restore {3}% max HP over {2}s.\nBuilt-in {4}s cooldown."
 
 # ------------------------------------------------
 # Random Pack 4: Debuffs

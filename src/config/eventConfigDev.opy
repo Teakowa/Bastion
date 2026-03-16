@@ -107,8 +107,6 @@ rule "initialize event array":
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_18_TITLE, true, 18):
         goto lbl_17
-    buffEvent[BuffEventId.RESOLVE] = [STR_EVT_BUFF_18_TITLE, STR_EVT_BUFF_18_DESC.format(negToPos(EVT_18_KNOCKBACK_RESISTANCE), EVT_18_DMG_REDUCE_PER_STACK, EVT_18_HEAL_PERCENT * 100), EVT_BUFF_18_DURATION, EVT_BUFF_18_WEIGHT]
-    buffEventId.append(BuffEventId.RESOLVE)
     lbl_17:
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_BUFF, STR_EVT_BUFF_19_TITLE, true, 19):
@@ -176,7 +174,7 @@ rule "initialize event array":
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_34_TITLE, true, 34):
         goto lbl_33
-    buffEvent[BuffEventId.TENACITY] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(percent(EVT_34_TRIGGER_HP_PERCENT), percent(EVT_34_HEAL_MAXHP_FACTOR), EVT_34_TRIGGER_COOLDOWN), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
+    buffEvent[BuffEventId.TENACITY] = [STR_EVT_BUFF_34_TITLE, STR_EVT_BUFF_34_DESC.format(negToPos(EVT_34_KNOCKBACK_RESISTANCE), percent(EVT_34_TRIGGER_HP_PERCENT), EVT_34_HEAL_DURATION, percent(EVT_34_HEAL_MAXHP_FACTOR), EVT_34_TRIGGER_COOLDOWN), EVT_BUFF_34_DURATION, EVT_BUFF_34_WEIGHT]
     buffEventId.append(BuffEventId.TENACITY)
     lbl_33:
     
