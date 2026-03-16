@@ -90,7 +90,7 @@
 #!define EVT_8_HP_LAYER_PER_DEATH 1
 #!define EVT_8_VISUAL_EFFECT Effect.WINSTON_PRIMAL_RAGE
 
-# --- ID 11: 死亡延迟 ---
+# --- ID 9: 死亡延迟 ---
 # Duration（秒）
 #!define EVT_BUFF_9_DURATION 45
 # Weight（权重）
@@ -104,13 +104,13 @@
 #!define EVT_9_EFFECT Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED
 #!define EVT_9_SOUND Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED_SOUND
 
-# --- ID 12 ---
+# --- ID 10: 有我有你 ---
 # Duration（秒）
 #!define EVT_BUFF_10_DURATION 120
 # Weight（权重）
 #!define EVT_BUFF_10_WEIGHT 1.2
 
-# --- ID 13: ↑↑↓↓←→←→BABA (魂斗罗/动态存档) ---
+# --- ID 11: ↑↑↓↓←→←→BABA (魂斗罗/动态存档) ---
 # Duration（秒）
 #!define EVT_BUFF_11_DURATION 120
 # Weight（权重）
@@ -123,7 +123,7 @@
 #!define EVT_11_EFFECT_DIE DynamicEffect.TRACER_RECALL_DISAPPEAR
 #!define EVT_11_EFFECT_RESURRECT DynamicEffect.TRACER_RECALL_REAPPEAR
 
-# --- ID 14: 费斯卡光子护盾 (团队共享盾) ---
+# --- ID 12: 费斯卡光子护盾 (团队共享盾) ---
 # Duration（秒）
 #!define EVT_BUFF_12_DURATION 120
 # Weight（权重）
@@ -135,7 +135,7 @@
 # 护盾池 ID 索引
 #!define EVT_12_HEALTH_ID 2
 
-# --- ID 16: 向我靠拢 (无敌光环) ---
+# --- ID 13: 向我靠拢 (无敌光环) ---
 # Duration（秒）
 #!define EVT_BUFF_13_DURATION 30
 # Weight（权重）
@@ -157,7 +157,7 @@
 # invincible[1] = 来源玩家 (Entity)
 # invincible[2] = 持续时间 (Number)
 
-# --- ID 19: 胜利意志 ---
+# --- ID 14: 胜利意志 ---
 # Duration（秒）
 #!define EVT_BUFF_14_DURATION 30
 # Weight（权重）
@@ -172,7 +172,7 @@
 #!define EVT_14_EFFECT Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED
 #!define EVT_14_SOUND Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED_SOUND
 
-# --- ID 20: 菲迪皮德斯之力 ---
+# --- ID 15: 菲迪皮德斯之力 ---
 # Duration（秒）
 #!define EVT_BUFF_15_DURATION 45
 # Weight（权重）
@@ -181,7 +181,7 @@
 #!define EVT_15_DISTANCE_INC 0.5
 #!define EVT_15_REWARD_SPEED 7.5
 
-# --- ID 21: 心之钢 Pro ---
+# --- ID 16: 心之钢 Pro ---
 # Duration（秒）
 #!define EVT_BUFF_16_DURATION 90
 # Weight（权重）
@@ -189,7 +189,7 @@
 #!define EVT_16_HP_GAIN_FLAT 12
 #!define EVT_16_HP_MULTIPLIER 2
 
-# --- ID 22: 数值之力 ---
+# --- ID 17: 数值之力 ---
 # Duration（秒）
 #!define EVT_BUFF_17_DURATION 90
 # Weight（权重）
@@ -197,7 +197,7 @@
 #!define EVT_17_HEAL_BOOST 500
 #!define EVT_17_RADIUS 200
 
-# --- ID 23: 我按Q辣 ---
+# --- ID 18: 我按Q辣 ---
 # Duration（秒）
 #!define EVT_BUFF_18_DURATION 120
 # Weight（权重）
@@ -205,7 +205,7 @@
 #!define EVT_18_ULT_CHARGE_PER_SEC 10
 #!define EVT_18_DMG_REDUCTION_DURING_ULT 75
 
-# --- ID 24: 相位猛冲 (智能检测版) ---
+# --- ID 19: 相位猛冲 (智能检测版) ---
 # Duration（秒）
 #!define EVT_BUFF_19_DURATION 45
 # Weight（权重）
@@ -215,7 +215,7 @@
 #!define EVT_19_EFFECT_RADIUS 200
 #!define EVT_19_EFFECT Effect.SOLDIER_SPRINTING
 
-# --- ID 25: 保镖 (Bodyguard) ---
+# --- ID 20: 保镖 (Bodyguard) ---
 # Duration（秒）
 #!define EVT_BUFF_20_DURATION 75
 # Weight（权重）
@@ -237,7 +237,7 @@
 # 事件尾部等待 (秒)
 #!define EVT_20_POST_WAIT 3
 
-# --- ID 26: 任务：殉道者 ---
+# --- ID 21: 任务：殉道者 ---
 # Duration（秒）
 #!define EVT_BUFF_21_DURATION 120
 # Weight（权重）
@@ -256,7 +256,7 @@
 
 #!define MARTYR_GOAL_MAX max(EVT_21_GOAL_MIN, round(len(bastionPosition) * EVT_21_GOAL_MAX_FACTOR))
 
-# --- ID 27: 多动症 (触发回血) ---
+# --- ID 22: 多动症 (触发回血) ---
 # Duration（秒）
 #!define EVT_BUFF_22_DURATION 90
 # Weight（权重）
@@ -276,7 +276,7 @@
 # 触发后等待 (秒)
 #!define EVT_22_POST_WAIT 2.5
 
-# --- ID 28: 鼓舞士气 ProMax ---
+# --- ID 23: 鼓舞士气 ProMax ---
 # Duration（秒）
 #!define EVT_BUFF_23_DURATION 60
 # Weight（权重）
@@ -287,14 +287,14 @@
 #!define EVT_23_HOT_MAXHP_FACTOR 0.5
 #!define EVT_23_TICK_INTERVAL 1
 
-# --- ID 29: F5 (循环刷新) ---
+# --- ID 24: F5 (循环刷新) ---
 # Duration（秒）
 #!define EVT_BUFF_24_DURATION 60
 # Weight（权重）
 #!define EVT_BUFF_24_WEIGHT 0.25
 #!define EVT_24_REFRESH_INTERVAL 5
 
-# --- ID 30: 治疗光塔 ProMax (全图奶) ---
+# --- ID 25: 治疗光塔 ProMax (全图奶) ---
 # Duration（秒）
 #!define EVT_BUFF_25_DURATION 90
 # Weight（权重）
@@ -303,7 +303,7 @@
 #!define EVT_25_HEAL_FLAT 50
 #!define EVT_25_HEAL_MAXHP_FACTOR 0.75
 
-# --- ID 31: 超级变换形态 ---
+# --- ID 26: 超级变换形态 ---
 # Duration（秒）
 #!define EVT_BUFF_26_DURATION 30
 # Weight（权重）
@@ -313,7 +313,7 @@
 #!define EVT_26_OVERHEALTH_DURATION 5
 #!define EVT_26_TRIGGER_GCD 0.1
 
-# --- ID 32: 向我开炮 ---
+# --- ID 27: 向我开炮 ---
 # Duration（秒）
 #!define EVT_BUFF_27_DURATION 45
 # Weight（权重）
@@ -322,7 +322,7 @@
 #!define EVT_27_ARMOR_AMOUNT 350
 #!define EVT_27_TARGET_WEIGHT 999
 
-# --- ID 33: 坚韧 ---
+# --- ID 28: 坚韧 ---
 # Duration（秒）
 #!define EVT_BUFF_28_DURATION 120
 # Weight（权重）
@@ -360,7 +360,7 @@
 # Weight（权重）
 #!define EVT_DEBUFF_1_WEIGHT 1.5
 
-# --- ID 2 (Debuff): 吸血鬼 ---
+# --- ID 2 (Debuff): 献祭 ---
 # Duration（秒）
 #!define EVT_DEBUFF_2_DURATION 30
 # Weight（权重）
@@ -452,7 +452,7 @@
 # 触发间隔 (防止瞬发技能多次触发)
 #!define EVT_DEBUFF_8_COOLDOWN 1
 
-# --- ID 10 (Debuff): 有难同当 (伤害分摊) ---
+# --- ID 9 (Debuff): 有难同当 (伤害分摊) ---
 # Duration（秒）
 #!define EVT_DEBUFF_9_DURATION 30
 # Weight（权重）
@@ -466,7 +466,7 @@
 # 视觉特效
 #!define EVT_DEBUFF_9_EFFECT Effect.TORBJORN_OVERLOADING
 
-# --- ID 11 (Debuff): 狂欢盛宴 (阵亡惩罚) ---
+# --- ID 10 (Debuff): 狂欢盛宴 (阵亡惩罚) ---
 # Duration（秒）
 #!define EVT_DEBUFF_10_DURATION 45
 # Weight（权重）
@@ -477,7 +477,7 @@
 # 冷却时间/触发间隔 (秒)
 #!define EVT_DEBUFF_10_COOLDOWN 5
 
-# --- ID 12 (Debuff): 无能的丈夫/妻子 ---
+# --- ID 11 (Debuff): 无能的丈夫/妻子 ---
 # Duration（秒）
 #!define EVT_DEBUFF_11_DURATION 2
 # Weight（权重）
@@ -488,7 +488,7 @@
 # 击倒持续时间
 #!define EVT_DEBUFF_11_KNOCKDOWN_DURATION 2
 
-# --- ID 13 (Debuff): 重伤 ---
+# --- ID 12 (Debuff): 重伤 ---
 # Duration（秒）
 #!define EVT_DEBUFF_12_DURATION 45
 # Weight（权重）
@@ -503,7 +503,7 @@
 #!define EVT_DEBUFF_12_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
 #!define EVT_DEBUFF_12_SOUND DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND
 
-# --- ID 14 (Debuff): 减半 ---
+# --- ID 13 (Debuff): 减半 ---
 # Duration（秒）
 #!define EVT_DEBUFF_13_DURATION 30
 # Weight（权重）
@@ -523,7 +523,7 @@
 # 扣血特效
 #!define EVT_DEBUFF_13_DAMAGE_EFFECT DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION
 
-# --- ID 15 (Debuff): 舍己为人 ---
+# --- ID 14 (Debuff): 舍己为人 ---
 # Duration（秒）
 #!define EVT_DEBUFF_14_DURATION 5
 # Weight（权重）
@@ -541,7 +541,7 @@
 #!define EVT_DEBUFF_14_EFFECT_TAKE DynamicEffect.ORISA_HALT_IMPLOSION
 #!define EVT_DEBUFF_14_EFFECT_GIVE DynamicEffect.GOOD_PICKUP_EFFECT
 
-# --- ID 16 (Debuff): 保持距离 (易伤光环) ---
+# --- ID 15 (Debuff): 保持距离 (易伤光环) ---
 # Duration（秒）
 #!define EVT_DEBUFF_15_DURATION 45
 # Weight（权重）
@@ -556,25 +556,25 @@
 # 循环间隔 (秒)
 #!define EVT_DEBUFF_15_INTERVAL 1
 
-# --- ID 17 (Debuff): （未写事件块） ---
+# --- ID 16 (Debuff): 404 ---
 # Duration（秒）
 #!define EVT_DEBUFF_16_DURATION 25
 # Weight（权重）
 #!define EVT_DEBUFF_16_WEIGHT 1.1
 
-# --- ID 18 (Debuff): （未写事件块） ---
+# --- ID 17 (Debuff): 连锁过载 ---
 # Duration（秒）
 #!define EVT_DEBUFF_17_DURATION 25
 # Weight（权重）
 #!define EVT_DEBUFF_17_WEIGHT 0.85
 
-# --- ID 19 (Debuff): （未写事件块） ---
+# --- ID 18 (Debuff): 我和你 ---
 # Duration（秒）
 #!define EVT_DEBUFF_18_DURATION 45
 # Weight（权重）
 #!define EVT_DEBUFF_18_WEIGHT 0.7
 
-# --- ID 20 (Debuff): 吸血鬼 (按需吸血) ---
+# --- ID 19 (Debuff): 吸血鬼 (按需吸血) ---
 # Duration（秒）
 #!define EVT_DEBUFF_19_DURATION 60
 # Weight（权重）
@@ -590,7 +590,7 @@
 # 循环间隔 (秒)
 #!define EVT_DEBUFF_19_INTERVAL 1
 
-# --- ID 21 (Debuff): 登月火箭 ---
+# --- ID 20 (Debuff): 登月火箭 ---
 # Duration（秒）
 #!define EVT_DEBUFF_20_DURATION 5
 # Weight（权重）
@@ -621,7 +621,7 @@
 #!define EVT_MECH_0_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
 #!define EVT_MECH_0_SOUND DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND
 
-# --- ID 2 (Mech): 赌徒 ---
+# --- ID 1 (Mech): 赌徒 ---
 # Duration（秒）
 #!define EVT_MECH_1_DURATION 15
 # Weight（权重）
@@ -635,7 +635,7 @@
 # 赌徒连胜计数上限 (用于HUD显示赌王称号等)
 #!define EVT_MECH_1_WIN_STREAK_CAP 5
 
-# --- ID 4 (Mech): 迷你形态 ---
+# --- ID 2 (Mech): 迷你形态 ---
 # Duration（秒）
 #!define EVT_MECH_2_DURATION 60
 # Weight（权重）
@@ -652,7 +652,7 @@
 # 移动速度加成 (%)
 #!define EVT_MECH_2_SPEED_BOOST 25
 
-# --- ID 5 (Mech): 悄悄地进村 ---
+# --- ID 3 (Mech): 悄悄地进村 ---
 # Duration（秒）
 #!define EVT_MECH_3_DURATION 30
 # Weight（权重）
@@ -660,7 +660,7 @@
 # 蹲下时的移速惩罚 (%)
 #!define EVT_MECH_3_SPEED_PENALTY 25
 
-# --- ID 7 (Mech): 刹车失灵 ---
+# --- ID 4 (Mech): 刹车失灵 ---
 # Duration（秒）
 #!define EVT_MECH_4_DURATION 45
 # Weight（权重）
@@ -680,7 +680,7 @@
 # 更新间隔 (秒)
 #!define EVT_MECH_4_INTERVAL 1
 
-# --- ID 8 (Mech): 屁动力 ---
+# --- ID 5 (Mech): 屁动力 ---
 # Duration（秒）
 #!define EVT_MECH_5_DURATION 30
 # Weight（权重）
@@ -694,7 +694,7 @@
 # 视觉特效
 #!define EVT_MECH_5_EFFECT Effect.ANA_NANO_BOOSTED
 
-# --- ID 9 (Mech): 赌徒：竞速挑战 ---
+# --- ID 6 (Mech): 赌徒：竞速挑战 ---
 # Duration（秒）
 #!define EVT_MECH_6_DURATION 15
 # Weight（权重）
@@ -718,7 +718,7 @@
 # 稀有奖励/惩罚数值 (移速 %)
 #!define EVT_MECH_6_VAL_RARE 12
 
-# --- ID 10 (Mech/Special): 作弊：我要验牌 ---
+# --- ID 7 (Mech/Special): 作弊：我要验牌 ---
 # Duration（秒）
 #!define EVT_MECH_7_DURATION 15
 # Weight（权重）
@@ -726,7 +726,7 @@
 #!define EVT_MECH_7_HEART_STEEL_COST 2
 #!define EVT_MECH_7_FORCE_ROLL 20
 
-# --- ID 12 (Mech/Special): 赌徒：短期投资 (交易) ---
+# --- ID 8 (Mech/Special): 赌徒：短期投资 (交易) ---
 # Duration（秒）
 #!define EVT_MECH_8_DURATION 15
 # Weight（权重）
@@ -745,19 +745,19 @@
 # 提示文本：合约生效的“未来 N 个事件”
 #!define EVT_MECH_8_CONTRACT_EVENTS 3
 
-# --- ID 13 (Mech): （未写事件块） ---
+# --- ID 9 (Mech): 命运共同体 ---
 # Duration（秒）
 #!define EVT_MECH_9_DURATION 5
 # Weight（权重）
 #!define EVT_MECH_9_WEIGHT 0.8
 
-# --- ID 14 (Mech): （跳过） ---
+# --- ID 10 (Mech): 作弊：跳过 ---
 # Duration（秒）
 #!define EVT_MECH_10_DURATION 30
 # Weight（权重）
 #!define EVT_MECH_10_WEIGHT 0.5
 
-# --- ID 15 (Mech/Special): 俄罗斯套娃 (变小复活) ---
+# --- ID 11 (Mech/Special): 俄罗斯套娃 (变小复活) ---
 # Duration（秒）
 #!define EVT_MECH_11_DURATION 90
 # Weight（权重）
@@ -777,7 +777,7 @@
 # 死亡后获得的移速加成（叠加到 mod_speed_event）
 #!define EVT_MECH_11_SPEED_STEP 5
 
-# --- ID 17 (Mech/Special): 赌徒：长期投资 (豪赌) ---
+# --- ID 12 (Mech/Special): 赌徒：长期投资 (豪赌) ---
 # Duration（秒）
 #!define EVT_MECH_12_DURATION 15
 # Weight（权重）
@@ -796,7 +796,7 @@
 # 提示文本：合约生效的“未来 N 个事件”
 #!define EVT_MECH_12_CONTRACT_EVENTS 5
 
-# --- ID 18 (Mech/Special): 瓦尔基里降临 ---
+# --- ID 13 (Mech/Special): 瓦尔基里降临 ---
 # Duration（秒）
 #!define EVT_MECH_13_DURATION 120
 # Weight（权重）
@@ -805,7 +805,7 @@
 # 体型血量倍率（用于 sizeHealth）
 #!define EVT_MECH_13_SIZE_HEALTH 10
 
-# --- ID 18 (Mech/Special): 瓦尔基里降临 (受击充能/开大回血) ---
+# --- ID 13 (Mech/Special): 瓦尔基里降临 (受击充能/开大回血) ---
 
 # 受击时增加的大招充能
 #!define EVT_MECH_13_ULT_CHARGE_GAIN 10
@@ -822,7 +822,7 @@
 # 回血 tick 间隔 (秒)
 #!define EVT_MECH_13_HEAL_TICK_INTERVAL 0.2
 
-# --- ID 19 (Mech/Special): 三位一体 (SSR) ---
+# --- ID 14 (Mech/Special): 三位一体 (SSR) ---
 # Duration（秒）
 #!define EVT_MECH_14_DURATION 120
 # Weight（权重）

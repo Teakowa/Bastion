@@ -21,49 +21,49 @@ rule "initialize event array":
     # ================================================
     # Pack 1: Buffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_1_TITLE, true, 1):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_1_TITLE, true, BuffEventId.GALE_BLESSING):
         goto lbl_0
     buffEvent[BuffEventId.GALE_BLESSING] = [STR_EVT_BUFF_1_TITLE, STR_EVT_BUFF_1_DESC.format(EVT_1_SPEED_BOOST), EVT_BUFF_1_DURATION, EVT_BUFF_1_WEIGHT]
     buffEventId.append(BuffEventId.GALE_BLESSING)
     lbl_0:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_2_TITLE, true, 2):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_2_TITLE, true, BuffEventId.IRON_BULWARK):
         goto lbl_1
     buffEvent[BuffEventId.IRON_BULWARK] = [STR_EVT_BUFF_2_TITLE, STR_EVT_BUFF_2_DESC.format(EVT_2_ARMOR_AMOUNT, negToPos(EVT_2_DMG_TAKEN)), EVT_BUFF_2_DURATION, EVT_BUFF_2_WEIGHT]
     buffEventId.append(BuffEventId.IRON_BULWARK)
     lbl_1:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_3_TITLE, true, 3):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_3_TITLE, true, BuffEventId.ADRENALINE):
         goto lbl_2
     buffEvent[BuffEventId.ADRENALINE] = [STR_EVT_BUFF_3_TITLE, STR_EVT_BUFF_3_DESC.format(negToPos(EVT_3_DMG_TAKEN), EVT_3_HEAL_BOOST), EVT_BUFF_3_DURATION, EVT_BUFF_3_WEIGHT]
     buffEventId.append(BuffEventId.ADRENALINE)
     lbl_2:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_4_TITLE, true, 4):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_4_TITLE, true, BuffEventId.LIFE_SPRING):
         goto lbl_3
     buffEvent[BuffEventId.LIFE_SPRING] = [STR_EVT_BUFF_4_TITLE, STR_EVT_BUFF_4_DESC.format(EVT_4_HEAL_PERCENT * 100), EVT_BUFF_4_DURATION, EVT_BUFF_4_WEIGHT]
     buffEventId.append(BuffEventId.LIFE_SPRING)
     lbl_3:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_5_TITLE, true, 5):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_5_TITLE, true, BuffEventId.BLACK_FANS_ASSAULT):
         goto lbl_4
     buffEvent[BuffEventId.BLACK_FANS_ASSAULT] = [STR_EVT_BUFF_5_TITLE, STR_EVT_BUFF_5_DESC.format(EVT_5_HEALTH_FLAT, percent(EVT_5_HEALTH_MAXHP_FACTOR), EVT_5_SPEED_BOOST), EVT_BUFF_5_DURATION, EVT_BUFF_5_WEIGHT]
     buffEventId.append(BuffEventId.BLACK_FANS_ASSAULT)
     lbl_4:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_6_TITLE, true, 6):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_6_TITLE, true, BuffEventId.SPEED_STACK):
         goto lbl_5
     buffEvent[BuffEventId.SPEED_STACK] = [STR_EVT_BUFF_6_TITLE, STR_EVT_BUFF_6_DESC.format(EVT_6_SPEED_INC_PER_SEC), EVT_BUFF_6_DURATION, EVT_BUFF_6_WEIGHT]
     buffEventId.append(BuffEventId.SPEED_STACK)
     lbl_5:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_7_TITLE, true, 7):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_7_TITLE, true, BuffEventId.FLESH_REGEN):
         goto lbl_6
     buffEvent[BuffEventId.FLESH_REGEN] = [STR_EVT_BUFF_7_TITLE, STR_EVT_BUFF_7_DESC.format(EVT_7_BASE_HEALTH, EVT_7_HEALTH_PERCENT * 100, EVT_7_REGEN_INTERVAL), EVT_BUFF_7_DURATION, EVT_BUFF_7_WEIGHT]
     buffEventId.append(BuffEventId.FLESH_REGEN)
     lbl_6:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_8_TITLE, true, 8):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_BUFF, STR_EVT_BUFF_8_TITLE, true, BuffEventId.HEART_OF_STEEL):
         goto lbl_7
     buffEvent[BuffEventId.HEART_OF_STEEL] = [STR_EVT_BUFF_8_TITLE, STR_EVT_BUFF_8_DESC.format(EVT_8_HP_LAYER_PER_DEATH, EVT_8_HP_PERCENT_PER_STACK), EVT_BUFF_8_DURATION, EVT_BUFF_8_WEIGHT]
     buffEventId.append(BuffEventId.HEART_OF_STEEL)
@@ -183,7 +183,7 @@ rule "initialize event array":
     # ================================================
     # Pack 1: Debuffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_0_TITLE, true):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_0_TITLE, DebuffEventId.GRAVITY_ANOMALY):
         goto lbl_33
     debuffEvent[DebuffEventId.GRAVITY_ANOMALY] = [
         STR_EVT_DEBUFF_0_TITLE,
@@ -194,7 +194,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.GRAVITY_ANOMALY)
     lbl_33:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_1_TITLE, true, 1):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_1_TITLE, true, DebuffEventId.EMP):
         goto lbl_34
     # 注：常量里没有 EVT_DEBUFF_1_DURATION，通常用 HACK_DURATION 作为该事件持续时间
     debuffEvent[DebuffEventId.EMP] = [
@@ -206,7 +206,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.EMP)
     lbl_34:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_DEBUFF, STR_EVT_DEBUFF_2_TITLE, true, 2):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_2_TITLE, true, DebuffEventId.SACRIFICE):
         goto lbl_35
     debuffEvent[DebuffEventId.SACRIFICE] = [
         STR_EVT_DEBUFF_2_TITLE,
@@ -217,7 +217,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.SACRIFICE)
     lbl_35:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_3_TITLE, true, 3):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_3_TITLE, true, DebuffEventId.VULNERABLE):
         goto lbl_36
     debuffEvent[DebuffEventId.VULNERABLE] = [
         STR_EVT_DEBUFF_3_TITLE,
@@ -228,7 +228,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.VULNERABLE)
     lbl_36:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_4_TITLE, true, 4):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_4_TITLE, true, DebuffEventId.SPEED_LIMIT_40):
         goto lbl_37
     debuffEvent[DebuffEventId.SPEED_LIMIT_40] = [
         STR_EVT_DEBUFF_4_TITLE,
@@ -242,7 +242,7 @@ rule "initialize event array":
     # ================================================
     # Pack 2: Debuffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_5_TITLE, true, 5):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_5_TITLE, true, DebuffEventId.GRAVITY_PULL):
         goto lbl_38
     debuffEvent[DebuffEventId.GRAVITY_PULL] = [
         STR_EVT_DEBUFF_5_TITLE,
@@ -253,7 +253,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.GRAVITY_PULL)
     lbl_38:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_6_TITLE, true, 5):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_6_TITLE, true, DebuffEventId.OSTEOPOROSIS):
         goto lbl_39
     debuffEvent[DebuffEventId.OSTEOPOROSIS] = [
         STR_EVT_DEBUFF_6_TITLE,
@@ -264,7 +264,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.OSTEOPOROSIS)
     lbl_39:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_7_TITLE, true, 7):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_7_TITLE, true, DebuffEventId.EMP_PROMAX):
         goto lbl_40
     debuffEvent[DebuffEventId.EMP_PROMAX] = [
         STR_EVT_DEBUFF_7_TITLE,
@@ -275,7 +275,7 @@ rule "initialize event array":
     debuffEventId.append(DebuffEventId.EMP_PROMAX)
     lbl_40:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_8_TITLE, true, 8):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_2_DEBUFF, STR_EVT_DEBUFF_8_TITLE, true, DebuffEventId.ENERGY_LEAK):
         goto lbl_41
     debuffEvent[DebuffEventId.ENERGY_LEAK] = [
         STR_EVT_DEBUFF_8_TITLE,
@@ -385,7 +385,7 @@ rule "initialize event array":
     # ================================================
     # Pack 3: Mechanics
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_0_TITLE, true):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_0_TITLE, MechEventId.EXTREME_CHALLENGE):
         goto lbl_55
     mechEvent[MechEventId.EXTREME_CHALLENGE] = [
         STR_EVT_MECH_0_TITLE,
