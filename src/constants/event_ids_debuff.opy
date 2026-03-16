@@ -22,30 +22,30 @@ enum DebuffEventId:
     EMP_PROMAX
     # legacy numeric id: 8
     ENERGY_LEAK
-    # legacy numeric id: 9
-    SHARE_THE_PAIN
     # legacy numeric id: 10
-    FEAST_FRENZY
+    SHARE_THE_PAIN = 10
     # legacy numeric id: 11
-    POWERLESS_SPOUSE
+    FEAST_FRENZY = 11
     # legacy numeric id: 12
-    GRIEVOUS_WOUNDS
+    POWERLESS_SPOUSE = 12
     # legacy numeric id: 13
-    HALVED
+    GRIEVOUS_WOUNDS = 13
     # legacy numeric id: 14
-    SELFLESS_GIVEAWAY
+    HALVED = 14
     # legacy numeric id: 15
-    KEEP_DISTANCE_AURA
+    SELFLESS_GIVEAWAY = 15
     # legacy numeric id: 16
-    ERROR_404
+    KEEP_DISTANCE_AURA = 16
     # legacy numeric id: 17
-    CHAIN_OVERLOAD
+    ERROR_404 = 17
     # legacy numeric id: 18
-    HEALTH_SYNC
+    CHAIN_OVERLOAD = 18
     # legacy numeric id: 19
-    VAMPIRE
+    HEALTH_SYNC = 19
     # legacy numeric id: 20
-    MOON_ROCKET
+    VAMPIRE = 20
+    # legacy numeric id: 21
+    MOON_ROCKET = 21
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 

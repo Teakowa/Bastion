@@ -38,36 +38,36 @@ enum BuffEventId:
     PHOTON_RESPIRATOR
     # legacy numeric id: 16
     REGROUP_CALL
-    # legacy numeric id: 17
-    WILL_TO_WIN
-    # legacy numeric id: 18
-    PHEIDIPPIDES_TRIAL
     # legacy numeric id: 19
-    HEART_OF_STEEL_PRO
+    WILL_TO_WIN = 19
     # legacy numeric id: 20
-    STAT_POWER
+    PHEIDIPPIDES_TRIAL = 20
     # legacy numeric id: 21
-    ULT_MOMENTUM
+    HEART_OF_STEEL_PRO = 21
     # legacy numeric id: 22
-    PHASE_SURGE
+    STAT_POWER = 22
     # legacy numeric id: 23
-    BODYGUARD
+    ULT_MOMENTUM = 23
     # legacy numeric id: 24
-    MARTYR_TRIAL
+    PHASE_SURGE = 24
     # legacy numeric id: 25
-    HYPERACTIVE_HEAL
+    BODYGUARD = 25
     # legacy numeric id: 26
-    MORALE_BOOST_PROMAX
+    MARTYR_TRIAL = 26
     # legacy numeric id: 27
-    F5_REFRESH
+    HYPERACTIVE_HEAL = 27
     # legacy numeric id: 28
-    HEALING_TOWER_PROMAX
+    MORALE_BOOST_PROMAX = 28
     # legacy numeric id: 29
-    SUPER_TRANSFORM
+    F5_REFRESH = 29
     # legacy numeric id: 30
-    DRAW_FIRE
+    HEALING_TOWER_PROMAX = 30
     # legacy numeric id: 31
-    TENACITY
+    SUPER_TRANSFORM = 31
+    # legacy numeric id: 32
+    DRAW_FIRE = 32
+    # legacy numeric id: 33
+    TENACITY = 33
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 
