@@ -344,10 +344,6 @@
 #!define STR_HUD_STATS_DEATH_SKIP "Deaths/Skips \n{0}/{1}"
 
 
-# Event Stats
-# {0}=Buff, {1}=Debuff, {2}=Total
-#!define STR_HUD_STATS_EVENT "Buff/Debuff/Total\r\n{0}/{1}/{2} "
-
 # Random Events 4.0 Title
 #!define STR_HUD_RANDOM_EVENTS_V4 "[Random Events 4.0]"
 
@@ -357,7 +353,7 @@
 
 # Attribute panel
 # {0}=Heartsteel stacks, {1}=Permanent movement speed bonus, {2}=Permanent damage reduction, {3}=Healing power
-#!define STR_HUD_ATTR_PANEL "Heartsteel {0}\r\nPermanent Speed {1}%\r\nPermanent DR {2}%\r\nHealing Power {3}%"
+#!define STR_HUD_ATTR_PANEL "Heartsteel/Speed/DR/Heal%\r\n{0}/{1}/{2}/{3}%"
 
 
 # ------------------------------------------------
