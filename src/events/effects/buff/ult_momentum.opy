@@ -18,18 +18,23 @@ rule "[VishkarEvent]: 我按Q辣":
 rule "[VishkarEvent]: 我按Q辣":
     @Event eachPlayer
     @Team 1
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.nanoEffect == null]) == true
+    
+    createEffect(getAllPlayers() if eventPlayer.isUsingUltimate() else null, Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.nanoEffect = getLastCreatedEntity()
+    waitUntil(eventPlayer.eventId != BuffEventId.ULT_MOMENTUM or eventPlayer.eventType != 0, eventPlayer.eventDuration)
+    destroyEffect(eventPlayer.nanoEffect)
+    eventPlayer.nanoEffect = null
+
+
+rule "[VishkarEvent]: 我按Q辣":
+    @Event eachPlayer
+    @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.isUsingUltimate()]) == true
     
     resetPlayerCD()
-    if eventPlayer.nanoEffect != null:
-        goto lbl_0
-
-    createEffect(getAllPlayers(), Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
-    eventPlayer.nanoEffect = getLastCreatedEntity()
-    lbl_0:
     eventPlayer.mod_dmg_taken -= EVT_23_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
-    destroyEffect(eventPlayer.nanoEffect)
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()

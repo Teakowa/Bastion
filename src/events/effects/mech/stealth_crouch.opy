@@ -4,11 +4,20 @@
 rule "[VishkarEvent]: 悄悄地进村":
     @Event eachPlayer
     @Team 1
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.STEALTH_CROUCH, eventPlayer.eventEffect == null]) == true
+    
+    createEffect(getAllPlayers() if eventPlayer.isHoldingButton(Button.CROUCH) == true else null, Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.eventEffect = getLastCreatedEntity()
+    waitUntil(eventPlayer.eventId != MechEventId.STEALTH_CROUCH or eventPlayer.eventType != 2, eventPlayer.eventDuration)
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 悄悄地进村":
+    @Event eachPlayer
+    @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.STEALTH_CROUCH]) == true
     @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
     
-    createEffect(getAllPlayers(), Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect = getLastCreatedEntity()
     eventPlayer.targetSilence = true
     eventPlayer.mod_speed_event -= EVT_MECH_5_SPEED_PENALTY
     updatePlayerStats()
@@ -16,5 +25,4 @@ rule "[VishkarEvent]: 悄悄地进村":
     eventPlayer.targetSilence = false
     eventPlayer.mod_speed_event = 0
     updatePlayerStats()
-    clearEventEffect()
     wait(0.25)

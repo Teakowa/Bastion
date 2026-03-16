@@ -3,14 +3,19 @@
 
 rule "[VishkarEvent]: 足力健":
     @Event eachPlayer
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.SPEED_STACK, eventPlayer.eventEffect == null]) == true
+    
+    createEffect(getAllPlayers() if (eventPlayer.isMoving() and eventPlayer.getSpeed() != 0) else null, Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.eventEffect = getLastCreatedEntity()
+    waitUntil(eventPlayer.eventId != BuffEventId.SPEED_STACK or eventPlayer.eventType != 0, eventPlayer.eventDuration)
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 足力健":
+    @Event eachPlayer
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.SPEED_STACK, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     wait(1, Wait.ABORT_WHEN_FALSE)
-    if eventPlayer.eventEffect != null:
-        goto lbl_0
-    createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect = getLastCreatedEntity()
-    lbl_0:
     eventPlayer.mod_speed_event += EVT_6_SPEED_INC_PER_SEC
     eventPlayer.hudText = "移速+{0}%".format(eventPlayer.mod_speed_event)
     updatePlayerStats()
@@ -20,4 +25,3 @@ rule "[VishkarEvent]: 足力健":
     eventPlayer.mod_speed_event = 0
     eventPlayer.hudText = ""
     updatePlayerStats()
-    clearEventEffect()
