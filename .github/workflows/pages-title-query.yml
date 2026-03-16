@@ -40,7 +40,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build title query page
-        run: pnpm run build:pages
+        run: pnpm run build:title-query
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

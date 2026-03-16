@@ -94,12 +94,12 @@ pnpm run build:dev
 Title query page:
 
 ```bash
-pnpm run test:title-data-sync
 pnpm run sync:title-data
+pnpm run test:title-data-sync
 pnpm run build:title-query
 ```
 
-The static page and in-game title source blocks are generated from `data/title-source.json` via `tools/sync-title-data.mjs`, and the page is deployed by `.github/workflows/pages-title-query.yml`.
+`pnpm run grant:title` now updates `data/title-source.json` and automatically runs title-data sync when it makes changes. The static page and in-game title source blocks are generated from `data/title-source.json` via `tools/sync-title-data.mjs`, and the page is deployed by `.github/workflows/pages-title-query.yml`.
 
 Dual-language release build:
 

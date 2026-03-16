@@ -206,6 +206,10 @@ test('dry-run does not write source file for input mode', async () => {
 
   assert.equal(result.changed, true);
   assert.equal(before, after);
+  assert.deepEqual(result.autoSync, {
+    executed: false,
+    reason: 'dry_run'
+  });
 });
 
 test('dry-run does not write source file for interactive-equivalent requestData', async () => {
@@ -228,4 +232,107 @@ test('dry-run does not write source file for interactive-equivalent requestData'
 
   assert.equal(result.changed, true);
   assert.equal(before, after);
+  assert.deepEqual(result.autoSync, {
+    executed: false,
+    reason: 'dry_run'
+  });
+});
+
+test('non-dry-run with changes triggers title sync once', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'grant-title-sync-'));
+  const sourceFile = path.join(tmpDir, 'title-source.json');
+
+  await fs.writeFile(sourceFile, `${JSON.stringify(buildFixture(), null, 2)}\n`, 'utf8');
+
+  const syncCalls = [];
+  const result = await grantPlayerTitle({
+    sourceFile,
+    requestData: {
+      players: [{ name: '新玩家', generalTitles: ['HACKING'], mapDominators: [] }],
+      options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
+    },
+    syncFn: async (options) => {
+      syncCalls.push(options);
+      return {
+        titleFileChanged: true,
+        sourceVersion: '1.2.3',
+        webPayload: {
+          meta: {
+            titleCount: 8,
+            playerCount: 3,
+            mapTitleCount: 3
+          }
+        }
+      };
+    }
+  });
+
+  const saved = JSON.parse(await fs.readFile(sourceFile, 'utf8'));
+  assert.equal(result.changed, true);
+  assert.equal(syncCalls.length, 1);
+  assert.equal(syncCalls[0].sourceFile, sourceFile);
+  assert.equal(saved.players.at(-1).name, '新玩家');
+  assert.deepEqual(result.autoSync, {
+    executed: true,
+    reason: 'source_changed',
+    titleFileChanged: true,
+    sourceVersion: '1.2.3',
+    generated: {
+      titleCount: 8,
+      playerCount: 3,
+      mapTitleCount: 3
+    }
+  });
+});
+
+test('non-dry-run without changes skips title sync', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'grant-title-noop-'));
+  const sourceFile = path.join(tmpDir, 'title-source.json');
+
+  await fs.writeFile(sourceFile, `${JSON.stringify(buildFixture(), null, 2)}\n`, 'utf8');
+
+  let syncCalled = false;
+  const result = await grantPlayerTitle({
+    sourceFile,
+    requestData: {
+      players: [{ name: '板鸭', generalTitles: ['MANBA'], mapDominators: [] }],
+      options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
+    },
+    syncFn: async () => {
+      syncCalled = true;
+      throw new Error('should not run');
+    }
+  });
+
+  assert.equal(result.changed, false);
+  assert.equal(syncCalled, false);
+  assert.deepEqual(result.autoSync, {
+    executed: false,
+    reason: 'no_changes'
+  });
+});
+
+test('sync failure is surfaced after source write', async () => {
+  const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), 'grant-title-sync-fail-'));
+  const sourceFile = path.join(tmpDir, 'title-source.json');
+
+  await fs.writeFile(sourceFile, `${JSON.stringify(buildFixture(), null, 2)}\n`, 'utf8');
+
+  await assert.rejects(
+    () =>
+      grantPlayerTitle({
+        sourceFile,
+        requestData: {
+          players: [{ name: '新玩家', generalTitles: ['HACKING'], mapDominators: [] }],
+          options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
+        },
+        syncFn: async () => {
+          throw new Error('sync failed');
+        }
+      }),
+    /sync failed/
+  );
+
+  const saved = JSON.parse(await fs.readFile(sourceFile, 'utf8'));
+  assert.equal(saved.players.at(-1).name, '新玩家');
 });

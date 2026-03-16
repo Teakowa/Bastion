@@ -20,7 +20,7 @@ description: 为 Bastion Overwatch Workshop 项目发放玩家称号的专用流
 1. 解析请求：优先整理为 [references/grant-template.md](references/grant-template.md) 的四段结构。
 2. 口径确认：只确认派生规则开关（默认值见下）。
 3. 写入 source：仅改 `data/title-source.json`（批处理或交互二选一）。
-4. 同步：`pnpm run sync:title-data`。
+4. 执行 `pnpm run grant:title`；该命令在非 `--dry-run` 且有变更时会自动同步 title 数据。
 5. 测试：`pnpm run test:title-data-sync`，必要时再跑 `pnpm run test:title-grant`。
 6. 回执：按“交付说明”输出新增玩家、称号和执行命令结果。
 
@@ -97,7 +97,7 @@ pnpm run grant:title -- --interactive [--dry-run]
 
 至少确认：
 
-1. `pnpm run sync:title-data` 成功。
+1. `pnpm run grant:title` 的 auto-sync 成功，或手动执行 `pnpm run sync:title-data` 成功。
 2. `pnpm run test:title-data-sync` 通过。
 3. 目标玩家、称号、地图槽位已同步到生成产物。
 4. 自动生成区块标记完整。

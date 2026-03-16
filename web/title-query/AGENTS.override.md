@@ -14,7 +14,7 @@ This file defines local collaboration rules for the web title query page and its
 
 - `data/title-source.json` is the only canonical source for title/map-title data.
 - Page data must flow through:
-  - `pnpm run sync:title-data`
+  - `pnpm run sync:title-data` for manual regeneration, or `pnpm run grant:title` for grant-driven updates with auto-sync
   - then `pnpm run build:title-query`
 - Do not manually edit generated artifacts under `web/title-query/public/data/`.
 

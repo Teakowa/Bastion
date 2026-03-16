@@ -94,12 +94,12 @@ pnpm run build:dev
 称号查询页：
 
 ```bash
-pnpm run test:title-data-sync
 pnpm run sync:title-data
+pnpm run test:title-data-sync
 pnpm run build:title-query
 ```
 
-静态查询页与游戏内称号源块均由 `tools/sync-title-data.mjs` 基于 `data/title-source.json` 自动生成，并通过 `.github/workflows/pages-title-query.yml` 部署到 GitHub Pages。
+`pnpm run grant:title` 在写入 `data/title-source.json` 后会自动执行称号数据同步。静态查询页与游戏内称号源块均由 `tools/sync-title-data.mjs` 基于 `data/title-source.json` 自动生成，并通过 `.github/workflows/pages-title-query.yml` 部署到 GitHub Pages。
 
 发布用双语言构建：
 

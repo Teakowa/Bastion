@@ -3,6 +3,7 @@ import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { syncTitleData } from './sync-title-data.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -397,7 +398,8 @@ export async function grantPlayerTitle({
   sourceFile = SOURCE_FILE,
   inputFile,
   requestData,
-  dryRun = false
+  dryRun = false,
+  syncFn = syncTitleData
 } = {}) {
   const hasInputFile = Boolean(inputFile);
   const hasRequestData = Boolean(requestData);
@@ -418,15 +420,34 @@ export async function grantPlayerTitle({
   const workingCopy = JSON.parse(beforeText);
   const { sourceData: nextData, summary } = applyGrantRequest(workingCopy, parsedInput);
   const afterText = `${JSON.stringify(nextData, null, 2)}\n`;
+  const changed = beforeText !== afterText;
+  let autoSync = {
+    executed: false,
+    reason: dryRun ? 'dry_run' : changed ? 'pending' : 'no_changes'
+  };
 
-  if (!dryRun) {
+  if (!dryRun && changed) {
     await fs.writeFile(sourceFile, afterText, 'utf8');
+
+    const syncResult = await syncFn({ sourceFile });
+    autoSync = {
+      executed: true,
+      reason: 'source_changed',
+      titleFileChanged: syncResult.titleFileChanged,
+      sourceVersion: syncResult.sourceVersion,
+      generated: {
+        titleCount: syncResult.webPayload.meta.titleCount,
+        playerCount: syncResult.webPayload.meta.playerCount,
+        mapTitleCount: syncResult.webPayload.meta.mapTitleCount
+      }
+    };
   }
 
   return {
     dryRun,
-    changed: beforeText !== afterText,
+    changed,
     summary,
+    autoSync,
     preview: {
       addedPlayers: summary.addedPlayers,
       generalTitleAdds: summary.generalTitleAdds,

@@ -51,6 +51,12 @@
 - 生成 web 查询页数据 `web/title-query/public/data/titles.json`
 - 提供一致性校验入口（配合 `pnpm run test:title-data-sync`）
 
+### `tools/grant-player-title.mjs`
+
+- 通过 `pnpm run grant:title` 写入 `data/title-source.json`
+- 非 `--dry-run` 且有实际变更时自动执行 `sync:title-data`
+- CLI 输出包含 auto-sync 结果，便于确认生成产物是否已刷新
+
 ### `title/title-cn.opy`
 
 - 运行时称号配置载体
@@ -72,5 +78,5 @@
 
 1. 编辑 `data/title-source.json`（称号定义、玩家授予）。
 2. 如有地图奖励变更，更新 `data/title-source.json` 的 `mapTitles` 对应槽位。
-3. 执行 `pnpm run sync:title-data`。
+3. 若通过 `pnpm run grant:title` 发放称号，确认输出中的 auto-sync 已执行；若手动编辑真源，则执行 `pnpm run sync:title-data`。
 4. 执行 `pnpm run test:title-data-sync`。

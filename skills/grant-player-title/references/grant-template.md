@@ -56,7 +56,6 @@ pnpm run grant:title -- --input <request.json> --dry-run
 pnpm run grant:title -- --input <request.json>
 pnpm run grant:title -- --interactive --dry-run
 pnpm run grant:title -- --interactive
-pnpm run sync:title-data
 pnpm run test:title-grant
 pnpm run test:title-data-sync
 ```
