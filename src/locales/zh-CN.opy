@@ -92,7 +92,7 @@
 #!define STR_EVT_BUFF_16_TITLE "向我靠拢"
 #!define STR_EVT_BUFF_16_DESC "你和你附近的队友每{0}秒获得{1}秒无敌"
 #!define STR_EVT_BUFF_18_TITLE "坚定"
-#!define STR_EVT_BUFF_18_DESC "已并入坚韧：获得{0}%击退抵抗\n生命值低于{1}%时，在{2}秒内回复{3}%最大生命值\n内置{4}秒冷却"
+#!define STR_EVT_BUFF_18_DESC "该事件已并入坚韧，不再单独出现"
 #!define STR_EVT_BUFF_19_TITLE "胜利意志"
 #!define STR_EVT_BUFF_19_DESC "生命值低于{0}%触发\n获得{1}秒无敌并清除负面状态"
 #!define STR_EVT_BUFF_20_TITLE "任务：菲迪皮德斯之力"

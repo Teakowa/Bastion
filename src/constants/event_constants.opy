@@ -179,7 +179,7 @@
 # 受到50%击退 = 50% 抵抗
 #!define EVT_17_MODE2_KNOCKBACK 50
 
-# --- ID 18: 坚定（已并入坚韧，保留兼容位） ---
+# --- ID 18: 坚定（已并入坚韧，保留历史占位） ---
 # Duration（秒）
 #!define EVT_BUFF_18_DURATION 90
 # Weight（权重）

@@ -87,7 +87,7 @@
 #!define STR_EVT_BUFF_16_TITLE "Rally to Me"
 #!define STR_EVT_BUFF_16_DESC "You and nearby teammates gain 2.5s damage immunity every 5s."
 #!define STR_EVT_BUFF_18_TITLE "Unwavering"
-#!define STR_EVT_BUFF_18_DESC "Merged into Tenacity: Gain {0}% knockback resistance.\nBelow {1}% HP, restore {3}% max HP over {2}s.\nBuilt-in {4}s cooldown."
+#!define STR_EVT_BUFF_18_DESC "This event has been merged into Tenacity and no longer appears separately."
 #!define STR_EVT_BUFF_19_TITLE "Will to Win"
 #!define STR_EVT_BUFF_19_DESC "Triggered below 30% HP: 5s damage immunity, cleanse debuffs, restore lost HP."
 #!define STR_EVT_BUFF_20_TITLE "Mission: Marathon"
