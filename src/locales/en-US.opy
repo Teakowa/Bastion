@@ -69,7 +69,7 @@
 #!define STR_EVT_BUFF_4_TITLE "Fountain of Life"
 #!define STR_EVT_BUFF_4_DESC "Regenerate 15% max HP per second."
 #!define STR_EVT_BUFF_5_TITLE "Fan Attack"
-#!define STR_EVT_BUFF_5_DESC "Shows how many Bastions are targeting you."
+#!define STR_EVT_BUFF_5_DESC "While targeted by Bastions, gain {0} + {1}% max HP as overhealth and {2}% bonus movement speed."
 #!define STR_EVT_BUFF_6_TITLE "Power Walk"
 #!define STR_EVT_BUFF_6_DESC "Moving for 1s grants 3% stacking movement speed."
 #!define STR_EVT_BUFF_7_TITLE "Flesh Regeneration"

@@ -62,6 +62,7 @@
 #!define EVT_5_HEALTH_TYPE Health.NORMAL
 #!define EVT_5_HEALTH_FLAT 25
 #!define EVT_5_HEALTH_MAXHP_FACTOR 0.5
+#!define EVT_5_SPEED_BOOST 50
 
 # --- ID 6: 足力健 ---
 # Duration（秒）
