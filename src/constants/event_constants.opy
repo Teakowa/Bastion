@@ -89,25 +89,6 @@
 #!define EVT_8_HP_LAYER_PER_DEATH 1
 #!define EVT_8_VISUAL_EFFECT Effect.WINSTON_PRIMAL_RAGE
 
-# --- ID 9: 危险感知 ---
-# Duration（秒）
-#!define EVT_BUFF_9_DURATION 20
-# Weight（权重）
-#!define EVT_BUFF_9_WEIGHT 1.2
-#!define EVT_9_SPEED_BOOST 60
-#!define EVT_9_DMG_TAKEN -25
-#!define EVT_9_LINGER_TIME 1
-
-# --- ID 10: 反应装甲 ---
-# Duration（秒）
-#!define EVT_BUFF_10_DURATION 60
-# Weight（权重）
-#!define EVT_BUFF_10_WEIGHT 0.8
-#!define EVT_10_ARMOR_AMOUNT 150
-# --- ID 10: 反应装甲 (反伤晕眩逻辑) ---
-#!define EVT_10_STUN_DURATION 1
-#!define EVT_10_STUN_COOLDOWN 1
-
 # --- ID 11: 死亡延迟 ---
 # Duration（秒）
 #!define EVT_BUFF_11_DURATION 45
@@ -153,12 +134,6 @@
 # 护盾池 ID 索引
 #!define EVT_14_HEALTH_ID 2
 
-# --- ID 15 ---
-# Duration（秒）
-#!define EVT_BUFF_15_DURATION 90
-# Weight（权重）
-#!define EVT_BUFF_15_WEIGHT 0
-
 # --- ID 16: 向我靠拢 (无敌光环) ---
 # Duration（秒）
 #!define EVT_BUFF_16_DURATION 30
@@ -180,28 +155,6 @@
 # invincible[0] = 是否激活 (bool)
 # invincible[1] = 来源玩家 (Entity)
 # invincible[2] = 持续时间 (Number)
-
-# --- ID 17: 我独自闯关 ---
-# Duration（秒）
-#!define EVT_BUFF_17_DURATION 120
-# Weight（权重）
-#!define EVT_BUFF_17_WEIGHT 1.1
-# 检测半径
-#!define EVT_17_CHECK_RADIUS 8
-
-# 状态 1：有队友时的数值 (普通)
-#!define EVT_17_MODE1_DMG_TAKEN -15
-#!define EVT_17_MODE1_HEAL_BOOST 30
-#!define EVT_17_MODE1_SPEED 12.5
-# 受到75%击退 = 25% 抵抗
-#!define EVT_17_MODE1_KNOCKBACK 75
-
-# 状态 2：独自一人时的数值 (强力)
-#!define EVT_17_MODE2_DMG_TAKEN -30
-#!define EVT_17_MODE2_HEAL_BOOST 60
-#!define EVT_17_MODE2_SPEED 25
-# 受到50%击退 = 50% 抵抗
-#!define EVT_17_MODE2_KNOCKBACK 50
 
 # --- ID 18: 坚定 ---
 # Duration（秒）
@@ -349,17 +302,6 @@
 #!define EVT_28_HOT_FLAT 75
 #!define EVT_28_HOT_MAXHP_FACTOR 0.5
 #!define EVT_28_TICK_INTERVAL 1
-
-# --- ID 29: 成吨的增益 (初始化与属性) ---
-# Duration（秒）
-#!define EVT_BUFF_29_DURATION 30
-# Weight（权重）
-#!define EVT_BUFF_29_WEIGHT 0.3
-#!define EVT_29_SPEED_DELTA 50
-#!define EVT_29_DMG_TAKEN_DELTA 50
-#!define EVT_29_HEAL_DEALT_DELTA 50
-#!define EVT_29_HEAL_RECV_DELTA 50
-#!define EVT_29_SIZE_HEALTH_SCALE 1.5
 
 # --- ID 30: F5 (循环刷新) ---
 # Duration（秒）
@@ -717,20 +659,6 @@
 #!define EVT_MECH_0_EFFECT Effect.ANA_BIOTIC_GRENADE_NO_HEALING
 #!define EVT_MECH_0_SOUND DynamicEffect.ANA_BIOTIC_GRENAGE_NO_HEALING_SOUND
 
-# --- ID 1 (Mech): 纳米战甲 ---
-# Duration（秒）
-#!define EVT_MECH_1_DURATION 15
-# Weight（权重）
-#!define EVT_MECH_1_WEIGHT 1.2
-# 额外生命值倍率 (8倍)
-#!define EVT_MECH_1_HP_MULTIPLIER 5
-
-# 速度惩罚 (%)
-#!define EVT_MECH_1_SPEED_PENALTY -20
-
-# 生命池索引
-#!define EVT_MECH_1_POOL_IDX 0
-
 # --- ID 2 (Mech): 赌徒 ---
 # Duration（秒）
 #!define EVT_MECH_2_DURATION 15
@@ -744,23 +672,6 @@
 
 # 赌徒连胜计数上限 (用于HUD显示赌王称号等)
 #!define EVT_MECH_2_WIN_STREAK_CAP 5
-
-# --- ID 3 (Mech): 有点松弛 ---
-# Duration（秒）
-#!define EVT_MECH_3_DURATION 45
-# Weight（权重）
-#!define EVT_MECH_3_WEIGHT 0
-# 烟雾/云雾效果半径
-#!define EVT_MECH_3_CLOUD_RADIUS 12
-
-# 烟雾生成间隔 (秒)
-#!define EVT_MECH_3_SPAWN_INTERVAL 1
-
-# 视觉特效 (自身火焰)
-#!define EVT_MECH_3_SELF_EFFECT Effect.WRECKING_BALL_PILEDRIVER_FIRE
-
-# 视觉特效 (干扰烟雾)
-#!define EVT_MECH_3_CLOUD_EFFECT Effect.CLOUD
 
 # --- ID 4 (Mech): 迷你形态 ---
 # Duration（秒）
@@ -786,17 +697,6 @@
 #!define EVT_MECH_5_WEIGHT 1.3
 # 蹲下时的移速惩罚 (%)
 #!define EVT_MECH_5_SPEED_PENALTY 25
-
-# --- ID 6 (Mech): 紧急避障 ---
-# Duration（秒）
-#!define EVT_MECH_6_DURATION 45
-# Weight（权重）
-#!define EVT_MECH_6_WEIGHT 1.2
-# 受伤触发的加速 (%)
-#!define EVT_MECH_6_SPEED_BOOST 30
-
-# 加速持续时间 (秒)
-#!define EVT_MECH_6_SPEED_DURATION 3
 
 # --- ID 7 (Mech): 刹车失灵 ---
 # Duration（秒）
@@ -864,14 +764,6 @@
 #!define EVT_MECH_10_HEART_STEEL_COST 2
 #!define EVT_MECH_10_FORCE_ROLL 20
 
-# --- ID 11 (Mech/Special): 作弊：回溯 ---
-# Duration（秒）
-#!define EVT_MECH_11_DURATION 30
-# Weight（权重）
-#!define EVT_MECH_11_WEIGHT 1
-#!define EVT_MECH_11_RECORD_INTERVAL 3
-#!define EVT_MECH_11_TRIGGER_HP_COST 0.1
-
 # --- ID 12 (Mech/Special): 赌徒：短期投资 (交易) ---
 # Duration（秒）
 #!define EVT_MECH_12_DURATION 15
@@ -903,7 +795,7 @@
 # Weight（权重）
 #!define EVT_MECH_14_WEIGHT 0.5
 
-# --- ID 15 (Mech/Special): 俄罗斯方块 (变大复活) ---
+# --- ID 15 (Mech/Special): 俄罗斯套娃 (变小复活) ---
 # Duration（秒）
 #!define EVT_MECH_15_DURATION 90
 # Weight（权重）
@@ -912,113 +804,79 @@
 # 复活等待时间 (秒)
 #!define EVT_MECH_15_RESURRECT_DELAY 2
 
-# 体型缩放：scale = 1 + step * eventSize
-#!define EVT_MECH_15_SIZE_STEP 0.05
-
-# 语音音高：pitch = max(minPitch, 1 - step * eventSize)
-#!define EVT_MECH_15_PITCH_STEP 0.05
-#!define EVT_MECH_15_PITCH_MIN 0.2
-
-# 额外生命倍率步长（用于 sizeHealth）
-#!define EVT_MECH_15_SIZE_HEALTH_STEP 0.05
-
-# --- ID 16 (Mech/Special): 俄罗斯套娃 (变小复活) ---
-# Duration（秒）
-#!define EVT_MECH_16_DURATION 90
-# Weight（权重）
-#!define EVT_MECH_16_WEIGHT 0.6
-
-# 复活等待时间 (秒)
-#!define EVT_MECH_16_RESURRECT_DELAY 2
-
 # 体型缩放：scale = max(minScale, 1 - step * eventSize)
-#!define EVT_MECH_16_SIZE_STEP 0.05
-#!define EVT_MECH_16_SIZE_MIN 0.2
+#!define EVT_MECH_15_SIZE_STEP 0.05
+#!define EVT_MECH_15_SIZE_MIN 0.2
 
 # 语音音高：pitch = max(minPitch, 1 + step * eventSize)
-#!define EVT_MECH_16_PITCH_STEP 0.05
-#!define EVT_MECH_16_PITCH_MIN 1.8
+#!define EVT_MECH_15_PITCH_STEP 0.05
+#!define EVT_MECH_15_PITCH_MIN 1.8
 
 # 死亡后获得的移速加成（叠加到 mod_speed_event）
-#!define EVT_MECH_16_SPEED_STEP 5
+#!define EVT_MECH_15_SPEED_STEP 5
 
-# --- ID 17 (Mech/Special): 作弊：0CD (血量换CD) ---
+# --- ID 17 (Mech/Special): 赌徒：长期投资 (豪赌) ---
 # Duration（秒）
 #!define EVT_MECH_17_DURATION 15
 # Weight（权重）
-#!define EVT_MECH_17_WEIGHT 0.8
+#!define EVT_MECH_17_WEIGHT 0.4
 
-# waitUntil 超时 (秒)
-#!define EVT_MECH_17_WAITUNTIL_TIMEOUT 2
+# 胜率阈值：random.randint(0,99) < 阈值 则胜
+#!define EVT_MECH_17_WIN_CHANCE 33
 
-# 触发代价：自伤 = MaxHP * percent
-#!define EVT_MECH_17_HP_COST_PERCENT 0.25
+# 胜利奖励：心之钢层数
+#!define EVT_MECH_17_REWARD_STACKS 20
 
-# 循环间隔 (秒)
-#!define EVT_MECH_17_INTERVAL 0.25
+# 强制下次投掷/强制次数
+#!define EVT_MECH_17_FORCE_ROLL 50
+#!define EVT_MECH_17_FORCE_COUNT 4
 
-# --- ID 18 (Mech/Special): 赌徒：长期投资 (豪赌) ---
+# 提示文本：合约生效的“未来 N 个事件”
+#!define EVT_MECH_17_CONTRACT_EVENTS 5
+
+# --- ID 18 (Mech/Special): 瓦尔基里降临 ---
 # Duration（秒）
-#!define EVT_MECH_18_DURATION 15
+#!define EVT_MECH_18_DURATION 120
 # Weight（权重）
 #!define EVT_MECH_18_WEIGHT 0.4
 
-# 胜率阈值：random.randint(0,99) < 阈值 则胜
-#!define EVT_MECH_18_WIN_CHANCE 33
+# 体型血量倍率（用于 sizeHealth）
+#!define EVT_MECH_18_SIZE_HEALTH 10
 
-# 胜利奖励：心之钢层数
-#!define EVT_MECH_18_REWARD_STACKS 20
+# --- ID 18 (Mech/Special): 瓦尔基里降临 (受击充能/开大回血) ---
 
-# 强制下次投掷/强制次数
-#!define EVT_MECH_18_FORCE_ROLL 50
-#!define EVT_MECH_18_FORCE_COUNT 4
+# 受击时增加的大招充能
+#!define EVT_MECH_18_ULT_CHARGE_GAIN 10
 
-# 提示文本：合约生效的“未来 N 个事件”
-#!define EVT_MECH_18_CONTRACT_EVENTS 5
+# 受击充能触发间隔 (秒)
+#!define EVT_MECH_18_ULT_CHARGE_INTERVAL 0.5
 
-# --- ID 19 (Mech/Special): 瓦尔基里降临 ---
+# eventTargetHP 平滑系数
+#!define EVT_MECH_18_HEAL_SMOOTHING 0.85
+
+# 每跳回血：MaxHP * percent
+#!define EVT_MECH_18_HEAL_TICK_PERCENT 0.04
+
+# 回血 tick 间隔 (秒)
+#!define EVT_MECH_18_HEAL_TICK_INTERVAL 0.2
+
+# --- ID 19 (Mech/Special): 三位一体 (SSR) ---
 # Duration（秒）
 #!define EVT_MECH_19_DURATION 120
 # Weight（权重）
 #!define EVT_MECH_19_WEIGHT 0.4
 
-# 体型血量倍率（用于 sizeHealth）
-#!define EVT_MECH_19_SIZE_HEALTH 10
-
-# --- ID 19 (Mech/Special): 瓦尔基里降临 (受击充能/开大回血) ---
-
-# 受击时增加的大招充能
-#!define EVT_MECH_19_ULT_CHARGE_GAIN 10
-
-# 受击充能触发间隔 (秒)
-#!define EVT_MECH_19_ULT_CHARGE_INTERVAL 0.5
-
-# eventTargetHP 平滑系数
-#!define EVT_MECH_19_HEAL_SMOOTHING 0.85
-
-# 每跳回血：MaxHP * percent
-#!define EVT_MECH_19_HEAL_TICK_PERCENT 0.04
-
-# 回血 tick 间隔 (秒)
-#!define EVT_MECH_19_HEAL_TICK_INTERVAL 0.2
-
-# --- ID 20 (Mech/Special): 三位一体 (SSR) ---
-# Duration（秒）
-#!define EVT_MECH_20_DURATION 120
-# Weight（权重）
-#!define EVT_MECH_20_WEIGHT 0.4
-
 # 减伤上限 (%)
-#!define EVT_MECH_20_DMG_REDUCE_CAP 85
+#!define EVT_MECH_19_DMG_REDUCE_CAP 85
 
 # 减伤成长：reduce = min(cap, MaxHP / divisor)
-#!define EVT_MECH_20_DMG_REDUCE_DIVISOR 25
+#!define EVT_MECH_19_DMG_REDUCE_DIVISOR 25
 
 # 移速系数：speed = (-mod_dmg_taken) * factor
-#!define EVT_MECH_20_SPEED_FACTOR 2.5
+#!define EVT_MECH_19_SPEED_FACTOR 2.5
 
 # 心之钢每跳增加量
-#!define EVT_MECH_20_HEART_STEEL_PER_TICK 0.25
+#!define EVT_MECH_19_HEART_STEEL_PER_TICK 0.25
 
 # 循环间隔 (秒)
-#!define EVT_MECH_20_INTERVAL 1
+#!define EVT_MECH_19_INTERVAL 1
