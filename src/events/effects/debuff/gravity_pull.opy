@@ -4,6 +4,19 @@
 rule "[VishkarEvent]: 引力异常":
     @Event eachPlayer
     @Team 1
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.GRAVITY_PULL, eventPlayer.eventEffect == null]) == true
+    
+    createEffect(getAllPlayers() if (eventPlayer.isAlive() and getPlayers(Team.2)[0] != null) else null, Effect.SIGMA_GRAVITIC_FLUX_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.eventEffect[0] = getLastCreatedEntity()
+    createEffect(getAllPlayers() if (eventPlayer.isAlive() and getPlayers(Team.2)[0] != null) else null, Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.eventEffect[1] = getLastCreatedEntity()
+    waitUntil(eventPlayer.eventId != DebuffEventId.GRAVITY_PULL or eventPlayer.eventType != 1, eventPlayer.eventDuration)
+    clearEventEffect()
+
+
+rule "[VishkarEvent]: 引力异常":
+    @Event eachPlayer
+    @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.GRAVITY_PULL]) == true
     @Condition getPlayers(Team.2)[0] != null
     
@@ -12,13 +25,6 @@ rule "[VishkarEvent]: 引力异常":
     eventPlayer.mod_speed_event -= EVT_DEBUFF_5_SPEED_REDUCTION
     updatePlayerStats()
     lbl_0:
-    if eventPlayer.eventEffect != null:
-        goto lbl_1
-    createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect[0] = getLastCreatedEntity()
-    createEffect(getAllPlayers(), Effect.SIGMA_GRAVITIC_FLUX_TARGET_SOUND, Color.TEAM_2, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
-    eventPlayer.eventEffect[1] = getLastCreatedEntity()
-    lbl_1:
     if getPlayers(Team.2)[1] == null:
         eventPlayer.target = getPlayers(Team.2)[0]
     else:
@@ -29,4 +35,3 @@ rule "[VishkarEvent]: 引力异常":
         loop()
     eventPlayer.mod_speed_event = 0
     updatePlayerStats()
-    clearEventEffect()

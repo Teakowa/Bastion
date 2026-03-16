@@ -24,8 +24,8 @@ Priority:
 | --- | --- | --- | --- | --- | --- |
 | `悄悄地进村` | `src/events/effects/mechEffects.opy` | attached | High | `P1` | Crouch state could repeatedly create and destroy the same attached player effect. Converted to a single lifecycle-owned effect with visibility gating on crouch state. |
 | `我按Q辣` | `src/events/effects/buffEffects.opy` | attached | High | `P1` | Ultimate entry and exit could repeatedly recreate the boost visual during the same event. Converted to one event-owned entity with visibility driven by `isUsingUltimate()`. |
-| `足力健` | `src/events/effects/buffEffects.opy` | attached | Medium | `P2` | Current rule already avoids duplicate creation during one moving window, but still tears the effect down when movement stops. Candidate for full event-lifetime ownership in a later pass. |
-| `引力异常` | `src/events/effects/debuffEffects.opy` | attached | Medium | `P2` | Current loop keeps the effect alive while the debuff is active, but still couples ownership to the per-tick rule body. A later pass can convert it to an explicit lifecycle rule for consistency. |
+| `足力健` | `src/events/effects/buffEffects.opy` | attached | Medium | `P1` | Converted to a lifecycle-owned sprint effect. Movement now only controls visibility and stacking logic. |
+| `引力异常` | `src/events/effects/debuffEffects.opy` | attached | Medium | `P1` | Converted to a lifecycle-owned dual-effect array. Pull logic keeps ownership separate from the impulse loop. |
 | `有点松弛` cloud chain | `src/events/effects/mechEffects.opy` | residual | Intentional | Excluded | The cloud list is a designed trail system with delayed cleanup. Replacing it with a single visibility-toggled effect would change gameplay readability. |
 | One-shot explosion / hit / sound effects | `src/events/effects/*` | burst | Low | Excluded | These are not sustained status indicators and should keep their current create-on-trigger semantics. |
 
@@ -33,6 +33,8 @@ Priority:
 
 - `悄悄地进村`
 - `我按Q辣`
+- `足力健`
+- `引力异常`
 
 Both rules now follow the same internal convention:
 
@@ -40,9 +42,8 @@ Both rules now follow the same internal convention:
 - use `EffectReeval.VISIBILITY_POSITION_AND_RADIUS`
 - drive `visibleTo` directly from the relevant button or ability condition
 - destroy the effect only when the event lifecycle ends or generic event cleanup runs
+- the same ownership model also applies when `eventEffect` stores an effect array instead of a single entity
 
 ## Follow-Up Candidates
 
-1. Convert `足力健` to full event-lifecycle ownership and keep movement as visibility-only.
-2. Convert `引力异常` to the same lifecycle model if testing confirms no readability regression.
-3. If more attached visuals are added later, factor the repeated lifecycle pattern into a documented event-effects convention rather than a new public helper API.
+1. If more attached visuals are added later, factor the repeated lifecycle pattern into a documented event-effects convention rather than a new public helper API.
