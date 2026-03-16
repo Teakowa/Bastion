@@ -63,16 +63,14 @@ enum BuffEventId:
     # legacy numeric id: 28
     MORALE_BOOST_PROMAX
     # legacy numeric id: 29
-    TONS_OF_BUFFS
-    # legacy numeric id: 30
     F5_REFRESH
-    # legacy numeric id: 31
+    # legacy numeric id: 30
     HEALING_TOWER_PROMAX
-    # legacy numeric id: 32
+    # legacy numeric id: 31
     SUPER_TRANSFORM
-    # legacy numeric id: 33
+    # legacy numeric id: 32
     DRAW_FIRE
-    # legacy numeric id: 34
+    # legacy numeric id: 33
     TENACITY
     # sentinel only for integrity checks (do not register as an event)
     COUNT

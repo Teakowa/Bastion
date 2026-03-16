@@ -174,16 +174,16 @@
 #!define STR_EVT_BUFF_27_DESC "位移回复{0}+{1}% 最大生命值"
 #!define STR_EVT_BUFF_28_TITLE "鼓舞士气 ProMax"
 #!define STR_EVT_BUFF_28_DESC "每秒治疗{0}米内的友方{1}+{2}%最大生命值"
-#!define STR_EVT_BUFF_30_TITLE "F5"
-#!define STR_EVT_BUFF_30_DESC "每{0}秒重置所有技能冷却"
-#!define STR_EVT_BUFF_31_TITLE "治疗光塔 ProMax"
-#!define STR_EVT_BUFF_31_DESC "无视距离，每秒为全队提供{0}+{1}%最大生命值的治疗"
-#!define STR_EVT_BUFF_32_TITLE "超级变换形态"
-#!define STR_EVT_BUFF_32_DESC "切换形态时获得{0}+{1}最大生命值的临时生命值"
-#!define STR_EVT_BUFF_33_TITLE "向我开炮"
-#!define STR_EVT_BUFF_33_DESC "获得{0}点可恢复护甲与{1}%伤害减免\n成为堡垒的优先攻击目标"
-#!define STR_EVT_BUFF_34_TITLE "坚韧"
-#!define STR_EVT_BUFF_34_DESC "获得{0}%击退抵抗\n生命值低于{1}%时，在{2}秒内回复{3}%最大生命值\n内置{4}秒冷却"
+#!define STR_EVT_BUFF_29_TITLE "F5"
+#!define STR_EVT_BUFF_29_DESC "每{0}秒重置所有技能冷却"
+#!define STR_EVT_BUFF_30_TITLE "治疗光塔 ProMax"
+#!define STR_EVT_BUFF_30_DESC "无视距离，每秒为全队提供{0}+{1}%最大生命值的治疗"
+#!define STR_EVT_BUFF_31_TITLE "超级变换形态"
+#!define STR_EVT_BUFF_31_DESC "切换形态时获得{0}+{1}最大生命值的临时生命值"
+#!define STR_EVT_BUFF_32_TITLE "向我开炮"
+#!define STR_EVT_BUFF_32_DESC "获得{0}点可恢复护甲与{1}%伤害减免\n成为堡垒的优先攻击目标"
+#!define STR_EVT_BUFF_33_TITLE "坚韧"
+#!define STR_EVT_BUFF_33_DESC "获得{0}%击退抵抗\n生命值低于{1}%时，在{2}秒内回复{3}%最大生命值\n内置{4}秒冷却"
 
 # ------------------------------------------------
 # 随机事件包 4：减益 (Debuff Events Pack 4)
@@ -198,10 +198,8 @@
 #!define STR_EVT_DEBUFF_19_DESC "生命值与最低血量的队友同步"
 #!define STR_EVT_DEBUFF_20_TITLE "吸血鬼"
 #!define STR_EVT_DEBUFF_20_DESC "吸取队友生命值来治疗自己"
-#!define STR_EVT_DEBUFF_21_TITLE "成吨的减益"
-#!define STR_EVT_DEBUFF_21_DESC "-50%生命/移速/减伤/治疗增益\n祝你好运"
-#!define STR_EVT_DEBUFF_22_TITLE "登月火箭"
-#!define STR_EVT_DEBUFF_22_DESC "被随机射向天空\n并在空中无法控制方向"
+#!define STR_EVT_DEBUFF_21_TITLE "登月火箭"
+#!define STR_EVT_DEBUFF_21_DESC "被随机射向天空\n并在空中无法控制方向"
 
 # ------------------------------------------------
 # 随机事件包 4：机制 (Mech Events Pack 4)

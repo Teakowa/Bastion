@@ -168,16 +168,16 @@
 #!define STR_EVT_BUFF_27_DESC "Movement cooldowns halved. Using them heals you."
 #!define STR_EVT_BUFF_28_TITLE "Inspire ProMax"
 #!define STR_EVT_BUFF_28_DESC "Heals allies within 5m for 50 + 50% Max HP per second."
-#!define STR_EVT_BUFF_30_TITLE "F5"
-#!define STR_EVT_BUFF_30_DESC "Resets all cooldowns every 5s."
-#!define STR_EVT_BUFF_31_TITLE "Healing Pylon ProMax"
-#!define STR_EVT_BUFF_31_DESC "Global range. Heals team for 25 + 125% Max HP/s."
-#!define STR_EVT_BUFF_32_TITLE "Super Transform Form"
-#!define STR_EVT_BUFF_32_DESC "Entering alternate form grants {0} + {1} Max HP overhealth for {2}s."
-#!define STR_EVT_BUFF_33_TITLE "Fire at Me"
-#!define STR_EVT_BUFF_33_DESC "Gain {0} recoverable armor and {1}% damage reduction.\nBastions prioritize targeting you."
-#!define STR_EVT_BUFF_34_TITLE "Tenacity"
-#!define STR_EVT_BUFF_34_DESC "Gain {0}% knockback resistance.\nBelow {1}% HP, restore {3}% max HP over {2}s.\nBuilt-in {4}s cooldown."
+#!define STR_EVT_BUFF_29_TITLE "F5"
+#!define STR_EVT_BUFF_29_DESC "Resets all cooldowns every 5s."
+#!define STR_EVT_BUFF_30_TITLE "Healing Pylon ProMax"
+#!define STR_EVT_BUFF_30_DESC "Global range. Heals team for 25 + 125% Max HP/s."
+#!define STR_EVT_BUFF_31_TITLE "Super Transform Form"
+#!define STR_EVT_BUFF_31_DESC "Entering alternate form grants {0} + {1} Max HP overhealth for {2}s."
+#!define STR_EVT_BUFF_32_TITLE "Fire at Me"
+#!define STR_EVT_BUFF_32_DESC "Gain {0} recoverable armor and {1}% damage reduction.\nBastions prioritize targeting you."
+#!define STR_EVT_BUFF_33_TITLE "Tenacity"
+#!define STR_EVT_BUFF_33_DESC "Gain {0}% knockback resistance.\nBelow {1}% HP, restore {3}% max HP over {2}s.\nBuilt-in {4}s cooldown."
 
 # ------------------------------------------------
 # Random Pack 4: Debuffs
@@ -192,10 +192,8 @@
 #!define STR_EVT_DEBUFF_19_DESC "HP synced with the lowest HP teammate."
 #!define STR_EVT_DEBUFF_20_TITLE "Vampire ProMax"
 #!define STR_EVT_DEBUFF_20_DESC "Drains ally HP to heal yourself."
-#!define STR_EVT_DEBUFF_21_TITLE "Tons of Debuffs"
-#!define STR_EVT_DEBUFF_21_DESC "All stats massively reduced.\nGood Luck."
-#!define STR_EVT_DEBUFF_22_TITLE "Moon Rocket"
-#!define STR_EVT_DEBUFF_22_DESC "Randomly launches you skyward\nand scrambles your flight direction."
+#!define STR_EVT_DEBUFF_21_TITLE "Moon Rocket"
+#!define STR_EVT_DEBUFF_21_DESC "Randomly launches you skyward\nand scrambles your flight direction."
 
 # ------------------------------------------------
 # Random Pack 4: Mechanics

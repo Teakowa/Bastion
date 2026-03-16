@@ -326,52 +326,52 @@
 #!define EVT_28_HOT_MAXHP_FACTOR 0.5
 #!define EVT_28_TICK_INTERVAL 1
 
-# --- ID 30: F5 (循环刷新) ---
+# --- ID 29: F5 (循环刷新) ---
 # Duration（秒）
-#!define EVT_BUFF_30_DURATION 60
+#!define EVT_BUFF_29_DURATION 60
 # Weight（权重）
-#!define EVT_BUFF_30_WEIGHT 0.25
-#!define EVT_30_REFRESH_INTERVAL 5
+#!define EVT_BUFF_29_WEIGHT 0.25
+#!define EVT_29_REFRESH_INTERVAL 5
 
-# --- ID 31: 治疗光塔 ProMax (全图奶) ---
+# --- ID 30: 治疗光塔 ProMax (全图奶) ---
 # Duration（秒）
-#!define EVT_BUFF_31_DURATION 90
+#!define EVT_BUFF_30_DURATION 90
 # Weight（权重）
-#!define EVT_BUFF_31_WEIGHT 0.1
-#!define EVT_31_HOT_DURATION 2
-#!define EVT_31_HEAL_FLAT 50
-#!define EVT_31_HEAL_MAXHP_FACTOR 0.75
+#!define EVT_BUFF_30_WEIGHT 0.1
+#!define EVT_30_HOT_DURATION 2
+#!define EVT_30_HEAL_FLAT 50
+#!define EVT_30_HEAL_MAXHP_FACTOR 0.75
 
-# --- ID 32: 超级变换形态 ---
+# --- ID 31: 超级变换形态 ---
 # Duration（秒）
-#!define EVT_BUFF_32_DURATION 30
+#!define EVT_BUFF_31_DURATION 30
 # Weight（权重）
-#!define EVT_BUFF_32_WEIGHT 1.6
-#!define EVT_32_HP_FLAT 50
-#!define EVT_32_HP_MAXHP_FACTOR 0.1
-#!define EVT_32_OVERHEALTH_DURATION 5
-#!define EVT_32_TRIGGER_GCD 0.1
+#!define EVT_BUFF_31_WEIGHT 1.6
+#!define EVT_31_HP_FLAT 50
+#!define EVT_31_HP_MAXHP_FACTOR 0.1
+#!define EVT_31_OVERHEALTH_DURATION 5
+#!define EVT_31_TRIGGER_GCD 0.1
 
-# --- ID 33: 向我开炮 ---
+# --- ID 32: 向我开炮 ---
 # Duration（秒）
-#!define EVT_BUFF_33_DURATION 45
+#!define EVT_BUFF_32_DURATION 45
 # Weight（权重）
-#!define EVT_BUFF_33_WEIGHT 1.4
-#!define EVT_33_DMG_TAKEN -50
-#!define EVT_33_ARMOR_AMOUNT 350
-#!define EVT_33_TARGET_WEIGHT 999
+#!define EVT_BUFF_32_WEIGHT 1.4
+#!define EVT_32_DMG_TAKEN -50
+#!define EVT_32_ARMOR_AMOUNT 350
+#!define EVT_32_TARGET_WEIGHT 999
 
-# --- ID 34: 坚韧 ---
+# --- ID 33: 坚韧 ---
 # Duration（秒）
-#!define EVT_BUFF_34_DURATION 120
+#!define EVT_BUFF_33_DURATION 120
 # Weight（权重）
-#!define EVT_BUFF_34_WEIGHT 1.6
-#!define EVT_34_KNOCKBACK_RESISTANCE -60
-#!define EVT_34_TRIGGER_HP_PERCENT 0.4
-#!define EVT_34_HEAL_DURATION 1.25
-#!define EVT_34_HEAL_MAXHP_FACTOR 0.8
-#!define EVT_34_TRIGGER_COOLDOWN 5
-#!define EVT_34_HEAL_PER_SEC_MAXHP_FACTOR (EVT_34_HEAL_MAXHP_FACTOR / EVT_34_HEAL_DURATION)
+#!define EVT_BUFF_33_WEIGHT 1.6
+#!define EVT_33_KNOCKBACK_RESISTANCE -60
+#!define EVT_33_TRIGGER_HP_PERCENT 0.4
+#!define EVT_33_HEAL_DURATION 1.25
+#!define EVT_33_HEAL_MAXHP_FACTOR 0.8
+#!define EVT_33_TRIGGER_COOLDOWN 5
+#!define EVT_33_HEAL_PER_SEC_MAXHP_FACTOR (EVT_33_HEAL_MAXHP_FACTOR / EVT_33_HEAL_DURATION)
 
 #!define EVT_BUFF_35_DURATION 5
 #!define EVT_BUFF_35_WEIGHT 0.6
@@ -646,19 +646,13 @@
 # 循环间隔 (秒)
 #!define EVT_DEBUFF_20_INTERVAL 1
 
-# --- ID 21 (Debuff): （未写事件块） ---
+# --- ID 21 (Debuff): 登月火箭 ---
 # Duration（秒）
-#!define EVT_DEBUFF_21_DURATION 30
+#!define EVT_DEBUFF_21_DURATION 5
 # Weight（权重）
-#!define EVT_DEBUFF_21_WEIGHT 0.2
-
-# --- ID 22 (Debuff): 登月火箭 ---
-# Duration（秒）
-#!define EVT_DEBUFF_22_DURATION 5
-# Weight（权重）
-#!define EVT_DEBUFF_22_WEIGHT 1.2
-#!define EVT_DEBUFF_22_GRAVITY 5
-#!define EVT_DEBUFF_22_UPWARD_IMPULSE 85
+#!define EVT_DEBUFF_21_WEIGHT 1.2
+#!define EVT_DEBUFF_21_GRAVITY 5
+#!define EVT_DEBUFF_21_UPWARD_IMPULSE 85
 
 
 # -----------------------------------------------------------------------------
