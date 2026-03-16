@@ -7,13 +7,13 @@ rule "[VishkarEvent]: 三位一体 (SSR)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.TRINITY_SSR]) == true
     
     if eventPlayer.isAlive():
-        eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_19_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_19_DMG_REDUCE_DIVISOR))
-        eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_19_SPEED_FACTOR
+        eventPlayer.mod_dmg_taken = negToPos(min(EVT_MECH_14_DMG_REDUCE_CAP, eventPlayer.getMaxHealth() / EVT_MECH_14_DMG_REDUCE_DIVISOR))
+        eventPlayer.mod_speed_event = eventPlayer.mod_dmg_taken * -EVT_MECH_14_SPEED_FACTOR
         updatePlayerStats()
-        eventPlayer.heart_steel += EVT_MECH_19_HEART_STEEL_PER_TICK
+        eventPlayer.heart_steel += EVT_MECH_14_HEART_STEEL_PER_TICK
         setPlayerHP()
         eventPlayer.hudText = "伤害减免：{0}% / 移速加成：{1}% / 心之钢：{2}层".format(negToPos(eventPlayer.mod_dmg_taken), eventPlayer.mod_speed_event, round(eventPlayer.heart_steel))
-    wait(EVT_MECH_19_INTERVAL)
+    wait(EVT_MECH_14_INTERVAL)
     if ruleCondition:
         loop()
     eventPlayer.mod_dmg_taken = 0

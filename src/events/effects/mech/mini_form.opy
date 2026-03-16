@@ -7,11 +7,11 @@ rule "[VishkarEvent]: 迷你形态":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.MINI_FORM]) == true
     
     wait(getAverageServerLoad() / 100 * 0.032)
-    eventPlayer.sizeHealth = EVT_MECH_4_HP_SCALE
-    eventPlayer.startScalingSize(EVT_MECH_4_MODEL_SCALE, false)
-    eventPlayer.startScalingBarriers(EVT_MECH_4_MODEL_SCALE, false)
-    eventPlayer.startModifyingVoicelinePitch(EVT_MECH_4_VOICE_PITCH, false)
-    eventPlayer.mod_speed_event = EVT_MECH_4_SPEED_BOOST
+    eventPlayer.sizeHealth = EVT_MECH_2_HP_SCALE
+    eventPlayer.startScalingSize(EVT_MECH_2_MODEL_SCALE, false)
+    eventPlayer.startScalingBarriers(EVT_MECH_2_MODEL_SCALE, false)
+    eventPlayer.startModifyingVoicelinePitch(EVT_MECH_2_VOICE_PITCH, false)
+    eventPlayer.mod_speed_event = EVT_MECH_2_SPEED_BOOST
     updatePlayerStats()
     setPlayerHP()
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)

@@ -6,7 +6,7 @@ rule "[VishkarEvent]: 瓦尔基里降临":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.VALKYRIE_DESCENT]) == true
     
-    eventPlayer.sizeHealth = EVT_MECH_18_SIZE_HEALTH
+    eventPlayer.sizeHealth = EVT_MECH_13_SIZE_HEALTH
     setPlayerHP()
     eventPlayer.heal_recv = EVT_MECH_0_HEAL_BAN
     eventPlayer.mod_heal_event = EVT_MECH_0_HEAL_BAN
@@ -26,8 +26,8 @@ rule "[VishkarEvent]: 瓦尔基里降临 大招充能":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.VALKYRIE_DESCENT]) == true
     @Condition attacker != eventPlayer
     
-    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_MECH_18_ULT_CHARGE_GAIN)
-    wait(EVT_MECH_18_ULT_CHARGE_INTERVAL)
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_MECH_13_ULT_CHARGE_GAIN)
+    wait(EVT_MECH_13_ULT_CHARGE_INTERVAL)
 
 rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
     @Event eachPlayer
@@ -36,8 +36,8 @@ rule "[VishkarEvent]: 瓦尔基里降临 (大招持续回血)":
     
     if eventPlayer.eventTargetHP == 0:
         eventPlayer.eventTargetHP = eventPlayer.getMaxHealth()
-    eventPlayer.eventTargetHP = eventPlayer.getHealth() + ((eventPlayer.eventTargetHP - eventPlayer.getHealth()) * EVT_MECH_18_HEAL_SMOOTHING)
+    eventPlayer.eventTargetHP = eventPlayer.getHealth() + ((eventPlayer.eventTargetHP - eventPlayer.getHealth()) * EVT_MECH_13_HEAL_SMOOTHING)
     while all([eventPlayer.isUsingUltimate(), eventPlayer.getHealth() < eventPlayer.eventTargetHP]):
-        eventPlayer.setHealth(min(eventPlayer.eventTargetHP, eventPlayer.getHealth() + eventPlayer.getMaxHealth() * EVT_MECH_18_HEAL_TICK_PERCENT))
+        eventPlayer.setHealth(min(eventPlayer.eventTargetHP, eventPlayer.getHealth() + eventPlayer.getMaxHealth() * EVT_MECH_13_HEAL_TICK_PERCENT))
         playEffect(getAllPlayers(), DynamicEffect.HEAL_TARGET_ACTIVE, Color.YELLOW, eventPlayer, 60)
-        wait(EVT_MECH_18_HEAL_TICK_INTERVAL)
+        wait(EVT_MECH_13_HEAL_TICK_INTERVAL)

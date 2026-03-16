@@ -6,7 +6,7 @@ rule "[VishkarEvent]: 保持距离 (易伤光环)":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.KEEP_DISTANCE_AURA]) == true
     
-    eventPlayer.target = getPlayersInRadius(eventPlayer, EVT_DEBUFF_16_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
+    eventPlayer.target = getPlayersInRadius(eventPlayer, EVT_DEBUFF_15_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer)
     if len(eventPlayer.target) > 1:
         eventPlayer.target = sorted(eventPlayer.target, lambda i: distance(eventPlayer, i))[0]
     elif eventPlayer.target[0] != null:
@@ -14,7 +14,7 @@ rule "[VishkarEvent]: 保持距离 (易伤光环)":
     else:
         eventPlayer.target = null
     if eventPlayer.target != null:
-        eventPlayer.mod_dmg_taken = min(EVT_DEBUFF_16_MAX, max(0, (EVT_DEBUFF_16_RADIUS - distance(eventPlayer, eventPlayer.target)) * EVT_DEBUFF_16_FACTOR))
+        eventPlayer.mod_dmg_taken = min(EVT_DEBUFF_15_MAX, max(0, (EVT_DEBUFF_15_RADIUS - distance(eventPlayer, eventPlayer.target)) * EVT_DEBUFF_15_FACTOR))
         eventPlayer.hudText = "受到伤害 +{0}%".format(eventPlayer.mod_dmg_taken)
     else:
         eventPlayer.mod_dmg_taken = 0

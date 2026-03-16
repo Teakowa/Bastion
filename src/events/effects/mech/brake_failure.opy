@@ -16,12 +16,12 @@ rule "[VishkarEvent]: 刹车失灵":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.BRAKE_FAILURE]) == true
     
-    while eventPlayer.mod_speed_event < EVT_MECH_7_MAX_SPEED:
+    while eventPlayer.mod_speed_event < EVT_MECH_4_MAX_SPEED:
         eventPlayer.mod_speed_event += 5
-        if eventPlayer.mod_dmg_taken == EVT_MECH_7_MAX_DMG_TAKEN:
+        if eventPlayer.mod_dmg_taken == EVT_MECH_4_MAX_DMG_TAKEN:
             goto lbl_0
-        eventPlayer.mod_dmg_taken -= EVT_MECH_7_DMG_TAKEN_INC
+        eventPlayer.mod_dmg_taken -= EVT_MECH_4_DMG_TAKEN_INC
         lbl_0:
         eventPlayer.hudText = "移速+{0}% / 伤害减免 {1}%".format(eventPlayer.mod_speed_event, negToPos(eventPlayer.mod_dmg_taken))
         updatePlayerStats()
-        wait(EVT_MECH_7_INTERVAL)
+        wait(EVT_MECH_4_INTERVAL)

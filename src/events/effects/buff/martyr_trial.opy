@@ -7,12 +7,12 @@ rule "[VishkarEvent]: 任务：殉道者 (初始化)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.MARTYR_TRIAL]) == true
     
     eventPlayer.eventMissionGoal = max(
-        EVT_26_GOAL_MIN,
+        EVT_21_GOAL_MIN,
         min(
             round(
-                EVT_26_GOAL_MIN
+                EVT_21_GOAL_MIN
                 + ((random.uniform(0, 1) + random.uniform(0, 1)) / 2)
-                * (MARTYR_GOAL_MAX - EVT_26_GOAL_MIN)
+                * (MARTYR_GOAL_MAX - EVT_21_GOAL_MIN)
             ),
             MARTYR_GOAL_MAX
         )
@@ -37,8 +37,8 @@ rule "[VishkarEvent]: 任务：殉道者 (进度检测)":
         eventPlayer.eventMissionGoal
     )
     if len(eventPlayer.eventMission) == eventPlayer.eventMissionGoal:
-        waitUntil(eventPlayer.isAlive(), EVT_26_WAITUNTIL_TIMEOUT)
+        waitUntil(eventPlayer.isAlive(), EVT_21_WAITUNTIL_TIMEOUT)
         bigMessage(eventPlayer, "任务：殉道者 完成！")
         smallMessage(eventPlayer, "  {0}  任务奖励：永久获得 {1}% 伤害减免".format(abilityIconString(Hero.HAZARD, Button.SECONDARY_FIRE), 5))
-        eventPlayer.mod_dmg_perma += EVT_26_REWARD_DMG_PERMA
+        eventPlayer.mod_dmg_perma += EVT_21_REWARD_DMG_PERMA
         updatePlayerStats()

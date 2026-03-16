@@ -12,9 +12,9 @@ rule "[VishkarEvent]: 相位猛冲 (智能检测版)":
     
     createEffect(getAllPlayers(), Effect.SOLDIER_SPRINTING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()
-    eventPlayer.mod_speed_event += EVT_24_SPEED_BOOST
+    eventPlayer.mod_speed_event += EVT_19_SPEED_BOOST
     updatePlayerStats()
-    wait(EVT_24_DURATION)
+    wait(EVT_19_DURATION)
     eventPlayer.mod_speed_event = 0
     updatePlayerStats()
     clearEventEffect()

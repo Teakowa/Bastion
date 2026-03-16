@@ -10,13 +10,13 @@ rule "[VishkarEvent]: 吸血鬼 (按需吸血)":
     
     eventPlayer.passiveRegenBlocked = true
     
-    eventPlayer.target = [i for i in getPlayersInRadius(eventPlayer, EVT_DEBUFF_20_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer) if i.isAlive()]
+    eventPlayer.target = [i for i in getPlayersInRadius(eventPlayer, EVT_DEBUFF_19_RADIUS, Team.1, LosCheck.SURFACES).exclude(eventPlayer) if i.isAlive()]
     if len(eventPlayer.target) > 0:
-        damage(eventPlayer.target, eventPlayer, EVT_DEBUFF_20_DAMAGE_PER_TARGET)
-        heal(eventPlayer, eventPlayer.target, len(eventPlayer.target) * EVT_DEBUFF_20_HEAL_PER_TARGET)
-        eventPlayer.dlcTimeChallenge[4] += len(eventPlayer.target) * EVT_DEBUFF_20_DAMAGE_PER_TARGET
+        damage(eventPlayer.target, eventPlayer, EVT_DEBUFF_19_DAMAGE_PER_TARGET)
+        heal(eventPlayer, eventPlayer.target, len(eventPlayer.target) * EVT_DEBUFF_19_HEAL_PER_TARGET)
+        eventPlayer.dlcTimeChallenge[4] += len(eventPlayer.target) * EVT_DEBUFF_19_DAMAGE_PER_TARGET
         playEffect(getAllPlayers(), DynamicEffect.MOIRA_FADE_REAPPEAR, Color.RED, eventPlayer.target, 200)
-    wait(EVT_DEBUFF_20_INTERVAL)
+    wait(EVT_DEBUFF_19_INTERVAL)
     if ruleCondition:
         loop()
     clearEventEffect()

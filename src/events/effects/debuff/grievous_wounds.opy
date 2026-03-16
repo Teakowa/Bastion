@@ -6,8 +6,8 @@ rule "[VishkarEvent]: 重伤":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.GRIEVOUS_WOUNDS]) == true
     
-    eventPlayer.mod_heal_event = EVT_DEBUFF_13_HEAL_DEALT_RED
-    eventPlayer.heal_recv = EVT_DEBUFF_13_HEAL_RECV_RED
+    eventPlayer.mod_heal_event = EVT_DEBUFF_12_HEAL_DEALT_RED
+    eventPlayer.heal_recv = EVT_DEBUFF_12_HEAL_RECV_RED
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_NO_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()

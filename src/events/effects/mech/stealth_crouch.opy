@@ -19,7 +19,7 @@ rule "[VishkarEvent]: 悄悄地进村":
     @Condition eventPlayer.isHoldingButton(Button.CROUCH) == true
     
     eventPlayer.targetSilence = true
-    eventPlayer.mod_speed_event -= EVT_MECH_5_SPEED_PENALTY
+    eventPlayer.mod_speed_event -= EVT_MECH_3_SPEED_PENALTY
     updatePlayerStats()
     waitUntil(eventPlayer.isHoldingButton(Button.CROUCH) == false, eventPlayer.eventDuration)
     eventPlayer.targetSilence = false

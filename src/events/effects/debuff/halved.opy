@@ -8,12 +8,12 @@ rule "[VishkarEvent]: 减半":
     
     eventPlayer.passiveRegenBlocked = true
     
-    if eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_DEBUFF_14_EXECUTE_THRESHOLD:
+    if eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_DEBUFF_13_EXECUTE_THRESHOLD:
         kill(eventPlayer, eventPlayer)
         playEffect(getAllPlayers(), DynamicEffect.DVA_SELF_DESTRUCT_EXPLOSION, Color.TEAM_2, eventPlayer, 200)
     else:
-        wait(EVT_DEBUFF_14_INTERVAL)
-        eventPlayer.startDamageOverTime(null, 1, eventPlayer.getHealth() * EVT_DEBUFF_14_DAMAGE_PERCENT)
+        wait(EVT_DEBUFF_13_INTERVAL)
+        eventPlayer.startDamageOverTime(null, 1, eventPlayer.getHealth() * EVT_DEBUFF_13_DAMAGE_PERCENT)
         playEffect(getAllPlayers(), DynamicEffect.ZARYA_PARTICLE_CANNON_EXPLOSION, Color.TEAM_2, eventPlayer, 3)
     if ruleCondition:
         loop()

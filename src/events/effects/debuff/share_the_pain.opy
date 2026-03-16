@@ -20,5 +20,5 @@ rule "[VishkarEvent]: 有难同当":
     @Condition eventAbility != null
     
     wait()
-    damage([player for player in getLivingPlayers(Team.1) if not player.hasStatus(Status.PHASED_OUT) and not player.hasStatus(Status.INVINCIBLE) and distance(eventPlayer, player) <= EVT_DEBUFF_10_RADIUS and eventPlayer != player], attacker, eventDamage * EVT_DEBUFF_10_DMG_FACTOR)
+    damage([player for player in getLivingPlayers(Team.1) if not player.hasStatus(Status.PHASED_OUT) and not player.hasStatus(Status.INVINCIBLE) and distance(eventPlayer, player) <= EVT_DEBUFF_9_RADIUS and eventPlayer != player], attacker, eventDamage * EVT_DEBUFF_9_DMG_FACTOR)
     wait()

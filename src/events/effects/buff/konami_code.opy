@@ -15,7 +15,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     if eventPlayer.eventEffect == null:
         createEffect(eventPlayer, Effect.SPARKLES, Color.YELLOW, eventPlayer.controlPlayerRespawnPosition[0], 1, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         eventPlayer.eventEffect = getLastCreatedEntity()
-    wait(EVT_13_CHECKPOINT_INTERVAL, Wait.ABORT_WHEN_FALSE)
+    wait(EVT_11_CHECKPOINT_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
 
@@ -30,7 +30,7 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     bigMessage(eventPlayer, "↑↑↓↓←→←→BABA")
     playEffect(getAllPlayers(), DynamicEffect.TRACER_RECALL_DISAPPEAR, Color.TEAM_1, eventPlayer, 200)
     eventPlayer.disableRespawn()
-    wait(EVT_13_RESPAWN_DELAY)
+    wait(EVT_11_RESPAWN_DELAY)
     eventPlayer.enableRespawn()
     eventPlayer.resurrect()
     eventPlayer.teleport(eventPlayer.controlPlayerRespawnPosition[0])

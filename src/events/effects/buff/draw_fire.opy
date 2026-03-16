@@ -11,11 +11,11 @@ rule "[VishkarEvent]: 向我开炮":
         goto lbl_0
     removeHealthPool(eventPlayer.healthId[1])
     lbl_0:
-    eventPlayer.addHealthPool(Health.ARMOR, EVT_32_ARMOR_AMOUNT, true, false)
+    eventPlayer.addHealthPool(Health.ARMOR, EVT_27_ARMOR_AMOUNT, true, false)
     eventPlayer.healthId[1] = getLastCreatedHealthPool()
     playEffect(getAllPlayers(), DynamicEffect.BRIGITTE_REPAIR_PACK_ARMOR, Color.WHITE, eventPlayer, 200)
-    eventPlayer.mod_dmg_taken = EVT_32_DMG_TAKEN
-    eventPlayer.targetWeight = EVT_32_TARGET_WEIGHT
+    eventPlayer.mod_dmg_taken = EVT_27_DMG_TAKEN
+    eventPlayer.targetWeight = EVT_27_TARGET_WEIGHT
     updatePlayerStats()
     waitUntil(eventPlayer.eventId == -1, eventPlayer.eventDuration)
     removeHealthPool(eventPlayer.healthId[1])

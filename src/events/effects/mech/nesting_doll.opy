@@ -7,11 +7,11 @@ rule "[VishkarEvent]: 俄罗斯套娃 (变小复活)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.NESTING_DOLL]) == true
     
     eventPlayer.disableRespawn()
-    wait(EVT_MECH_15_RESURRECT_DELAY)
+    wait(EVT_MECH_11_RESURRECT_DELAY)
     eventPlayer.enableRespawn()
     eventPlayer.resurrect()
     eventPlayer.eventSize++
-    eventPlayer.startScalingSize(max(EVT_MECH_15_SIZE_MIN, 1 - EVT_MECH_15_SIZE_STEP * eventPlayer.eventSize), false)
-    eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_15_PITCH_MIN, 1 + EVT_MECH_15_PITCH_STEP * eventPlayer.eventSize), false)
-    eventPlayer.mod_speed_event += EVT_MECH_15_SPEED_STEP
+    eventPlayer.startScalingSize(max(EVT_MECH_11_SIZE_MIN, 1 - EVT_MECH_11_SIZE_STEP * eventPlayer.eventSize), false)
+    eventPlayer.startModifyingVoicelinePitch(max(EVT_MECH_11_PITCH_MIN, 1 + EVT_MECH_11_PITCH_STEP * eventPlayer.eventSize), false)
+    eventPlayer.mod_speed_event += EVT_MECH_11_SPEED_STEP
     updatePlayerStats()

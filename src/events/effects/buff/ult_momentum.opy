@@ -7,7 +7,7 @@ rule "[VishkarEvent]: 我按Q辣":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.isMoving(), eventPlayer.getSpeed() != 0]) == true
     
     wait(1, Wait.ABORT_WHEN_FALSE)
-    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_23_ULT_CHARGE_PER_SEC)
+    eventPlayer.setUltCharge(eventPlayer.getUltCharge() + EVT_18_ULT_CHARGE_PER_SEC)
     if ruleCondition:
         loop()
     if eventPlayer.isWinner:
@@ -33,7 +33,7 @@ rule "[VishkarEvent]: 我按Q辣":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.isUsingUltimate()]) == true
     
     resetPlayerCD()
-    eventPlayer.mod_dmg_taken -= EVT_23_DMG_REDUCTION_DURING_ULT
+    eventPlayer.mod_dmg_taken -= EVT_18_DMG_REDUCTION_DURING_ULT
     updatePlayerStats()
     waitUntil(not eventPlayer.isUsingUltimate(), eventPlayer.eventDuration)
     eventPlayer.mod_dmg_taken = 0

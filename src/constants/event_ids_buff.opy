@@ -23,51 +23,45 @@ enum BuffEventId:
     # legacy numeric id: 8
     HEART_OF_STEEL
     # legacy numeric id: 9
-    DANGER_SENSE
-    # legacy numeric id: 10
-    REACTIVE_ARMOR
-    # legacy numeric id: 11
     DEATH_DELAY
-    # legacy numeric id: 12
+    # legacy numeric id: 10
     SYMBIOSIS
-    # legacy numeric id: 13
+    # legacy numeric id: 11
     KONAMI_CODE
-    # legacy numeric id: 14
+    # legacy numeric id: 12
     PHOTON_SHIELD
-    # legacy numeric id: 15
-    PHOTON_RESPIRATOR
-    # legacy numeric id: 16
+    # legacy numeric id: 13
     REGROUP_CALL
+    # legacy numeric id: 14
+    WILL_TO_WIN
+    # legacy numeric id: 15
+    PHEIDIPPIDES_TRIAL
+    # legacy numeric id: 16
+    HEART_OF_STEEL_PRO
+    # legacy numeric id: 17
+    STAT_POWER
+    # legacy numeric id: 18
+    ULT_MOMENTUM
     # legacy numeric id: 19
-    WILL_TO_WIN = 19
+    PHASE_SURGE
     # legacy numeric id: 20
-    PHEIDIPPIDES_TRIAL = 20
+    BODYGUARD
     # legacy numeric id: 21
-    HEART_OF_STEEL_PRO = 21
+    MARTYR_TRIAL
     # legacy numeric id: 22
-    STAT_POWER = 22
+    HYPERACTIVE_HEAL
     # legacy numeric id: 23
-    ULT_MOMENTUM = 23
+    MORALE_BOOST_PROMAX
     # legacy numeric id: 24
-    PHASE_SURGE = 24
+    F5_REFRESH
     # legacy numeric id: 25
-    BODYGUARD = 25
+    HEALING_TOWER_PROMAX
     # legacy numeric id: 26
-    MARTYR_TRIAL = 26
+    SUPER_TRANSFORM
     # legacy numeric id: 27
-    HYPERACTIVE_HEAL = 27
+    DRAW_FIRE
     # legacy numeric id: 28
-    MORALE_BOOST_PROMAX = 28
-    # legacy numeric id: 29
-    F5_REFRESH = 29
-    # legacy numeric id: 30
-    HEALING_TOWER_PROMAX = 30
-    # legacy numeric id: 31
-    SUPER_TRANSFORM = 31
-    # legacy numeric id: 32
-    DRAW_FIRE = 32
-    # legacy numeric id: 33
-    TENACITY = 33
+    TENACITY
     # sentinel only for integrity checks (do not register as an event)
     COUNT
 

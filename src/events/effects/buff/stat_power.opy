@@ -6,8 +6,8 @@ rule "[VishkarEvent]: 数值之力":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.STAT_POWER]) == true
     
-    eventPlayer.mod_heal_event = EVT_22_HEAL_BOOST
-    eventPlayer.heal_recv = EVT_22_HEAL_BOOST
+    eventPlayer.mod_heal_event = EVT_17_HEAL_BOOST
+    eventPlayer.heal_recv = EVT_17_HEAL_BOOST
     updatePlayerStats()
     createEffect(getAllPlayers(), Effect.ANA_BIOTIC_GRENADE_INCREASED_HEALING, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.eventEffect = getLastCreatedEntity()

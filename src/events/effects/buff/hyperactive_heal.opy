@@ -6,9 +6,9 @@ rule "[VishkarEvent]: 多动症 (触发回血)":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.HYPERACTIVE_HEAL, eventPlayer.phase_trigger == true]) == true
     
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > EVT_27_CD_THRESHOLD:
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_1) > EVT_22_CD_THRESHOLD:
         eventPlayer.setAbilityCooldown(Button.ABILITY_1, eventPlayer.getAbilityCooldown(Button.ABILITY_1) * 0.5)
-    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > EVT_27_CD_THRESHOLD:
+    if eventPlayer.getAbilityCooldown(Button.ABILITY_2) > EVT_22_CD_THRESHOLD:
         eventPlayer.setAbilityCooldown(Button.ABILITY_2, eventPlayer.getAbilityCooldown(Button.ABILITY_2) * 0.5)
-    eventPlayer.startHealingOverTime(eventPlayer, EVT_27_HOT_DIVISOR, (round(50 + eventPlayer.getMaxHealth() * EVT_27_HOT_MAXHP_FACTOR)) / EVT_27_HOT_DIVISOR)
-    wait(EVT_27_POST_WAIT)
+    eventPlayer.startHealingOverTime(eventPlayer, EVT_22_HOT_DIVISOR, (round(50 + eventPlayer.getMaxHealth() * EVT_22_HOT_MAXHP_FACTOR)) / EVT_22_HOT_DIVISOR)
+    wait(EVT_22_POST_WAIT)

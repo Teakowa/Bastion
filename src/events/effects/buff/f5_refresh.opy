@@ -7,6 +7,6 @@ rule "[VishkarEvent]: F5 (循环刷新)":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.F5_REFRESH]) == true
     
     resetPlayerCD()
-    wait(EVT_29_REFRESH_INTERVAL, Wait.ABORT_WHEN_FALSE)
+    wait(EVT_24_REFRESH_INTERVAL, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()

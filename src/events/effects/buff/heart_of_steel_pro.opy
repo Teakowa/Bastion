@@ -6,10 +6,10 @@ rule "[VishkarEvent]: 心之钢 Pro":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.HEART_OF_STEEL_PRO]) == true
     
-    eventPlayer.heart_steel += EVT_21_HP_GAIN_FLAT
-    smallMessage(eventPlayer, "  {0}  已获得 {1} 层（{2}%）心之钢".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), EVT_21_HP_GAIN_FLAT, EVT_21_HP_GAIN_FLAT * EVT_8_HP_PERCENT_PER_STACK))
+    eventPlayer.heart_steel += EVT_16_HP_GAIN_FLAT
+    smallMessage(eventPlayer, "  {0}  已获得 {1} 层（{2}%）心之钢".format(abilityIconString(Hero.MAUGA, Button.ABILITY_2), EVT_16_HP_GAIN_FLAT, EVT_16_HP_GAIN_FLAT * EVT_8_HP_PERCENT_PER_STACK))
     if eventPlayer.heart_steel > 0:
-        eventPlayer.setMaxHealth(100 + eventPlayer.heart_steel * EVT_21_HP_MULTIPLIER)
+        eventPlayer.setMaxHealth(100 + eventPlayer.heart_steel * EVT_16_HP_MULTIPLIER)
         wait(eventPlayer.eventDuration)
         setPlayerHP()
     else:

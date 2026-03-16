@@ -6,12 +6,12 @@ rule "[VishkarEvent]: 舍己为人":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.SELFLESS_GIVEAWAY]) == true
     
-    if eventPlayer.getMaxHealth() <= EVT_DEBUFF_15_MIN_MAX_HP:
+    if eventPlayer.getMaxHealth() <= EVT_DEBUFF_14_MIN_MAX_HP:
         eventPlayer.eventDuration = 0
     else:
-        getPlayers(Team.1).exclude(eventPlayer).heart_steel += EVT_DEBUFF_15_STACKS_GIVE
+        getPlayers(Team.1).exclude(eventPlayer).heart_steel += EVT_DEBUFF_14_STACKS_GIVE
         getPlayers(Team.1).exclude(eventPlayer).setPlayerHP = true
-        eventPlayer.heart_steel -= EVT_DEBUFF_15_STACKS_TAKE * len(getPlayers(Team.1).exclude(eventPlayer))
+        eventPlayer.heart_steel -= EVT_DEBUFF_14_STACKS_TAKE * len(getPlayers(Team.1).exclude(eventPlayer))
         setPlayerHP()
     playEffect(getAllPlayers(), DynamicEffect.ORISA_HALT_IMPLOSION, Color.TEAM_1, eventPlayer, 200)
     playEffect(getAllPlayers(), DynamicEffect.GOOD_PICKUP_EFFECT, Color.GREEN, eventPlayer, 100)

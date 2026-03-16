@@ -5,7 +5,7 @@ rule "[VishkarEvent]: 胜利意志":
     @Event eachPlayer
     @Team 1
     @Condition eventPlayer.isAlive() == true
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.WILL_TO_WIN, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_19_TRIGGER_HP_PERCENT]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.WILL_TO_WIN, eventPlayer.getHealth() <= eventPlayer.getMaxHealth() * EVT_14_TRIGGER_HP_PERCENT]) == true
     
     # Exception: multi-phase revive/invincible flow keeps explicit phase waits.
     waitUntil(eventPlayer.isAlive(), MAX_TIME)
@@ -16,7 +16,7 @@ rule "[VishkarEvent]: 胜利意志":
     wait()
     if not eventPlayer.isAlive():
         return
-    eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, EVT_19_INVINCIBLE_DURATION)
+    eventPlayer.setStatusEffect(eventPlayer, Status.INVINCIBLE, EVT_14_INVINCIBLE_DURATION)
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)
     eventPlayer.invincibleEffect = getLastCreatedEntity()
     createEffect(getAllPlayers(), Effect.BAPTISTE_IMMORTALITY_FIELD_PROTECTED_SOUND, Color.TEAM_1, eventPlayer, 200, EffectReeval.POSITION_AND_RADIUS)

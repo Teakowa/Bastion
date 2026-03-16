@@ -7,8 +7,8 @@ rule "[VishkarEvent]: 登月火箭":
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.MOON_ROCKET]) == true
 
     eventPlayer.startForcingThrottle(0, 0, 0, 0, 0, 0)
-    eventPlayer.setGravity(EVT_DEBUFF_21_GRAVITY)
-    eventPlayer.applyImpulse(Vector.UP, EVT_DEBUFF_21_UPWARD_IMPULSE, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
+    eventPlayer.setGravity(EVT_DEBUFF_20_GRAVITY)
+    eventPlayer.applyImpulse(Vector.UP, EVT_DEBUFF_20_UPWARD_IMPULSE, Relativity.TO_WORLD, Impulse.CANCEL_CONTRARY_MOTION)
     wait(eventPlayer.eventDuration)
     eventPlayer.stopForcingThrottle()
     eventPlayer.setGravity(100)
