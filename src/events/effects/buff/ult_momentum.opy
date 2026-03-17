@@ -18,13 +18,12 @@ rule "[VishkarEvent]: 我按Q辣":
 rule "[VishkarEvent]: 我按Q辣":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.nanoEffect == null]) == true
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.ULT_MOMENTUM, eventPlayer.eventEffect == null]) == true
     
     createEffect(getAllPlayers() if eventPlayer.isUsingUltimate() else null, Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
-    eventPlayer.nanoEffect = getLastCreatedEntity()
+    eventPlayer.eventEffect = getLastCreatedEntity()
     waitUntil(eventPlayer.eventId != BuffEventId.ULT_MOMENTUM or eventPlayer.eventType != 0, eventPlayer.eventDuration)
-    destroyEffect(eventPlayer.nanoEffect)
-    eventPlayer.nanoEffect = null
+    clearEventEffect()
 
 
 rule "[VishkarEvent]: 我按Q辣":
