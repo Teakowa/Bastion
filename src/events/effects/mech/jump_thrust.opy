@@ -15,3 +15,16 @@ rule "[VishkarEvent]: 屁动力":
         loop()
     eventPlayer.mod_dmg_taken = 0
     updatePlayerStats()
+
+rule "[VishkarEvent]: 屁动力 eff":
+    @Event eachPlayer
+    @Team 1
+    @Condition all([eventPlayer.hasSpawned(), eventPlayer.eventType == 2, eventPlayer.eventId == MechEventId.GAMBLER_SHORT_INVESTMENT, eventPlayer.nanoEffect == null]) == true
+    
+    createEffect(getAllPlayers() if eventPlayer.isHoldingButton(Button.JUMP) else null, Effect.ANA_NANO_BOOSTED, Color.TEAM_2, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+    eventPlayer.nanoEffect = getLastCreatedEntity()
+    
+    wait(eventPlayer.eventDuration)
+    
+    destroyEffect(eventPlayer.nanoEffect)
+    eventPlayer.nanoEffect = null
