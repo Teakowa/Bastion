@@ -16,7 +16,7 @@ rule "map - watchpoint gibraltar":
     bastionPosition[5] = vect(31.85, 7.62, -107.88)
     bastionPosition[6] = vect(56.88, 9.23, -118.92)
     bastionPosition[7] = vect(21.730, 8.78, -129.04)
-    endPosition = vect(43.42, 6.00, -129.34)
+    endPosition = vect(43.42, 5.15, -129.34)
     thirdPersonPosition = vect(93.88, 1.06, 63.17)
     resetPosition = vect(97.55, 1.06, 60.38)
     creditsPosition = vect(112.23, 0, 73.59)
