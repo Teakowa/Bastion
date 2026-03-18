@@ -57,10 +57,12 @@ If a rule is referenced elsewhere, keep only a short pointer and do not duplicat
 - Entry-specific compile validation: `pnpm run build:main` and `pnpm run build:dev`
 - Title data sync and validation: `pnpm run sync:title-data` then `pnpm run test:title-data-sync`
 - Title grant helper: `pnpm run grant:title` (auto-syncs title data after successful non-dry-run writes)
+- Title grant workflow test: `pnpm run test:title-grant`
 - Title query local dev server (auto-sync + Vite): `pnpm run dev:title-query`
 - Title query page build: `pnpm run build:title-query`
 - Locale key integrity check (when touching source/localization/event text): `./tools/check_locale_keys.sh`
 - Performance loop scan helper: `pnpm run perf:scan`
+- Performance loop strict gate (non-zero on high-risk findings): `pnpm run perf:scan --strict`
 - Release artifact build (local parity): `pnpm run build:release`
 - Locale-specific release builds: `pnpm run build:main:en` and `pnpm run build:main:zh`
 - Manual env version bump (release helper): `pnpm run bump:env-version`
