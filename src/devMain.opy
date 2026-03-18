@@ -243,7 +243,6 @@ playervar lastThreatTime 108
 playervar hudText 109
 playervar eventMissionGoal 110
 playervar altFormTrigger 111
-playervar event404DisabledSlot 112
 playervar tempUnlockId
 playervar earnedAchievements
 playervar menuHeroIndex

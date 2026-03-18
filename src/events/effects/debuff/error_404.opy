@@ -1,6 +1,8 @@
 # Event: DebuffEventId.ERROR_404
 # 下线规范：若下线此事件，请在本文件内将相关 rule 标记为 @Disabled（并写明日期/原因），然后同步移除 eventConfig 注册与聚合 include。
 
+playervar event404DisabledSlot
+
 rule "[VishkarEvent]: 404 (随机禁用技能)":
     @Event eachPlayer
     @Team 1
