@@ -325,8 +325,8 @@
 # ------------------------------------------------
 # HUD Panel Structure (4.0 New)
 # ------------------------------------------------
-#!define STR_HUD_PANEL_TOP "┌──────────┐"
-#!define STR_HUD_PANEL_BOTTOM "└──────────┘"
+#!define STR_HUD_PANEL_TOP "┌───────────┐"
+#!define STR_HUD_PANEL_BOTTOM "└───────────┘"
 
 # Stats Panel Content
 # {0}=Deaths/Skips, {1}=Event Stats, {2}=Total Time
