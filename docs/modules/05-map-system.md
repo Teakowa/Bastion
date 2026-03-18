@@ -45,7 +45,7 @@
 
 ## 关联模块
 
-- `utilities/mapDetection.opy`：地图识别
+- `utilities/system/mapDetection.opy`：地图识别
 - `effects/init.opy`：终点/跳点可视化
 - 入口主规则：切图传送与终点晋级
 

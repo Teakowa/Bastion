@@ -42,7 +42,7 @@
 - `src/events/effects/buffEffects.opy`
 - `src/events/effects/debuffEffects.opy`
 - `src/events/effects/mechEffects.opy`
-- `src/utilities/devTool.opy`
+- `src/utilities/dev_support/devTool.opy`
 - `src/main.opy` / `src/devMain.opy`
 - `src/config/eventConfig.opy` / `src/config/eventConfigDev.opy`
 - `src/bastion/init.opy`
@@ -52,7 +52,7 @@
 
 - 新功能优先补充对应模块文档，避免只改代码不改说明。
 - 事件类改动需同时核对：`config` + `events/effects` + `locales`。
-- 地图类改动需同时核对：对应地图文件 + `map/setup_all_map.opy` +（必要时）`utilities/mapDetection.opy`。
+- 地图类改动需同时核对：对应地图文件 + `map/setup_all_map.opy` +（必要时）`utilities/system/mapDetection.opy`。
 - 若仅改 `main.opy` 或仅改 `devMain.opy`，必须在变更说明中写明原因。
 
 ## 近期 Session 纪要（2026-02-27 ~ 2026-02-28）

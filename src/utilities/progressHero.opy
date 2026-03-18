@@ -1,1 +1,0 @@
-#!include "system/progressHero.opy"

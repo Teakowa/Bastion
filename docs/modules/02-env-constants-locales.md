@@ -45,7 +45,7 @@
 
 - 使用 `BuffEventId` / `DebuffEventId` / `MechEventId` 枚举定义事件 ID
 - 每个枚举末尾包含哨兵项 `COUNT`（仅用于计数，不参与事件注册）
-- 同文件提供 `BUFF_EVENT_ID_COUNT` / `DEBUFF_EVENT_ID_COUNT` / `MECH_EVENT_ID_COUNT`（映射到各自 `*.COUNT`），用于按枚举总数动态校验事件池完整性（例如 `utilities/hashtag.opy`）
+- 同文件提供 `BUFF_EVENT_ID_COUNT` / `DEBUFF_EVENT_ID_COUNT` / `MECH_EVENT_ID_COUNT`（映射到各自 `*.COUNT`），用于按枚举总数动态校验事件池完整性（例如 `utilities/system/hashtag.opy`）
 
 ## `locales/` 模块
 

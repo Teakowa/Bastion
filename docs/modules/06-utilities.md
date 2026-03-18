@@ -1,8 +1,8 @@
 # 06. 通用工具层（`utilities/`）
 
-`utilities/` 现采用“分组目录 + 兼容层”结构。业务逻辑文件进入分组目录，旧平铺路径仅保留 shim（单行 `#!include`）用于过渡兼容。
+`utilities/` 采用分组目录结构，真实实现仅位于 `event_core/`、`system/`、`dev_support/` 三个子目录。
 
-## 目录结构（当前）
+## 目录结构
 
 ### A. `utilities/event_core/`
 
@@ -44,12 +44,6 @@
 - `macros.opy`
 - `devTool.opy`
 
-## 兼容层策略（过渡期）
-
-- 旧路径（如 `utilities/setPlayerEvent.opy`）保留同名文件，但内容仅为 `#!include "event_core/setPlayerEvent.opy"`。
-- 兼容层文件不再放置业务逻辑，避免双源维护。
-- 兼容窗口结束后，再统一移除旧路径 shim。
-
 ## 入口约定（main/devMain）
 
 - 顶部宏：`utilities/dev_support/macros.opy`
@@ -69,6 +63,5 @@
 - 事件结束后若忘记 `clearPlayerEvent()`，容易残留状态
 - 新增属性修正时需记得并入 `updatePlayerStats()`
 - `hp_data` 相关功能必须维护过期清理，否则元素数会累积
-- 过渡期修改 utility 时应改分组目录下的“真实文件”，不要改旧路径 shim
 - `playerRegen.opy` 的脱战回复由受伤信号控制：受伤会立即停止 HOT，并通过 `wait(3, Wait.RESTART_WHEN_TRUE)` 保证“满 3 秒未再受伤”后才重新允许启动回复
 - `hashtag.opy` 现改为 init 阶段主机 `titlePlayer` 白名单校验：等待称号数组初始化并确认 `hostPlayer` 存在后，若主机名不在白名单中则关闭 `hashTag`
