@@ -29,7 +29,7 @@ rule "symmetra auto-breaks tp after time limit":
 rule "symmetra ability 1 disabled":
     @Event eachPlayer
     @Team 1
-    @Hero symmetra
+    @Condition eventPlayer.getHero() == Hero.SYMMETRA
     @Condition eventPlayer.isWinner != true
 
     eventPlayer.disallowButton(Button.ABILITY_1)
