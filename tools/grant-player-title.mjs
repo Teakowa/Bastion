@@ -642,19 +642,89 @@ export function validateCliArgs(args) {
   }
 }
 
-function printOptions(list, { includeZeroLabel } = {}) {
+const INTERACTIVE_DEFAULT_OPTIONS = {
+  grantDifficultyFromMaps: false,
+  autoMasteryMode: 'check_only'
+};
+
+const ANSI_RESET_FOREGROUND = '\u001b[39m';
+
+export function createAnsi({ enabled } = {}) {
+  const shouldColor =
+    enabled ??
+    (Boolean(output.isTTY) && process.env.NO_COLOR !== '1' && process.env.TERM !== 'dumb');
+
+  const withCode = (open, close) => (text) =>
+    shouldColor ? `\u001b[${open}m${String(text)}\u001b[${close}m` : String(text);
+  const withForeground = (code) => (text) =>
+    shouldColor ? `\u001b[${code}m${String(text)}${ANSI_RESET_FOREGROUND}` : String(text);
+
+  return {
+    enabled: shouldColor,
+    accent: withForeground(36),
+    success: withForeground(32),
+    warning: withForeground(33),
+    error: withForeground(31),
+    strong: withCode(1, 22),
+    contrast: withCode(7, 27)
+  };
+}
+
+function createUi(outputStream = output) {
+  const ansi = createAnsi({
+    enabled:
+      Boolean(outputStream?.isTTY) &&
+      process.env.NO_COLOR !== '1' &&
+      process.env.TERM !== 'dumb'
+  });
+
+  return {
+    ansi,
+    info: (text) => console.log(ansi.accent(text)),
+    success: (text) => console.log(ansi.success(text)),
+    warning: (text) => console.log(ansi.warning(text)),
+    error: (text) => console.log(ansi.error(text)),
+    strong: (text) => console.log(ansi.strong(text)),
+    contrast: (text) => console.log(ansi.contrast(text))
+  };
+}
+
+function printOptions(list, { includeZeroLabel, ui } = {}) {
   if (includeZeroLabel) {
-    console.log(`  0) ${includeZeroLabel}`);
+    if (ui) {
+      ui.info(`  0) ${includeZeroLabel}`);
+    } else {
+      console.log(`  0) ${includeZeroLabel}`);
+    }
   }
   list.forEach((item, index) => {
-    console.log(`  ${index + 1}) ${item}`);
+    if (ui) {
+      ui.info(`  ${index + 1}) ${item}`);
+    } else {
+      console.log(`  ${index + 1}) ${item}`);
+    }
   });
 }
 
-async function askSingleChoice(rl, prompt, list, { includeZeroLabel } = {}) {
+async function askSingleChoice(
+  rl,
+  prompt,
+  list,
+  { includeZeroLabel, allowEmpty = false, defaultChoice, defaultLabel, ui } = {}
+) {
   while (true) {
-    printOptions(list, { includeZeroLabel });
-    const raw = await rl.question(`${prompt}: `);
+    printOptions(list, { includeZeroLabel, ui });
+    const raw = await rl.question(`${ui?.ansi.strong(prompt) ?? prompt}: `);
+
+    if (String(raw ?? '').trim() === '' && allowEmpty) {
+      if (defaultChoice === undefined) {
+        return undefined;
+      }
+      if (ui) {
+        ui.warning(`未输入，已使用默认值：${defaultLabel ?? defaultChoice}`);
+      }
+      return defaultChoice;
+    }
 
     try {
       const selected = parseNumberSelection(raw, {
@@ -664,15 +734,24 @@ async function askSingleChoice(rl, prompt, list, { includeZeroLabel } = {}) {
       });
       return selected[0];
     } catch (error) {
-      console.log(`输入无效: ${error.message}`);
+      if (ui) {
+        ui.error(`输入无效: ${error.message}`);
+      } else {
+        console.log(`输入无效: ${error.message}`);
+      }
     }
   }
 }
 
-async function askMultiChoice(rl, prompt, list, { allowZero = false, allowEmpty = false, includeZeroLabel } = {}) {
+async function askMultiChoice(
+  rl,
+  prompt,
+  list,
+  { allowZero = false, allowEmpty = false, includeZeroLabel, ui } = {}
+) {
   while (true) {
-    printOptions(list, { includeZeroLabel });
-    const raw = await rl.question(`${prompt}: `);
+    printOptions(list, { includeZeroLabel, ui });
+    const raw = await rl.question(`${ui?.ansi.strong(prompt) ?? prompt}: `);
     try {
       return parseNumberSelection(raw, {
         max: list.length,
@@ -681,41 +760,56 @@ async function askMultiChoice(rl, prompt, list, { allowZero = false, allowEmpty 
         multi: true
       });
     } catch (error) {
-      console.log(`输入无效: ${error.message}`);
+      if (ui) {
+        ui.error(`输入无效: ${error.message}`);
+      } else {
+        console.log(`输入无效: ${error.message}`);
+      }
     }
   }
 }
 
-async function askNewPlayerName(rl) {
+async function askNewPlayerName(rl, ui) {
   while (true) {
-    const name = (await rl.question('新玩家名称: ')).trim();
+    const name = (await rl.question(`${ui?.ansi.strong('新玩家名称') ?? '新玩家名称'}: `)).trim();
     if (!name) {
-      console.log('玩家名称不能为空');
+      if (ui) {
+        ui.warning('玩家名称不能为空');
+      } else {
+        console.log('玩家名称不能为空');
+      }
       continue;
     }
 
-    const confirm = await rl.question(`确认新增玩家 "${name}"? [y/N]: `);
+    const confirm = await rl.question(
+      `${ui?.ansi.strong(`确认新增玩家 "${name}"? [y/N]`) ?? `确认新增玩家 "${name}"? [y/N]`}: `
+    );
     if (parseYesNo(confirm, false)) {
       return name;
     }
-    console.log('已取消新增，返回选择。');
+    if (ui) {
+      ui.warning('已取消新增，返回选择。');
+    } else {
+      console.log('已取消新增，返回选择。');
+    }
     return null;
   }
 }
 
-async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi = true } = {}) {
+async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi = true, ui } = {}) {
   const selected = [];
 
   if (!multi) {
     const choice = await askSingleChoice(rl, '选择玩家编号', playerNames, {
-      includeZeroLabel: allowCreate ? '新增玩家' : undefined
+      includeZeroLabel: allowCreate ? '新增玩家' : undefined,
+      ui
     });
     if (choice === 0) {
-      const newName = await askNewPlayerName(rl);
+      const newName = await askNewPlayerName(rl, ui);
       if (newName) {
         return [newName];
       }
-      return pickPlayersByMenu(rl, playerNames, { allowCreate, multi });
+      return pickPlayersByMenu(rl, playerNames, { allowCreate, multi, ui });
     }
     return [playerNames[choice - 1]];
   }
@@ -724,20 +818,25 @@ async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi =
     const picked = await askMultiChoice(rl, '选择玩家编号（多选逗号，回车结束）', playerNames, {
       allowZero: allowCreate,
       allowEmpty: true,
-      includeZeroLabel: allowCreate ? '新增玩家并加入本次选择' : undefined
+      includeZeroLabel: allowCreate ? '新增玩家并加入本次选择' : undefined,
+      ui
     });
 
     if (picked.length === 0) {
       if (selected.length > 0) {
         return selected;
       }
-      console.log('至少选择一名玩家');
+      if (ui) {
+        ui.warning('至少选择一名玩家');
+      } else {
+        console.log('至少选择一名玩家');
+      }
       continue;
     }
 
     for (const index of picked) {
       if (index === 0) {
-        const newName = await askNewPlayerName(rl);
+        const newName = await askNewPlayerName(rl, ui);
         if (newName && !selected.includes(newName)) {
           selected.push(newName);
         }
@@ -750,15 +849,21 @@ async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi =
       }
     }
 
-    console.log(`当前已选玩家: ${selected.join(', ')}`);
+    if (ui) {
+      ui.success(`当前已选玩家: ${selected.join(', ')}`);
+    } else {
+      console.log(`当前已选玩家: ${selected.join(', ')}`);
+    }
   }
 }
 
 export async function collectInteractiveRequest(sourceData, io = { input, output }) {
-  const rl = readline.createInterface(io);
+  const usingInjectedReadline = Boolean(io?.readline);
+  const rl = io?.readline ?? readline.createInterface(io);
+  const ui = createUi(io.output);
   try {
-    console.log('选择对象类型:');
-    const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式']);
+    ui.strong('选择对象类型:');
+    const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式'], { ui });
 
     const titleOptions = sourceData.titles.map((item) => `${item.key} (${item.label})`);
     const mapOptions = sourceData.mapTitles.map((item) => `${item.mapKey} (${item.mapLabel})`);
@@ -767,28 +872,28 @@ export async function collectInteractiveRequest(sourceData, io = { input, output
     let requestPayload;
 
     if (mode === 1) {
-      const selectedPlayer = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: false });
+      const selectedPlayer = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: false, ui });
 
-      const titlePicked = await askMultiChoice(rl, '选择通用称号（多选逗号，0 跳过）', titleOptions, {
-        allowZero: true,
-        allowEmpty: false,
-        includeZeroLabel: '跳过'
+      const titlePicked = await askMultiChoice(rl, '选择通用称号（多选逗号，回车跳过）', titleOptions, {
+        allowZero: false,
+        allowEmpty: true,
+        ui
       });
-      const mapPicked = await askMultiChoice(rl, '选择地图主宰（多选逗号，0 跳过）', mapOptions, {
-        allowZero: true,
-        allowEmpty: false,
-        includeZeroLabel: '跳过'
+      const mapPicked = await askMultiChoice(rl, '选择地图主宰（多选逗号，回车跳过）', mapOptions, {
+        allowZero: false,
+        allowEmpty: true,
+        ui
       });
 
       requestPayload = {
         targetType: 'player',
         playerName: selectedPlayer[0],
-        generalTitles: titlePicked.filter((x) => x !== 0).map((index) => sourceData.titles[index - 1].key),
-        mapDominators: mapPicked.filter((x) => x !== 0).map((index) => sourceData.mapTitles[index - 1].mapKey)
+        generalTitles: titlePicked.map((index) => sourceData.titles[index - 1].key),
+        mapDominators: mapPicked.map((index) => sourceData.mapTitles[index - 1].mapKey)
       };
     } else {
-      const mapPicked = await askSingleChoice(rl, '选择地图编号', mapOptions);
-      const selectedPlayers = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: true });
+      const mapPicked = await askSingleChoice(rl, '选择地图编号', mapOptions, { ui });
+      const selectedPlayers = await pickPlayersByMenu(rl, playerNames, { allowCreate: true, multi: true, ui });
 
       requestPayload = {
         targetType: 'map',
@@ -797,18 +902,37 @@ export async function collectInteractiveRequest(sourceData, io = { input, output
       };
     }
 
-    const difficultyChoice = await askSingleChoice(rl, '自动补发难度挑战称号', ['否', '是']);
-    const masteryChoice = await askSingleChoice(rl, '地图精通模式', ['off', 'check_only', 'grant']);
+    const difficultyChoice = await askSingleChoice(rl, '自动补发难度挑战称号（回车默认：否）', ['否', '是'], {
+      allowEmpty: true,
+      defaultChoice: 1,
+      defaultLabel: '否',
+      ui
+    });
+    const masteryChoice = await askSingleChoice(
+      rl,
+      '地图精通模式（回车默认：check_only）',
+      ['off', 'check_only', 'grant'],
+      {
+        allowEmpty: true,
+        defaultChoice: 2,
+        defaultLabel: 'check_only',
+        ui
+      }
+    );
+
+    const options = {
+      grantDifficultyFromMaps: difficultyChoice === 2,
+      autoMasteryMode: ['off', 'check_only', 'grant'][masteryChoice - 1]
+    };
 
     return buildInteractiveRequest({
       ...requestPayload,
-      options: {
-        grantDifficultyFromMaps: difficultyChoice === 2,
-        autoMasteryMode: ['off', 'check_only', 'grant'][masteryChoice - 1]
-      }
+      options
     });
   } finally {
-    rl.close();
+    if (!usingInjectedReadline) {
+      rl.close();
+    }
   }
 }
 
@@ -837,6 +961,7 @@ if (invokedPath === __filename) {
       if (args.interactive) {
         const sourceData = await loadTitleSource(SOURCE_FILE);
         requestData = await collectInteractiveRequest(sourceData);
+        const ui = createUi(output);
 
         const preview = await grantPlayerTitle({
           sourceFile: SOURCE_FILE,
@@ -844,16 +969,17 @@ if (invokedPath === __filename) {
           dryRun: true
         });
 
-        console.log('\n变更预览:');
-        console.log(JSON.stringify(preview.preview, null, 2));
+        ui.contrast('\n变更预览');
+        ui.strong(JSON.stringify(preview.preview, null, 2));
 
         const rl = readline.createInterface({ input, output });
         try {
-          const confirm = await rl.question('确认写入? [y/N]: ');
+          const confirm = await rl.question(`${ui.ansi.strong('确认写入? [y/N]')}: `);
           if (!parseYesNo(confirm, false)) {
-            console.log('已取消，不做写入。');
+            ui.warning('已取消，不做写入。');
             process.exit(0);
           }
+          ui.success('确认写入，开始执行同步流程。');
         } finally {
           rl.close();
         }
@@ -886,7 +1012,8 @@ if (invokedPath === __filename) {
       console.log(JSON.stringify(result, null, 2));
     })
     .catch((error) => {
-      console.error(error.message);
+      const ansi = createAnsi();
+      console.error(ansi.error(error.message));
       process.exitCode = 1;
     });
 }

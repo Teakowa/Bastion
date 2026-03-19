@@ -7,6 +7,8 @@ import path from 'node:path';
 import {
   applyGrantRequest,
   buildInteractiveRequest,
+  collectInteractiveRequest,
+  createAnsi,
   grantPlayerTitle,
   parseCliArgs,
   parseNumberSelection,
@@ -49,6 +51,19 @@ function buildFixture() {
         holders: { PIONEER: [], CONQUEROR: [], DOMINATOR: [] }
       }
     ]
+  };
+}
+
+function createScriptedReadline(answers) {
+  const queue = [...answers];
+  return {
+    async question() {
+      if (queue.length === 0) {
+        throw new Error('No scripted answer left for readline question');
+      }
+      return queue.shift();
+    },
+    close() {}
   };
 }
 
@@ -436,4 +451,45 @@ test('sync failure is surfaced after source write', async () => {
 
   const saved = JSON.parse(await fs.readFile(sourceFile, 'utf8'));
   assert.equal(saved.players.at(-1).name, '新玩家');
+});
+
+test('interactive enter-to-skip uses defaults for optional prompts', async () => {
+  const sourceData = buildFixture();
+  const readline = createScriptedReadline(['1', '1', '', '1', '', '']);
+  const output = { isTTY: false };
+
+  const request = await collectInteractiveRequest(sourceData, { readline, output });
+
+  assert.deepEqual(request.options, {
+    grantDifficultyFromMaps: false,
+    autoMasteryMode: 'check_only',
+    failOnMissingPlayer: false
+  });
+  assert.deepEqual(request.players, [
+    { name: '老玩家', generalTitles: [], mapDominators: ['DATA_ROUTE66'] }
+  ]);
+});
+
+test('interactive flow can override defaults with explicit difficulty/mastery input', async () => {
+  const sourceData = buildFixture();
+  const readline = createScriptedReadline(['2', '1', '1', '', '2', '3']);
+  const output = { isTTY: false };
+
+  const request = await collectInteractiveRequest(sourceData, { readline, output });
+
+  assert.deepEqual(request.options, {
+    grantDifficultyFromMaps: true,
+    autoMasteryMode: 'grant',
+    failOnMissingPlayer: false
+  });
+  assert.deepEqual(request.players, [
+    { name: '老玩家', generalTitles: [], mapDominators: ['DATA_ROUTE66'] }
+  ]);
+});
+
+test('createAnsi does not inject escape codes when color is disabled', () => {
+  const ansi = createAnsi({ enabled: false });
+  assert.equal(ansi.accent('提示'), '提示');
+  assert.equal(ansi.error('错误'), '错误');
+  assert.equal(ansi.contrast('预览'), '预览');
 });
