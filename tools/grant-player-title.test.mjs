@@ -10,6 +10,8 @@ import {
   grantPlayerTitle,
   parseCliArgs,
   parseNumberSelection,
+  resolvePlayerNameFromPlayerId,
+  resolveTitleKeyFromLabel,
   validateCliArgs
 } from './grant-player-title.mjs';
 
@@ -69,6 +71,13 @@ test('cli args parse direct player mode with general title and fail-on-missing-p
   assert.equal(args.failOnMissingPlayer, true);
 });
 
+test('cli args parse player-id mode with chinese title label', () => {
+  const args = parseCliArgs(['--player-id', '12', '--general-title-label', '幸运星']);
+  validateCliArgs(args);
+  assert.equal(args.playerId, '12');
+  assert.deepEqual(args.generalTitleLabels, ['幸运星']);
+});
+
 test('cli args reject mixing --player-name with --input or --interactive', () => {
   const withInput = parseCliArgs(['--player-name', '板鸭', '--general-title', 'MANBA', '--input', 'req.json']);
   assert.throws(() => validateCliArgs(withInput), /mutually exclusive/);
@@ -77,9 +86,19 @@ test('cli args reject mixing --player-name with --input or --interactive', () =>
   assert.throws(() => validateCliArgs(withInteractive), /mutually exclusive/);
 });
 
+test('cli args reject mixing --player-name and --player-id', () => {
+  const args = parseCliArgs(['--player-name', '板鸭', '--player-id', '1', '--general-title', 'MANBA']);
+  assert.throws(() => validateCliArgs(args), /mutually exclusive/);
+});
+
 test('cli args require --general-title in --player-name mode', () => {
   const args = parseCliArgs(['--player-name', '板鸭']);
-  assert.throws(() => validateCliArgs(args), /requires at least one --general-title/);
+  assert.throws(() => validateCliArgs(args), /Direct player mode requires/);
+});
+
+test('cli args require title input in --player-id mode', () => {
+  const args = parseCliArgs(['--player-id', '0']);
+  assert.throws(() => validateCliArgs(args), /Direct player mode requires/);
 });
 
 test('parseNumberSelection parses single/multi and deduplicates', () => {
@@ -172,6 +191,21 @@ test('failOnMissingPlayer rejects unknown players instead of auto-appending', ()
 
   assert.throws(() => applyGrantRequest(data, req), /Player not found in title source/);
   assert.equal(data.players.some((item) => item.name === '不存在的玩家'), false);
+});
+
+test('resolve player name from player id index', () => {
+  const data = buildFixture();
+  assert.equal(resolvePlayerNameFromPlayerId(data, '0'), '老玩家');
+  assert.equal(resolvePlayerNameFromPlayerId(data, 1), '板鸭');
+  assert.throws(() => resolvePlayerNameFromPlayerId(data, 'x'), /Invalid player id/);
+  assert.throws(() => resolvePlayerNameFromPlayerId(data, '3'), /out of range/);
+});
+
+test('resolve title key from chinese label', () => {
+  const data = buildFixture();
+  assert.equal(resolveTitleKeyFromLabel(data, '幸运星'), 'LUCKY_STAR');
+  assert.equal(resolveTitleKeyFromLabel(data, 'What can i say'), 'MANBA');
+  assert.throws(() => resolveTitleKeyFromLabel(data, '不存在的称号'), /Unknown title label/);
 });
 
 test('maps alias to map key and auto-adds CONQUEROR when granting DOMINATOR', () => {

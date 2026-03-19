@@ -83,6 +83,34 @@ function normalizeTitleInput(value, titleKeySet, titlesByLabel) {
   throw new Error(`Unknown title input: ${value}`);
 }
 
+export function resolvePlayerNameFromPlayerId(sourceData, playerIdRaw) {
+  const text = String(playerIdRaw ?? '').trim();
+  if (!/^\d+$/.test(text)) {
+    throw new Error(`Invalid player id: ${playerIdRaw}`);
+  }
+
+  const playerId = Number(text);
+  if (playerId < 0 || playerId >= sourceData.players.length) {
+    throw new Error(`Player id out of range: ${playerId}`);
+  }
+
+  return sourceData.players[playerId].name;
+}
+
+export function resolveTitleKeyFromLabel(sourceData, labelRaw) {
+  const label = String(labelRaw ?? '').trim();
+  if (!label) {
+    throw new Error('Invalid title label');
+  }
+
+  const matched = sourceData.titles.find((item) => item.label === label);
+  if (!matched) {
+    throw new Error(`Unknown title label: ${labelRaw}`);
+  }
+
+  return matched.key;
+}
+
 function normalizeMapInput(value, mapKeySet, mapByLabel) {
   ensureString(value, `Invalid map key: ${value}`);
   const raw = value.trim();
@@ -465,7 +493,13 @@ export async function grantPlayerTitle({
 }
 
 export function parseCliArgs(argv) {
-  const args = { dryRun: false, interactive: false, generalTitles: [], failOnMissingPlayer: false };
+  const args = {
+    dryRun: false,
+    interactive: false,
+    generalTitles: [],
+    generalTitleLabels: [],
+    failOnMissingPlayer: false
+  };
 
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i];
@@ -490,12 +524,32 @@ export function parseCliArgs(argv) {
       continue;
     }
 
+    if (token === '--player-id') {
+      const value = argv[i + 1];
+      if (!value) {
+        throw new Error('Missing value for --player-id');
+      }
+      args.playerId = value;
+      i += 1;
+      continue;
+    }
+
     if (token === '--general-title') {
       const value = argv[i + 1];
       if (!value) {
         throw new Error('Missing value for --general-title');
       }
       args.generalTitles.push(value);
+      i += 1;
+      continue;
+    }
+
+    if (token === '--general-title-label') {
+      const value = argv[i + 1];
+      if (!value) {
+        throw new Error('Missing value for --general-title-label');
+      }
+      args.generalTitleLabels.push(value);
       i += 1;
       continue;
     }
@@ -527,25 +581,31 @@ export function parseCliArgs(argv) {
 }
 
 export function validateCliArgs(args) {
-  const modeCount = Number(Boolean(args.interactive)) + Number(Boolean(args.inputFile)) + Number(Boolean(args.playerName));
+  const directMode = Boolean(args.playerName) || args.playerId !== undefined;
+  const modeCount = Number(Boolean(args.interactive)) + Number(Boolean(args.inputFile)) + Number(directMode);
   if (modeCount > 1) {
-    throw new Error('--interactive, --input and --player-name are mutually exclusive');
+    throw new Error('--interactive, --input and direct player mode are mutually exclusive');
   }
 
-  if (!args.help && !args.interactive && !args.inputFile && !args.playerName) {
-    throw new Error('One mode is required: --interactive, --input <request.json>, or --player-name <name>');
+  if (args.playerName && args.playerId !== undefined) {
+    throw new Error('--player-name and --player-id are mutually exclusive');
   }
 
-  if (args.playerName && args.generalTitles.length === 0) {
-    throw new Error('--player-name mode requires at least one --general-title <TITLE_KEY>');
+  if (!args.help && !args.interactive && !args.inputFile && !directMode) {
+    throw new Error('One mode is required: --interactive, --input <request.json>, --player-name <name>, or --player-id <id>');
   }
 
-  if (!args.playerName && args.generalTitles.length > 0) {
-    throw new Error('--general-title can only be used with --player-name');
+  const directTitleCount = args.generalTitles.length + args.generalTitleLabels.length;
+  if (directMode && directTitleCount === 0) {
+    throw new Error('Direct player mode requires --general-title <TITLE_KEY> or --general-title-label <中文称号>');
   }
 
-  if (!args.playerName && args.failOnMissingPlayer) {
-    throw new Error('--fail-on-missing-player can only be used with --player-name');
+  if (!directMode && (args.generalTitles.length > 0 || args.generalTitleLabels.length > 0)) {
+    throw new Error('--general-title / --general-title-label can only be used in direct player mode');
+  }
+
+  if (!directMode && args.failOnMissingPlayer) {
+    throw new Error('--fail-on-missing-player can only be used in direct player mode');
   }
 }
 
@@ -734,6 +794,9 @@ if (invokedPath === __filename) {
         console.log(
           '  node tools/grant-player-title.mjs --player-name <name> --general-title <TITLE_KEY> [--general-title <TITLE_KEY>] [--fail-on-missing-player] [--dry-run]'
         );
+        console.log(
+          '  node tools/grant-player-title.mjs --player-id <id> --general-title-label <中文称号> [--general-title-label <中文称号>] [--dry-run]'
+        );
         process.exit(0);
       }
 
@@ -763,11 +826,16 @@ if (invokedPath === __filename) {
         }
       }
 
-      if (args.playerName) {
+      if (args.playerName || args.playerId !== undefined) {
+        const sourceData = await loadTitleSource(SOURCE_FILE);
+        const targetName = args.playerName ?? resolvePlayerNameFromPlayerId(sourceData, args.playerId);
+        const mappedFromLabels = args.generalTitleLabels.map((label) => resolveTitleKeyFromLabel(sourceData, label));
+        const mergedGeneralTitles = [...args.generalTitles, ...mappedFromLabels];
+
         requestData = buildInteractiveRequest({
           targetType: 'player',
-          playerName: args.playerName,
-          generalTitles: args.generalTitles,
+          playerName: targetName,
+          generalTitles: [...new Set(mergedGeneralTitles)],
           mapDominators: [],
           options: {
             grantDifficultyFromMaps: false,
