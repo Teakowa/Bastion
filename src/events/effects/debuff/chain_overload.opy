@@ -6,14 +6,13 @@ rule "[VishkarEvent]: 连锁过载 (扁平循环版)":
     @Team 1
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 1, eventPlayer.eventId == DebuffEventId.CHAIN_OVERLOAD]) == true
     
-    if any([eventPlayer.getAbilityCooldown(Button.ABILITY_1) > 0, eventPlayer.getAbilityCooldown(Button.ABILITY_2) > 0, eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE) > 0, eventPlayer.getAbilityCooldown(Button.RELOAD) > 0, eventPlayer.getAbilityCooldown(Button.JUMP) > 0]) == true:
+    # 语义重做：仅在技能键按下时触发一次联动冷却（上升沿语义），松开后才允许再次触发。
+    if any([eventPlayer.isHoldingButton(Button.ABILITY_1), eventPlayer.isHoldingButton(Button.ABILITY_2), eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)]) == true:
         eventPlayer.setAbilityCooldown(Button.ABILITY_1, max(eventPlayer.getAbilityCooldown(Button.ABILITY_1), random.randint(15, 30)))
         eventPlayer.setAbilityCooldown(Button.ABILITY_2, max(eventPlayer.getAbilityCooldown(Button.ABILITY_2), random.randint(15, 30)))
         eventPlayer.setAbilityCooldown(Button.SECONDARY_FIRE, max(eventPlayer.getAbilityCooldown(Button.SECONDARY_FIRE), random.randint(15, 30)))
-        eventPlayer.setAbilityCooldown(Button.PRIMARY_FIRE, max(eventPlayer.getAbilityCooldown(Button.PRIMARY_FIRE), random.randint(15, 30)))
-        eventPlayer.setAbilityCooldown(Button.RELOAD, max(eventPlayer.getAbilityCooldown(Button.RELOAD), random.randint(15, 30)))
-        eventPlayer.setAbilityCooldown(Button.JUMP, max(eventPlayer.getAbilityCooldown(Button.JUMP), random.randint(15, 30)))
-    wait(eventPlayer.eventDuration)
+        waitUntil(any([eventPlayer.isHoldingButton(Button.ABILITY_1), eventPlayer.isHoldingButton(Button.ABILITY_2), eventPlayer.isHoldingButton(Button.SECONDARY_FIRE)]) == false, eventPlayer.eventDuration)
+    wait(1, Wait.ABORT_WHEN_FALSE)
     if ruleCondition:
         loop()
     clearEventEffect()
