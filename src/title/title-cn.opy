@@ -245,7 +245,7 @@ enum MapTITLEKey:
     }, \
     { \
         name: "云雀", \
-        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HACKING] \
+        titles: [TITLE.CHALLENGER_LEGEND, TITLE.TRAVELER_HELL, TITLE.HACKING, TITLE.LUCKY_STAR] \
     }, \
     { \
         name: "嘤嘤嘤丶", \
