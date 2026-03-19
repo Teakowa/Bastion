@@ -138,26 +138,47 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Buffs
     # ================================================
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_19_TITLE, true, BuffEventId.PHASE_SURGE):
+        goto lbl_101
     buffEvent[BuffEventId.PHASE_SURGE] = [STR_EVT_BUFF_19_TITLE, STR_EVT_BUFF_19_DESC.format(EVT_19_SPEED_BOOST), EVT_BUFF_19_DURATION, EVT_BUFF_19_WEIGHT]
     buffEventId.append(BuffEventId.PHASE_SURGE)
+    lbl_101:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_20_TITLE, true, BuffEventId.BODYGUARD):
+        goto lbl_102
     buffEvent[BuffEventId.BODYGUARD] = [STR_EVT_BUFF_20_TITLE, STR_EVT_BUFF_20_DESC, EVT_BUFF_20_DURATION, EVT_BUFF_20_WEIGHT]
     buffEventId.append(BuffEventId.BODYGUARD)
+    lbl_102:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_21_TITLE, true, BuffEventId.MARTYR_TRIAL):
+        goto lbl_103
     buffEvent[BuffEventId.MARTYR_TRIAL] = [STR_EVT_BUFF_21_TITLE, STR_EVT_BUFF_21_DESC.format(EVT_21_REWARD_DMG_PERMA), EVT_BUFF_21_DURATION, EVT_BUFF_21_WEIGHT]
     buffEventId.append(BuffEventId.MARTYR_TRIAL)
+    lbl_103:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_22_TITLE, true, BuffEventId.HYPERACTIVE_HEAL):
+        goto lbl_104
     buffEvent[BuffEventId.HYPERACTIVE_HEAL] = [STR_EVT_BUFF_22_TITLE, STR_EVT_BUFF_22_DESC.format(EVT_22_HOT_FLAT, percent(EVT_22_HOT_MAXHP_FACTOR)), EVT_BUFF_22_DURATION, EVT_BUFF_22_WEIGHT]
     buffEventId.append(BuffEventId.HYPERACTIVE_HEAL)
+    lbl_104:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_23_TITLE, true, BuffEventId.MORALE_BOOST_PROMAX):
+        goto lbl_105
     buffEvent[BuffEventId.MORALE_BOOST_PROMAX] = [STR_EVT_BUFF_23_TITLE, STR_EVT_BUFF_23_DESC.format(EVT_23_HEAL_RADIUS, EVT_23_HOT_FLAT, percent(EVT_23_HOT_MAXHP_FACTOR)), EVT_BUFF_23_DURATION, EVT_BUFF_23_WEIGHT]
     buffEventId.append(BuffEventId.MORALE_BOOST_PROMAX)
+    lbl_105:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_24_TITLE, true, BuffEventId.F5_REFRESH):
+        goto lbl_106
     buffEvent[BuffEventId.F5_REFRESH] = [STR_EVT_BUFF_24_TITLE, STR_EVT_BUFF_24_DESC.format(EVT_24_REFRESH_INTERVAL), EVT_BUFF_24_DURATION, EVT_BUFF_24_WEIGHT]
     buffEventId.append(BuffEventId.F5_REFRESH)
+    lbl_106:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_25_TITLE, true, BuffEventId.HEALING_TOWER_PROMAX):
+        goto lbl_107
     buffEvent[BuffEventId.HEALING_TOWER_PROMAX] = [STR_EVT_BUFF_25_TITLE, STR_EVT_BUFF_25_DESC.format(EVT_25_HEAL_FLAT, percent(EVT_25_HEAL_MAXHP_FACTOR)), EVT_BUFF_25_DURATION, EVT_BUFF_25_WEIGHT]
     buffEventId.append(BuffEventId.HEALING_TOWER_PROMAX)
+    lbl_107:
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_26_TITLE, true, BuffEventId.SUPER_TRANSFORM):
         goto lbl_32
@@ -165,8 +186,11 @@ rule "initialize event array":
     buffEventId.append(BuffEventId.SUPER_TRANSFORM)
     lbl_32:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_27_TITLE, true, BuffEventId.DRAW_FIRE):
+        goto lbl_108
     buffEvent[BuffEventId.DRAW_FIRE] = [STR_EVT_BUFF_27_TITLE, STR_EVT_BUFF_27_DESC.format(EVT_27_ARMOR_AMOUNT, negToPos(EVT_27_DMG_TAKEN)), EVT_BUFF_27_DURATION, EVT_BUFF_27_WEIGHT]
     buffEventId.append(BuffEventId.DRAW_FIRE)
+    lbl_108:
 
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_28_TITLE, true, BuffEventId.TENACITY):
         goto lbl_33
@@ -183,7 +207,7 @@ rule "initialize event array":
     # ================================================
     # Pack 1: Debuffs
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_0_TITLE, DebuffEventId.GRAVITY_ANOMALY):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_1_DEBUFF, STR_EVT_DEBUFF_0_TITLE, true, DebuffEventId.GRAVITY_ANOMALY):
         goto lbl_33
     debuffEvent[DebuffEventId.GRAVITY_ANOMALY] = [
         STR_EVT_DEBUFF_0_TITLE,
@@ -358,23 +382,41 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Debuffs
     # ================================================
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_15_TITLE, true, DebuffEventId.KEEP_DISTANCE_AURA):
+        goto lbl_109
     debuffEvent[DebuffEventId.KEEP_DISTANCE_AURA] = [STR_EVT_DEBUFF_15_TITLE, STR_EVT_DEBUFF_15_DESC, EVT_DEBUFF_15_DURATION, EVT_DEBUFF_15_WEIGHT]
     debuffEventId.append(DebuffEventId.KEEP_DISTANCE_AURA)
+    lbl_109:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_16_TITLE, true, DebuffEventId.ERROR_404):
+        goto lbl_110
     debuffEvent[DebuffEventId.ERROR_404] = [STR_EVT_DEBUFF_16_TITLE, STR_EVT_DEBUFF_16_DESC, EVT_DEBUFF_16_DURATION, EVT_DEBUFF_16_WEIGHT]
     debuffEventId.append(DebuffEventId.ERROR_404)
+    lbl_110:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_17_TITLE, true, DebuffEventId.CHAIN_OVERLOAD):
+        goto lbl_111
     debuffEvent[DebuffEventId.CHAIN_OVERLOAD] = [STR_EVT_DEBUFF_17_TITLE, STR_EVT_DEBUFF_17_DESC, EVT_DEBUFF_17_DURATION, EVT_DEBUFF_17_WEIGHT]
     debuffEventId.append(DebuffEventId.CHAIN_OVERLOAD)
+    lbl_111:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_18_TITLE, true, DebuffEventId.HEALTH_SYNC):
+        goto lbl_112
     debuffEvent[DebuffEventId.HEALTH_SYNC] = [STR_EVT_DEBUFF_18_TITLE, STR_EVT_DEBUFF_18_DESC, EVT_DEBUFF_18_DURATION, EVT_DEBUFF_18_WEIGHT]
     debuffEventId.append(DebuffEventId.HEALTH_SYNC)
+    lbl_112:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_19_TITLE, true, DebuffEventId.VAMPIRE):
+        goto lbl_113
     debuffEvent[DebuffEventId.VAMPIRE] = [STR_EVT_DEBUFF_19_TITLE, STR_EVT_DEBUFF_19_DESC, EVT_DEBUFF_19_DURATION, EVT_DEBUFF_19_WEIGHT]
     debuffEventId.append(DebuffEventId.VAMPIRE)
+    lbl_113:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_DEBUFF, STR_EVT_DEBUFF_20_TITLE, true, DebuffEventId.MOON_ROCKET):
+        goto lbl_114
     debuffEvent[DebuffEventId.MOON_ROCKET] = [STR_EVT_DEBUFF_20_TITLE, STR_EVT_DEBUFF_20_DESC, EVT_DEBUFF_20_DURATION, EVT_DEBUFF_20_WEIGHT]
     debuffEventId.append(DebuffEventId.MOON_ROCKET)
+    lbl_114:
     
     # ================================================
     # 机制事件 (Mech Events)
@@ -385,7 +427,7 @@ rule "initialize event array":
     # ================================================
     # Pack 3: Mechanics
     # ================================================
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_0_TITLE, MechEventId.EXTREME_CHALLENGE):
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_3_MECH, STR_EVT_MECH_0_TITLE, true, MechEventId.EXTREME_CHALLENGE):
         goto lbl_55
     mechEvent[MechEventId.EXTREME_CHALLENGE] = [
         STR_EVT_MECH_0_TITLE,
@@ -454,26 +496,50 @@ rule "initialize event array":
     # ================================================
     # Pack 4: Mechanics
     # ================================================
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_7_TITLE, true, MechEventId.CHEAT_CARD_COUNTING):
+        goto lbl_115
     mechEvent[MechEventId.CHEAT_CARD_COUNTING] = [STR_EVT_MECH_7_TITLE, STR_EVT_MECH_7_DESC.format(Button.RELOAD, EVT_MECH_7_HEART_STEEL_COST, EVT_MECH_7_HEART_STEEL_COST * EVT_8_HP_PERCENT_PER_STACK), EVT_MECH_7_DURATION, EVT_MECH_7_WEIGHT]
     mechEventId.append(MechEventId.CHEAT_CARD_COUNTING)
+    lbl_115:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_8_TITLE, true, MechEventId.GAMBLER_SHORT_INVESTMENT):
+        goto lbl_116
     mechEvent[MechEventId.GAMBLER_SHORT_INVESTMENT] = [STR_EVT_MECH_8_TITLE, STR_EVT_MECH_8_DESC.format(Button.RELOAD, EVT_MECH_8_CONTRACT_EVENTS, EVT_MECH_8_WIN_CHANCE, EVT_MECH_8_REWARD_STACKS), EVT_MECH_8_DURATION, EVT_MECH_8_WEIGHT]
     mechEventId.append(MechEventId.GAMBLER_SHORT_INVESTMENT)
+    lbl_116:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_9_TITLE, true, MechEventId.FATE_SYNC):
+        goto lbl_117
     mechEvent[MechEventId.FATE_SYNC] = [STR_EVT_MECH_9_TITLE, STR_EVT_MECH_9_DESC, EVT_MECH_9_DURATION, EVT_MECH_9_WEIGHT]
     mechEventId.append(MechEventId.FATE_SYNC)
+    lbl_117:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_10_TITLE, true, MechEventId.CHEAT_SKIP_HERO):
+        goto lbl_118
     mechEvent[MechEventId.CHEAT_SKIP_HERO] = [STR_EVT_MECH_10_TITLE, STR_EVT_MECH_10_DESC.format(Button.RELOAD), EVT_MECH_10_DURATION, EVT_MECH_10_WEIGHT]
     mechEventId.append(MechEventId.CHEAT_SKIP_HERO)
+    lbl_118:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_11_TITLE, true, MechEventId.NESTING_DOLL):
+        goto lbl_119
     mechEvent[MechEventId.NESTING_DOLL] = [STR_EVT_MECH_11_TITLE, STR_EVT_MECH_11_DESC.format(EVT_MECH_11_RESURRECT_DELAY, percent(EVT_MECH_11_SIZE_STEP), EVT_MECH_11_SPEED_STEP), EVT_MECH_11_DURATION, EVT_MECH_11_WEIGHT]
     mechEventId.append(MechEventId.NESTING_DOLL)
+    lbl_119:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_12_TITLE, true, MechEventId.GAMBLER_LONG_INVESTMENT):
+        goto lbl_120
     mechEvent[MechEventId.GAMBLER_LONG_INVESTMENT] = [STR_EVT_MECH_12_TITLE, STR_EVT_MECH_12_DESC.format(Button.RELOAD, EVT_MECH_12_CONTRACT_EVENTS, EVT_MECH_12_WIN_CHANCE, EVT_MECH_12_REWARD_STACKS), EVT_MECH_12_DURATION, EVT_MECH_12_WEIGHT]
     mechEventId.append(MechEventId.GAMBLER_LONG_INVESTMENT)
+    lbl_120:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_13_TITLE, true, MechEventId.VALKYRIE_DESCENT):
+        goto lbl_121
     mechEvent[MechEventId.VALKYRIE_DESCENT] = [STR_EVT_MECH_13_TITLE, STR_EVT_MECH_13_DESC.format(EVT_MECH_13_SIZE_HEALTH * 100, percent(EVT_MECH_13_HEAL_SMOOTHING)), EVT_MECH_13_DURATION, EVT_MECH_13_WEIGHT]
     mechEventId.append(MechEventId.VALKYRIE_DESCENT)
+    lbl_121:
 
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_14_TITLE, true, MechEventId.TRINITY_SSR):
+        goto lbl_122
     mechEvent[MechEventId.TRINITY_SSR] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(100 / EVT_MECH_14_DMG_REDUCE_DIVISOR, EVT_MECH_14_SPEED_FACTOR, EVT_MECH_14_INTERVAL / EVT_MECH_14_HEART_STEEL_PER_TICK), EVT_MECH_14_DURATION, EVT_MECH_14_WEIGHT]
     mechEventId.append(MechEventId.TRINITY_SSR)
+    lbl_122:
