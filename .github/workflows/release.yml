@@ -132,6 +132,13 @@ jobs:
         with:
           tag_name: ${{ steps.release_meta.outputs.tag }}
           name: ${{ steps.release_meta.outputs.tag }}
+          generate_release_notes: true
+          body: |
+            Automated release build from `main`.
+
+            Included workshop artifacts:
+            - build/en-US.ow
+            - build/zh-CN.ow
           overwrite_files: true
           files: |
             build/en-US.ow
