@@ -7,7 +7,12 @@ rule "map - watchpoint gibraltar":
     @Condition __currentMap___ == Map.WATCHPOINT_GIBRALTAR
     
     __currentMapText___ = "直布罗陀"
-    __currentMapPioneerText___ = __currentMapText___
+    if evalOnce(random.randint(0, 1)) == 0:
+        __currentMapPioneerText___ = "守望先锋"
+        __currentPioneerText___ = ""
+    else:
+        __currentMapPioneerText___ = "黑爪特工"
+        __currentPioneerText___ = ""
     bastionPosition = vect(70.099, 9, 26.803)
     bastionPosition.append(vect(86.26, 7.46, 2.95))
     bastionPosition.append(vect(61.64, 3.67, -20.79))
@@ -28,3 +33,9 @@ rule "map - watchpoint gibraltar":
         DATA_WATCHPOINT_GIBRALTAR[1].split("-"),
         DATA_WATCHPOINT_GIBRALTAR[2].split("-")
     ]
+
+    waitUntil(len(allTitle) > TITLE.PIONEER, MAX_TIME)
+    if __currentMapPioneerText___ == "守望先锋":
+        allTitle[TITLE.PIONEER][1] = vect(240, 101, 20)
+    else:
+        allTitle[TITLE.PIONEER][1] = vect(227, 3, 3)
