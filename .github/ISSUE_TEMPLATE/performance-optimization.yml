@@ -43,7 +43,7 @@ body:
         - build/tooling
         - other
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: extra_context

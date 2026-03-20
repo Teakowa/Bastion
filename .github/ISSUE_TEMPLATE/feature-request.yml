@@ -25,18 +25,7 @@ body:
       label: 期望行为 / Expected Behavior
       description: 希望系统最终如何表现 / Desired final behavior
     validations:
-      required: true
-
-  - type: dropdown
-    id: priority
-    attributes:
-      label: 优先级 / Priority
-      options:
-        - High
-        - Medium
-        - Low
-    validations:
-      required: true
+      required: false
 
   - type: dropdown
     id: affected_area
@@ -52,7 +41,7 @@ body:
         - web/title-query
         - other
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: extra_context
@@ -61,11 +50,3 @@ body:
       description: 选填，可附参考链接或草图 / Optional links or mockups
     validations:
       required: false
-
-  - type: checkboxes
-    id: checklist
-    attributes:
-      label: 确认项 / Checklist
-      options:
-        - label: 我已确认非季节特化需求优先走主线通用逻辑 / I confirm non-seasonal requests should target mainline general logic first
-          required: true

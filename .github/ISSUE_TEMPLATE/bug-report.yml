@@ -18,32 +18,16 @@ body:
       required: true
 
   - type: textarea
-    id: repro_steps
-    attributes:
-      label: 复现步骤 / Reproduction Steps
-      description: 最好提供最小可复现路径 / Prefer minimal reproducible steps
-      placeholder: |
-        1.
-        2.
-        3.
-    validations:
-      required: true
-
-  - type: textarea
     id: expected
     attributes:
       label: 预期结果 / Expected
       placeholder: 描述期望行为 / Describe expected behavior
-    validations:
-      required: true
 
   - type: textarea
     id: actual
     attributes:
       label: 实际结果 / Actual
       placeholder: 描述实际行为与错误表现 / Describe actual behavior and symptoms
-    validations:
-      required: true
 
   - type: dropdown
     id: environment
@@ -51,7 +35,7 @@ body:
       label: 发生环境 / Environment
       description: 首选问题首次出现的环境 / Select where issue is observed
       options:
-        - 本地 / Local
+        - 游戏内 / Game
         - CI Build Check
         - GitHub Release
         - GitHub Pages (Title Query)
