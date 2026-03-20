@@ -325,8 +325,8 @@ enum MapTITLEKey:
 # 渣客镇
 #!define DATA_JUNKERTOWN [ \
    [], \
-   playerNameToIndexDelimited(["WildRage", "尘风歌者", "吾携秋水揽星河", "寒霜冰湮", "Cold", "豆本豆豆奶", "溪云初起日沉阁", "卖核弹的小女孩", "看啊情", "眼镜小宅", "初一吖", "EruIluvatar", "雨鸢", "八十万萝莉总教头", "八月八月八"], "-"), \
-   playerNameToIndexDelimited(["WildRage", "尘风歌者", "吾携秋水揽星河", "寒霜冰湮", "Cold", "豆本豆豆奶", "溪云初起日沉阁", "卖核弹的小女孩", "看啊情", "眼镜小宅", "初一吖", "EruIluvatar", "雨鸢", "八十万萝莉总教头", "八月八月八"], "-")\
+   playerNameToIndexDelimited(["WildRage", "尘风歌者", "吾携秋水揽星河", "寒霜冰湮", "Cold", "豆本豆豆奶", "溪云初起日沉阁", "卖核弹的小女孩", "看啊情", "眼镜小宅", "初一吖", "EruIluvatar", "雨鸢", "八十万萝莉总教头", "八月八月八", "嘤嘤嘤丶"], "-"), \
+   playerNameToIndexDelimited(["WildRage", "尘风歌者", "吾携秋水揽星河", "寒霜冰湮", "Cold", "豆本豆豆奶", "溪云初起日沉阁", "卖核弹的小女孩", "看啊情", "眼镜小宅", "初一吖", "EruIluvatar", "雨鸢", "八十万萝莉总教头", "八月八月八", "嘤嘤嘤丶"], "-")\
 ]
 
 # 国王大道
