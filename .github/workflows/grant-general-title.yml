@@ -114,7 +114,7 @@ jobs:
 
       - name: Create pull request for title grant
         if: ${{ inputs.dry_run != true && steps.changed.outputs.changed == 'true' }}
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: chore/grant-general-title-${{ github.run_id }}
