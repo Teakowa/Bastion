@@ -19,6 +19,7 @@ const MAP_ALIAS = {
 const TITLE_ALIAS = {
   'what can i say': 'MANBA'
 };
+const MASTERY_PRUNE_EXEMPT_PLAYERS = new Set(['他又', '别感冒']);
 
 const RESTRICTED_GENERAL_TITLE_KEYS = [
   'PIONEER',
@@ -357,6 +358,7 @@ export function applyGrantRequest(sourceData, requestData) {
     generalTitleAdds: {},
     mapAdds: {},
     masteryTitleRemovals: {},
+    masteryPruneSkipped: [],
     masteryCheck: {},
     options
   };
@@ -453,6 +455,11 @@ export function applyGrantRequest(sourceData, requestData) {
       dominatorCount: domCount,
       mapCount
     });
+
+    if (MASTERY_PRUNE_EXEMPT_PLAYERS.has(player.name)) {
+      summary.masteryPruneSkipped.push(player.name);
+      continue;
+    }
 
     if (!allConqueror) {
       const beforeLength = player.titleKeys.length;
@@ -602,7 +609,8 @@ export async function grantPlayerTitle({
       addedPlayers: summary.addedPlayers,
       generalTitleAdds: summary.generalTitleAdds,
       mapAdds: summary.mapAdds,
-      masteryTitleRemovals: summary.masteryTitleRemovals
+      masteryTitleRemovals: summary.masteryTitleRemovals,
+      masteryPruneSkipped: summary.masteryPruneSkipped
     }
   };
 }

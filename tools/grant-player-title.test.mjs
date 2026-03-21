@@ -394,6 +394,38 @@ test('full-scan mastery reconciliation removes stale ALL_IN_ONE and SKY globally
   assert.deepEqual(summary.masteryTitleRemovals['历史玩家'], ['ALL_IN_ONE', 'SKY']);
 });
 
+test('full-scan mastery reconciliation skips exempt players', () => {
+  const data = buildFixture();
+  data.players.push({ name: '他又', titleKeys: ['ALL_IN_ONE', 'SKY'] });
+  data.players.push({ name: '别感冒', titleKeys: ['ALL_IN_ONE', 'SKY'] });
+
+  const req = {
+    players: [
+      {
+        name: '老玩家',
+        generalTitles: ['HACKING'],
+        mapDominators: []
+      }
+    ],
+    options: {
+      grantDifficultyFromMaps: false,
+      autoMasteryMode: 'off'
+    }
+  };
+
+  const { sourceData, summary } = applyGrantRequest(data, req);
+  const exemptA = sourceData.players.find((item) => item.name === '他又');
+  const exemptB = sourceData.players.find((item) => item.name === '别感冒');
+
+  assert.equal(exemptA.titleKeys.includes('ALL_IN_ONE'), true);
+  assert.equal(exemptA.titleKeys.includes('SKY'), true);
+  assert.equal(exemptB.titleKeys.includes('ALL_IN_ONE'), true);
+  assert.equal(exemptB.titleKeys.includes('SKY'), true);
+  assert.equal(summary.masteryTitleRemovals['他又'], undefined);
+  assert.equal(summary.masteryTitleRemovals['别感冒'], undefined);
+  assert.deepEqual(summary.masteryPruneSkipped.sort(), ['他又', '别感冒'].sort());
+});
+
 test('autoMasteryMode=grant re-grants eligible mastery titles after reconciliation', () => {
   const data = buildFixture();
   data.mapTitles = data.mapTitles.map((mapItem) => ({
@@ -494,6 +526,7 @@ test('dry-run preview includes masteryTitleRemovals for stale holders', async ()
 
   const source = buildFixture();
   source.players.push({ name: '历史玩家', titleKeys: ['ALL_IN_ONE', 'SKY'] });
+  source.players.push({ name: '他又', titleKeys: ['ALL_IN_ONE', 'SKY'] });
   await fs.writeFile(sourceFile, `${JSON.stringify(source, null, 2)}\n`, 'utf8');
 
   const before = await fs.readFile(sourceFile, 'utf8');
@@ -509,6 +542,8 @@ test('dry-run preview includes masteryTitleRemovals for stale holders', async ()
 
   assert.equal(before, after);
   assert.deepEqual(result.preview.masteryTitleRemovals['历史玩家'], ['ALL_IN_ONE', 'SKY']);
+  assert.equal(result.preview.masteryTitleRemovals['他又'], undefined);
+  assert.equal(result.preview.masteryPruneSkipped.includes('他又'), true);
 });
 
 test('non-dry-run with changes triggers title sync once', async () => {
