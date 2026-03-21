@@ -682,9 +682,7 @@
         "HARD_TO_KILL",
         "LIGHT_PACK",
         "DODGE_ULTIMATE",
-        "ALL_IN_ONE",
         "TRAVELER",
-        "SKY",
         "LUCKY_STAR",
         "MANBA"
       ]
@@ -747,9 +745,7 @@
         "CHALLENGER_LEGEND",
         "TRAVELER_HELL",
         "HARD_TO_KILL",
-        "ALL_IN_ONE",
         "TRAVELER",
-        "SKY",
         "LUCKY_STAR",
         "MANBA",
         "HACKING",
@@ -870,9 +866,7 @@
         "MANBA",
         "SPEEDRUN",
         "DODGE_ULTIMATE",
-        "FLAWLESS",
-        "ALL_IN_ONE",
-        "SKY"
+        "FLAWLESS"
       ]
     },
     {
@@ -1211,12 +1205,14 @@
         "CONQUEROR": [
           "吾携秋水揽星河",
           "卖核弹的小女孩",
-          "八十万萝莉总教头"
+          "八十万萝莉总教头",
+          "嘤嘤嘤丶"
         ],
         "DOMINATOR": [
           "吾携秋水揽星河",
           "卖核弹的小女孩",
-          "八十万萝莉总教头"
+          "八十万萝莉总教头",
+          "嘤嘤嘤丶"
         ]
       }
     },
@@ -1935,7 +1931,9 @@
           "初一吖",
           "雨鸢",
           "嘤嘤嘤丶",
-          "八十万萝莉总教头"
+          "八十万萝莉总教头",
+          "EruIluvatar",
+          "锄禾日当午"
         ],
         "DOMINATOR": [
           "吾携秋水揽星河",
@@ -1947,7 +1945,9 @@
           "初一吖",
           "雨鸢",
           "嘤嘤嘤丶",
-          "八十万萝莉总教头"
+          "八十万萝莉总教头",
+          "EruIluvatar",
+          "锄禾日当午"
         ]
       }
     },
