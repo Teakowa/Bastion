@@ -969,7 +969,7 @@ export async function collectInteractiveRequest(sourceData, io = { input, output
     const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式'], { ui });
 
     const titleOptions = sourceData.titles.map((item) => `${item.key} (${item.label})`);
-    const mapOptions = sourceData.mapTitles.map((item) => `${item.mapKey} (${item.mapLabel})`);
+    const mapOptions = sourceData.mapTitles.map((item) => item.mapLabel);
     const playerNames = sourceData.players.map((item) => item.name);
 
     let requestPayload;
