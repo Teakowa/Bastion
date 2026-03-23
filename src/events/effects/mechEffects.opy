@@ -21,3 +21,4 @@
 #!include "mech/gambler_long_investment.opy"
 #!include "mech/valkyrie_descent.opy"
 #!include "mech/trinity_ssr.opy"
+#!include "mech/battlefield_medic.opy"

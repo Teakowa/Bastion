@@ -549,3 +549,12 @@ rule "initialize event array":
     mechEvent[MechEventId.TRINITY_SSR] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(100 / EVT_MECH_14_DMG_REDUCE_DIVISOR, EVT_MECH_14_SPEED_FACTOR, EVT_MECH_14_INTERVAL / EVT_MECH_14_HEART_STEEL_PER_TICK), EVT_MECH_14_DURATION, EVT_MECH_14_WEIGHT]
     mechEventId.append(MechEventId.TRINITY_SSR)
     lbl_122:
+
+    # ================================================
+    # Pack 5: Mechanics
+    # ================================================
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_5_MECH, STR_EVT_MECH_15_TITLE, true, MechEventId.BATTLEFIELD_MEDIC):
+        goto lbl_123
+    mechEvent[MechEventId.BATTLEFIELD_MEDIC] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(EVT_MECH_15_GOAL_BASE, EVT_MECH_15_GOAL_MAX_HP_FACTOR * 100, EVT_MECH_15_REWARD_HEAL, EVT_MECH_15_REWARD_DMG_REDUCTION, EVT_MECH_15_REWARD_SPEED), EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
+    mechEventId.append(MechEventId.BATTLEFIELD_MEDIC)
+    lbl_123:
