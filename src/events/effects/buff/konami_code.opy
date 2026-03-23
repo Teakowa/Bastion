@@ -4,11 +4,8 @@
 rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     @Event eachPlayer
     @Team 1
-    @Condition controlRespawnPosition == null
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.KONAMI_CODE]) == true
-    
-    if controlRespawnPosition != null:
-        eventPlayer.eventDuration = 0
+
     eventPlayer.controlPlayerRespawnPosition = [eventPlayer.getPosition(), eventPlayer.getFacingDirection(), eventPlayer.getHero()]
     playEffect(getAllPlayers(), DynamicEffect.SOMBRA_TRANSLOCATING_MATERIAL, Color.TEAM_1, eventPlayer, 200)
     playEffect(eventPlayer, DynamicEffect.SOMBRA_TRANSLOCATING_SOUND, Color.WHITE, eventPlayer, 100)
@@ -19,10 +16,21 @@ rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     if ruleCondition:
         loop()
 
+rule "[VishkarEvent]: ↑↑↓↓←→←→BABA sync 3in1 checkpoint":
+    @Event eachPlayer
+    @Team 1
+    @Condition controlRespawnPosition != null
+    @Condition controlRespawnPosition[eventPlayer.controlJumpIndex] != null
+    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.isAlive(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.KONAMI_CODE, eventPlayer.controlPlayerRespawnPosition != null]) == true
+    @Condition any([eventPlayer.hasStatus(Status.PHASED_OUT), eventPlayer.hasStatus(Status.INVINCIBLE)]) == true
+    @Condition distance(eventPlayer.getPosition(), controlRespawnPosition[eventPlayer.controlJumpIndex]) <= 4
+    @Condition eventPlayer.controlPlayerRespawnPosition[0] != controlRespawnPosition[eventPlayer.controlJumpIndex]
+
+    eventPlayer.controlPlayerRespawnPosition = [controlRespawnPosition[eventPlayer.controlJumpIndex], eventPlayer.getFacingDirection(), eventPlayer.getHero()]
+
 rule "[VishkarEvent]: ↑↑↓↓←→←→BABA":
     @Event playerDied
     @Team 1
-    @Condition controlRespawnPosition == null
     @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.KONAMI_CODE]) == true
     @Condition eventPlayer.isWinner != true
     @Condition eventPlayer.controlPlayerRespawnPosition != []
