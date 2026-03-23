@@ -216,6 +216,8 @@
 #!define STR_EVT_MECH_13_DESC "生命值提高{0}%，获得禁疗\n受到伤害获得大招充能\n大招持续期间最多回复{1}%生命值"
 #!define STR_EVT_MECH_14_TITLE "三位一体"
 #!define STR_EVT_MECH_14_DESC "100HP→{0}%减伤，1%减伤→{1}%移速\n每{2}秒获得1层心之钢"
+#!define STR_EVT_MECH_15_TITLE "任务：战地医生"
+#!define STR_EVT_MECH_15_DESC "持续时间内累计为友方提供{0}+{1}%最大生命值治疗\n奖励：永久获得{2}%治疗增益、{3}%伤害减免与{4}%移速"
 
 
 # 设置菜单分类 (Pack)

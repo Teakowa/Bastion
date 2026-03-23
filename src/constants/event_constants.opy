@@ -853,4 +853,19 @@
 # 循环间隔 (秒)
 #!define EVT_MECH_14_INTERVAL 1
 
+# --- ID 15 (Mech/Special): 任务：战地医生 ---
+# Duration（秒）
+#!define EVT_MECH_15_DURATION 120
+# Weight（权重）
+#!define EVT_MECH_15_WEIGHT 0.7
+
+# 任务目标治疗量 = base + MaxHP * factor
+#!define EVT_MECH_15_GOAL_BASE 3000
+#!define EVT_MECH_15_GOAL_MAX_HP_FACTOR 2
+
+# 完成奖励
+#!define EVT_MECH_15_REWARD_HEAL 10
+#!define EVT_MECH_15_REWARD_DMG_REDUCTION 10
+#!define EVT_MECH_15_REWARD_SPEED 5
+
 # -----------------------------------------------------------------------------

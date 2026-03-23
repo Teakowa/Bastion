@@ -210,6 +210,8 @@
 #!define STR_EVT_MECH_13_DESC "Become BOSS: 500% HP.\nNo healing received. Heal via Ultimate."
 #!define STR_EVT_MECH_14_TITLE "Trinity"
 #!define STR_EVT_MECH_14_DESC "100HP->4% DR, 1% DR->2.5% Speed, 100% Speed/s->1 Heartsteel."
+#!define STR_EVT_MECH_15_TITLE "Mission: Battlefield Medic"
+#!define STR_EVT_MECH_15_DESC "Heal allies for {0}+{1}% max HP during the timer.\nReward: Permanently gain {2}% healing dealt, {3}% damage reduction, and {4}% movement speed."
 
 
 # Settings Categories

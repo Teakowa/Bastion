@@ -369,5 +369,7 @@ rule "initialize event array":
     # ================================================
     # Pack 5: Reserved for 5.0 event development
     # ================================================
+    mechEvent[MechEventId.BATTLEFIELD_MEDIC] = [STR_EVT_MECH_15_TITLE, STR_EVT_MECH_15_DESC.format(EVT_MECH_15_GOAL_BASE, EVT_MECH_15_GOAL_MAX_HP_FACTOR * 100, EVT_MECH_15_REWARD_HEAL, EVT_MECH_15_REWARD_DMG_REDUCTION, EVT_MECH_15_REWARD_SPEED), EVT_MECH_15_DURATION, EVT_MECH_15_WEIGHT]
+    mechEventId.append(MechEventId.BATTLEFIELD_MEDIC)
 
     lbl_4:
