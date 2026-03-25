@@ -301,8 +301,8 @@ enum MapTITLEKey:
 # 直布罗陀
 #!define DATA_WATCHPOINT_GIBRALTAR [ \
    playerNameToIndexDelimited(["吾携秋水揽星河", "卖核弹的小女孩"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河", "卖核弹的小女孩", "八十万萝莉总教头", "嘤嘤嘤丶", "锄禾日当午", "EruIluvatar"], "-"), \
-   playerNameToIndexDelimited(["吾携秋水揽星河", "卖核弹的小女孩", "八十万萝莉总教头", "嘤嘤嘤丶", "锄禾日当午", "EruIluvatar"], "-")\
+   playerNameToIndexDelimited(["吾携秋水揽星河", "卖核弹的小女孩", "八十万萝莉总教头", "嘤嘤嘤丶", "锄禾日当午", "EruIluvatar", "八月八月八"], "-"), \
+   playerNameToIndexDelimited(["吾携秋水揽星河", "卖核弹的小女孩", "八十万萝莉总教头", "嘤嘤嘤丶", "锄禾日当午", "EruIluvatar", "八月八月八"], "-")\
 ]
 
 # 哈瓦那
