@@ -820,51 +820,138 @@ function createUi(outputStream = output) {
       process.env.NO_COLOR !== '1' &&
       process.env.TERM !== 'dumb'
   });
+  const writeLine = (text) => {
+    if (typeof outputStream?.write === 'function') {
+      outputStream.write(`${text}\n`);
+      return;
+    }
+    console.log(text);
+  };
 
   return {
     ansi,
-    info: (text) => console.log(ansi.accent(text)),
-    success: (text) => console.log(ansi.success(text)),
-    warning: (text) => console.log(ansi.warning(text)),
-    error: (text) => console.log(ansi.error(text)),
-    strong: (text) => console.log(ansi.strong(text)),
-    contrast: (text) => console.log(ansi.contrast(text))
+    outputStream,
+    info: (text) => writeLine(ansi.accent(text)),
+    success: (text) => writeLine(ansi.success(text)),
+    warning: (text) => writeLine(ansi.warning(text)),
+    error: (text) => writeLine(ansi.error(text)),
+    strong: (text) => writeLine(ansi.strong(text)),
+    contrast: (text) => writeLine(ansi.contrast(text))
   };
 }
 
-function printOptions(list, { includeZeroLabel, ui } = {}) {
+function formatOptions(list, { includeZeroLabel, ui } = {}) {
+  const lines = [];
   if (includeZeroLabel) {
-    if (ui) {
-      ui.info(`  0) ${includeZeroLabel}`);
-    } else {
-      console.log(`  0) ${includeZeroLabel}`);
-    }
+    lines.push(`  0) ${includeZeroLabel}`);
   }
   list.forEach((item, index) => {
-    if (ui) {
-      ui.info(`  ${index + 1}) ${item}`);
-    } else {
-      console.log(`  ${index + 1}) ${item}`);
-    }
+    lines.push(`  ${index + 1}) ${item}`);
   });
+  if (!ui) {
+    return lines;
+  }
+  return lines.map((line) => ui.ansi.accent(line));
+}
+
+function printOptions(list, { includeZeroLabel, ui } = {}) {
+  const lines = formatOptions(list, { includeZeroLabel });
+  for (const line of lines) {
+    if (ui) {
+      ui.info(line);
+    } else {
+      console.log(line);
+    }
+  }
+}
+
+export function createInteractiveRenderer(outputStream = output, { enabled } = {}) {
+  const shouldEnable =
+    enabled ??
+    (Boolean(outputStream?.isTTY) &&
+      typeof outputStream?.write === 'function' &&
+      process.env.NO_COLOR !== '1' &&
+      process.env.TERM !== 'dumb');
+  let occupiedLines = 0;
+
+  function clear() {
+    if (!shouldEnable || occupiedLines === 0) {
+      return;
+    }
+
+    outputStream.write(`\u001b[${occupiedLines}F`);
+    for (let index = 0; index < occupiedLines; index += 1) {
+      outputStream.write('\u001b[2K');
+      if (index < occupiedLines - 1) {
+        outputStream.write('\u001b[1E');
+      }
+    }
+    outputStream.write('\r');
+    occupiedLines = 0;
+  }
+
+  function render(lines) {
+    if (!shouldEnable) {
+      return;
+    }
+
+    clear();
+    if (lines.length > 0) {
+      outputStream.write(`${lines.join('\n')}\n`);
+    }
+    occupiedLines = lines.length + 1;
+  }
+
+  return {
+    enabled: shouldEnable,
+    clear,
+    render
+  };
+}
+
+function renderInteractivePrompt(ui, prompt, list, { heading, includeZeroLabel, statusLines = [] } = {}) {
+  const renderer = ui?.renderer;
+  if (!renderer?.enabled) {
+    if (heading) {
+      if (ui) {
+        ui.strong(heading);
+      } else {
+        console.log(heading);
+      }
+    }
+    printOptions(list, { includeZeroLabel, ui });
+    for (const line of statusLines) {
+      if (ui) {
+        ui.info(line);
+      } else {
+        console.log(line);
+      }
+    }
+    return;
+  }
+
+  renderer.render([
+    ...(heading ? [ui.ansi.strong(heading)] : []),
+    ui.ansi.strong(prompt),
+    ...formatOptions(list, { includeZeroLabel, ui }),
+    ...statusLines
+  ]);
 }
 
 async function askSingleChoice(
   rl,
   prompt,
   list,
-  { includeZeroLabel, allowEmpty = false, defaultChoice, defaultLabel, ui } = {}
+  { heading, includeZeroLabel, allowEmpty = false, defaultChoice, defaultLabel, ui } = {}
 ) {
+  let statusLines = [];
   while (true) {
-    printOptions(list, { includeZeroLabel, ui });
+    renderInteractivePrompt(ui, prompt, list, { heading, includeZeroLabel, statusLines });
     const raw = await rl.question(`${ui?.ansi.strong(prompt) ?? prompt}: `);
 
     if (String(raw ?? '').trim() === '' && allowEmpty) {
       if (defaultChoice === undefined) {
         return undefined;
-      }
-      if (ui) {
-        ui.warning(`未输入，已使用默认值：${defaultLabel ?? defaultChoice}`);
       }
       return defaultChoice;
     }
@@ -877,11 +964,7 @@ async function askSingleChoice(
       });
       return selected[0];
     } catch (error) {
-      if (ui) {
-        ui.error(`输入无效: ${error.message}`);
-      } else {
-        console.log(`输入无效: ${error.message}`);
-      }
+      statusLines = [ui ? ui.ansi.error(`输入无效: ${error.message}`) : `输入无效: ${error.message}`];
     }
   }
 }
@@ -890,10 +973,11 @@ async function askMultiChoice(
   rl,
   prompt,
   list,
-  { allowZero = false, allowEmpty = false, includeZeroLabel, ui } = {}
+  { heading, allowZero = false, allowEmpty = false, includeZeroLabel, statusLines: initialStatusLines = [], ui } = {}
 ) {
+  let statusLines = [...initialStatusLines];
   while (true) {
-    printOptions(list, { includeZeroLabel, ui });
+    renderInteractivePrompt(ui, prompt, list, { heading, includeZeroLabel, statusLines });
     const raw = await rl.question(`${ui?.ansi.strong(prompt) ?? prompt}: `);
     try {
       return parseNumberSelection(raw, {
@@ -903,38 +987,33 @@ async function askMultiChoice(
         multi: true
       });
     } catch (error) {
-      if (ui) {
-        ui.error(`输入无效: ${error.message}`);
-      } else {
-        console.log(`输入无效: ${error.message}`);
-      }
+      statusLines = [ui ? ui.ansi.error(`输入无效: ${error.message}`) : `输入无效: ${error.message}`];
     }
   }
 }
 
 async function askNewPlayerName(rl, ui) {
+  let statusLines = [];
   while (true) {
+    if (ui?.renderer?.enabled) {
+      ui.renderer.render([ui.ansi.strong('新玩家名称'), ...statusLines]);
+    }
     const name = (await rl.question(`${ui?.ansi.strong('新玩家名称') ?? '新玩家名称'}: `)).trim();
     if (!name) {
-      if (ui) {
-        ui.warning('玩家名称不能为空');
-      } else {
-        console.log('玩家名称不能为空');
-      }
+      statusLines = [ui ? ui.ansi.warning('玩家名称不能为空') : '玩家名称不能为空'];
       continue;
     }
 
+    if (ui?.renderer?.enabled) {
+      ui.renderer.render([ui.ansi.strong(`确认新增玩家 "${name}"? [y/N]`)]);
+    }
     const confirm = await rl.question(
       `${ui?.ansi.strong(`确认新增玩家 "${name}"? [y/N]`) ?? `确认新增玩家 "${name}"? [y/N]`}: `
     );
     if (parseYesNo(confirm, false)) {
       return name;
     }
-    if (ui) {
-      ui.warning('已取消新增，返回选择。');
-    } else {
-      console.log('已取消新增，返回选择。');
-    }
+    statusLines = [ui ? ui.ansi.warning('已取消新增，返回选择。') : '已取消新增，返回选择。'];
     return null;
   }
 }
@@ -957,11 +1036,14 @@ async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi =
     return [playerNames[choice - 1]];
   }
 
+  let statusLine = null;
   while (true) {
     const picked = await askMultiChoice(rl, '选择玩家编号（多选逗号，回车结束）', playerNames, {
+      heading: '选择玩家',
       allowZero: allowCreate,
       allowEmpty: true,
       includeZeroLabel: allowCreate ? '新增玩家并加入本次选择' : undefined,
+      statusLines: statusLine ? [statusLine] : [],
       ui
     });
 
@@ -969,11 +1051,7 @@ async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi =
       if (selected.length > 0) {
         return selected;
       }
-      if (ui) {
-        ui.warning('至少选择一名玩家');
-      } else {
-        console.log('至少选择一名玩家');
-      }
+      statusLine = ui ? ui.ansi.warning('至少选择一名玩家') : '至少选择一名玩家';
       continue;
     }
 
@@ -992,10 +1070,9 @@ async function pickPlayersByMenu(rl, playerNames, { allowCreate = false, multi =
       }
     }
 
-    if (ui) {
-      ui.success(`当前已选玩家: ${selected.join(', ')}`);
-    } else {
-      console.log(`当前已选玩家: ${selected.join(', ')}`);
+    statusLine = ui ? ui.ansi.success(`当前已选玩家: ${selected.join(', ')}`) : `当前已选玩家: ${selected.join(', ')}`;
+    if (!ui?.renderer?.enabled) {
+      ui?.success(`当前已选玩家: ${selected.join(', ')}`);
     }
   }
 }
@@ -1004,9 +1081,12 @@ export async function collectInteractiveRequest(sourceData, io = { input, output
   const usingInjectedReadline = Boolean(io?.readline);
   const rl = io?.readline ?? readline.createInterface(io);
   const ui = createUi(io.output);
+  ui.renderer = createInteractiveRenderer(io.output);
   try {
-    ui.strong('选择对象类型:');
-    const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式'], { ui });
+    const mode = await askSingleChoice(rl, '输入编号', ['玩家模式', '地图模式'], {
+      heading: '选择对象类型',
+      ui
+    });
 
     const titleOptions = sourceData.titles.map((item) => item.label);
     const mapOptions = sourceData.mapTitles.map((item) => item.mapLabel);

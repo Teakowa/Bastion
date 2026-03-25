@@ -9,6 +9,7 @@ import {
   buildInteractiveRequest,
   collectInteractiveRequest,
   createAnsi,
+  createInteractiveRenderer,
   grantPlayerTitle,
   parseCliArgs,
   parseNumberSelection,
@@ -732,6 +733,41 @@ test('interactive map flow keeps pioneer choice while using fixed options', asyn
   assert.deepEqual(request.players, [
     { name: '老玩家', generalTitles: [], mapDominators: [], mapPioneers: ['DATA_ROUTE66'] }
   ]);
+});
+
+test('interactive renderer rewinds and redraws the same block in tty mode', () => {
+  const writes = [];
+  const output = {
+    isTTY: true,
+    write(chunk) {
+      writes.push(chunk);
+    }
+  };
+
+  const renderer = createInteractiveRenderer(output, { enabled: true });
+  renderer.render(['第一屏', '  1) 选项A']);
+  renderer.render(['第二屏', '  1) 选项B']);
+
+  assert.equal(
+    writes.join(''),
+    '第一屏\n  1) 选项A\n\u001b[3F\u001b[2K\u001b[1E\u001b[2K\u001b[1E\u001b[2K\r第二屏\n  1) 选项B\n'
+  );
+});
+
+test('interactive renderer stays disabled for non-tty output', () => {
+  const writes = [];
+  const output = {
+    isTTY: false,
+    write(chunk) {
+      writes.push(chunk);
+    }
+  };
+
+  const renderer = createInteractiveRenderer(output);
+  assert.equal(renderer.enabled, false);
+  renderer.render(['不会输出']);
+  renderer.clear();
+  assert.deepEqual(writes, []);
 });
 
 test('createAnsi does not inject escape codes when color is disabled', () => {
