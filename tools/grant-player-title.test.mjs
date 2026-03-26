@@ -32,6 +32,7 @@ function buildFixture() {
         displayExpr: '"a"',
         colorExpr: 'vect(1, 2, 3)'
       },
+      { key: 'DODGE_ULTIMATE', label: '终极闪避', category: 'c', condition: 'd', availability: 'active', displayExpr: '"a"', colorExpr: 'null' },
       { key: 'TRAVELER_HELL', label: '地狱行者', category: 'c', condition: 'd', availability: 'active', displayExpr: '"a"', colorExpr: 'null' },
       { key: 'ALL_IN_ONE', label: '全图征服', category: 'c', condition: 'd', availability: 'active', displayExpr: '"a"', colorExpr: 'breathRed' },
       { key: 'SKY', label: '全图主宰', category: 'c', condition: 'd', availability: 'active', displayExpr: '"a"', colorExpr: 'breathPurple' },
@@ -262,7 +263,7 @@ test('resolve title key from chinese label', () => {
   assert.throws(() => resolveTitleKeyFromLabel(data, '不存在的称号'), /Unknown title label/);
 });
 
-test('blocks restricted title key grant for index 0-14 set', () => {
+test('blocks restricted title key grant for restricted set', () => {
   const data = buildFixture();
   const req = {
     players: [{ name: '老玩家', generalTitles: ['CHALLENGER_LEGEND'], mapDominators: [] }],
@@ -271,13 +272,39 @@ test('blocks restricted title key grant for index 0-14 set', () => {
   assert.throws(() => applyGrantRequest(data, req), /Restricted general title cannot be granted/);
 });
 
-test('blocks restricted title label grant for index 0-14 set', () => {
+test('blocks restricted title label grant for restricted set', () => {
   const data = buildFixture();
   const req = {
     players: [{ name: '老玩家', generalTitles: ['难度挑战'], mapDominators: [] }],
     options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
   };
   assert.throws(() => applyGrantRequest(data, req), /Restricted general title cannot be granted/);
+});
+
+test('allows DODGE_ULTIMATE general title grant by key', () => {
+  const data = buildFixture();
+  const req = {
+    players: [{ name: '老玩家', generalTitles: ['DODGE_ULTIMATE'], mapDominators: [] }],
+    options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
+  };
+  const { sourceData, summary } = applyGrantRequest(data, req);
+  const player = sourceData.players.find((item) => item.name === '老玩家');
+
+  assert.equal(player.titleKeys.includes('DODGE_ULTIMATE'), true);
+  assert.deepEqual(summary.generalTitleAdds['老玩家'], ['DODGE_ULTIMATE']);
+});
+
+test('allows DODGE_ULTIMATE general title grant by label', () => {
+  const data = buildFixture();
+  const req = {
+    players: [{ name: '老玩家', generalTitles: ['终极闪避'], mapDominators: [] }],
+    options: { grantDifficultyFromMaps: false, autoMasteryMode: 'off' }
+  };
+  const { sourceData, summary } = applyGrantRequest(data, req);
+  const player = sourceData.players.find((item) => item.name === '老玩家');
+
+  assert.equal(player.titleKeys.includes('DODGE_ULTIMATE'), true);
+  assert.deepEqual(summary.generalTitleAdds['老玩家'], ['DODGE_ULTIMATE']);
 });
 
 test('blocks pioneer as general title and suggests --map-pioneer', () => {
