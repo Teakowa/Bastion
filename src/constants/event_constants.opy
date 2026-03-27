@@ -89,7 +89,7 @@
 # Duration（秒）
 #!define EVT_BUFF_8_DURATION 120
 # Weight（权重）
-#!define EVT_BUFF_8_WEIGHT 1
+#!define EVT_BUFF_8_WEIGHT 1.2
 #!define EVT_8_HP_PERCENT_PER_STACK 0.75
 #!define EVT_8_HP_LAYER_PER_DEATH 1
 #!define EVT_8_VISUAL_EFFECT Effect.WINSTON_PRIMAL_RAGE
