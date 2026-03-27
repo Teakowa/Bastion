@@ -8,18 +8,26 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
     @Condition eventPlayer.isHoldingButton(Button.INTERACT) == true
     
     # Exception: this initiator/receiver pair is state-sync workflow, not cadence loop.
-    # 1. 寻找目标 (排除自己、已获胜、已从属于他人、已被附身的玩家)
+    # 1. 寻找目标 (排除自己、已获胜、已从属于他人、已被附身、正在反向锁定自己的玩家)
     wait(0.032, Wait.ABORT_WHEN_FALSE)
     # 这里把 possessed 视为数组判断，len(p.possessed) == 0 代表未被附身
-    eventPlayer.possess = sorted([player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.isWinner != true and len(player.possessed) == 0 and distance(eventPlayer, player) < 40], lambda i: distance(eventPlayer, i))
+    eventPlayer.possess = sorted([player for player in getLivingPlayers(Team.1) if player != eventPlayer and player.isWinner != true and len(player.possessed) == 0 and distance(eventPlayer, player) < 40 and raycast(eventPlayer.getEyePosition(), player.getEyePosition(), getAllPlayers(), eventPlayer, true).getPlayerHit() == player and (player.possess == null or player.possess[0] != eventPlayer)], lambda i: distance(eventPlayer, i))
     
     wait(0.032)
     smallMessage(eventPlayer, "  {0}".format("附近未找到可附身目标" if len(eventPlayer.possess) == 0 else "附身目标：{0}".format(eventPlayer.possess[0])))
     
     if len(eventPlayer.possess) == 0:
-        goto lbl_0
+        eventPlayer.possess = null
+        wait(2)
+        return
 
     # 2. 发起附身 (写入数据)
+    if len(eventPlayer.possess[0].possessed) > 0 or not entityExists(eventPlayer.possess[0]) or (eventPlayer.possess[0].possess != null and eventPlayer.possess[0].possess[0] == eventPlayer):
+        smallMessage(eventPlayer, "  目标已失效")
+        eventPlayer.possess = null
+        wait(2)
+        return
+
     # 目标变量 possessed 结构: [0:来源玩家, 1:治疗增益, 2:减伤, 3:移速, 4:血池ID(预留), 5:最大生命值]
     # 先写入除 ID 外的数据，ID 由目标生成后填入
     eventPlayer.possess[0].possessed[0] = eventPlayer
@@ -49,7 +57,6 @@ rule "[VishkarEvent]: 有我有你 (Initiator - Control Logic)":
      # 自身状态：无敌 (双重保险)
     eventPlayer.setStatusEffect(null, Status.INVINCIBLE, 9999)
 
-    lbl_0:
     # 4. 维持阶段
     # 等待直到：目标死亡、自身按蹲、目标掉线、时间结束、或者目标被意外清除了附身状态
     waitUntil(eventPlayer.possess[0].isDead() or eventPlayer.isHoldingButton(Button.CROUCH) or not entityExists(eventPlayer.possess[0]) or eventPlayer.isDead() or len(eventPlayer.possess[0].possessed) == 0 or eventPlayer.eventDuration == 0, eventPlayer.eventDuration)
