@@ -9,6 +9,8 @@ const SOURCE_FILE = path.resolve(__dirname, '../data/title-source.json');
 const TITLE_FILE = path.resolve(__dirname, '../src/title/title-cn.opy');
 const ENV_FILE = path.resolve(__dirname, '../src/env/env.opy');
 const WEB_OUTPUT_FILE = path.resolve(__dirname, '../web/title-query/public/data/titles.json');
+const PLAYER_NAME_TO_INDEX_FILE = path.resolve(__dirname, '../src/tools/playerNameToIndex.js');
+const PLAYER_NAME_TO_INDEX_DELIMITED_FILE = path.resolve(__dirname, '../src/tools/playerNameToIndexDelimited.js');
 
 const ENUM_BEGIN = '# BEGIN AUTO-GENERATED TITLE ENUM';
 const ENUM_END = '# END AUTO-GENERATED TITLE ENUM';
@@ -316,6 +318,36 @@ function renderMapTitleData(mapTitles) {
   return lines.join('\n');
 }
 
+function renderPlayerIndexScript(players, { delimited }) {
+  const names = players.map((player) => player.name);
+  const quotedNames = names.map((name) => `  ${JSON.stringify(name)}`).join(',\n');
+  const lines = [];
+
+  lines.push('const TITLE_PLAYER_NAMES = [');
+  lines.push(quotedNames);
+  lines.push('];');
+  lines.push('');
+  lines.push('const titleIndexByName = Object.fromEntries(');
+  lines.push('  TITLE_PLAYER_NAMES.map((name, index) => [name, index])');
+  lines.push(');');
+  lines.push('');
+  lines.push('const indices = names');
+  lines.push('  .map((name) => titleIndexByName[name])');
+  lines.push(`  .filter((index) => index !== undefined)${delimited ? '' : '.sort((left, right) => left - right);'}`);
+
+  if (!delimited) {
+    lines.push('');
+    lines.push('JSON.stringify(indices);');
+    return `${lines.join('\n')}\n`;
+  }
+  lines.push('');
+  lines.push('const delimiter = sep == null || sep === "" ? "-" : sep;');
+  lines.push('');
+  lines.push('JSON.stringify(indices.join(delimiter));');
+
+  return `${lines.join('\n')}\n`;
+}
+
 function replaceManagedBlock(source, beginMarker, endMarker, blockContent) {
   const pattern = new RegExp(`${escapeRegex(beginMarker)}[\\s\\S]*?${escapeRegex(endMarker)}`);
 
@@ -439,29 +471,39 @@ export async function syncTitleData({
   titleFile = TITLE_FILE,
   envFile = ENV_FILE,
   webOutputFile = WEB_OUTPUT_FILE,
+  playerNameToIndexFile = PLAYER_NAME_TO_INDEX_FILE,
+  playerNameToIndexDelimitedFile = PLAYER_NAME_TO_INDEX_DELIMITED_FILE,
   dryRun = false
 } = {}) {
-  const [sourceData, titleSource, envSource] = await Promise.all([
+  const [sourceData, titleSource, envSource, playerNameToIndexSource, playerNameToIndexDelimitedSource] = await Promise.all([
     loadTitleSource(sourceFile),
     fs.readFile(titleFile, 'utf8'),
-    fs.readFile(envFile, 'utf8')
+    fs.readFile(envFile, 'utf8'),
+    fs.readFile(playerNameToIndexFile, 'utf8'),
+    fs.readFile(playerNameToIndexDelimitedFile, 'utf8')
   ]);
 
   const sourceVersion = parseMainVersion(envSource);
   const nextTitleFile = applyManagedTitleFile(titleSource, sourceData);
   const webPayload = buildWebPayload(sourceData, sourceVersion);
   const webText = `${JSON.stringify(webPayload, null, 2)}\n`;
+  const nextPlayerNameToIndexFile = renderPlayerIndexScript(sourceData.players, { delimited: false });
+  const nextPlayerNameToIndexDelimitedFile = renderPlayerIndexScript(sourceData.players, { delimited: true });
 
   if (!dryRun) {
     await fs.writeFile(titleFile, nextTitleFile, 'utf8');
     await fs.mkdir(path.dirname(webOutputFile), { recursive: true });
     await fs.writeFile(webOutputFile, webText, 'utf8');
+    await fs.writeFile(playerNameToIndexFile, nextPlayerNameToIndexFile, 'utf8');
+    await fs.writeFile(playerNameToIndexDelimitedFile, nextPlayerNameToIndexDelimitedFile, 'utf8');
   }
 
   return {
     sourceData,
     webPayload,
     titleFileChanged: nextTitleFile !== titleSource,
+    playerNameToIndexFileChanged: nextPlayerNameToIndexFile !== playerNameToIndexSource,
+    playerNameToIndexDelimitedFileChanged: nextPlayerNameToIndexDelimitedFile !== playerNameToIndexDelimitedSource,
     sourceVersion
   };
 }
