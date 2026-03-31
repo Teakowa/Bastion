@@ -311,11 +311,11 @@
 # Duration（秒）
 #!define EVT_BUFF_26_DURATION 30
 # Weight（权重）
-#!define EVT_BUFF_26_WEIGHT 1.6
+#!define EVT_BUFF_26_WEIGHT 0
 #!define EVT_26_HP_FLAT 50
 #!define EVT_26_HP_MAXHP_FACTOR 0.1
 #!define EVT_26_OVERHEALTH_DURATION 5
-#!define EVT_26_TRIGGER_GCD 0.1
+#!define EVT_26_TRIGGER_GCD 0.5
 
 # --- ID 27: 向我开炮 ---
 # Duration（秒）
