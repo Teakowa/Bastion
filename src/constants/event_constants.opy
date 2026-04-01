@@ -777,7 +777,7 @@
 #!define EVT_MECH_11_RESURRECT_DELAY 2
 
 # 体型缩放：scale = max(minScale, 1 - step * eventSize)
-#!define EVT_MECH_11_SIZE_STEP 0.05
+#!define EVT_MECH_11_SIZE_STEP 0.08
 #!define EVT_MECH_11_SIZE_MIN 0.2
 
 # 语音音高：pitch = max(minPitch, 1 + step * eventSize)
