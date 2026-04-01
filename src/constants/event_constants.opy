@@ -190,7 +190,7 @@
 #!define EVT_BUFF_16_DURATION 90
 # Weight（权重）
 #!define EVT_BUFF_16_WEIGHT 0.9
-#!define EVT_16_HP_GAIN_FLAT 12
+#!define EVT_16_HP_GAIN_FLAT 16
 #!define EVT_16_HP_MULTIPLIER 2
 
 # --- ID 17: 数值之力 ---
