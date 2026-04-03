@@ -1,32 +1,93 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const THEME_STORAGE_KEY = 'title-query-theme-mode';
-const query = ref('');
-const loading = ref(true);
-const error = ref('');
-const players = ref([]);
-const titles = ref([]);
-const mapTitles = ref([]);
-const meta = ref(null);
-const expandedSeriesKeys = ref(new Set());
-const collapsedDefaultSeriesKeys = ref(new Set());
-const completedMapsExpanded = ref(false);
-const themeMode = ref('light');
-const hasQuery = computed(() => query.value.trim().length > 0);
+const ROUTE_FALLBACK = 'titles';
+const ROUTE_ORDER = ['titles', 'events', 'players'];
+const ROUTE_LABELS = {
+  titles: '称号',
+  events: '事件',
+  players: '玩家'
+};
+const ROUTE_HEADINGS = {
+  titles: {
+    title: '称号查询',
+    copy: '按称号名或分类检索，快速定位解锁条件与持有玩家。'
+  },
+  events: {
+    title: '事件查询',
+    copy: '按随机事件包查看 Buff / Debuff / Mech 清单与基础参数。'
+  },
+  players: {
+    title: '玩家查询',
+    copy: '输入玩家名后可直接看到“已获取 / 未获取”的完整称号进度情况。'
+  }
+};
+const TYPE_LABELS = {
+  buff: '增益',
+  debuff: '减益',
+  mech: '机制'
+};
 const MAP_TITLE_LABELS = {
   PIONEER: '开拓者',
   CONQUEROR: '征服者',
   DOMINATOR: '主宰'
 };
 
+const currentRoute = ref(ROUTE_FALLBACK);
+const loading = ref(true);
+const error = ref('');
+const themeMode = ref('light');
+
+const playerQuery = ref('');
+const titleQuery = ref('');
+const eventQuery = ref('');
+
+const players = ref([]);
+const titles = ref([]);
+const mapTitles = ref([]);
+const titleMeta = ref(null);
+const eventPacks = ref([]);
+const events = ref([]);
+const eventMeta = ref(null);
+
+const expandedSeriesKeys = ref(new Set());
+const collapsedDefaultSeriesKeys = ref(new Set());
+const completedMapsExpanded = ref(false);
+
+function normalizeRoute(hashValue) {
+  const raw = String(hashValue || '')
+    .replace(/^#\/?/, '')
+    .split('?')[0]
+    .trim()
+    .toLowerCase();
+  return ROUTE_ORDER.includes(raw) ? raw : ROUTE_FALLBACK;
+}
+
+function setRouteFromHash() {
+  currentRoute.value = normalizeRoute(typeof window === 'undefined' ? '' : window.location.hash);
+}
+
+function routeHref(routeKey) {
+  return `#/${routeKey}`;
+}
+
+function isRouteActive(routeKey) {
+  return currentRoute.value === routeKey;
+}
+
+const activeRouteHeading = computed(() => ROUTE_HEADINGS[currentRoute.value] ?? ROUTE_HEADINGS[ROUTE_FALLBACK]);
+
+const hasPlayerQuery = computed(() => playerQuery.value.trim().length > 0);
+const hasTitleQuery = computed(() => titleQuery.value.trim().length > 0);
+const hasEventQuery = computed(() => eventQuery.value.trim().length > 0);
+
 const filteredPlayers = computed(() => {
-  const keyword = query.value.trim().toLocaleLowerCase();
+  const keyword = playerQuery.value.trim().toLocaleLowerCase();
   const sortedPlayers = [...players.value].sort((left, right) => {
     if (right.titleCount !== left.titleCount) {
       return right.titleCount - left.titleCount;
     }
-
     return left.name.localeCompare(right.name, 'zh-Hans-CN');
   });
 
@@ -37,8 +98,8 @@ const filteredPlayers = computed(() => {
   return sortedPlayers.filter((player) => player.name.toLocaleLowerCase().includes(keyword));
 });
 
-const exactMatch = computed(() => {
-  const keyword = query.value.trim();
+const exactPlayerMatch = computed(() => {
+  const keyword = playerQuery.value.trim();
   if (!keyword) {
     return null;
   }
@@ -47,13 +108,15 @@ const exactMatch = computed(() => {
 });
 
 const showcasedPlayer = computed(() => {
-  if (!hasQuery.value) {
+  if (!hasPlayerQuery.value) {
     return null;
   }
 
-  return exactMatch.value || filteredPlayers.value[0] || null;
+  return exactPlayerMatch.value || filteredPlayers.value[0] || null;
 });
+
 const visibleTitles = computed(() => titles.value.filter((title) => title.id > 10));
+
 function groupTitlesBySeries(titleList) {
   const seriesMap = new Map();
 
@@ -77,7 +140,6 @@ function groupTitlesBySeries(titleList) {
       if (right.titles.length !== left.titles.length) {
         return right.titles.length - left.titles.length;
       }
-
       return left.series.localeCompare(right.series, 'zh-Hans-CN');
     });
 }
@@ -181,13 +243,107 @@ const mapSummary = computed(() => {
   };
 });
 
+const filteredTitles = computed(() => {
+  const keyword = titleQuery.value.trim().toLocaleLowerCase();
+  const sorted = [...visibleTitles.value].sort((left, right) => left.id - right.id);
+
+  if (!keyword) {
+    return sorted;
+  }
+
+  return sorted.filter((title) => {
+    const searchText = [title.label, title.category, title.condition, ...(title.tags || [])].join('|').toLocaleLowerCase();
+    return searchText.includes(keyword);
+  });
+});
+
+const selectedTitle = computed(() => {
+  if (!filteredTitles.value.length) {
+    return null;
+  }
+
+  const keyword = titleQuery.value.trim();
+  if (!keyword) {
+    return filteredTitles.value[0];
+  }
+
+  return filteredTitles.value.find((title) => title.label === keyword) ?? filteredTitles.value[0];
+});
+
+const selectedTitleHolders = computed(() => {
+  const title = selectedTitle.value;
+  if (!title) {
+    return [];
+  }
+
+  return players.value
+    .filter((player) => player.titleIds?.includes(title.id))
+    .sort((left, right) => {
+      if (right.titleCount !== left.titleCount) {
+        return right.titleCount - left.titleCount;
+      }
+      return left.name.localeCompare(right.name, 'zh-Hans-CN');
+    });
+});
+
+const filteredEventPacks = computed(() => {
+  const keyword = eventQuery.value.trim().toLocaleLowerCase();
+  const sortedPacks = [...eventPacks.value].sort((left, right) => left.id - right.id);
+
+  if (!keyword) {
+    return sortedPacks;
+  }
+
+  return sortedPacks
+    .map((pack) => {
+      const filteredEvents = (pack.events || []).filter((eventItem) => {
+        const searchText = [
+          pack.labelZh,
+          TYPE_LABELS[eventItem.type] || eventItem.type,
+          eventItem.nameZh,
+          eventItem.key,
+          eventItem.descZh,
+          ...(eventItem.tags || [])
+        ]
+          .join('|')
+          .toLocaleLowerCase();
+        return searchText.includes(keyword);
+      });
+
+      return {
+        ...pack,
+        events: filteredEvents
+      };
+    })
+    .filter((pack) => pack.events.length > 0);
+});
+
+function eventGroups(pack) {
+  return ['buff', 'debuff', 'mech']
+    .map((type) => ({
+      type,
+      label: TYPE_LABELS[type],
+      events: (pack.events || []).filter((eventItem) => eventItem.type === type)
+    }))
+    .filter((group) => group.events.length > 0);
+}
+
 const sourceDisplay = computed(() => {
-  if (!meta.value) {
+  if (!titleMeta.value) {
     return '躲避堡垒 3';
   }
 
-  const sourceLabel = meta.value.sourceLabel || '躲避堡垒 3';
-  return meta.value.sourceVersion ? `${sourceLabel} ${meta.value.sourceVersion}` : sourceLabel;
+  const sourceLabel = titleMeta.value.sourceLabel || '躲避堡垒 3';
+  return titleMeta.value.sourceVersion ? `${sourceLabel} ${titleMeta.value.sourceVersion}` : sourceLabel;
+});
+
+const eventSourceDisplay = computed(() => {
+  if (!eventMeta.value) {
+    return '随机事件';
+  }
+
+  const sourceLabel = eventMeta.value.sourceLabel || '随机事件';
+  return eventMeta.value.manifestVersion ? `${sourceLabel} ${eventMeta.value.manifestVersion}` : sourceLabel;
 });
 
 function getSeriesKey(groupType, seriesName) {
@@ -285,18 +441,29 @@ async function loadData() {
   error.value = '';
 
   try {
-    const response = await fetch('./data/titles.json', { cache: 'no-store' });
-    if (!response.ok) {
-      throw new Error(`数据请求失败（${response.status}）`);
+    const [titleResponse, eventResponse] = await Promise.all([
+      fetch('./data/titles.json', { cache: 'no-store' }),
+      fetch('./data/events.json', { cache: 'no-store' })
+    ]);
+
+    if (!titleResponse.ok) {
+      throw new Error(`称号数据请求失败（${titleResponse.status}）`);
+    }
+    if (!eventResponse.ok) {
+      throw new Error(`事件数据请求失败（${eventResponse.status}）`);
     }
 
-    const payload = await response.json();
-    players.value = payload.players ?? [];
-    titles.value = payload.titles ?? [];
-    mapTitles.value = payload.mapTitles ?? [];
-    meta.value = payload.meta ?? null;
+    const [titlePayload, eventPayload] = await Promise.all([titleResponse.json(), eventResponse.json()]);
+    players.value = titlePayload.players ?? [];
+    titles.value = titlePayload.titles ?? [];
+    mapTitles.value = titlePayload.mapTitles ?? [];
+    titleMeta.value = titlePayload.meta ?? null;
+
+    eventPacks.value = eventPayload.packs ?? [];
+    events.value = eventPayload.events ?? [];
+    eventMeta.value = eventPayload.meta ?? null;
   } catch (loadError) {
-    error.value = loadError instanceof Error ? loadError.message : '称号数据加载失败';
+    error.value = loadError instanceof Error ? loadError.message : '查询数据加载失败';
   } finally {
     loading.value = false;
   }
@@ -304,7 +471,17 @@ async function loadData() {
 
 onMounted(() => {
   initTheme();
+  setRouteFromHash();
+  if (typeof window !== 'undefined') {
+    window.addEventListener('hashchange', setRouteFromHash);
+  }
   loadData();
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('hashchange', setRouteFromHash);
+  }
 });
 
 watch(
@@ -327,7 +504,7 @@ watch(
       <section class="hero-panel ow-card">
         <div class="hero-band">
           <p class="eyebrow">躲避堡垒 3</p>
-          <p class="hero-band-copy">TEAM-BASED TITLE PROGRESSION</p>
+          <p class="hero-band-copy">TITLE / EVENT / PLAYER QUERY</p>
           <button
             type="button"
             class="theme-toggle ow-button ow-button-secondary"
@@ -341,41 +518,150 @@ watch(
 
         <div class="hero-heading">
           <div>
-            <h1>玩家称号查询</h1>
-            <p class="hero-copy">
-              输入玩家名后可直接看到“已获取 / 未获取”的完整称号进度情况。
-            </p>
+            <h1>{{ activeRouteHeading.title }}</h1>
+            <p class="hero-copy">{{ activeRouteHeading.copy }}</p>
           </div>
           <div class="hero-emblem">QUERY PANEL</div>
         </div>
 
-        <label class="search-panel">
+        <nav class="route-nav" aria-label="查询路由">
+          <a
+            v-for="routeKey in ROUTE_ORDER"
+            :key="`route-${routeKey}`"
+            class="route-link ow-button"
+            :class="isRouteActive(routeKey) ? 'route-link-active' : 'route-link-idle'"
+            :href="routeHref(routeKey)"
+            :aria-current="isRouteActive(routeKey) ? 'page' : null"
+          >
+            {{ ROUTE_LABELS[routeKey] }}
+          </a>
+        </nav>
+
+        <label class="search-panel" v-if="currentRoute === 'players'">
           <span>搜索玩家</span>
           <input
-            v-model="query"
+            v-model="playerQuery"
+            name="player-search"
             type="search"
-            placeholder="输入完整昵称或关键字，例如 卖核弹 / Cold / 旅店"
+            placeholder="输入完整昵称或关键字，例如 卖核弹 / Cold / 旅店…"
             autocomplete="off"
           />
         </label>
-        <div class="search-candidates" v-if="hasQuery && !loading && !error && filteredPlayers.length">
+
+        <label class="search-panel" v-else-if="currentRoute === 'titles'">
+          <span>搜索称号</span>
+          <input
+            v-model="titleQuery"
+            name="title-search"
+            type="search"
+            placeholder="输入称号名、分类或标签，例如 赌神 / 活动限定 / 随机事件…"
+            autocomplete="off"
+          />
+        </label>
+
+        <label class="search-panel" v-else>
+          <span>搜索事件</span>
+          <input
+            v-model="eventQuery"
+            name="event-search"
+            type="search"
+            placeholder="输入事件名、包编号或类型，例如 随机事件包 4 / 赌徒 / Debuff…"
+            autocomplete="off"
+          />
+        </label>
+
+        <div class="search-candidates" v-if="currentRoute === 'players' && hasPlayerQuery && !loading && !error && filteredPlayers.length">
           <button
             v-for="player in filteredPlayers"
             :key="`candidate-${player.name}`"
             class="candidate-chip ow-button ow-button-secondary"
             type="button"
-            @click="query = player.name"
+            @click="playerQuery = player.name"
           >
             <span class="candidate-name">{{ player.name }}</span>
             <span class="candidate-count">{{ player.titleCount }}</span>
           </button>
         </div>
-        <p class="search-candidates-empty" v-else-if="hasQuery && !loading && !error">
-          没有匹配到玩家，请尝试更短关键字或完整昵称。
-        </p>
       </section>
 
-      <section class="content-grid">
+      <section class="content-grid" v-if="currentRoute === 'titles'">
+        <article class="card ow-card spotlight-card">
+          <header class="card-header">
+            <p>称号详情</p>
+            <h2>{{ selectedTitle ? selectedTitle.label : '未命中称号' }}</h2>
+          </header>
+          <div v-if="loading" class="state-block">正在加载称号数据…</div>
+          <div v-else-if="error" class="state-block state-error">{{ error }}</div>
+          <div v-else-if="!selectedTitle" class="state-block">没有匹配的称号，请调整关键字。</div>
+          <div v-else class="spotlight-body">
+            <p class="player-meta">分类：{{ selectedTitle.category }}</p>
+            <p class="player-meta">条件：{{ selectedTitle.condition }}</p>
+            <p class="player-meta">持有玩家：{{ selectedTitleHolders.length }} 人</p>
+            <div class="search-candidates">
+              <span class="title-tag" v-for="tag in selectedTitle.tags || []" :key="`title-tag-${tag}`">{{ tag }}</span>
+              <span class="title-tag title-tag-retired" v-if="isRetiredTitle(selectedTitle)">不再发放</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card ow-card spotlight-card">
+          <header class="card-header">
+            <p>持有玩家</p>
+            <h2>{{ selectedTitleHolders.length }} 人</h2>
+          </header>
+          <div v-if="loading" class="state-block">正在匹配玩家数据…</div>
+          <div v-else-if="error" class="state-block state-error">当前无法显示玩家列表。</div>
+          <ul v-else-if="selectedTitleHolders.length" class="status-title-list holder-list">
+            <li v-for="holder in selectedTitleHolders" :key="`holder-${holder.name}`">
+              <span class="title-chip title-chip-owned">
+                <span class="title-head">
+                  <span class="title-label">{{ holder.name }}</span>
+                  <span class="title-tag">{{ holder.titleCount }} 称号</span>
+                </span>
+              </span>
+            </li>
+          </ul>
+          <div v-else class="state-block">暂无玩家持有该称号。</div>
+        </article>
+      </section>
+
+      <section class="catalog-panel card ow-card" v-if="currentRoute === 'events'">
+        <header class="card-header">
+          <p>随机事件包</p>
+          <h2>按版本分组</h2>
+        </header>
+        <div v-if="loading" class="state-block">正在加载事件数据…</div>
+        <div v-else-if="error" class="state-block state-error">{{ error }}</div>
+        <div v-else-if="!filteredEventPacks.length" class="state-block">没有匹配的事件，请调整关键字。</div>
+        <div v-else class="event-pack-list">
+          <article class="map-block" v-for="pack in filteredEventPacks" :key="`pack-${pack.id}`">
+            <header class="map-block-head">
+              <h3>{{ pack.labelZh }}</h3>
+              <span class="map-block-count">{{ pack.eventCount }}</span>
+            </header>
+            <div class="event-group-list">
+              <section class="event-group" v-for="group in eventGroups(pack)" :key="`group-${pack.id}-${group.type}`">
+                <p class="map-slot-group-title">{{ group.label }}</p>
+                <ul class="status-title-list">
+                  <li v-for="eventItem in group.events" :key="`event-${eventItem.type}-${eventItem.id}`">
+                    <span class="title-chip" :class="eventItem.type === 'buff' ? 'title-chip-owned' : 'title-chip-missing'">
+                      <span class="title-head">
+                        <span class="title-label">{{ eventItem.nameZh }}</span>
+                        <span class="title-tag">ID {{ eventItem.id }}</span>
+                        <span class="title-tag">时长 {{ eventItem.durationSec }}s</span>
+                        <span class="title-tag">权重 {{ eventItem.weight }}</span>
+                      </span>
+                      <span class="title-condition">{{ eventItem.descZh }}</span>
+                    </span>
+                  </li>
+                </ul>
+              </section>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-grid" v-if="currentRoute === 'players'">
         <article class="card ow-card spotlight-card">
           <header class="card-header">
             <p>查询结果</p>
@@ -384,7 +670,7 @@ watch(
 
           <div v-if="loading" class="state-block">正在加载称号数据…</div>
           <div v-else-if="error" class="state-block state-error">{{ error }}</div>
-          <div v-else-if="!hasQuery" class="spotlight-body">
+          <div v-else-if="!hasPlayerQuery" class="spotlight-body">
             <div class="player-heading">
               <div>
                 <p class="player-name">未选择玩家</p>
@@ -393,16 +679,12 @@ watch(
               <div class="player-badge">READY</div>
             </div>
           </div>
-          <div v-else-if="!showcasedPlayer" class="state-block">
-            没有找到匹配的玩家，试试缩短关键字或直接输入完整昵称。
-          </div>
+          <div v-else-if="!showcasedPlayer" class="state-block">没有找到匹配的玩家，试试缩短关键字或直接输入完整昵称。</div>
           <div v-else class="spotlight-body">
             <div class="player-heading">
               <div>
                 <p class="player-name">{{ showcasedPlayer.name }}</p>
-                <p class="player-meta">
-                  已获取 {{ groupedTitles.ownedCount }} / {{ visibleTitles.length }}
-                </p>
+                <p class="player-meta">已获取 {{ groupedTitles.ownedCount }} / {{ visibleTitles.length }}</p>
               </div>
               <div class="player-badge">LOCKED IN</div>
             </div>
@@ -410,7 +692,7 @@ watch(
         </article>
       </section>
 
-      <section class="catalog-panel card ow-card" v-if="hasQuery">
+      <section class="catalog-panel card ow-card" v-if="currentRoute === 'players' && hasPlayerQuery">
         <header class="card-header">
           <p>所有称号列表</p>
           <h2>已获取 / 未获取</h2>
@@ -442,13 +724,7 @@ watch(
                     :aria-controls="getSeriesBodyId('owned', seriesGroup.series)"
                   >
                     <span>{{ isSeriesExpanded('owned', ownedIndex, seriesGroup.series) ? '收起' : '展开' }}</span>
-                    <span
-                      class="series-toggle-icon"
-                      :class="isSeriesExpanded('owned', ownedIndex, seriesGroup.series) ? 'is-expanded' : ''"
-                      aria-hidden="true"
-                    >
-                      ▾
-                    </span>
+                    <span class="series-toggle-icon" :class="isSeriesExpanded('owned', ownedIndex, seriesGroup.series) ? 'is-expanded' : ''" aria-hidden="true">▾</span>
                   </button>
                 </header>
                 <div
@@ -463,9 +739,7 @@ watch(
                         <span class="title-head">
                           <span class="title-label">{{ title.label }}</span>
                           <span class="title-tag">{{ title.category }}</span>
-                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`owned-tag-${title.id}-${tag}`">
-                            {{ tag }}
-                          </span>
+                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`owned-tag-${title.id}-${tag}`">{{ tag }}</span>
                           <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
                         </span>
                         <span class="title-condition">{{ title.condition }}</span>
@@ -501,13 +775,7 @@ watch(
                     :aria-controls="getSeriesBodyId('missing', seriesGroup.series)"
                   >
                     <span>{{ isSeriesExpanded('missing', missingIndex, seriesGroup.series) ? '收起' : '展开' }}</span>
-                    <span
-                      class="series-toggle-icon"
-                      :class="isSeriesExpanded('missing', missingIndex, seriesGroup.series) ? 'is-expanded' : ''"
-                      aria-hidden="true"
-                    >
-                      ▾
-                    </span>
+                    <span class="series-toggle-icon" :class="isSeriesExpanded('missing', missingIndex, seriesGroup.series) ? 'is-expanded' : ''" aria-hidden="true">▾</span>
                   </button>
                 </header>
                 <div
@@ -522,9 +790,7 @@ watch(
                         <span class="title-head">
                           <span class="title-label">{{ title.label }}</span>
                           <span class="title-tag">{{ title.category }}</span>
-                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`missing-tag-${title.id}-${tag}`">
-                            {{ tag }}
-                          </span>
+                          <span class="title-tag title-tag-challenge" v-for="tag in title.tags || []" :key="`missing-tag-${title.id}-${tag}`">{{ tag }}</span>
                           <span class="title-tag title-tag-retired" v-if="isRetiredTitle(title)">不再发放</span>
                         </span>
                         <span class="title-condition">{{ title.condition }}</span>
@@ -539,7 +805,7 @@ watch(
         </div>
       </section>
 
-      <section class="catalog-panel card ow-card" v-if="hasQuery">
+      <section class="catalog-panel card ow-card" v-if="currentRoute === 'players' && hasPlayerQuery">
         <header class="card-header">
           <p>地图专属称号</p>
           <h2>已获取 / 未获取</h2>
@@ -575,9 +841,7 @@ watch(
                       <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
                         <span class="title-head">
                           <span class="title-label">{{ slot.label }}</span>
-                          <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
-                            {{ slot.owned ? '已获得' : '未获得' }}
-                          </span>
+                          <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">{{ slot.owned ? '已获得' : '未获得' }}</span>
                         </span>
                       </span>
                     </li>
@@ -588,9 +852,7 @@ watch(
                   <span class="title-chip" :class="mapItem.pioneerSlot.owned ? 'title-chip-owned' : 'title-chip-missing'">
                     <span class="title-head">
                       <span class="title-label">{{ mapItem.pioneerSlot.label }}</span>
-                      <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">
-                        {{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}
-                      </span>
+                      <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">{{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}</span>
                     </span>
                   </span>
                 </section>
@@ -613,12 +875,7 @@ watch(
                 <span class="series-toggle-icon" :class="completedMapsExpanded ? 'is-expanded' : ''" aria-hidden="true">▾</span>
               </button>
             </header>
-            <div
-              class="complete-map-body"
-              id="complete-map-list"
-              :class="completedMapsExpanded ? 'is-expanded' : 'is-collapsed'"
-              :aria-hidden="!completedMapsExpanded"
-            >
+            <div class="complete-map-body" id="complete-map-list" :class="completedMapsExpanded ? 'is-expanded' : 'is-collapsed'" :aria-hidden="!completedMapsExpanded">
               <div class="map-title-grid">
                 <article class="map-title-card map-title-card-complete" v-for="mapItem in completeMapTitles" :key="mapItem.mapKey">
                   <header class="map-title-head">
@@ -631,9 +888,7 @@ watch(
                         <span class="title-chip" :class="slot.owned ? 'title-chip-owned' : 'title-chip-missing'">
                           <span class="title-head">
                             <span class="title-label">{{ slot.label }}</span>
-                            <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">
-                              {{ slot.owned ? '已获得' : '未获得' }}
-                            </span>
+                            <span class="title-tag" :class="slot.owned ? 'map-status-owned' : 'map-status-missing'">{{ slot.owned ? '已获得' : '未获得' }}</span>
                           </span>
                         </span>
                       </li>
@@ -644,9 +899,7 @@ watch(
                     <span class="title-chip" :class="mapItem.pioneerSlot.owned ? 'title-chip-owned' : 'title-chip-missing'">
                       <span class="title-head">
                         <span class="title-label">{{ mapItem.pioneerSlot.label }}</span>
-                        <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">
-                          {{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}
-                        </span>
+                        <span class="title-tag" :class="mapItem.pioneerSlot.owned ? 'map-status-owned' : 'map-status-missing'">{{ mapItem.pioneerSlot.owned ? '已获得' : '未获得' }}</span>
                       </span>
                     </span>
                   </section>
@@ -657,9 +910,10 @@ watch(
         </div>
       </section>
 
-      <footer class="page-footer" v-if="meta">
-        <span>数据来源：{{ sourceDisplay }}</span>
-        <span>生成时间：{{ new Date(meta.generatedAt).toLocaleString('zh-CN') }}</span>
+      <footer class="page-footer" v-if="titleMeta || eventMeta">
+        <span>称号源：{{ sourceDisplay }}</span>
+        <span>事件源：{{ eventSourceDisplay }}</span>
+        <span>生成时间：{{ new Date((eventMeta?.generatedAt || titleMeta?.generatedAt) ?? Date.now()).toLocaleString('zh-CN') }}</span>
       </footer>
     </main>
   </div>

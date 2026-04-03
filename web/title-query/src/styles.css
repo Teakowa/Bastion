@@ -350,6 +350,38 @@ code {
   font-size: 0.83rem;
 }
 
+.route-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.82rem;
+}
+
+.route-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.route-link-idle {
+  border: 1px solid var(--ow-line-strong);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6f9ff;
+}
+
+.route-link-active {
+  border: 1px solid rgba(240, 100, 20, 0.74);
+  background: rgba(240, 100, 20, 0.22);
+  color: #ffe8d9;
+}
+
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -819,6 +851,26 @@ code {
   font-size: 0.85rem;
 }
 
+.holder-list {
+  margin-top: 0.82rem;
+}
+
+.event-pack-list {
+  margin-top: 0.84rem;
+  display: grid;
+  gap: 0.72rem;
+}
+
+.event-group-list {
+  margin-top: 0.58rem;
+  display: grid;
+  gap: 0.62rem;
+}
+
+.event-group .status-title-list {
+  gap: 0.45rem;
+}
+
 .map-section-stack {
   margin-top: 0.84rem;
   display: grid;
@@ -1090,6 +1142,18 @@ code {
   border-color: rgba(28, 43, 72, 0.35);
   background: rgba(255, 255, 255, 0.95);
   color: #1b2840;
+}
+
+:root[data-theme='light'] .route-link-idle {
+  border-color: rgba(28, 43, 72, 0.24);
+  background: rgba(28, 43, 72, 0.08);
+  color: var(--ow-text);
+}
+
+:root[data-theme='light'] .route-link-active {
+  border-color: rgba(214, 95, 31, 0.64);
+  background: rgba(240, 100, 20, 0.16);
+  color: #8a3e17;
 }
 
 :root[data-theme='light'] .player-badge {

@@ -95,8 +95,9 @@ pnpm run build:dev
 Title query page:
 
 ```bash
-pnpm run sync:title-data
+pnpm run sync:query-data
 pnpm run test:title-data-sync
+pnpm run test:event-data-sync
 pnpm run build:title-query
 ```
 
