@@ -1054,15 +1054,6 @@ code {
   color: rgba(211, 229, 255, 0.9);
 }
 
-.map-slot-group-pioneer {
-  border: 1px dashed rgba(255, 191, 120, 0.36);
-  border-radius: 10px;
-  padding: 0.45rem 0.5rem 0.5rem;
-  background:
-    linear-gradient(180deg, rgba(66, 44, 19, 0.34) 0%, rgba(17, 22, 31, 0.3) 100%),
-    linear-gradient(135deg, rgba(255, 174, 91, 0.12), transparent 62%);
-}
-
 .map-summary-item-pioneer {
   border-color: rgba(255, 178, 92, 0.52);
   background: rgba(255, 178, 92, 0.15);
@@ -1243,13 +1234,6 @@ code {
 
 :root[data-theme='light'] .map-slot-group-title {
   color: #5b6f91;
-}
-
-:root[data-theme='light'] .map-slot-group-pioneer {
-  border-color: rgba(212, 131, 49, 0.42);
-  background:
-    linear-gradient(180deg, rgba(255, 232, 205, 0.7) 0%, rgba(255, 247, 235, 0.92) 100%),
-    linear-gradient(135deg, rgba(233, 148, 63, 0.1), transparent 62%);
 }
 
 :root[data-theme='light'] .map-summary-item-pioneer {
