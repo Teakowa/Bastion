@@ -46,6 +46,8 @@ const eventMeta = ref(null);
 
 const expandedSeriesKeys = ref(new Set());
 const collapsedDefaultSeriesKeys = ref(new Set());
+const expandedEventGroupKeys = ref(new Set());
+const collapsedDefaultEventGroupKeys = ref(new Set());
 const completedMapsExpanded = ref(false);
 
 function normalizeRoute(hashValue) {
@@ -314,12 +316,28 @@ function getSeriesKey(groupType, seriesName) {
   return `${groupType}:${seriesName}`;
 }
 
+function getEventGroupKey(packId, groupType) {
+  return `${packId}:${groupType}`;
+}
+
 function getSeriesBodyId(groupType, seriesName) {
   const normalized = String(seriesName)
     .toLocaleLowerCase()
     .replace(/[^a-z0-9\u4e00-\u9fff]+/gi, '-')
     .replace(/^-+|-+$/g, '');
   return `series-body-${groupType}-${normalized || 'default'}`;
+}
+
+function getEventGroupBodyId(packId, groupType) {
+  const normalizedPackId = String(packId)
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fff]+/gi, '-')
+    .replace(/^-+|-+$/g, '');
+  const normalizedGroupType = String(groupType)
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fff]+/gi, '-')
+    .replace(/^-+|-+$/g, '');
+  return `event-group-body-${normalizedPackId || 'default'}-${normalizedGroupType || 'default'}`;
 }
 
 function isSeriesExpanded(groupType, index, seriesName) {
@@ -350,6 +368,37 @@ function toggleSeries(groupType, index, seriesName) {
     expandedSeriesKeys.value.add(seriesKey);
   } else {
     expandedSeriesKeys.value.delete(seriesKey);
+  }
+}
+
+function isEventGroupExpanded(packId, index, groupType) {
+  const groupKey = getEventGroupKey(packId, groupType);
+  if (collapsedDefaultEventGroupKeys.value.has(groupKey)) {
+    return false;
+  }
+  if (expandedEventGroupKeys.value.has(groupKey)) {
+    return true;
+  }
+  return index < 2;
+}
+
+function toggleEventGroup(packId, index, groupType) {
+  const groupKey = getEventGroupKey(packId, groupType);
+  const nextExpanded = !isEventGroupExpanded(packId, index, groupType);
+
+  if (index < 2) {
+    if (nextExpanded) {
+      collapsedDefaultEventGroupKeys.value.delete(groupKey);
+    } else {
+      collapsedDefaultEventGroupKeys.value.add(groupKey);
+    }
+    return;
+  }
+
+  if (nextExpanded) {
+    expandedEventGroupKeys.value.add(groupKey);
+  } else {
+    expandedEventGroupKeys.value.delete(groupKey);
   }
 }
 
@@ -828,22 +877,48 @@ watch(
               <span class="map-block-count">{{ pack.eventCount }}</span>
             </header>
             <div class="event-group-list">
-              <section class="event-group" v-for="group in eventGroups(pack)" :key="`group-${pack.id}-${group.type}`">
-                <p class="event-group-title">{{ group.label }}</p>
-                <ul class="event-item-list">
-                  <li v-for="eventItem in group.events" :key="`event-${eventItem.type}-${eventItem.id}`">
-                    <article class="event-item" :class="eventTypeClass(eventItem.type)">
-                      <p class="event-line">
-                        <span class="event-name">{{ eventItem.nameZh }}</span>
-                        <span class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</span>
-                      </p>
-                      <p class="event-tag-list">
-                        <span class="event-tag event-tag-duration">{{ eventItem.durationSec }}秒</span>
-                        <span class="event-tag event-tag-weight">权重 {{ eventItem.weight }}</span>
-                      </p>
-                    </article>
-                  </li>
-                </ul>
+              <section class="event-group" v-for="(group, groupIndex) in eventGroups(pack)" :key="`group-${pack.id}-${group.type}`">
+                <header class="event-group-head">
+                  <p class="event-group-title">{{ group.label }}</p>
+                  <span class="series-count">{{ group.events.length }}</span>
+                  <button
+                    type="button"
+                    class="series-toggle ow-button ow-button-aux"
+                    @click="toggleEventGroup(pack.id, groupIndex, group.type)"
+                    :aria-expanded="isEventGroupExpanded(pack.id, groupIndex, group.type)"
+                    :aria-controls="getEventGroupBodyId(pack.id, group.type)"
+                  >
+                    <span>{{ isEventGroupExpanded(pack.id, groupIndex, group.type) ? '收起' : '展开' }}</span>
+                    <span
+                      class="series-toggle-icon"
+                      :class="isEventGroupExpanded(pack.id, groupIndex, group.type) ? 'is-expanded' : ''"
+                      aria-hidden="true"
+                    >
+                      ▾
+                    </span>
+                  </button>
+                </header>
+                <div
+                  class="event-group-body"
+                  :id="getEventGroupBodyId(pack.id, group.type)"
+                  :class="isEventGroupExpanded(pack.id, groupIndex, group.type) ? 'is-expanded' : 'is-collapsed'"
+                  :aria-hidden="!isEventGroupExpanded(pack.id, groupIndex, group.type)"
+                >
+                  <ul class="event-item-list">
+                    <li v-for="eventItem in group.events" :key="`event-${eventItem.type}-${eventItem.id}`">
+                      <article class="event-item" :class="eventTypeClass(eventItem.type)">
+                        <p class="event-line">
+                          <span class="event-name">{{ eventItem.nameZh }}</span>
+                          <span class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</span>
+                        </p>
+                        <p class="event-tag-list">
+                          <span class="event-tag event-tag-duration">{{ eventItem.durationSec }}秒</span>
+                          <span class="event-tag event-tag-weight">权重 {{ eventItem.weight }}</span>
+                        </p>
+                      </article>
+                    </li>
+                  </ul>
+                </div>
               </section>
             </div>
           </article>

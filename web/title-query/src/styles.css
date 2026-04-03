@@ -870,12 +870,40 @@ code {
   gap: 0.62rem;
 }
 
+.event-group-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
 .event-group-title {
-  margin: 0 0 0.35rem;
+  margin: 0;
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: rgba(211, 229, 255, 0.9);
+}
+
+.event-group-body {
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+  transition:
+    max-height var(--ow-time-mid) ease,
+    opacity var(--ow-time-fast) ease,
+    margin var(--ow-time-fast) ease;
+}
+
+.event-group-body.is-expanded {
+  opacity: 1;
+  overflow: visible;
+  max-height: none;
+  margin-top: 0.35rem;
+  transition:
+    opacity var(--ow-time-fast) ease,
+    margin var(--ow-time-fast) ease;
 }
 
 .event-item-list {
