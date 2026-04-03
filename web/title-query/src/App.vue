@@ -274,6 +274,20 @@ function eventGroups(pack) {
     .filter((group) => group.events.length > 0);
 }
 
+function eventTypeClass(type) {
+  if (type === 'buff') {
+    return 'event-item-buff';
+  }
+  if (type === 'debuff') {
+    return 'event-item-debuff';
+  }
+  return 'event-item-mech';
+}
+
+function normalizedDesc(value) {
+  return String(value || '').replace(/\\n/g, '\n');
+}
+
 const sourceDisplay = computed(() => {
   if (!titleMeta.value) {
     return '躲避堡垒 3';
@@ -810,18 +824,17 @@ watch(
             </header>
             <div class="event-group-list">
               <section class="event-group" v-for="group in eventGroups(pack)" :key="`group-${pack.id}-${group.type}`">
-                <p class="map-slot-group-title">{{ group.label }}</p>
-                <ul class="status-title-list">
+                <p class="event-group-title">{{ group.label }}</p>
+                <ul class="event-item-list">
                   <li v-for="eventItem in group.events" :key="`event-${eventItem.type}-${eventItem.id}`">
-                    <span class="title-chip" :class="eventItem.type === 'buff' ? 'title-chip-owned' : 'title-chip-missing'">
-                      <span class="title-head">
-                        <span class="title-label">{{ eventItem.nameZh }}</span>
-                        <span class="title-tag">ID {{ eventItem.id }}</span>
-                        <span class="title-tag">时长 {{ eventItem.durationSec }}s</span>
-                        <span class="title-tag">权重 {{ eventItem.weight }}</span>
-                      </span>
-                      <span class="title-condition">{{ eventItem.descZh }}</span>
-                    </span>
+                    <article class="event-item" :class="eventTypeClass(eventItem.type)">
+                      <p class="event-line">
+                        <span class="event-name">{{ eventItem.nameZh }}</span>
+                        <span class="event-meta">{{ eventItem.durationSec }}s</span>
+                        <span class="event-meta">权重 {{ eventItem.weight }}</span>
+                      </p>
+                      <p class="event-desc">{{ normalizedDesc(eventItem.descZh) }}</p>
+                    </article>
                   </li>
                 </ul>
               </section>
