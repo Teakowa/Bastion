@@ -285,7 +285,11 @@ function eventTypeClass(type) {
 }
 
 function normalizedDesc(value) {
-  return String(value || '').replace(/\\n/g, '\n');
+  return String(value || '')
+    .replace(/\\n/g, ' ')
+    .replace(/\r?\n/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 const sourceDisplay = computed(() => {
@@ -835,7 +839,7 @@ watch(
                         <span class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</span>
                       </p>
                       <p class="event-tag-list">
-                        <span class="event-tag event-tag-duration">{{ eventItem.durationSec }}s</span>
+                        <span class="event-tag event-tag-duration">{{ eventItem.durationSec }}秒</span>
                         <span class="event-tag event-tag-weight">权重 {{ eventItem.weight }}</span>
                       </p>
                     </article>
