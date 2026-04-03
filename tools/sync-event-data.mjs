@@ -11,6 +11,7 @@ const WEB_OUTPUT_FILE = path.resolve(__dirname, '../web/title-query/public/data/
 const MANIFEST_OUTPUT_FILE = path.resolve(__dirname, '../src/constants/event_manifest.opy');
 const EVENT_CONFIG_FILE = path.resolve(__dirname, '../src/config/eventConfig.opy');
 const EVENT_CONFIG_DEV_FILE = path.resolve(__dirname, '../src/config/eventConfigDev.opy');
+const EVENT_CONSTANTS_FILE = path.resolve(__dirname, '../src/constants/event_constants.opy');
 const EVENT_ID_FILES = {
   buff: path.resolve(__dirname, '../src/constants/event_ids_buff.opy'),
   debuff: path.resolve(__dirname, '../src/constants/event_ids_debuff.opy'),
@@ -23,6 +24,11 @@ const EVENT_ENUM_NAMES = {
 };
 const EVENT_TYPES = ['buff', 'debuff', 'mech'];
 const ALLOWED_AVAILABILITY = new Set(['active', 'retired']);
+const BUTTON_LABELS_ZH = {
+  'Button.RELOAD': '换弹键',
+  'Button.INTERACT': '互动键',
+  'Button.JUMP': '跳跃键'
+};
 
 function ensureString(value, message) {
   if (typeof value !== 'string' || value.trim() === '') {
@@ -114,6 +120,356 @@ function parseConfigRegistrationKeys(configText) {
   }
 
   return result;
+}
+
+function splitTopLevelComma(text) {
+  const items = [];
+  let depthParen = 0;
+  let depthBracket = 0;
+  let depthBrace = 0;
+  let start = 0;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+
+    if (char === '(') {
+      depthParen += 1;
+      continue;
+    }
+    if (char === ')') {
+      depthParen = Math.max(0, depthParen - 1);
+      continue;
+    }
+    if (char === '[') {
+      depthBracket += 1;
+      continue;
+    }
+    if (char === ']') {
+      depthBracket = Math.max(0, depthBracket - 1);
+      continue;
+    }
+    if (char === '{') {
+      depthBrace += 1;
+      continue;
+    }
+    if (char === '}') {
+      depthBrace = Math.max(0, depthBrace - 1);
+      continue;
+    }
+    if (char === ',' && depthParen === 0 && depthBracket === 0 && depthBrace === 0) {
+      items.push(text.slice(start, index).trim());
+      start = index + 1;
+    }
+  }
+
+  const tail = text.slice(start).trim();
+  if (tail.length > 0) {
+    items.push(tail);
+  }
+  return items;
+}
+
+function parseEventDescriptionFormatArgs(configText) {
+  const matchRegex = /(buffEvent|debuffEvent|mechEvent)\[\s*(BuffEventId|DebuffEventId|MechEventId)\.([A-Z0-9_]+)\s*\]\s*=\s*\[([\s\S]*?)\]/g;
+  const result = new Map();
+
+  for (const match of configText.matchAll(matchRegex)) {
+    const eventKey = match[3];
+    const fields = splitTopLevelComma(match[4]);
+    if (fields.length < 2) {
+      continue;
+    }
+
+    const descExpr = fields[1].replace(/\s+/g, ' ').trim();
+    if (!descExpr.startsWith('STR_') || !descExpr.includes('_DESC')) {
+      continue;
+    }
+
+    const formatMatch = descExpr.match(/^STR_[A-Z0-9_]+_DESC\.format\(([\s\S]*)\)$/);
+    if (!formatMatch) {
+      result.set(eventKey, []);
+      continue;
+    }
+
+    result.set(eventKey, splitTopLevelComma(formatMatch[1]));
+  }
+
+  return result;
+}
+
+function parseEventConstantsRawMap(constantsText) {
+  const constants = new Map();
+
+  for (const line of constantsText.split('\n')) {
+    const match = line.match(/^#!define\s+(EVT_[A-Z0-9_]+)\s+(.+)$/);
+    if (!match) {
+      continue;
+    }
+
+    const key = match[1];
+    const expr = match[2].trim();
+    constants.set(key, expr);
+  }
+
+  return constants;
+}
+
+function tokenizeMathExpression(expression) {
+  const tokens = [];
+  let index = 0;
+
+  while (index < expression.length) {
+    const char = expression[index];
+
+    if (/\s/.test(char)) {
+      index += 1;
+      continue;
+    }
+
+    if ('+-*/(),'.includes(char)) {
+      tokens.push({ type: char, value: char });
+      index += 1;
+      continue;
+    }
+
+    if (/[0-9.]/.test(char)) {
+      let end = index + 1;
+      while (end < expression.length && /[0-9.]/.test(expression[end])) {
+        end += 1;
+      }
+      tokens.push({ type: 'number', value: Number(expression.slice(index, end)) });
+      index = end;
+      continue;
+    }
+
+    if (/[A-Za-z_]/.test(char)) {
+      let end = index + 1;
+      while (end < expression.length && /[A-Za-z0-9_.]/.test(expression[end])) {
+        end += 1;
+      }
+      tokens.push({ type: 'identifier', value: expression.slice(index, end) });
+      index = end;
+      continue;
+    }
+
+    throw new Error(`Unsupported token "${char}" in expression: ${expression}`);
+  }
+
+  return tokens;
+}
+
+function evaluateNumericExpression(expression, resolveIdentifier) {
+  const tokens = tokenizeMathExpression(expression);
+  let cursor = 0;
+
+  function peek() {
+    return tokens[cursor] || null;
+  }
+
+  function consume(type) {
+    const token = tokens[cursor];
+    if (!token || token.type !== type) {
+      throw new Error(`Expected token ${type} in expression: ${expression}`);
+    }
+    cursor += 1;
+    return token;
+  }
+
+  function parseExpression() {
+    let value = parseTerm();
+    while (true) {
+      const token = peek();
+      if (!token || (token.type !== '+' && token.type !== '-')) {
+        break;
+      }
+      cursor += 1;
+      const rhs = parseTerm();
+      value = token.type === '+' ? value + rhs : value - rhs;
+    }
+    return value;
+  }
+
+  function parseTerm() {
+    let value = parseUnary();
+    while (true) {
+      const token = peek();
+      if (!token || (token.type !== '*' && token.type !== '/')) {
+        break;
+      }
+      cursor += 1;
+      const rhs = parseUnary();
+      value = token.type === '*' ? value * rhs : value / rhs;
+    }
+    return value;
+  }
+
+  function parseUnary() {
+    const token = peek();
+    if (token?.type === '+') {
+      cursor += 1;
+      return parseUnary();
+    }
+    if (token?.type === '-') {
+      cursor += 1;
+      return -parseUnary();
+    }
+    return parsePrimary();
+  }
+
+  function parsePrimary() {
+    const token = peek();
+    if (!token) {
+      throw new Error(`Unexpected end of expression: ${expression}`);
+    }
+
+    if (token.type === 'number') {
+      cursor += 1;
+      return token.value;
+    }
+
+    if (token.type === '(') {
+      consume('(');
+      const value = parseExpression();
+      consume(')');
+      return value;
+    }
+
+    if (token.type === 'identifier') {
+      cursor += 1;
+      const identifier = token.value;
+      if (peek()?.type === '(') {
+        consume('(');
+        const args = [];
+        if (peek()?.type !== ')') {
+          args.push(parseExpression());
+          while (peek()?.type === ',') {
+            consume(',');
+            args.push(parseExpression());
+          }
+        }
+        consume(')');
+
+        if (identifier === 'percent') {
+          if (args.length !== 1) {
+            throw new Error(`percent() expects 1 argument: ${expression}`);
+          }
+          return args[0] * 100;
+        }
+        if (identifier === 'negToPos') {
+          if (args.length !== 1) {
+            throw new Error(`negToPos() expects 1 argument: ${expression}`);
+          }
+          return args[0] * -1;
+        }
+        throw new Error(`Unsupported function ${identifier} in expression: ${expression}`);
+      }
+
+      return resolveIdentifier(identifier);
+    }
+
+    throw new Error(`Unexpected token "${token.type}" in expression: ${expression}`);
+  }
+
+  const value = parseExpression();
+  if (cursor !== tokens.length) {
+    throw new Error(`Unexpected trailing tokens in expression: ${expression}`);
+  }
+
+  return value;
+}
+
+function formatCompiledValue(value) {
+  if (typeof value === 'string') {
+    return value;
+  }
+
+  if (!Number.isFinite(value)) {
+    throw new Error(`Invalid numeric value in compiled event description: ${value}`);
+  }
+
+  if (Math.abs(value - Math.round(value)) < 1e-9) {
+    return String(Math.round(value));
+  }
+
+  return value.toFixed(6).replace(/\.?0+$/, '');
+}
+
+function buildEventDescriptionCompiler({ eventConfigSource, eventConfigDevSource, eventConstantsSource }) {
+  const prodArgs = parseEventDescriptionFormatArgs(eventConfigSource);
+  const devArgs = parseEventDescriptionFormatArgs(eventConfigDevSource);
+  const argsByEventKey = new Map(devArgs);
+  for (const [eventKey, args] of prodArgs.entries()) {
+    argsByEventKey.set(eventKey, args);
+  }
+
+  const rawConstants = parseEventConstantsRawMap(eventConstantsSource);
+  const resolvedConstants = new Map();
+  const resolving = new Set();
+
+  function resolveConstant(name) {
+    if (resolvedConstants.has(name)) {
+      return resolvedConstants.get(name);
+    }
+    const expr = rawConstants.get(name);
+    if (!expr) {
+      throw new Error(`Missing constant ${name} required by event description compiler.`);
+    }
+    if (resolving.has(name)) {
+      throw new Error(`Circular constant reference detected: ${name}`);
+    }
+
+    resolving.add(name);
+    const value = evaluateNumericExpression(expr, (identifier) => {
+      if (!identifier.startsWith('EVT_')) {
+        throw new Error(`Unsupported identifier ${identifier} in constant ${name}`);
+      }
+      return resolveConstant(identifier);
+    });
+    resolving.delete(name);
+    resolvedConstants.set(name, value);
+    return value;
+  }
+
+  function evaluateFormatArgument(rawExpr) {
+    const expr = String(rawExpr).trim();
+    if (!expr) {
+      return '';
+    }
+    if (BUTTON_LABELS_ZH[expr]) {
+      return BUTTON_LABELS_ZH[expr];
+    }
+
+    const numericValue = evaluateNumericExpression(expr, (identifier) => {
+      if (!identifier.startsWith('EVT_')) {
+        throw new Error(`Unsupported identifier ${identifier} in format argument ${expr}`);
+      }
+      return resolveConstant(identifier);
+    });
+    return formatCompiledValue(numericValue);
+  }
+
+  function applyTemplate(template, eventKey, values) {
+    const placeholderRegex = /\{(\d+)\}/g;
+    let match;
+    while ((match = placeholderRegex.exec(template)) != null) {
+      const index = Number(match[1]);
+      if (!Number.isInteger(index) || index < 0 || index >= values.length) {
+        throw new Error(`Placeholder {${match[1]}} in ${eventKey} exceeds provided format args.`);
+      }
+    }
+
+    return template.replace(placeholderRegex, (_, indexText) => values[Number(indexText)]);
+  }
+
+  return function compileDescription(eventItem) {
+    const args = argsByEventKey.get(eventItem.key) ?? [];
+    if (args.length === 0) {
+      return eventItem.descZh;
+    }
+
+    const compiledValues = args.map((arg) => evaluateFormatArgument(arg));
+    return applyTemplate(eventItem.descZh, eventItem.key, compiledValues);
+  };
 }
 
 function normalizeTags(rawTags, eventIndex) {
@@ -321,7 +677,8 @@ function ensureSourceMatchesConfigRegistrations(sourceData, configRegistrations)
   }
 }
 
-function buildWebPayload(sourceData, sourceVersion) {
+function buildWebPayload(sourceData, sourceVersion, compilerInputs) {
+  const compileDescription = buildEventDescriptionCompiler(compilerInputs);
   const packById = new Map(sourceData.packs.map((pack) => [pack.id, pack]));
   const events = sourceData.events.map((eventItem) => ({
     key: eventItem.key,
@@ -330,6 +687,7 @@ function buildWebPayload(sourceData, sourceVersion) {
     pack: eventItem.pack,
     nameZh: eventItem.nameZh,
     descZh: eventItem.descZh,
+    descZhCompiled: compileDescription(eventItem),
     durationSec: eventItem.durationSec,
     weight: eventItem.weight,
     ...(eventItem.tags.length ? { tags: eventItem.tags } : {}),
@@ -425,11 +783,24 @@ export async function loadEventSource(sourceFile = SOURCE_FILE) {
 export async function generateEventQueryData({
   sourceFile = SOURCE_FILE,
   envFile = ENV_FILE,
+  eventConfigFile = EVENT_CONFIG_FILE,
+  eventConfigDevFile = EVENT_CONFIG_DEV_FILE,
+  eventConstantsFile = EVENT_CONSTANTS_FILE,
   outputFile = WEB_OUTPUT_FILE
 } = {}) {
-  const [sourceData, envSource] = await Promise.all([loadEventSource(sourceFile), fs.readFile(envFile, 'utf8')]);
+  const [sourceData, envSource, eventConfigSource, eventConfigDevSource, eventConstantsSource] = await Promise.all([
+    loadEventSource(sourceFile),
+    fs.readFile(envFile, 'utf8'),
+    fs.readFile(eventConfigFile, 'utf8'),
+    fs.readFile(eventConfigDevFile, 'utf8'),
+    fs.readFile(eventConstantsFile, 'utf8')
+  ]);
   const sourceVersion = parseMainVersion(envSource);
-  const webPayload = buildWebPayload(sourceData, sourceVersion);
+  const webPayload = buildWebPayload(sourceData, sourceVersion, {
+    eventConfigSource,
+    eventConfigDevSource,
+    eventConstantsSource
+  });
 
   await fs.mkdir(path.dirname(outputFile), { recursive: true });
   await fs.writeFile(outputFile, `${JSON.stringify(webPayload, null, 2)}\n`, 'utf8');
@@ -444,14 +815,16 @@ export async function syncEventData({
   manifestOutputFile = MANIFEST_OUTPUT_FILE,
   eventConfigFile = EVENT_CONFIG_FILE,
   eventConfigDevFile = EVENT_CONFIG_DEV_FILE,
+  eventConstantsFile = EVENT_CONSTANTS_FILE,
   eventIdFiles = EVENT_ID_FILES,
   dryRun = false
 } = {}) {
-  const [sourceData, envSource, eventConfigSource, eventConfigDevSource, ...eventIdSources] = await Promise.all([
+  const [sourceData, envSource, eventConfigSource, eventConfigDevSource, eventConstantsSource, ...eventIdSources] = await Promise.all([
     loadEventSource(sourceFile),
     fs.readFile(envFile, 'utf8'),
     fs.readFile(eventConfigFile, 'utf8'),
     fs.readFile(eventConfigDevFile, 'utf8'),
+    fs.readFile(eventConstantsFile, 'utf8'),
     ...EVENT_TYPES.map((type) => fs.readFile(eventIdFiles[type], 'utf8'))
   ]);
 
@@ -472,7 +845,11 @@ export async function syncEventData({
   };
   ensureSourceMatchesConfigRegistrations(sourceData, mergedRegistrations);
 
-  const webPayload = buildWebPayload(sourceData, sourceVersion);
+  const webPayload = buildWebPayload(sourceData, sourceVersion, {
+    eventConfigSource,
+    eventConfigDevSource,
+    eventConstantsSource
+  });
   const webText = `${JSON.stringify(webPayload, null, 2)}\n`;
   const manifestText = renderEventManifest(sourceData, sourceVersion);
 

@@ -118,6 +118,14 @@ test('generates event web payload and manifest', async () => {
   assert.ok(payload.events.length > 0);
   assert.ok(payload.packs.length > 0);
   assert.equal(payload.meta.sourceFile, 'data/event-source.json');
+  const galeBlessing = payload.events.find((eventItem) => eventItem.key === 'GALE_BLESSING');
+  assert.ok(galeBlessing);
+  assert.equal(galeBlessing.descZhCompiled, '移动速度提高50%');
+  assert.ok(!/\{\d+\}/.test(galeBlessing.descZhCompiled));
+
+  const symbiosis = payload.events.find((eventItem) => eventItem.key === 'SYMBIOSIS');
+  assert.ok(symbiosis);
+  assert.match(symbiosis.descZhCompiled, /互动键/);
 
   const syncResult = await syncEventData({
     sourceFile,

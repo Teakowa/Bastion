@@ -833,7 +833,7 @@ watch(
                         <span class="event-meta">{{ eventItem.durationSec }}s</span>
                         <span class="event-meta">权重 {{ eventItem.weight }}</span>
                       </p>
-                      <p class="event-desc">{{ normalizedDesc(eventItem.descZh) }}</p>
+                      <p class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</p>
                     </article>
                   </li>
                 </ul>
