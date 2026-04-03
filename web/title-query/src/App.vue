@@ -816,8 +816,7 @@ watch(
 
       <section class="catalog-panel card ow-card" v-if="currentRoute === 'events'">
         <header class="card-header">
-          <p>随机事件包</p>
-          <h2>按版本分组</h2>
+          <h2>随机事件</h2>
         </header>
         <div v-if="loading" class="state-block">正在加载事件数据…</div>
         <div v-else-if="error" class="state-block state-error">{{ error }}</div>
