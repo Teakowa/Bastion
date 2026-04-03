@@ -943,27 +943,56 @@ code {
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.42rem;
+  width: 100%;
 }
 
 .event-name {
   color: #fff;
   font-size: 0.92rem;
   font-weight: 700;
-}
-
-.event-meta {
-  color: #e6efff;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .event-desc {
   margin: 0;
   color: var(--ow-text-muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   line-height: 1.45;
   white-space: pre-line;
+}
+
+.event-tag-list {
+  margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+.event-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #e9f1ff;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  padding: 0.16rem 0.44rem;
+}
+
+.event-tag-duration {
+  border-color: rgba(96, 188, 255, 0.62);
+  color: #def2ff;
+  background: rgba(28, 91, 145, 0.72);
+}
+
+.event-tag-weight {
+  border-color: rgba(255, 176, 101, 0.62);
+  color: #ffe8cf;
+  background: rgba(137, 76, 22, 0.7);
 }
 
 .map-section-stack {
@@ -1370,12 +1399,26 @@ code {
   color: #20345b;
 }
 
-:root[data-theme='light'] .event-meta {
-  color: #355382;
-}
-
 :root[data-theme='light'] .event-desc {
   color: var(--ow-text-soft);
+}
+
+:root[data-theme='light'] .event-tag {
+  border-color: rgba(28, 43, 72, 0.24);
+  background: rgba(28, 43, 72, 0.08);
+  color: #304569;
+}
+
+:root[data-theme='light'] .event-tag-duration {
+  border-color: rgba(35, 129, 201, 0.48);
+  background: rgba(58, 144, 209, 0.14);
+  color: #1e5c89;
+}
+
+:root[data-theme='light'] .event-tag-weight {
+  border-color: rgba(212, 131, 49, 0.44);
+  background: rgba(255, 203, 145, 0.28);
+  color: #7c461a;
 }
 
 :root[data-theme='light'] .title-condition {
@@ -1445,6 +1488,32 @@ code {
 
   .player-name-row {
     gap: 0.45rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .event-item {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.6rem;
+  }
+
+  .event-line {
+    flex: 1;
+    min-width: 0;
+    gap: 0.5rem;
+  }
+
+  .event-desc {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .event-tag-list {
+    flex-shrink: 0;
+    justify-content: flex-end;
+    align-self: flex-start;
   }
 }
 

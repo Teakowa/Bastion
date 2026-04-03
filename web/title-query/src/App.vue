@@ -832,10 +832,12 @@ watch(
                     <article class="event-item" :class="eventTypeClass(eventItem.type)">
                       <p class="event-line">
                         <span class="event-name">{{ eventItem.nameZh }}</span>
-                        <span class="event-meta">{{ eventItem.durationSec }}s</span>
-                        <span class="event-meta">权重 {{ eventItem.weight }}</span>
+                        <span class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</span>
                       </p>
-                      <p class="event-desc">{{ normalizedDesc(eventItem.descZhCompiled || eventItem.descZh) }}</p>
+                      <p class="event-tag-list">
+                        <span class="event-tag event-tag-duration">{{ eventItem.durationSec }}s</span>
+                        <span class="event-tag event-tag-weight">权重 {{ eventItem.weight }}</span>
+                      </p>
                     </article>
                   </li>
                 </ul>
