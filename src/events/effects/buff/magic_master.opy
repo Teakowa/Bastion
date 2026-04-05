@@ -4,10 +4,19 @@
 rule "[VishkarEvent]: 魔术大师":
     @Event eachPlayer
     @Team 1
-    @Condition all([dlcVishkarEvent, eventPlayer.hasSpawned(), eventPlayer.eventType == 0, eventPlayer.eventId == BuffEventId.MAGIC_MASTER]) == true
+    @Condition all([
+        dlcVishkarEvent,
+        eventPlayer.hasSpawned(),
+        eventPlayer.eventType == 0,
+        eventPlayer.eventId == BuffEventId.MAGIC_MASTER,
+        eventPlayer.isCommunicatingEmote() == true
+    ]) == true
 
-    eventPlayer.targetSilence = eventPlayer.isCommunicatingEmote()
-    wait(0.25)
-    if ruleCondition:
-        loop()
+    eventPlayer.targetSilence = true
+    if eventPlayer.eventEffect == null:
+        createEffect(getAllPlayers(), Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+        eventPlayer.eventEffect = getLastCreatedEntity()
+    waitUntil(eventPlayer.isCommunicatingEmote() == false, eventPlayer.eventDuration)
     eventPlayer.targetSilence = false
+    clearEventEffect()
+    wait(0.1)

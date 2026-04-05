@@ -198,11 +198,11 @@ rule "initialize event array":
     buffEventId.append(BuffEventId.TENACITY)
 
     lbl_109:
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_BUFF, STR_EVT_BUFF_29_TITLE, true, BuffEventId.MAGIC_MASTER):
-        goto lbl_33
+    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_5_BUFF, STR_EVT_BUFF_29_TITLE, true, BuffEventId.MAGIC_MASTER):
+        goto lbl_123
     buffEvent[BuffEventId.MAGIC_MASTER] = [STR_EVT_BUFF_29_TITLE, STR_EVT_BUFF_29_DESC, EVT_BUFF_29_DURATION, EVT_BUFF_29_WEIGHT]
     buffEventId.append(BuffEventId.MAGIC_MASTER)
-    lbl_33:
+    lbl_123:
     
     # ================================================
     # 减益事件 (Debuff Events)
