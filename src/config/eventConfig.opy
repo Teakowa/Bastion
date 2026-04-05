@@ -358,7 +358,6 @@ rule "initialize event array":
     mechEvent[MechEventId.TRINITY_SSR] = [STR_EVT_MECH_14_TITLE, STR_EVT_MECH_14_DESC.format(100 / EVT_MECH_14_DMG_REDUCE_DIVISOR, EVT_MECH_14_SPEED_FACTOR, EVT_MECH_14_INTERVAL / EVT_MECH_14_HEART_STEEL_PER_TICK), EVT_MECH_14_DURATION, EVT_MECH_14_WEIGHT]
     mechEventId.append(MechEventId.TRINITY_SSR)
 
-
     lbl_3:
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK, STR_CAT_RANDOM_PACK_5, true, 1):
         goto lbl_4
