@@ -850,7 +850,7 @@
 # Duration（秒）
 #!define EVT_MECH_15_DURATION 60
 # Weight（权重）
-#!define EVT_MECH_15_WEIGHT 0.5
+#!define EVT_MECH_15_WEIGHT 0.3
 # 长按判定时长（秒）
 #!define EVT_MECH_15_HOLD_TIME 1
 # 单次结算后冷却间隔（秒）
