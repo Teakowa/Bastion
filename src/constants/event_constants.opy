@@ -754,12 +754,6 @@
 # 提示文本：合约生效的“未来 N 个事件”
 #!define EVT_MECH_8_CONTRACT_EVENTS 3
 
-# --- ID 9 (Mech): 命运共同体 ---
-# Duration（秒）
-#!define EVT_MECH_9_DURATION 5
-# Weight（权重）
-#!define EVT_MECH_9_WEIGHT 0.8
-
 # --- ID 10 (Mech): 作弊：跳过 ---
 # Duration（秒）
 #!define EVT_MECH_10_DURATION 30

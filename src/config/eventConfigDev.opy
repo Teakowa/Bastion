@@ -515,12 +515,6 @@ rule "initialize event array":
     mechEventId.append(MechEventId.GAMBLER_SHORT_INVESTMENT)
     lbl_116:
 
-    if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_9_TITLE, true, MechEventId.FATE_SYNC):
-        goto lbl_117
-    mechEvent[MechEventId.FATE_SYNC] = [STR_EVT_MECH_9_TITLE, STR_EVT_MECH_9_DESC, EVT_MECH_9_DURATION, EVT_MECH_9_WEIGHT]
-    mechEventId.append(MechEventId.FATE_SYNC)
-    lbl_117:
-
     if not createWorkshopSettingBool(STR_CAT_RANDOM_PACK_4_MECH, STR_EVT_MECH_10_TITLE, true, MechEventId.CHEAT_SKIP_HERO):
         goto lbl_118
     mechEvent[MechEventId.CHEAT_SKIP_HERO] = [STR_EVT_MECH_10_TITLE, STR_EVT_MECH_10_DESC.format(Button.RELOAD), EVT_MECH_10_DURATION, EVT_MECH_10_WEIGHT]

@@ -687,17 +687,6 @@
       "availability": "active"
     },
     {
-      "key": "FATE_SYNC",
-      "type": "mech",
-      "id": 9,
-      "pack": 4,
-      "nameZh": "命运共同体",
-      "descZh": "与随机一名友方共享下一次抽取的事件类别",
-      "durationSec": 5,
-      "weight": 0.8,
-      "availability": "active"
-    },
-    {
       "key": "CHEAT_SKIP_HERO",
       "type": "mech",
       "id": 10,

@@ -202,8 +202,6 @@
 #!define STR_EVT_MECH_7_DESC "Hold {0}: Lose 10% Max HP permanently. Next event guaranteed Buff."
 #!define STR_EVT_MECH_8_TITLE "Gambler: Short Term"
 #!define STR_EVT_MECH_8_DESC "Hold {0}: Lock 3 Debuffs.\n75% chance to gain 4 Heartsteel stacks."
-#!define STR_EVT_MECH_9_TITLE "Shared Fate"
-#!define STR_EVT_MECH_9_DESC "Share events with a random ally."
 #!define STR_EVT_MECH_10_TITLE "Cheat: Skip"
 #!define STR_EVT_MECH_10_DESC "Hold {0}: Skip current hero (Doesn't count for challenge)."
 #!define STR_EVT_MECH_11_TITLE "Matryoshka"

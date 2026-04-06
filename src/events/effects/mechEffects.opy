@@ -15,7 +15,6 @@
 #!include "mech/jump_thrust.opy"
 #!include "mech/gambler_speed_challenge.opy"
 #!include "mech/cheat_card_counting.opy"
-#!include "mech/fate_sync.opy"
 #!include "mech/cheat_skip_hero.opy"
 #!include "mech/nesting_doll.opy"
 #!include "mech/gambler_long_investment.opy"

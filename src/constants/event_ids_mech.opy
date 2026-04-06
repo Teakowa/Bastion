@@ -22,8 +22,6 @@ enum MechEventId:
     CHEAT_CARD_COUNTING
     # legacy numeric id: 8
     GAMBLER_SHORT_INVESTMENT
-    # legacy numeric id: 9
-    FATE_SYNC
     # legacy numeric id: 10
     CHEAT_SKIP_HERO
     # legacy numeric id: 11

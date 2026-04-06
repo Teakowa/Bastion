@@ -208,8 +208,6 @@
 #!define STR_EVT_MECH_7_DESC "长按{0}永久损失{1}层心之钢（约{2}%最大生命值）\n下个事件必为增益"
 #!define STR_EVT_MECH_8_TITLE "赌徒：短期投资"
 #!define STR_EVT_MECH_8_DESC "长按{0}锁定{1}个减益\n{2}%概率获得{3}层心之钢"
-#!define STR_EVT_MECH_9_TITLE "命运共同体"
-#!define STR_EVT_MECH_9_DESC "与随机一名友方共享下一次抽取的事件类别"
 #!define STR_EVT_MECH_10_TITLE "作弊：跳过"
 #!define STR_EVT_MECH_10_DESC "长按{0}跳过当前英雄且不计入挑战进度"
 #!define STR_EVT_MECH_11_TITLE "俄罗斯套娃"
