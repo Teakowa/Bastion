@@ -349,7 +349,7 @@
       "descZh": "获得{0}%击退抵抗\\n生命值低于{1}%时，回复至{3}%生命值\\n{4}秒冷却",
       "durationSec": 45,
       "weight": 1.6,
-      "availability": "active"
+      "availability": "retired"
     },
     {
       "key": "MAGIC_MASTER",
