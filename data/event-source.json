@@ -29,6 +29,11 @@
       "id": 4,
       "key": "pack4",
       "labelZh": "随机事件包 4"
+    },
+    {
+      "id": 5,
+      "key": "pack5",
+      "labelZh": "随机事件包 5"
     }
   ],
   "events": [
@@ -745,6 +750,17 @@
       "descZh": "100HP→{0}%减伤，1%减伤→{1}%移速\\n每{2}秒获得1层心之钢",
       "durationSec": 120,
       "weight": 0.4,
+      "availability": "active"
+    },
+    {
+      "key": "GAMBLER_DICE_MANIAC",
+      "type": "mech",
+      "id": 15,
+      "pack": 5,
+      "nameZh": "赌徒：掷骰狂人",
+      "descZh": "持续{0}秒，长按{1}{2}秒掷骰\\n1: -{3}层心之钢 | 2: -{4}%移速\\n3: -{5}%减伤和治疗增益 | 4: +{4}%移速\\n5: +{3}层心之钢 | 6: +{5}%减伤和治疗增益",
+      "durationSec": 60,
+      "weight": 0.5,
       "availability": "active"
     }
   ]
