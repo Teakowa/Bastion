@@ -5,7 +5,6 @@ rule "[VishkarEvent]: 魔术大师":
     @Event eachPlayer
     @Team 1
     @Condition all([
-        dlcVishkarEvent,
         eventPlayer.hasSpawned(),
         eventPlayer.eventType == 0,
         eventPlayer.eventId == BuffEventId.MAGIC_MASTER,
@@ -16,11 +15,11 @@ rule "[VishkarEvent]: 魔术大师":
     eventPlayer.mod_speed_event += EVT_29_SPEED_BOOST
     updatePlayerStats()
     if eventPlayer.eventEffect == null:
-        createEffect(getAllPlayers(), Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
+        createEffect(getAllPlayers() if eventPlayer.isCommunicatingEmote() else null, Effect.REAPER_WRAITH_FORM, Color.TEAM_1, eventPlayer, 200, EffectReeval.VISIBILITY_POSITION_AND_RADIUS)
         eventPlayer.eventEffect = getLastCreatedEntity()
     waitUntil(eventPlayer.isCommunicatingEmote() == false, eventPlayer.eventDuration)
     eventPlayer.targetSilence = false
-    eventPlayer.mod_speed_event -= EVT_29_SPEED_BOOST
+    eventPlayer.mod_speed_event = 0
     updatePlayerStats()
     clearEventEffect()
-    wait(0.1)
+    wait(0.25)
